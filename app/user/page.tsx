@@ -10,11 +10,11 @@ const Users = () => {
       {contents.map((user) => (
           <Link
             key={user.id}
-            // href={{
-            //   pathname: `/user/${user.username}`,
-            //   query: user,
-            // }}
-            href={`/user/${user.username}`}
+            href={{
+              pathname: `/user/${user.username}`,
+              query: user,
+            }}
+            // href={`/user/${user.username}`}
           >
               <li key={user.id}>{user.name}</li>
           </Link>
