@@ -21,10 +21,10 @@ export const linksdata: LinkDataType[] = [
     icon: "services",
   },
   {
-    title: "Products",
-    pathname: "/products",
-    path: "/products",
-    icon: "products",
+    title: "User",
+    pathname: "/user",
+    path: "/user",
+    icon: "user",
   },
   {
     title: "Contact",
