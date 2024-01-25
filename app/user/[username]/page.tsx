@@ -1,29 +1,18 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import React from "react";
+import { UserDataType } from "@/app/types/user";
 
-interface UserPageProps {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-}
 
-const UserPage: React.FC<UserPageProps> = () => {
-  const params = useSearchParams();
+const UserPage: React.FC = () => {
+  const searchParams = useSearchParams();
 
-  const user: UserPageProps = {
-    id: params.get("id") || "",
-    name: params.get("name") || "",
-    username: params.get("username") || "",
-    email: params.get("email") || "",
+  const { id, name, username, email }: UserDataType = {
+    id: searchParams.get("id"),
+    name: searchParams.get("name"),
+    username: searchParams.get("username"),
+    email: searchParams.get("email"),
   };
-
-  const username: string | null = params.get("username");
-
-  // console.log("params", params);
-  // console.log("user", user);
-  // console.log("query_params", username);
 
   if (!username) {
     return <p>Invalid URL</p>;
@@ -33,10 +22,10 @@ const UserPage: React.FC<UserPageProps> = () => {
     <div className="flex flex-col">
       <h3>User Page</h3>
       <ul>
-        <li>id: {user.id}</li>
-        <li>name: {user.name}</li>
-        <li>username: {user.username}</li>
-        <li>email: {user.email}</li>
+        <li>id: {id}</li>
+        <li>name: {name}</li>
+        <li>username: {username}</li>
+        <li>email: {email}</li>
       </ul>
     </div>
   );
