@@ -32,4 +32,16 @@ export const linksdata: LinkDataType[] = [
     path: "/contact",
     icon: "contact",
   },
+  {
+    title: "Login",
+    pathname: "/login",
+    path: "/login",
+    icon: "login",
+  },
+  {
+    title: "Register",
+    pathname: "/register",
+    path: "/register",
+    icon: "register",
+  },
 ];
