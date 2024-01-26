@@ -1,7 +1,7 @@
-// /app/data/linksdata.ts
+// /app/data/linksData.ts
 import { LinkDataType } from "../types/links";
 
-export const linksdata: LinkDataType[] = [
+export const links: LinkDataType[] = [
   {
     title: "Home",
     pathname: "/",
