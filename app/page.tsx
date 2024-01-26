@@ -6,7 +6,7 @@ export default function Home() {
     <main className="w-100 h-screen flex flex-col md:flex-row w-full">
       {/* Side Bare */}
       <SideBar links={links} links2={links2} />
-      <section className="bg-white">
+      <section className="bg-white mt-1">
         main
         </section>
     </main>

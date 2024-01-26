@@ -4,7 +4,9 @@ import React from 'react'
 const Logo = () => {
   return (
     <>
-    <Image src="/images/ade.png" alt='logo' width={50} height={50} quality={100} className=''/>
+    <div className='w-[40px] h-[40px] md:w-[50px] md:h-[50px] relative'>
+    <Image src="/images/ade.png" alt='logo' fill quality={100} className=''/>
+    </div>
     </>
   )
 }

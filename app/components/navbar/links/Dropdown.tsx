@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Section from "./Section";
+import Section from "../../sidebar/Section";
 
 interface LinkItem {
   title: string;
@@ -9,11 +9,20 @@ interface LinkItem {
 interface SideBarProps {
   links: LinkItem[];
   links2: LinkItem[];
+  isMobileMenuOpen: boolean;
 }
-const SideBar: React.FC<SideBarProps> = ({ links, links2 }) => {
+const Dropdown: React.FC<SideBarProps> = ({
+  links,
+  links2,
+  isMobileMenuOpen,
+}) => {
   return (
     <>
-      <section className="hidden md:flex flex-col bg-[#F4F4F4] w-full md:w-[16.6%] px-[15px] pt-[15px] overflow-y-auto">
+      <section
+        className={`bg-[#F4F4F4] w-full px-[15px] pt-[15px] overflow-y-auto nav-list  ${
+          isMobileMenuOpen ? "open" : ""
+        } `}
+      >
         <Section title="popular tags" links={links} />
         <Link href="" className="text-[14px] capitalize leading-[28px]">
           browse all tags
@@ -30,4 +39,4 @@ const SideBar: React.FC<SideBarProps> = ({ links, links2 }) => {
   );
 };
 
-export default SideBar;
+export default Dropdown;
