@@ -4,7 +4,7 @@ import React from "react";
 
 const Links = () => {
   return (
-    <div className="flex w-full">
+    <div className="flex w-full my-auto uppercase text-[#434343] text-[14px] font-[700]">
       <ul className="flex gap-4">
         {links.map((link, index) => (
           <Link key={index} href={link.pathname}>
