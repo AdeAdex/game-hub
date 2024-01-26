@@ -31,3 +31,24 @@
 .menu-open .rotate-icon {
   transform: rotate(90deg);
 }
+
+.link {
+  position: relative;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  transition: transform 0.3s ease, width 0.3s ease;
+  transform-origin: right;
+}
+
+.link:hover::after {
+  width: 100%;
+  transform: scaleX(100%);
+  background-color: #da2c49;
+}
