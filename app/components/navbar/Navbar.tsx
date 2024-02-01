@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Links from "./links/Links";
 import Logo from "./Logo";
@@ -13,21 +13,27 @@ const Navbar = () => {
 
   return (
     <main>
-      <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between">
+      <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white">
         <div className="flex gap-5">
-        <MenuIcon
-          isMobileMenuOpen={isMobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-        />
-        <Logo />
+          <MenuIcon
+            isMobileMenuOpen={isMobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+          />
+          <Logo />
         </div>
         <Links />
-        <Dropdown links={links} links2={links2} isMobileMenuOpen={isMobileMenuOpen}/>
+        <Dropdown
+          links={links}
+          links2={links2}
+          isMobileMenuOpen={isMobileMenuOpen}
+        />
         <SearchBox />
         <div className="flex gap-8">
-          <AuthButton title="login" />
+          <div className="my-auto">
+            <AuthButton title="login" to="/login" />
+          </div>
           <div className="my-auto hidden md:flex">
-            <AuthButton title="register" />
+            <AuthButton title="register" to="/register" />
           </div>
         </div>
       </nav>
