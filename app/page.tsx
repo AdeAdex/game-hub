@@ -27,7 +27,8 @@ export default function Home() {
 
 
   const cards = Array.from({ length: 10 }).map((_, index) => (
-    <div key={index} className="w-[20%] h-[300px] p-4 bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div key={index} className="w-[19%] h-[300px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+      <div className="relative w-100 h-[70%]">
       <Image
         src="/images/404_error-h_half_column_mobile.png"
         alt="logo"
@@ -35,16 +36,17 @@ export default function Home() {
         quality={100}
         className=""
       />
+      </div>
       <div className="p-4">
         <h2 className="text-xl  font-semibold">Beautiful Card</h2>
         <p className="text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          Lorem ipsum dolor 
         </p>
-        <div className="flex justify-between items-center mt-4">
+        {/* <div className="flex justify-between items-center mt-4">
           <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400">
             Learn More
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   ));
@@ -55,9 +57,9 @@ export default function Home() {
       <main className="w-100 h-screen flex flex-col md:flex-row w-full">
         {/* Side Bare */}
         <SideBar links={links} links2={links2} />
-        <section className="bg-white mt-1 w-[83%] flex flex-wrap justify-between">
+        <section className="bg-white mt-1 w-[83%] flex flex-wrap justify-between gap-[5px]">
           {cards}
-          <Footer />
+          {/* <Footer /> */}
         </section>
         {/* <section className="bg-white mt-1 w-[83%]"> */}
           {/* <Footer /> */}
