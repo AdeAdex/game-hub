@@ -1,5 +1,5 @@
 import Footer from "@/app/components/footer/Footer";
-import Navbar from "@/app/components/navbar/Navbar";
+import Navbar from "@/app/components/login/Navbar";
 import Link from "next/link";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
