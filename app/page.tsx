@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/SideBar";
@@ -24,17 +25,68 @@ export default function Home() {
   //     console.error('There was a problem with the fetch operation:', error);
   //   });
 
+
+  const cards = Array.from({ length: 10 }).map((_, index) => (
+    <div key={index} className="w-[20%] h-[300px] p-4 bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+      <Image
+        src="/images/404_error-h_half_column_mobile.png"
+        alt="logo"
+        fill
+        quality={100}
+        className=""
+      />
+      <div className="p-4">
+        <h2 className="text-xl  font-semibold">Beautiful Card</h2>
+        <p className="text-gray-600">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+        </p>
+        <div className="flex justify-between items-center mt-4">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+            Learn More
+          </button>
+        </div>
+      </div>
+    </div>
+  ));
+
   return (
     <>
       <Navbar />
       <main className="w-100 h-screen flex flex-col md:flex-row w-full">
         {/* Side Bare */}
         <SideBar links={links} links2={links2} />
-        <section className="bg-white mt-1">
-          main
+        <section className="bg-white mt-1 w-[83%] flex flex-wrap justify-between">
+          {cards}
           <Footer />
         </section>
+        {/* <section className="bg-white mt-1 w-[83%]"> */}
+          {/* <Footer /> */}
+        {/* </section> */}
       </main>
     </>
   );
 }
+
+          // <div className="w-[16%] h-[300px] p-4 bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+          //   {/* <img className="w-full h-40 object-cover rounded-t-lg" alt="Card Image" src="https://via.placeholder.com/150"> */}
+          //   <Image
+          //     src="/images/404_error-h_half_column_mobile.png"
+          //     alt="logo"
+          //     fill
+          //     quality={100}
+          //     className=""
+          //     // width={100}
+          //     // height={40}
+          //   />
+          //   <div className="p-4">
+          //     <h2 className="text-xl  font-semibold">Beautiful Card</h2>
+          //     <p className="text-gray-600">
+          //       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          //     </p>
+          //     <div className="flex justify-between items-center mt-4">
+          //       <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+          //         Learn More
+          //       </button>
+          //     </div>
+          //   </div>
+          // </div>
