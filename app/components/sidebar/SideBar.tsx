@@ -16,7 +16,7 @@ const SideBar: React.FC<SideBarProps> = ({ links, links2 }) => {
       <section className="hidden md:flex flex-col bg-[#F4F4F4] w-full md:w-[226px] px-[15px] pt-[15px] overflow-y-auto">
         <Section title="popular tags" links={links} />
         <Link href="" className="text-[14px] capitalize leading-[28px]">
-          browse all tags
+          browse all tags →
         </Link>
 
         <div className="mt-[30px] flex flex-col gap-y-[30px]">

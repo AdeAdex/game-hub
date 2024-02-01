@@ -25,7 +25,7 @@ const Dropdown: React.FC<SideBarProps> = ({
       >
         <Section title="popular tags" links={links} />
         <Link href="" className="text-[14px] capitalize leading-[28px]">
-          browse all tags
+          browse all tags →
         </Link>
 
         <div className="mt-[30px] flex flex-col gap-y-[30px]">
