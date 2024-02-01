@@ -2,14 +2,14 @@ import Footer from "@/app/components/footer/Footer";
 import Navbar from "@/app/components/navbar/Navbar";
 import React from "react";
 
-const registerPage = () => {
+const page = () => {
   return (
     <main>
       <Navbar />
-      <div>registerPage</div>
+      <div>Register page</div>
       <Footer />
     </main>
   );
 };
 
-export default registerPage;
+export default page;
