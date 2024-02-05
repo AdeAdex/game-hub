@@ -1,4 +1,4 @@
-import { UserModel } from "../models/user";
+import UserModel from "../models/user";
 import { connectToDb } from "../utils/database";
 
 export const RegisterUser = async (userData) => {
