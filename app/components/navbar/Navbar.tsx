@@ -7,6 +7,7 @@ import AuthButton from "./AuthButton";
 import MenuIcon from "./MenuIcon";
 import { links, links2 } from "@/app/lib/SideBarLinks";
 import Dropdown from "./links/Dropdown";
+import  {signIn, signOut, useSession, getProviders} from 'next-auth/react';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
