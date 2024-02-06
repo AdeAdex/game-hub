@@ -67,13 +67,13 @@ export default function Home() {
               <span className="my-auto">Don&apos;t see anything you like? </span>
               <Link
                 href=""
-                className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px]"
+                className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px] justify-center"
               >
                <span> View all games</span> <IoArrowForward className="my-auto"/>
               </Link>
               <Link
                 href=""
-                className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px]"
+                className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px] justify-center"
               >
                 <span>View something random</span> <FaRandom className="my-auto"/>
               </Link>
