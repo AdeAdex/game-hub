@@ -112,10 +112,10 @@ const RegisterForm = () => {
             <AboutYou />
           </section>
           {/* form button */}
-          <div className="flex w-full gap-[10px]">
+          <div className="flex flex-col md:flex-row w-full gap-[10px]">
             <button
               type="submit"
-              className="text-center bg-blue-700 py-2 px-4 text-white bg-[#FF2449] rounded-sm"
+              className="text-center py-2 px-4 text-white bg-[#FF2449] rounded-sm"
             >
               Create account
             </button>

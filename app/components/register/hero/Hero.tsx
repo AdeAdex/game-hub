@@ -5,7 +5,7 @@ import { HeroData } from "@/app/lib/RegisterHeroData";
 
 const Hero: React.FC = () => {
   return (
-    <div className="w-full flex flex-col  w-full md:w-[50%] px-[10px] gap-[25px] pt-[30px] text-[13px] text-[#434343]">
+    <div className="w-full flex flex-col  w-full md:w-[50%] px-[10px] gap-[25px] pt-[30px] text-[13px] text-[#434343] pb-[40px]">
       {HeroData.map((data, index) => (
         <div key={index} className="flex flex-col gap-[15px]">
           <Headings
