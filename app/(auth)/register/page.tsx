@@ -2,100 +2,22 @@
 
 import Footer from "@/app/components/footer/Footer";
 import Navbar from "@/app/components/navbar/Navbar";
-import React, { FormEvent, useState } from "react";
-import { RegisterUser } from "@/app/controllers/user_controller";
+import Hero from "@/app/components/register/hero/Hero";
+import RegisterForm from "@/app/components/register/form/RegisterForm";
 
 const RegisterPage = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleCreateAccount = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const userData = {
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-    };
-    try {
-      RegisterUser(userData);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
-
   return (
-    <main>
+    <main className="w-full bg-[#F4F4F4]">
       <Navbar />
-      <button></button>
-      <div className="w-full">
-        <form onSubmit={handleCreateAccount} className="px-[10px] flex flex-col gap-[25px]">
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full " htmlFor="firstName">
-              FirstName:
-            </label>
-            <input
-              type="text"
-              name="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
-            />
-          </div>
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full " htmlFor="lastName">
-              LastName:
-            </label>
-            <input
-              type="text"
-              name="lastName"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
-            />
-          </div>
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full " htmlFor="userName">
-              UserName:
-            </label>
-            <input
-              type="text"
-              name="userName"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
-            />
-          </div>
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full " htmlFor="email">
-              Email:
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
-            />
-          </div>
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full " htmlFor="password">
-              Password:
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
-            />
-          </div>
-          <button type="submit" className="text-center bg-blue-700 w-full py-2 px-4 text-white mt-[]">Create</button>
-        </form>
+      <div className="w-full lg:w-[60%] mx-auto mt-[1px] md:mt-6 bg-white rounded-sm border-2 border-gray-300">
+        <h3 className="py-[30px] border-b border-gray-300 px-[10px] md:px-[30px] font-bold text-[#434343] md:text-[20px] ">
+          Log in to your game hub account
+        </h3>
+        <div className="w-full flex flex-col md:flex-row px-5 gap-[50px]">
+          <RegisterForm />
+          <div className="border border-1 "></div>
+          <Hero/>
+        </div>
       </div>
       <Footer />
     </main>
