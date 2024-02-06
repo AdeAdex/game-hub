@@ -19,7 +19,7 @@ const UserPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full text-center py-5">
       <h3>User Page</h3>
       <ul>
         <li>id: {id}</li>
