@@ -27,7 +27,7 @@ export default function Home() {
 
 
   const cards = Array.from({ length: 10 }).map((_, index) => (
-    <div key={index} className="w-[19%] h-[300px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div key={index} className="w-full md:w-[30%] lg:w-[19%] h-[300px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <div className="relative w-100 h-[70%]">
       <Image
         src="/images/404_error-h_half_column_mobile.png"
@@ -57,7 +57,7 @@ export default function Home() {
       <main className="w-100 h-screen flex flex-col md:flex-row w-full">
         {/* Side Bare */}
         <SideBar links={links} links2={links2} />
-        <section className="bg-white mt-1 w-[83%] flex flex-wrap justify-between gap-[5px]">
+        <section className="bg-white mt-1 w-full md:w-[83%] flex flex-wrap justify-between gap-[25px] md:gap-[0px]">
           {cards}
           {/* <Footer /> */}
         </section>
