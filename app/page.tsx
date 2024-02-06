@@ -64,7 +64,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] bg-white py-[30px] px-[30px]">
             {cards}
             <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">
-              <span className="my-auto">Don't see anything you like? </span>
+              <span className="my-auto">Don&apos;t see anything you like? </span>
               <Link
                 href=""
                 className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px]"

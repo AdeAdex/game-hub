@@ -10,13 +10,13 @@ const AboutYou = () => {
         <div className="flex gap-2">
           <input type="checkbox" name="" id="" />
           <span className="my-auto">
-            I'm interested in playing or downloading games on adex
+          I&apos;m interested in playing or downloading games on adex
           </span>
         </div>
         <div className="flex gap-2">
           <input type="checkbox" name="" id="" />
           <span className="my-auto">
-            I'm interested in distributing content on adex.co
+          I&apos;m interested in distributing content on adex.co
           </span>
         </div>
         <div>
