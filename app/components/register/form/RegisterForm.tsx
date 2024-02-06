@@ -1,3 +1,5 @@
+'use client'
+
 import React, { FormEvent, useState } from "react";
 import { RegisterUser } from "@/app/controllers/user_controller";
 import RegisterWith from "./RegisterWith";
