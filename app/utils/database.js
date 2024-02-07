@@ -1,3 +1,4 @@
+// database.js
 import mongoose from "mongoose";
 
 const URI = process.env.MONGODB_URI;
@@ -9,7 +10,7 @@ export const connectToDb = async () => {
       console.log("Using existing connection");
       return;
     }
-    const db = await mongoose.connect(URI);
+    const db = await mongoose.connect(URI)
     connection.isConnected = db.connections[0].readyState;
   } catch (error) {
     console.log("Error connecting to database:", error.message);

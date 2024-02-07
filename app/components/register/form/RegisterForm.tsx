@@ -1,20 +1,23 @@
-'use client'
+"use client";
 
 import React, { FormEvent, useState } from "react";
-import { RegisterUser } from "@/app/controllers/user_controller";
 import RegisterWith from "./RegisterWith";
 import Link from "next/link";
 import AboutYou from "./AboutYou";
+import { useRouter } from 'next/navigation'
 
 const RegisterForm = () => {
+  const router = useRouter()
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleCreateAccount = (event: FormEvent<HTMLFormElement>) => {
+  const handleCreateAccount = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitting(true);
     const userData = {
       firstName,
       lastName,
@@ -23,9 +26,25 @@ const RegisterForm = () => {
       password,
     };
     try {
-      RegisterUser(userData);
+      const response = await fetch("/api/prompt/new", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: userData,
+        }),
+      });
+      if (response.ok) {
+        console.log("User created successfully");
+        router.push("/login");
+      } else {
+        console.error("Error creating user:", response.statusText);
+      }
     } catch (error: any) {
       console.error(error.message);
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -104,6 +123,7 @@ const RegisterForm = () => {
             <input
               type="password"
               name="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-2 px-3 py-[5px] border-gray-300"
@@ -118,8 +138,13 @@ const RegisterForm = () => {
             <button
               type="submit"
               className="text-center py-2 px-4 text-white bg-[#FF2449] rounded-sm"
+              disabled={submitting}
             >
-              Create account
+              {submitting ? (
+                <span>Processing...</span>
+              ) : (
+                <span>Create account</span>
+              )}
             </button>
             <div className="my-auto">
               <span>or already have an account?</span>

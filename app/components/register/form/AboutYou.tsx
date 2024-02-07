@@ -8,13 +8,13 @@ const AboutYou = () => {
       <div className="border rounded-sm border-[#CDCDCD] py-3 px-4 flex flex-col gap-[10px]">
         <h3>About you</h3>
         <div className="flex gap-2">
-          <input type="checkbox" name="" id="" />
+          <input type="checkbox" name="" id="checkbox1" />
           <span className="my-auto">
           I&apos;m interested in playing or downloading games on adex
           </span>
         </div>
         <div className="flex gap-2">
-          <input type="checkbox" name="" id="" />
+          <input type="checkbox" name="" id="checkbox2" />
           <span className="my-auto">
           I&apos;m interested in distributing content on adex.co
           </span>
@@ -28,13 +28,13 @@ const AboutYou = () => {
       {/* Terms and condition */}
       <div className="flex flex-col gap-[10px]">
         <div className="flex gap-2">
-          <input type="checkbox" name="" id="" />
+          <input type="checkbox" name="" id="checkbox3" />
           <span className="my-auto">
             Sign me up for the bi-monthly adex digest newsletter
           </span>
         </div>
         <div className="flex gap-2">
-          <input type="checkbox" name="" id="" />
+          <input type="checkbox" name="" id="checkbox4" />
           <div className="my-auto flex gap-1">
             <span className="my-auto">I accept the </span>
             <Link href="" className="text-red-500 my-auto underline">
