@@ -1,7 +1,7 @@
 import { connectToDb } from "../../utils/database";
 import User from "../../models/user";
 
-export const POST = async (req, res) => {
+export const POST = async (request) => {
   const loginDetails = await req.json();
   console.log(loginDetails);
 
@@ -12,14 +12,17 @@ export const POST = async (req, res) => {
     });
 
     if (user) {
-        console.log("User found:", user);
-        return { status: 200, body: user }; // Returning user data
-      } else {
-        console.log("User not found");
-        return { status: 404, body: { message: "User not found" } }; // Returning error message
-      }
-    } catch (error) {
-      console.log(error);
-      return { status: 500, body: { message: "Internal server error" } }; // Returning error message
+      console.log("User found:", user);
+      // Return a JSON response with user data
+      return new Response(JSON.stringify(user), { status: 200, headers: { "Content-Type": "application/json" } });
+    } else {
+      console.log("User not found");
+      // Return a JSON response with error message
+      return new Response(JSON.stringify({ message: "User not found" }), { status: 404, headers: { "Content-Type": "application/json" } });
     }
+  } catch (error) {
+    console.log(error);
+    // Return a JSON response with internal server error message
+    return new Response(JSON.stringify({ message: "Internal server error" }), { status: 500, headers: { "Content-Type": "application/json" } });
+  }
 };
