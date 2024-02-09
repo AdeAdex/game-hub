@@ -8,10 +8,18 @@ import AuthButton from "./AuthButton";
 import MenuIcon from "./MenuIcon";
 import { links, links2 } from "@/app/lib/SideBarLinks";
 import Dropdown from "./links/Dropdown";
-// import  {signIn, signOut, useSession, getProviders} from 'next-auth/react';
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { FaAngleDown } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const [dropdown, setDropdown] = useState(false)
+
+  const handleDropdown = () => {
+    setDropdown(!dropdown)
+  }
 
   return (
     <main>
@@ -31,11 +39,36 @@ const Navbar = () => {
         />
         <SearchBox />
         <div className="flex gap-8">
-          <div className="my-auto">
-            <AuthButton title="login" to="/login" />
+          <div className="my-auto flex">
+            {session?.user ? (
+              <div className="flex flex-col relative">
+              <div className="flex gap-3 cursor-pointer" onClick={handleDropdown} >
+                <Image
+                  src={session?.user?.image || "/images/ade.png"}
+                  alt="profile"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+                <span className="my-auto text-[14px] font-bold">Adex</span>
+                <FaAngleDown size={18} className="my-auto"/>
+              </div>
+              {dropdown && (
+                <div className="absolute top-10 right-0 bg-red-500 z-20 w-[200px]">
+                  adex
+                </div>
+              )}
+              </div>
+            ) : (
+              <AuthButton title="login" to="/login" />
+            )}
           </div>
           <div className="my-auto hidden md:flex">
-            <AuthButton title="register" to="/register" />
+            {session?.user ? (
+              <div></div>
+            ) : (
+              <AuthButton title="register" to="/register" />
+            )}
           </div>
         </div>
       </nav>

@@ -1,19 +1,32 @@
-"use client";
+"use client"
 
 import React, { FormEvent, useState } from "react";
 import RegisterWith from "./RegisterWith";
 import Link from "next/link";
 import AboutYou from "./AboutYou";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 const RegisterForm = () => {
-  const router = useRouter()
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp />
+    </SnackbarProvider>
+  );
+};
+
+function MyApp() {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleCreateAccount = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,8 +49,16 @@ const RegisterForm = () => {
         }),
       });
       if (response.ok) {
-        console.log("User created successfully");
-        router.push("/login");
+        // enqueueSnackbar("User created successfully", {
+        //   variant: "success",
+        // });
+        // router.push("/login");
+        enqueueSnackbar("User created successfully", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          router.push("/login");
+        }, 5000);
       } else {
         console.error("Error creating user:", response.statusText);
       }
@@ -47,6 +68,7 @@ const RegisterForm = () => {
       setSubmitting(false);
     }
   };
+
   return (
     <div className="w-full flex flex-col relative w-full md:w-[50%] pb-[40px]">
       {/* Register with github section */}
@@ -60,7 +82,7 @@ const RegisterForm = () => {
           className="px-[10px] flex flex-col gap-[25px] mt-[30px] text-[13px] text-[#434343]"
         >
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold " htmlFor="userName">
+            <label className="w-full font-bold" htmlFor="userName">
               UserName:
             </label>
             <input
@@ -72,7 +94,9 @@ const RegisterForm = () => {
             />
           </div>
           <div className="text-center">
-            <h3 className="text-black font-bold">Your profile page will be</h3>
+            <h3 className="text-black font-bold">
+              Your profile page will be
+            </h3>
             <div
               className="py-2 px-3 bg-[#F9F9F9] mt-[5px]"
               style={{ userSelect: "none" }}
@@ -81,7 +105,7 @@ const RegisterForm = () => {
             </div>
           </div>
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold " htmlFor="firstName">
+            <label className="w-full font-bold" htmlFor="firstName">
               FirstName:
             </label>
             <input
@@ -93,7 +117,7 @@ const RegisterForm = () => {
             />
           </div>
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold " htmlFor="lastName">
+            <label className="w-full font-bold" htmlFor="lastName">
               LastName:
             </label>
             <input
@@ -105,7 +129,7 @@ const RegisterForm = () => {
             />
           </div>
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold " htmlFor="email">
+            <label className="w-full font-bold" htmlFor="email">
               Your email here:
             </label>
             <input
@@ -117,7 +141,7 @@ const RegisterForm = () => {
             />
           </div>
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold " htmlFor="password">
+            <label className="w-full font-bold" htmlFor="password">
               Password:
             </label>
             <input
@@ -157,6 +181,6 @@ const RegisterForm = () => {
       </section>
     </div>
   );
-};
+}
 
 export default RegisterForm;

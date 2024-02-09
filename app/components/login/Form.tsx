@@ -1,20 +1,54 @@
-import React from "react";
+"use client";
+import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 
 const Form = () => {
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const loginDetails = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await fetch("/api/prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginDetails),
+      });
+
+      if (response.ok) {
+        // Handle successful login
+        console.log("Login successful");
+      } else {
+        // Handle login failure
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
+
   return (
-    <>
+    <form action="" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-[25px]">
         <div className="w-full flex flex-col gap-[5px]">
-          <label className="w-full " htmlFor="username">
+          <label className="w-full " htmlFor="email">
             Username or email:
           </label>
           <input
             className="w-full border border-2 px-3 py-[5px] border-gray-300"
             type="text"
-            id="username"
-            name="username"
-            placeholder="Required"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className="w-full flex flex-col gap-[5px]">
@@ -25,8 +59,9 @@ const Form = () => {
             className="w-full border border-2 px-3 py-[5px] border-gray-300"
             type="password"
             id="password"
-            name="password"
-            placeholder="Required"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
       </div>
@@ -47,7 +82,8 @@ const Form = () => {
           </Link>
         </div>
       </div>
-    </>
+    </form>
+   
   );
 };
 
