@@ -35,6 +35,7 @@ const SocialMediaLogin = () => {
     <>
       <div className="py-[25px]">
         <div className="text-[12px] font-bold">Or log in with another site</div>
+        <div className="flex flex-row justify-between  w-full" >
         {providers &&
           Object.values(providers).map((provider) => (
             <button
@@ -53,6 +54,7 @@ const SocialMediaLogin = () => {
               </span>
             </button>
           ))}
+          </div>
       </div>
     </>
   );
