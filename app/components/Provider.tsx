@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 
 
 interface ProviderProps{
-  session: any;
+  session?: any;
   children: ReactNode;
 }
 
