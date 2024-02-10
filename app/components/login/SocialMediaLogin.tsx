@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 
 interface Provider {
   id: string;
   name: string;
   type: string;
   signinUrl: string;
+  callbackUrl: string;
 }
 
 const SocialMediaLogin = () => {
@@ -22,13 +23,12 @@ const SocialMediaLogin = () => {
       const setUpProvider = async () => {
         const response = await getProviders();
         setProviders(response as Record<string, Provider>);
+        console.log(response);
+        
       };
       setUpProvider();
-      // console.log(providers);
     },
-    [
-      /* providers */
-    ]
+    []
   );
 
   return (
