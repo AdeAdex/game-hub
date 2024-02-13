@@ -24,7 +24,7 @@ function MyApp() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitting(true)
+    setSubmitting(true);
 
     const loginDetails = {
       email,
@@ -33,23 +33,35 @@ function MyApp() {
 
     try {
       const response = await axios.post("/api/prompt", loginDetails);
+      console.log(response.status);
 
-      if (response.status == 200) {
-        console.log("Login successful", response);
-        enqueueSnackbar("Login successful", {
+      if (response.status === 200) {
+        console.log(response.data);
+        enqueueSnackbar(response.data?.message, {
           variant: "success",
-        });  
+        });
       } else {
-        console.log("Login failed", response);
-        enqueueSnackbar(response.statusText, {
+        console.log(response.data);
+        enqueueSnackbar("Unexpected error occurred", {
           variant: "error",
-        }); 
+        });
       }
-    } catch (error) {
-      console.error("Error during login:", error);
-      enqueueSnackbar("Error during login", {
-        variant: "error",
-      }); 
+    } catch (error: any) {
+      if (
+        error.response &&
+        (error.response.status === 404 || error.response.status === 401)
+      ) {
+        const errorMessage =
+          error.response.data?.message || "Invalid email or password";
+        enqueueSnackbar(errorMessage, {
+          variant: "error",
+        });
+      } else {
+        console.log(error);
+        enqueueSnackbar("Error during login", {
+          variant: "error",
+        });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -66,6 +78,7 @@ function MyApp() {
             className="w-full border border-2 px-3 py-[5px] border-gray-300"
             type="text"
             id="email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -79,6 +92,7 @@ function MyApp() {
             className="w-full border border-2 px-3 py-[5px] border-gray-300"
             type="password"
             id="password"
+            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -91,11 +105,7 @@ function MyApp() {
           className="bg-[#FF2E51] px-3 py-[5px] text-white rounded-sm"
           disabled={submitting}
         >
-          {submitting ? (
-            <div>Connecting</div>
-          ) : (
-            <div>Login</div>
-          )}
+          {submitting ? <div>Connecting</div> : <div>Login</div>}
         </button>
         <div className="flex my-auto text-[12px] md:text-[14px]">
           <span>or </span>
