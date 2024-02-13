@@ -1,11 +1,13 @@
-"use client"
+"use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import RegisterWith from "./RegisterWith";
 import Link from "next/link";
 import AboutYou from "./AboutYou";
 import { useRouter } from "next/navigation";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const RegisterForm = () => {
   return (
@@ -20,51 +22,63 @@ const RegisterForm = () => {
 
 function MyApp() {
   const router = useRouter();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleCreateAccount = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSubmitting(true);
-    const userData = {
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-    };
-    try {
-      const response = await fetch("/api/prompt/new", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt: userData,
-        }),
-      });
-      if (response.ok) {
-        enqueueSnackbar("Account created successfully", {
-          variant: "success",
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      userName: "",
+      password: "",
+    },
+
+    onSubmit: async (values) => {
+      setSubmitting(true);
+      // console.log(values);
+
+      try {
+        const response = await fetch("/api/prompt/new", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt: values,
+          }),
         });
-        setTimeout(() => {
-          router.push("/login");
-        }, 5000);
-        
-      } else {
-        console.error("Error creating user:", response.statusText);
+        if (response.ok) {
+          enqueueSnackbar("Account created successfully. Please check your email.", {
+            variant: "success",
+          });          
+          setTimeout(() => {
+            router.push("/login");
+          }, 5000);
+        } else {
+          console.error("Error creating user:", response.statusText);
+        }
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setSubmitting(false);
       }
-    } catch (error: any) {
-      console.error(error.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    },
+
+    validationSchema: yup.object({
+      userName: yup.string().required("Username is required"),
+      firstName: yup.string().required("First name is required"),
+      lastName: yup.string().required("Last name is required"),
+      email: yup.string().email("Invalid email").required("Email is required"),
+      password: yup
+        .string()
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+          "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
+        )
+        .required("Password is required"),
+    }),
+  });
 
   return (
     <div className="w-full flex flex-col relative w-full md:w-[50%] pb-[40px]">
@@ -75,7 +89,7 @@ function MyApp() {
       {/* form section */}
       <section>
         <form
-          onSubmit={handleCreateAccount}
+          onSubmit={formik.handleSubmit}
           className="px-[10px] flex flex-col gap-[25px] mt-[30px] text-[13px] text-[#434343]"
         >
           <div className="w-full flex flex-col gap-[5px]">
@@ -84,16 +98,24 @@ function MyApp() {
             </label>
             <input
               type="text"
+              autoComplete="on"
               name="userName"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+                formik.errors.userName && formik.touched.userName
+                  ? "register-input"
+                  : ""
+              }`}
+              placeholder={
+                formik.touched.userName && formik.errors.userName
+                  ? formik.errors.userName
+                  : "Enter your username"
+              }
             />
           </div>
           <div className="text-center">
-            <h3 className="text-black font-bold">
-              Your profile page will be
-            </h3>
+            <h3 className="text-black font-bold">Your profile page will be</h3>
             <div
               className="py-2 px-3 bg-[#F9F9F9] mt-[5px]"
               style={{ userSelect: "none" }}
@@ -107,10 +129,20 @@ function MyApp() {
             </label>
             <input
               type="text"
+              autoComplete="on"
               name="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+                formik.errors.firstName && formik.touched.firstName
+                  ? "register-input"
+                  : ""
+              }`}
+              placeholder={
+                formik.touched.firstName && formik.errors.firstName
+                  ? formik.errors.firstName
+                  : "Enter your firstname"
+              }
             />
           </div>
           <div className="w-full flex flex-col gap-[5px]">
@@ -119,10 +151,20 @@ function MyApp() {
             </label>
             <input
               type="text"
+              autoComplete="on"
               name="lastName"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+                formik.errors.lastName && formik.touched.lastName
+                  ? "register-input"
+                  : ""
+              }`}
+              placeholder={
+                formik.touched.lastName && formik.errors.lastName
+                  ? formik.errors.lastName
+                  : "Enter your lastname"
+              }
             />
           </div>
           <div className="w-full flex flex-col gap-[5px]">
@@ -131,10 +173,20 @@ function MyApp() {
             </label>
             <input
               type="email"
+              autoComplete="on"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+                formik.errors.email && formik.touched.email
+                  ? "register-input"
+                  : ""
+              }`}
+              placeholder={
+                formik.touched.email && formik.errors.email
+                  ? formik.errors.email
+                  : "Enter your email"
+              }
             />
           </div>
           <div className="w-full flex flex-col gap-[5px]">
@@ -145,10 +197,24 @@ function MyApp() {
               type="password"
               name="password"
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-2 px-3 py-[5px] border-gray-300"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+                formik.errors.password && formik.touched.password
+                  ? "register-input"
+                  : ""
+              }`}
+              placeholder={
+                formik.touched.password && formik.errors.password
+                  ? formik.errors.password
+                  : "Enter your password"
+              }
             />
+            {formik.touched.password &&
+              formik.errors.password &&
+              !formik.errors.password.match(/required/i) && (
+                <div className="text-red-500">{formik.errors.password}</div>
+              )}
           </div>
           {/* About you section of the form */}
           <section>

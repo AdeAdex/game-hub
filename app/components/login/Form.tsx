@@ -1,13 +1,29 @@
 "use client";
+
 import React, { FormEvent, useState } from "react";
 import Link from "next/link";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 const Form = () => {
-  const [email, setEmail] = useState(""); 
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp />
+    </SnackbarProvider>
+  );
+};
+
+function MyApp() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true)
 
     const loginDetails = {
       email,
@@ -25,10 +41,14 @@ const Form = () => {
 
       if (response.ok) {
         // Handle successful login
-        console.log("Login successful");
+        console.log("Login successful", response);
+        enqueueSnackbar("Login successful", {
+          variant: "success",
+        });  
       } else {
         // Handle login failure
-        console.error("Login failed");
+        // console.error("Login failed");
+        console.log("Login successful", response);
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -83,8 +103,7 @@ const Form = () => {
         </div>
       </div>
     </form>
-   
   );
-};
+}
 
 export default Form;
