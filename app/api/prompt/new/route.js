@@ -4,6 +4,8 @@ import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { hashPassword } from "../../../utils/bcrypt";
 import { sendWelcomeEmail } from "../../../utils/emailUtils";
+import { NextResponse } from "next/server";
+
 
 export const POST = async (req) => {
   const { prompt } = await req.json();
@@ -13,7 +15,7 @@ export const POST = async (req) => {
 
     if (existingUser) {
       console.log("Email already exists");
-      return new Response("Email already exists");
+      return NextResponse.json({ message: "Email already exists" }, { status: 400 });
     }
 
     const hashedPassword = await hashPassword(prompt.password);
@@ -26,6 +28,7 @@ export const POST = async (req) => {
       email: prompt.email,
       password: hashedPassword,
     });
+
     try {
       await sendWelcomeEmail(prompt.email, prompt.firstName);
       console.log("Welcome email sent successfully.");
@@ -33,11 +36,10 @@ export const POST = async (req) => {
       console.error("Error sending welcome email:", error);
     }
 
-    return new Response(JSON.stringify(newUser), {
-      status: 201,
-    });
+    return NextResponse.json({newUser, message: "Account created successfully. Please check your email.", status: 201});
   } catch (error) {
     console.error("Error creating user:", error.message);
-    return new Response("Failed to create a new user", { status: 500 });
+    return NextResponse.json({ message: "Failed to create a new user" }, { status: 500 });
   }
+
 };

@@ -36,8 +36,7 @@ function MyApp() {
 
     onSubmit: async (values) => {
       setSubmitting(true);
-      // console.log(values);
-
+   
       try {
         const response = await fetch("/api/prompt/new", {
           method: "POST",
@@ -48,21 +47,34 @@ function MyApp() {
             prompt: values,
           }),
         });
-        if (response.ok) {
-          enqueueSnackbar("Account created successfully. Please check your email.", {
+      
+        const responseData = await response.json(); 
+      
+        console.log(responseData);
+        if (responseData.status === 201) {
+        console.log("created", responseData);
+
+          enqueueSnackbar(responseData.message, {
             variant: "success",
-          });          
+          });
           setTimeout(() => {
             router.push("/login");
           }, 5000);
         } else {
-          console.error("Error creating user:", response.statusText);
+          console.log("Error creating user:", responseData.message);
+          enqueueSnackbar(responseData.message || "Error creating user", {
+            variant: "error",
+          });
         }
       } catch (error: any) {
         console.error(error.message);
+        enqueueSnackbar("Error creating user", {
+          variant: "error",
+        });
       } finally {
         setSubmitting(false);
       }
+      
     },
 
     validationSchema: yup.object({
