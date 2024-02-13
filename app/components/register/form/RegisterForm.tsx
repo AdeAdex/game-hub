@@ -49,16 +49,13 @@ function MyApp() {
         }),
       });
       if (response.ok) {
-        // enqueueSnackbar("User created successfully", {
-        //   variant: "success",
-        // });
-        // router.push("/login");
-        enqueueSnackbar("User created successfully", {
+        enqueueSnackbar("Account created successfully", {
           variant: "success",
         });
         setTimeout(() => {
           router.push("/login");
         }, 5000);
+        
       } else {
         console.error("Error creating user:", response.statusText);
       }

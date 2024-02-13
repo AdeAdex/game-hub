@@ -2,14 +2,36 @@
 
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
+import { hashPassword } from "../../../utils/bcrypt";
+import { sendWelcomeEmail } from "../../../utils/emailUtils";
 
 export const POST = async (req) => {
   const { prompt } = await req.json();
-
   try {
     await connectToDb();
-    const newUser = new User(prompt);
-    await newUser.save();
+    const existingUser = await User.findOne({ email: prompt.email });
+
+    if (existingUser) {
+      console.log("Email already exists");
+      return new Response("Email already exists");
+    }
+
+    const hashedPassword = await hashPassword(prompt.password);
+    console.log("Hashed Password:", hashedPassword);
+
+    const newUser = await User.create({
+      firstName: prompt.firstName,
+      lastName: prompt.lastName,
+      userName: prompt.userName,
+      email: prompt.email,
+      password: hashedPassword,
+    });
+    try {
+      await sendWelcomeEmail(prompt.email, prompt.firstName);
+      console.log("Welcome email sent successfully.");
+    } catch (error) {
+      console.error("Error sending welcome email:", error);
+    }
 
     return new Response(JSON.stringify(newUser), {
       status: 201,
@@ -19,6 +41,3 @@ export const POST = async (req) => {
     return new Response("Failed to create a new user", { status: 500 });
   }
 };
-
-
-
