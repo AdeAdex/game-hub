@@ -3,6 +3,7 @@
 import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import axios from "axios";
 
 const Form = () => {
   return (
@@ -31,27 +32,26 @@ function MyApp() {
     };
 
     try {
-      const response = await fetch("/api/prompt", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginDetails),
-      });
+      const response = await axios.post("/api/prompt", loginDetails);
 
-      if (response.ok) {
-        // Handle successful login
+      if (response.status == 200) {
         console.log("Login successful", response);
         enqueueSnackbar("Login successful", {
           variant: "success",
         });  
       } else {
-        // Handle login failure
-        // console.error("Login failed");
-        console.log("Login successful", response);
+        console.log("Login failed", response);
+        enqueueSnackbar(response.statusText, {
+          variant: "error",
+        }); 
       }
     } catch (error) {
       console.error("Error during login:", error);
+      enqueueSnackbar("Error during login", {
+        variant: "error",
+      }); 
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -89,8 +89,13 @@ function MyApp() {
         <button
           type="submit"
           className="bg-[#FF2E51] px-3 py-[5px] text-white rounded-sm"
+          disabled={submitting}
         >
-          Login
+          {submitting ? (
+            <div>Connecting</div>
+          ) : (
+            <div>Login</div>
+          )}
         </button>
         <div className="flex my-auto text-[12px] md:text-[14px]">
           <span>or </span>
