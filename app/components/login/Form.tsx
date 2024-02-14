@@ -4,6 +4,10 @@ import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import axios from "axios";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/app/redux/authSlice";
 
 const Form = () => {
   return (
@@ -21,6 +25,9 @@ function MyApp() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,13 +40,18 @@ function MyApp() {
 
     try {
       const response = await axios.post("/api/prompt", loginDetails);
-      console.log(response.status);
 
       if (response.status === 200) {
         console.log(response.data);
+        const { token } = response.data;
+        const userInfo = response.data._doc;
+        
+        dispatch(loginSuccess({ token, userInfo }));
+
         enqueueSnackbar(response.data?.message, {
           variant: "success",
         });
+        router.push("/dashboard");
       } else {
         console.log(response.data);
         enqueueSnackbar("Unexpected error occurred", {
@@ -84,19 +96,30 @@ function MyApp() {
             required
           />
         </div>
-        <div className="w-full flex flex-col gap-[5px]">
+        <div className="w-full flex flex-col gap-[5px] relative">
           <label className="w-full " htmlFor="password">
             Password:
           </label>
           <input
             className="w-full border border-2 px-3 py-[5px] border-gray-300"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <button
+            type="button"
+            className="absolute right-[10px] top-[50%] bg-[none] border-none cursor-pointer "
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? (
+              <AiFillEyeInvisible size={25} />
+            ) : (
+              <AiFillEye size={25} />
+            )}
+          </button>
         </div>
       </div>
       <div className="py-[25px] flex gap-4 border-b border-gray-300">

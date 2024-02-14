@@ -2,6 +2,7 @@ import { connectToDb } from "../../utils/database";
 import User from "../../models/user";
 import { comparePassword } from "../../utils/bcrypt";
 import { NextResponse } from "next/server";
+import { generateToken } from "../../utils/jwtUtils"
 
 export const POST = async (req, res) => {
   const { email, password } = await req.json();
@@ -12,25 +13,27 @@ export const POST = async (req, res) => {
     });
 
     if (!user) {
-      console.log("User not found");
+      // console.log("User not found");
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
     const passwordMatch = await comparePassword(password, user.password);
 
     if (!passwordMatch) {
-      console.log("Invalid email or password");
+      // console.log("Invalid email or password");
       return NextResponse.json(
         { message: "Invalid email or password" },
         { status: 401 }
       );
     }
 
+    const token = generateToken({ email: user.email })
+
     user.password = undefined;
-    console.log("User found:", user);
+
 
     return NextResponse.json(
-      { ...user, message: "Login successful" },
+      { ...user, token, message: "Login successful" },
       { status: 200 }
     );
   } catch (error) {
