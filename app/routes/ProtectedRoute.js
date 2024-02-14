@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 
 const ProtectedRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
-//   const userData = useSelector((state) => state.auth.userInfo);
   const router = useRouter();
 
   if (!token) {

@@ -1,9 +1,10 @@
 // app/dashboard/page.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 interface RootState {
   auth: {
@@ -20,6 +21,26 @@ interface RootState {
 const DashboardPage = () => {
   const userData = useSelector((state: RootState) => state.auth.userInfo);
   const token = useSelector((state: RootState) => state.auth.token);
+  const [dashboardData, setDashboardData] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/dashboard", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setDashboardData(response.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
 
   console.log(userData);
   console.log(token);
@@ -40,6 +61,11 @@ const DashboardPage = () => {
         <div>
           <strong>Email:</strong> {userData.email}
         </div>
+        {dashboardData && (
+          <div>
+            {/* Display dashboard data here */}
+          </div>
+        )}
       </div>
     </ProtectedRoute>
   );
