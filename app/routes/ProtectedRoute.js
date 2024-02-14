@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (!token) {
     if (router.pathname !== "/login") {
-      router.replace("/login");
+      router.push("/login");
     }
     return null; // Prevent rendering the children
   }
