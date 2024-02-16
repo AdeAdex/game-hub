@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Links from "./links/Links";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
@@ -11,11 +11,31 @@ import Dropdown from "./links/Dropdown";
 import { useSession } from "next-auth/react";
 // import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
-const Navbar = () => {
+interface AuthState {
+  userInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    userName: string;
+  };
+  token: string;
+}
+
+
+
+const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
   const [dropdown, setDropdown] = useState(false);
+  
+    const userInfos = useSelector((state: any) => state.auth.userInformation);
+
+
+  useEffect(() => {
+    console.log("userInfos ", userInfos);
+  }, []);
 
   // console.log(session);
   
@@ -24,7 +44,6 @@ const Navbar = () => {
     setDropdown(!dropdown);
   };
 
-  // console.log(session);
 
   return (
     <main>
@@ -73,7 +92,7 @@ const Navbar = () => {
                 </div>
                 {dropdown && (
                   <div className="absolute top-10 right-0 bg-red-500 z-20 w-[200px]">
-                    adex dropdown
+                    {session?.user.email}
                   </div>
                 )}
               </div>

@@ -2,6 +2,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
+
+// import { useDispatch } from "react-redux";
+// import { signInSuccess } from "@/app/redux/authSlice";
+
+
 
 interface UserData {
   firstName: string;
@@ -12,6 +18,7 @@ interface UserData {
 
 const DashboardPage = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,9 +33,10 @@ const DashboardPage = () => {
             Accept: "application/json",
           },
         });
-
+        
         if (response.data.user) {
           setUserData(response.data.user);
+          // dispatch(signInSuccess(response.data.user));
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -41,6 +49,7 @@ const DashboardPage = () => {
   return (
     <div>
       <h2>User Data</h2>
+      <Link href="/">Home</Link>
       {userData && (
         <div>
           <div>
