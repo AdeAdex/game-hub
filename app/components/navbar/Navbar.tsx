@@ -17,6 +17,9 @@ const Navbar = () => {
   const { data: session } = useSession();
   const [dropdown, setDropdown] = useState(false);
 
+  // console.log(session);
+  
+
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
@@ -55,6 +58,7 @@ const Navbar = () => {
                   height={32}
                   className="rounded-full"
                 /> */}
+                {}
                   <img
                     src={(session.user.image as string)}
                     alt="profile"

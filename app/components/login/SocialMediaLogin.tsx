@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, getProviders } from "next-auth/react";
+import { signIn, getProviders, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface Provider {
   id: string;
@@ -17,19 +18,31 @@ const SocialMediaLogin = () => {
   const [providers, setProviders] = useState<Record<string, Provider> | null>(
     null
   );
+  const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(
     () => {
       const setUpProvider = async () => {
         const response = await getProviders();
         setProviders(response as Record<string, Provider>);
-        console.log(response);
+        // console.log(response);
         
       };
       setUpProvider();
     },
     []
   );
+
+  useEffect(() => {
+    console.log(session);
+    
+    if (!session) {
+      router.push("/");
+    } else {
+      router.push("/login");
+    }
+  }, [session, router]);
 
   return (
     <>

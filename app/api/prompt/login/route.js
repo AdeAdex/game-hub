@@ -1,8 +1,8 @@
-import { connectToDb } from "../../utils/database";
-import User from "../../models/user";
-import { comparePassword } from "../../utils/bcrypt";
+import { connectToDb } from "../../../utils/database";
+import User from "../../../models/user";
+import { comparePassword } from "../../../utils/bcrypt";
 import { NextResponse } from "next/server";
-import { generateToken } from "../../utils/jwtUtils"
+import { generateToken } from "../../../utils/jwtUtils"
 
 export const POST = async (req, res) => {
   const { email, password } = await req.json();

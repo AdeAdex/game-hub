@@ -39,7 +39,7 @@ function MyApp() {
     };
 
     try {
-      const response = await axios.post("/api/prompt", loginDetails);
+      const response = await axios.post("/api/prompt/login", loginDetails);
 
       if (response.status === 200) {
         console.log(response.data);
@@ -47,7 +47,7 @@ function MyApp() {
         const userInfo = response.data._doc;
         
         dispatch(loginSuccess({ token, userInfo }));
-
+        localStorage.loginToken = token;
         enqueueSnackbar(response.data?.message, {
           variant: "success",
         });

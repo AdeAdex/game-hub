@@ -12,3 +12,24 @@ export const generateToken = (payload) => {
     console.error("Error generating token:", error);
   }
 };
+
+
+export const verifyToken = (token) => {
+  try {
+    const decodedToken = jwt.verify(token, secretKey);
+    return decodedToken;
+  } catch (error) {
+    return null; // Token verification failed
+  }
+};
+
+
+// export const compareToken = (token, payload) => {
+//   try {
+//     const decodedPayload = jwt.verify(token, secretKey);
+//     return JSON.stringify(decodedPayload) === JSON.stringify(payload);
+//   } catch (error) {
+//     console.error("Error comparing token:", error);
+//     return false;
+//   }
+// };
