@@ -1,11 +1,11 @@
 // app/dashboard/page.tsx
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
-// import { useDispatch } from "react-redux";
-// import { signInSuccess } from "@/app/redux/authSlice";
 
 
 
@@ -17,10 +17,13 @@ interface UserData {
 }
 
 const DashboardPage = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  // const dispatch = useDispatch();
+  const userData = useSelector((state: any) => state.auth.userInformation);
+  const router = useRouter();
+
 
   useEffect(() => {
+    console.log(userData);
+    
     const fetchData = async () => {
       try {
         const token = localStorage.loginToken;
@@ -33,11 +36,12 @@ const DashboardPage = () => {
             Accept: "application/json",
           },
         });
+
+        if (!response.data.success) {
+          router.push('/login')
+          
+        }      
         
-        if (response.data.user) {
-          setUserData(response.data.user);
-          // dispatch(signInSuccess(response.data.user));
-        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

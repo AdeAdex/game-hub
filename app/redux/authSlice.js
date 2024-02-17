@@ -14,11 +14,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.token = action.payload.token;
-      state.userInfo = action.payload.userInfo;
+      state.token = action.payload;
+      state.userInfo = action.payload;
     },
     signInSuccess: (state, action) => {
-      state.userInformation = action.payload.userInformation;
+      state.userInformation = action.payload;
     },
   },
 });
