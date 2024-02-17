@@ -117,7 +117,7 @@ const Navbar: React.FC = () => {
         <SearchBox />
         <div className="flex gap-8">
           <div className="my-auto flex">
-            {session?.user || userInfos ? (
+            {session?.user || userInfos?.email ? (
               <div className="flex flex-col relative">
                 <div
                   className="flex gap-3 cursor-pointer"
@@ -149,7 +149,7 @@ const Navbar: React.FC = () => {
             )}
           </div>
           <div className="my-auto hidden md:flex">
-            {session?.user || userInfos ? (
+            {session?.user || userInfos?.email ? (
               <div>nothing</div>
             ) : (
               <AuthButton title="register" to="/register" />
