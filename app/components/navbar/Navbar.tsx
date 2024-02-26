@@ -8,10 +8,11 @@ import AuthButton from "./AuthButton";
 import MenuIcon from "./MenuIcon";
 import { links, links2 } from "@/app/lib/SideBarLinks";
 import Dropdown from "./links/Dropdown";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 // import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+
 
 interface AuthState {
   userInfo: {
@@ -38,6 +39,10 @@ const Navbar: React.FC = () => {
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
+  };
+
+  const handleLogout = async () => {
+    await signOut();
   };
 
   return (
@@ -140,7 +145,8 @@ const Navbar: React.FC = () => {
                 </div>
                 {dropdown && (
                   <div className="absolute top-10 right-0 bg-red-500 z-20 w-[200px]">
-                    {session?.user?.email || userInfos?.email}
+                    <div>{session?.user?.email || userInfos?.email}</div>
+                    <div onClick={handleLogout}>logout</div>
                   </div>
                 )}
               </div>
@@ -150,7 +156,7 @@ const Navbar: React.FC = () => {
           </div>
           <div className="my-auto hidden md:flex">
             {session?.user || userInfos?.email ? (
-              <div>nothing</div>
+              <div></div>
             ) : (
               <AuthButton title="register" to="/register" />
             )}
