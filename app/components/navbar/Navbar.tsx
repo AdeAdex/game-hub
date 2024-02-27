@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
-  };
+  }
 
   const handleLogout = async () => {
     await signOut();
@@ -144,9 +144,21 @@ const Navbar: React.FC = () => {
                   <FaAngleDown size={18} className="my-auto" />
                 </div>
                 {dropdown && (
-                  <div className="absolute top-10 right-0 bg-red-500 z-20 w-[200px]">
-                    <div>{session?.user?.email || userInfos?.email}</div>
-                    <div onClick={handleLogout}>logout</div>
+                  <div className="absolute top-10 right-0 bg-white z-20 w-[200px] flex flex-col gap-[5px] text-[14px] rounded-sm border border-1">
+                    <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">Explore</small>
+                    <div className="px-4 nav-dropdown">My library</div>
+                    <div className="px-4 nav-dropdown">Recommendation</div>
+                    <div className="px-4 nav-dropdown">Game Jams</div>
+                    {/* <div className="px-4 nav-dropdown">{session?.user?.email || userInfos?.email}</div> */}
+                    <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">Create</small>
+                    <div className="px-4 nav-dropdown">Dashboard</div>
+                    <div className="px-4 nav-dropdown">Posts</div>
+                    <div className="px-4 nav-dropdown">Upload new project</div>
+                    <div className="px-4 nav-dropdown">Host game jam</div>
+                    <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">Account</small>
+                    <div className="px-4 nav-dropdown">View profile</div>
+                    <div className="px-4 nav-dropdown">Settings</div>
+                    <div className="px-4 nav-dropdown" onClick={handleLogout}>logout</div>
                   </div>
                 )}
               </div>

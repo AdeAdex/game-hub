@@ -236,7 +236,7 @@ function MyApp() {
           <div className="flex flex-col md:flex-row w-full gap-[10px]">
             <button
               type="submit"
-              className="text-center py-2 px-4 text-white bg-[#FF2449] rounded-sm"
+              className="text-center py-2 px-4  text-white bg-[#FF2449] rounded-sm"
               disabled={submitting}
             >
               {submitting ? (
