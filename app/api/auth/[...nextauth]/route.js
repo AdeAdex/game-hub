@@ -92,14 +92,28 @@ const handler = NextAuth({
             userName = '';
           }
     
-          await User.create({
+          // await User.create({
+          //   email: profile.email,
+          //   firstName: firstName,
+          //   lastName: lastName,
+          //   userName: profile.login,
+          //   password: password,
+          //   profilePicture: image,
+          // });
+
+
+          const userObject = {
             email: profile.email,
             firstName: firstName,
             lastName: lastName,
             userName: profile.login,
             password: password,
-            image: image,
-          });
+            profilePicture: image // Include profilePicture field
+          };
+    
+          // Use Mongoose's 'strict: false' option to allow dynamic fields
+          const user = new User(userObject);
+          await user.save();
         }
     
         return true;
