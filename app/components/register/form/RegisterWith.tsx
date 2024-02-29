@@ -23,9 +23,9 @@ const RegisterWith = () => {
     if (session?.user) {
       router.push("/dashboard");
     } else {
-      router.push("/register");
+      // router.push("/register");
     }
-  }, [session, router]);
+  }, [session]);
 
   const handleGithubSignIn = async () => {
     await signIn("github");

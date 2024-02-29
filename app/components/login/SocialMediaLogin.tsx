@@ -38,9 +38,9 @@ const SocialMediaLogin = () => {
     if (session?.user) {
       router.push("/dashboard");
     } else {
-      router.push("/login");
+      // router.push("/login");
     }
-  }, [session, router]);
+  }, [session]);
 
   return (
     <>
