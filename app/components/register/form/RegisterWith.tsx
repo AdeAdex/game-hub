@@ -22,9 +22,7 @@ const RegisterWith = () => {
   useEffect(() => {
     if (session?.user) {
       router.push("/dashboard");
-    } else {
-      // router.push("/register");
-    }
+    } 
   }, [session]);
 
   const handleGithubSignIn = async () => {

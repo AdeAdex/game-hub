@@ -26,11 +26,10 @@ const DashboardPage = () => {
 
   
   useEffect(() => {
-    if (session?.user) {
-    } else {
+    if (!session?.user) {
       router.push("/login");
-    }
-  }, [session, router]);
+    } 
+  }, [session]);
 
 
   useEffect(() => {
