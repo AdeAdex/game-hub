@@ -114,7 +114,20 @@ const handler = NextAuth({
           // Use Mongoose's 'strict: false' option to allow dynamic fields
           const user = new User(userObject);
           await user.save();
-        }
+        } /* else if(userExists) {
+          const userObject = {
+            email: profile.email,
+            firstName: firstName,
+            lastName: lastName,
+            userName: profile.login,
+            password: password,
+            profilePicture: image // Include profilePicture field
+          };
+    
+          // Use Mongoose's 'strict: false' option to allow dynamic fields
+          const user = new User(userObject);
+          await user.save();
+        } */
     
         return true;
       } catch (error) {

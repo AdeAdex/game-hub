@@ -1,10 +1,13 @@
 // app/dashboard/page.tsx
 "use client";
+
 import React, { useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
+
 
 
 
@@ -19,6 +22,16 @@ interface UserData {
 const DashboardPage = () => {
   const userData = useSelector((state: any) => state.auth.userInformation);
   const router = useRouter();
+  const { data: session } = useSession();
+
+  
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/login");
+    }
+  }, [session, router]);
 
 
   useEffect(() => {

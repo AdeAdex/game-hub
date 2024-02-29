@@ -40,6 +40,8 @@ export default function Home() {
           fill
           quality={100}
           className=""
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
+          priority
         />
       </div>
       <div className="p-4">

@@ -35,10 +35,8 @@ const SocialMediaLogin = () => {
   );
 
   useEffect(() => {
-    // console.log(session);
-    
     if (session?.user) {
-      router.push("/");
+      router.push("/dashboard");
     } else {
       router.push("/login");
     }
