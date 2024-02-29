@@ -27,7 +27,6 @@ const DashboardPage = () => {
   
   useEffect(() => {
     if (session?.user) {
-      router.push("/dashboard");
     } else {
       router.push("/login");
     }
