@@ -12,7 +12,7 @@ import { useSession, signOut } from "next-auth/react";
 // import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
 
 interface AuthState {
   userInfo: {
@@ -28,20 +28,7 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
   const [dropdown, setDropdown] = useState(false);
-  // const [userData, setUserData] = useState(null);
-  // const cookies = new Cookies();
-
   const userInfo = useSelector((state: any) => state.auth.userInformation);
-
-  useEffect(() => {
-    // console.log("userInfo ", userInfo);
-    // console.log("session ", session);
-    // console.log("cookies ", cookies);
-    // const sessionCookie = cookies.get("session");
-    // if (sessionCookie) {
-    //   setUserData(sessionCookie.userData);
-    // }
-  }, [userInfo]);
 
   const handleDropdown = () => {
     setDropdown(!dropdown);

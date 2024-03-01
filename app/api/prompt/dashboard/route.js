@@ -15,6 +15,7 @@ export const GET = async (req, res) => {
     }
 
     const token = authorizationHeader.split("Bearer ")[1];
+    // console.log("token", token);
 
     if (!token) {
       return NextResponse.json({
@@ -31,8 +32,9 @@ export const GET = async (req, res) => {
     }
 
     await connectToDb(); // Connect to the database
-    const user = await User.findOne({ email: decodedToken.email })
-    .select("-password"); // Remove the password from what will be sent
+    const user = await User.findOne({ email: decodedToken.email }).select(
+      "-password"
+    ); // Remove the password from what will be sent
 
     if (!user) {
       return NextResponse.json({ success: false, error: "User not found" });

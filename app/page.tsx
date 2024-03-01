@@ -41,7 +41,8 @@ export default function Home() {
           quality={100}
           className=""
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
-          priority
+          // priority
+          loading="lazy"
         />
       </div>
       <div className="p-4">

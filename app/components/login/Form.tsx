@@ -8,6 +8,11 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "@/app/redux/authSlice";
+import Cookies from "universal-cookie";
+import localforage from "localforage";
+import CryptoJS from 'crypto-js';
+
+const cookies = new Cookies();
 
 const Form = () => {
   return (
@@ -28,6 +33,7 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const SECRET_KEY = 'YOUR_SECRET_KEY';
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,12 +48,14 @@ function MyApp() {
       const response = await axios.post("/api/prompt/login", loginDetails);
 
       if (response.status === 200) {
-        console.log(response.data);
         const { token } = response.data;
         const userInfo = response.data._doc;
-        
+
         dispatch(signInSuccess(userInfo));
-        localStorage.loginToken = token;
+        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userInfo), SECRET_KEY).toString();
+        localforage.setItem('userData', encryptedData);
+        cookies.set("loginToken", token, { secure: true, sameSite: "strict" });
+        // document.cookie = `loginToken=${token}; Secure; HttpOnly; SameSite=Strict; Path=/`;
         enqueueSnackbar(response.data?.message, {
           variant: "success",
         });
@@ -128,7 +136,7 @@ function MyApp() {
           className="bg-[#FF2E51] px-3 py-[5px] text-white rounded-sm"
           disabled={submitting}
         >
-          {submitting ? <div>Connecting</div> : <div>Login</div>}
+          {submitting ? <div>Connecting...</div> : <div>Login</div>}
         </button>
         <div className="flex my-auto text-[12px] md:text-[14px]">
           <span>or </span>
