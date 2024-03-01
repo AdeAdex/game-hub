@@ -79,7 +79,7 @@ const DashboardPage = () => {
 
         console.log(response);
 
-        if (response && response.data && response.data.success === false) {
+        if (response && response.data && response.data.success == false) {
           console.log(response);
            router.push("/login");
         }
