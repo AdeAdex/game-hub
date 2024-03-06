@@ -20,41 +20,7 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-    // CredentialsProvider({
-    //   credentials: {
-    //     email: { label: "Email", type: "email" },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials, req) {
-    //     // Custom authentication logic using your existing route
-    //     const { email, password } = credentials;
-    //     try {
-    //       await connectToDb();
-    //       const user = await User.findOne({
-    //         $or: [{ email }, { userName: email }],
-    //       });
 
-    //       if (!user) {
-    //         return Promise.resolve(null);
-    //       }
-
-    //       const passwordMatch = await comparePassword(password, user.password);
-
-    //       if (!passwordMatch) {
-    //         return Promise.resolve(null);
-    //       }
-
-    //       const token = generateToken({ email: user.email });
-
-    //       user.password = undefined;
-
-    //       return Promise.resolve({ ...user, token });
-    //     } catch (error) {
-    //       console.error("Error during authentication:", error);
-    //       return Promise.resolve(null);
-    //     }
-    //   },
-    // }),
   ],
   callbacks: {
     async session({ session }) {
@@ -72,9 +38,7 @@ const handler = NextAuth({
         const userExists = await User.findOne({ email: profile.email });
 
     
-        if (!userExists) {
-          const password = Math.random().toString(36).slice(-8);
-    
+        if (!userExists) {    
           const nameParts = profile.name.split(" ");
           const firstName = nameParts.slice(1).join(" ");
           const lastName = nameParts[0];
@@ -91,44 +55,19 @@ const handler = NextAuth({
             image = ''; 
             userName = '';
           }
-    
-          // await User.create({
-          //   email: profile.email,
-          //   firstName: firstName,
-          //   lastName: lastName,
-          //   userName: profile.login,
-          //   password: password,
-          //   profilePicture: image,
-          // });
-
 
           const userObject = {
             email: profile.email,
             firstName: firstName,
             lastName: lastName,
             userName: profile.login,
-            password: password,
             profilePicture: image // Include profilePicture field
           };
     
           // Use Mongoose's 'strict: false' option to allow dynamic fields
           const user = new User(userObject);
           await user.save();
-        } /* else if(userExists) {
-          const userObject = {
-            email: profile.email,
-            firstName: firstName,
-            lastName: lastName,
-            userName: profile.login,
-            password: password,
-            profilePicture: image // Include profilePicture field
-          };
-    
-          // Use Mongoose's 'strict: false' option to allow dynamic fields
-          const user = new User(userObject);
-          await user.save();
-        } */
-    
+        }
         return true;
       } catch (error) {
         console.error("Error occurred during signIn:", error);
