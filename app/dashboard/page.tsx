@@ -4,9 +4,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Cookies from "universal-cookie";
 import localforage from "localforage";
 import CryptoJS from "crypto-js";
@@ -22,22 +21,11 @@ const cookies = new Cookies();
 const SECRET_KEY = "YOUR_SECRET_KEY";
 
 const DashboardPage = () => {
-  // const userData = useSelector((state: any) => state.auth.userInformation);
   const router = useRouter();
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
-
-  // const getCookie = (name: string) => {
-  //   const cookies = document.cookie.split("; ");
-  //   for (const cookie of cookies) {
-  //     const [cookieName, cookieValue] = cookie.split("=");
-  //     if (cookieName === name) {
-  //       return cookieValue;
-  //     }
-  //   }
-  //   return null;
-  // };
+ 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -78,30 +66,21 @@ const DashboardPage = () => {
           },
         });
 
-        // setUserData(response)
-        if (!response.data) {
-          console.log("No response data received");
-          return;
-        }
-
-        setUserResponse(response);
-        console.log(response.data.success);
+        setUserResponse(response.data); // Update userResponse with response.data directly
 
         if (response.data.success === false) {
           console.log(response);
           setTimeout(() => {
-            // router.push("/login");
+            router.push("/login");
           }, 3000);
-          return;
         }
-        console.log(response.data.success);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchData();
-  }, [session, userResponse]);
+  }, [session]);
 
   return (
     <div>

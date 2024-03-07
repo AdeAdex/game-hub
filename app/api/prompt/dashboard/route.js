@@ -15,7 +15,7 @@ export const GET = async (req, res) => {
     }
 
     const token = authorizationHeader.split("Bearer ")[1];
-    // console.log("token", token);
+    console.log("token", token);
 
     if (!token) {
       return NextResponse.json({
