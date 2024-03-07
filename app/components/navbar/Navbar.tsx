@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
   const { data: session } = useSession();
   const [dropdown, setDropdown] = useState(false);
   const userInfo = useSelector((state: any) => state.auth.userInformation);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  // const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
@@ -41,19 +41,19 @@ const Navbar: React.FC = () => {
   };
 
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdown(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+  //       setDropdown(false);
+  //     }
+  //   };
 
-    window.addEventListener("click", handleClickOutside);
+  //   window.addEventListener("click", handleClickOutside);
 
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <main>
