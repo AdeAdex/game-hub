@@ -26,6 +26,7 @@ const DashboardPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [userResponse, setUserResponse] = useState<any>(null);
 
   // const getCookie = (name: string) => {
   //   const cookies = document.cookie.split("; ");
@@ -77,11 +78,18 @@ const DashboardPage = () => {
           },
         });
 
-        console.log(response);
+        // setUserData(response)
+        if (!response.data) {
+          console.log("No response data received");
+          return;
+        }
 
-        if (response && response.data && response.data.success == false) {
+        setUserResponse(response);
+
+        if (response.data.success === false) {
           console.log(response);
-           router.push("/login");
+          router.push("/login");
+          return;
         }
         console.log(response);
       } catch (error) {
@@ -90,13 +98,13 @@ const DashboardPage = () => {
     };
 
     fetchData();
-  }, [session]);
+  }, [session, userResponse]);
 
   return (
     <div>
       <h2>User Data</h2>
       <Link href="/">Home</Link>
-      {userData && (
+      {userData && userResponse && userResponse.data.success === true && (
         <div>
           <div>
             <strong>UserName:</strong> {userData.userName}
