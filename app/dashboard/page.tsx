@@ -27,6 +27,7 @@ const DashboardPage = () => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
+  const [redirecting, setRedirecting] = useState(false);
 
   // const getCookie = (name: string) => {
   //   const cookies = document.cookie.split("; ");
@@ -78,18 +79,22 @@ const DashboardPage = () => {
           },
         });
 
-        // setUserData(response)
+        setUserResponse(response);
+
         if (!response.data) {
           console.log("No response data received");
           return;
         }
 
-        setUserResponse(response);
 
-        if (response?.data && response?.data.success == false) {
+        if (response.data.success === false) {
           console.log(response);
+          // Delay redirect to login page for 3 seconds
           setTimeout(() => {
-            router.push("/login");
+            if (!redirecting) {
+              router.push("/login");
+              setRedirecting(true);
+            }
           }, 3000);
           return;
         }
