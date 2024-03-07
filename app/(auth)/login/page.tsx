@@ -1,14 +1,12 @@
 import Footer from "@/app/components/footer/Footer";
 import Form from "@/app/components/login/Form";
-import Navbar from "@/app/components/login/Navbar";
 import SocialMediaLogin from "@/app/components/login/SocialMediaLogin";
 import Link from "next/link";
 import React from "react";
 
 const LoginPage = () => {
   return (
-    <main className="w-full bg-[#F4F4F4] md:h-screen">
-      <Navbar/>
+      <>
       <div className=" w-full lg:w-1/3 mx-auto mt-[1px] md:mt-6 bg-white rounded-sm">
         <h3 className="py-[30px] border-b border-gray-300 px-[10px] md:px-[30px] font-bold text-[#434343] md:text-[20px] ">
           Log in to your game hub account
@@ -25,7 +23,7 @@ const LoginPage = () => {
         </div>
       </div>
       <Footer/>
-    </main>
+      </>
   );
 };
 

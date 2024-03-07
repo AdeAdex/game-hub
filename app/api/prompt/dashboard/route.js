@@ -5,16 +5,20 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
 
 export const GET = async (req, res) => {
   try {
-    const authorizationHeader = req.headers.get("authorization");
+    // const authorizationHeader = req.headers.get("authorization");
 
-    if (!authorizationHeader) {
-      return NextResponse.json({
-        success: false,
-        error: "Authorization header missing",
-      });
-    }
+    // if (!authorizationHeader) {
+    //   return NextResponse.json({
+    //     success: false,
+    //     error: "Authorization header missing",
+    //   });
+    // }
 
-    const token = authorizationHeader.split("Bearer ")[1];
+    // const token = authorizationHeader.split("Bearer ")[1];
+
+
+
+    const { token } = req.query;
     console.log("token", token);
 
     if (!token) {
