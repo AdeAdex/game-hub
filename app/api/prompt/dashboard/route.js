@@ -24,7 +24,7 @@ export const GET = async (req, res) => {
       });
     }
 
-    const decodedToken = verifyToken(token);
+    const decodedToken = await verifyToken(token);
     // console.log(decodedToken);
 
     if (!decodedToken) {
