@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
                   <FaAngleDown size={18} className="my-auto" />
                 </div>
                 {dropdown && (
-                  <ProfileDropdown handleClick={handleLogout} ref={dropdownRef}/>
+                  <ProfileDropdown handleClick={handleLogout}/*  ref={dropdownRef} *//>
                 )}
               </div>
             ) : (
