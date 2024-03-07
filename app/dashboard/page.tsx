@@ -64,7 +64,7 @@ const DashboardPage = () => {
       try {
         if (!token) {
           console.error("Token is missing or invalid");
-          router.push("/login");
+          // router.push("/login");
           return; // Add return statement to prevent further execution
         }
         
@@ -81,7 +81,7 @@ const DashboardPage = () => {
 
         if (response && response.data && response.data.success == false) {
           console.log(response);
-           router.push("/login");
+          //  router.push("/login");
         }
         console.log(response);
       } catch (error) {

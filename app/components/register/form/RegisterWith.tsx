@@ -21,7 +21,7 @@ const RegisterWith = () => {
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } 
   }, [session]);
 

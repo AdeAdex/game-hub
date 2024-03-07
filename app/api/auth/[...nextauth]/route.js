@@ -36,7 +36,6 @@ const handler = NextAuth({
       try {
         await connectToDb();
         const userExists = await User.findOne({ email: profile.email });
-
     
         if (!userExists) {    
           const nameParts = profile.name.split(" ");
@@ -44,23 +43,20 @@ const handler = NextAuth({
           const lastName = nameParts[0];
     
           let image;
-          let userName;
+          let userNames;
           if (profile.avatar_url) {
             image = profile.avatar_url;
-            userName = profile.login;
-          } else if (profile.picture) {
-            image = profile.picture;
-            userName = profile.email;
+            userNames = profile.login;
           } else {
-            image = ''; 
-            userName = '';
+            image = profile.picture;
+            userNames = profile.email;
           }
 
           const userObject = {
             email: profile.email,
             firstName: firstName,
             lastName: lastName,
-            userName: profile.login,
+            userName: userNames,
             profilePicture: image // Include profilePicture field
           };
     
