@@ -88,7 +88,9 @@ const DashboardPage = () => {
 
         if (response.data.success === false) {
           console.log(response);
-          router.push("/login");
+          setTimeout(() => {
+            router.push("/login");
+          }, 3000);
           return;
         }
         console.log(response);
