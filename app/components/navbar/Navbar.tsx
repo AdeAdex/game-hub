@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Links from "./links/Links";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
@@ -30,6 +30,7 @@ const Navbar: React.FC = () => {
   const { data: session } = useSession();
   const [dropdown, setDropdown] = useState(false);
   const userInfo = useSelector((state: any) => state.auth.userInformation);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
@@ -38,6 +39,21 @@ const Navbar: React.FC = () => {
   const handleLogout = async () => {
     await signOut();
   };
+
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdown(false);
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <main>
@@ -100,3 +116,5 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
+
