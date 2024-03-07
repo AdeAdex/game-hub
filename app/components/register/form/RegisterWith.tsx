@@ -20,8 +20,8 @@ const RegisterWith = () => {
   };
 
   useEffect(() => {
-    if (session?.user) {
-      // router.push("/dashboard");
+    if (session && session?.user) {
+      router.push("/dashboard");
     } 
   }, [session]);
 
