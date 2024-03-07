@@ -13,6 +13,7 @@ const SECRET_KEY = "YOUR_SECRET_KEY";
 
 const DashboardClient = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
