@@ -86,7 +86,7 @@ const DashboardPage = () => {
 
         setUserResponse(response);
 
-        if (response.data.success === false) {
+        if (response?.data && response?.data.success == false) {
           console.log(response);
           setTimeout(() => {
             router.push("/login");
