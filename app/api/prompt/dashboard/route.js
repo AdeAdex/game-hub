@@ -6,27 +6,26 @@ import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
 
-
 // export default async function handler(
-  //   req: NextApiRequest,
-  //   res: NextApiResponse
-  // ) {
-  export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+//   req: NextApiRequest,
+//   res: NextApiResponse
+// ) {
+// export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const GET = async (req, res) => {
   try {
-    // const authorizationHeader = req.headers.get("authorization");
+    const authorizationHeader = req.headers.get("authorization");
 
-    // if (!authorizationHeader) {
-    //   return NextResponse.json({
-    //     success: false,
-    //     error: "Authorization header missing",
-    //   });
-    // }
+    if (!authorizationHeader) {
+      return NextResponse.json({
+        success: false,
+        error: "Authorization header missing",
+      });
+    }
 
-    // const token = authorizationHeader.split("Bearer ")[1];
-    const url = new URL(req.url || "", "http://localhost"); // Assuming localhost as the base URL
-    const token = url.searchParams.get("token");
+    const token = authorizationHeader.split("Bearer ")[1];
+    // const url = new URL(req.url || "", "http://localhost"); 
+    // const token = url.searchParams.get("token");
 
-    // const { token } = req.query;
     console.log("token", token);
 
     if (!token) {
@@ -61,7 +60,14 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
       error: "Internal Server Error",
     });
   }
-}
+};
+
+
+
+
+
+
+
 
 
 // import { NextApiRequest, NextApiResponse } from "next";

@@ -67,15 +67,15 @@ const DashboardPage = () => {
         }
         
 
-        // const response = await axios.get("/api/prompt/dashboard", {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //     "Content-Type": "application/json",
-        //     Accept: "application/json",
-        //   },
-        // });
+        const response = await axios.get("/api/prompt/dashboard", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
 
-        const response = await axios.get(`/api/prompt/dashboard?token=${token}`);
+        // const response = await axios.get(`/api/prompt/dashboard?token=${token}`);
 
         setUserResponse(response.data); // Update userResponse with response.data directly
         console.log(response.data);
