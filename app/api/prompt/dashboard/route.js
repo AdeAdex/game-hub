@@ -1,10 +1,14 @@
+// app/api/dashboard/route.ts
+
 import { NextResponse, NextRequest } from "next/server";
-import { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
 
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+
+// export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const GET = async (req, res) => {
+
   try {
     // const authorizationHeader = req.headers.get("authorization");
 
@@ -16,10 +20,8 @@ export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
     // }
 
     // const token = authorizationHeader.split("Bearer ")[1];
-    const url = new URL(req.url || '', 'http://localhost'); // Assuming localhost as the base URL
-    const token = url.searchParams.get('token');
-
-
+    const url = new URL(req.url || "", "http://localhost"); // Assuming localhost as the base URL
+    const token = url.searchParams.get("token");
 
     // const { token } = req.query;
     console.log("token", token);
@@ -56,4 +58,4 @@ export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
       error: "Internal Server Error",
     });
   }
-};
+}

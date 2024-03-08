@@ -1,4 +1,5 @@
 // app/dashboard/page.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -25,6 +26,7 @@ const DashboardPage = () => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   
 
   useEffect(() => {
@@ -43,6 +45,8 @@ const DashboardPage = () => {
         setUserData(storedUserData);
       } catch (error:any) {
         console.error("Error fetching user data:", error.message);
+      }finally {
+        setLoading(false); // Set loading to false regardless of success or error
       }
     };
 
@@ -84,19 +88,22 @@ const DashboardPage = () => {
         }
       } catch (error:any) {
         console.error("Error fetching user data:", error.message);
+      }finally {
+        setLoading(false); // Set loading to false regardless of success or error
       }
     };
 
     fetchData();
   }, [session]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <h2>User Data</h2>
       {/* <Link href="/">Home</Link> */}
-      {(!userData || !userResponse) && (
-      <div>Loading...</div>
-    )}
       {userData && userResponse && userResponse.success === true && (
         <div>
           <div>
