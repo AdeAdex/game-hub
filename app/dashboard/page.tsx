@@ -11,6 +11,7 @@ import Cookies from "universal-cookie";
 import localforage from "localforage";
 import CryptoJS from "crypto-js";
 
+
 interface UserData {
   firstName: string;
   lastName: string;
