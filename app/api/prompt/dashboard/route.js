@@ -1,7 +1,7 @@
 // app/api/dashboard/route.ts
 
 import { NextResponse, NextRequest } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
+// import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
