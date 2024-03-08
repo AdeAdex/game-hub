@@ -49,6 +49,8 @@ function MyApp() {
 
       if (response.status === 200) {
         // const { token } = response.data;
+        console.log("user", response.data._doc);
+        
         const userInfo = response.data._doc;
 
         dispatch(signInSuccess(userInfo));

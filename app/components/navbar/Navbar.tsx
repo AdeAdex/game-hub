@@ -13,23 +13,31 @@ import { useSession, signOut } from "next-auth/react";
 import { FaAngleDown } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropdown";
+import axios from "axios";
 // import Cookies from "universal-cookie";
 
 interface AuthState {
-  userInfo: {
+  // userInfo: {
     firstName: string;
     lastName: string;
     email: string;
     userName: string;
-  };
-  token: string;
+    image: string;
+  // };
+  // token: string;
 }
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
   const [dropdown, setDropdown] = useState(false);
-  const userInfo = useSelector((state: any) => state.auth.userInformation);
+  // const userInfo = useSelector((state: any) => state.auth.userInformation);
+  
+  // const [userData, setUserData] = useState<UserData | null>(null);
+  const [userInfo, setUserInfo] = useState<AuthState | null>(null);
+  const [userResponse, setUserResponse] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
   // const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdown = () => {
@@ -54,6 +62,29 @@ const Navbar: React.FC = () => {
   //     window.removeEventListener("click", handleClickOutside);
   //   };
   // }, []);
+
+  useEffect(() => {
+    // const token = cookies.get("loginToken");
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`/api/prompt/dashboard`);
+       
+        if (response.data.success === true) {
+          setUserResponse(response.data)
+          setUserInfo(response.data.user)
+          
+        }
+      } catch (error:any) {
+        console.error("Error fetching user data:", error.message);
+      }finally {
+        setLoading(false); // Set loading to false regardless of success or error
+      }
+    };
+
+    fetchData();
+  }, [session]);
+
 
   return (
     <main>

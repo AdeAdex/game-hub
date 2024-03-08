@@ -32,7 +32,7 @@ export const POST = async (req, res) => {
 
     cookies().set("loginToken", token, {
       httpOnly: true, // Ensures the cookie is not accessible by client-side JavaScript
-      maxAge: 60 , // Expires after 24 hours (adjust as needed)
+      maxAge: 60 * 60 * 24, // Expires after 24 hours (adjust as needed)
       path: "/", // Cookie is accessible from all paths on the domain
       sameSite: 'strict',
       // Add other options if needed (e.g., secure: true if using HTTPS)
