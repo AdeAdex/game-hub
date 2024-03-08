@@ -20,6 +20,11 @@ import jwt from "jsonwebtoken"; // Import JWT library for decoding tokens
 export async function middleware(request) {
   const token = request.cookies.get('loginToken')?.value;
  
+  // Exclude the homepage ("/") from token validation
+  if (request.nextUrl.pathname === '/') {
+    return;
+  }
+ 
   if (token && !request.nextUrl.pathname.startsWith('/dashboard')) {
     // Decode the token to check if it's expired
     try {
@@ -27,7 +32,7 @@ export async function middleware(request) {
       const currentTimestamp = Math.floor(Date.now() / 1000);
 
       if (decodedToken.exp && decodedToken.exp < currentTimestamp) {
-        // Token has expired, redirect to login
+        console.log("Token has expired, redirect to login");
         return Response.redirect(new URL('/login', request.url));
       }
 
@@ -45,6 +50,7 @@ export async function middleware(request) {
     return Response.redirect(new URL('/login', request.url));
   }
 }
+
 
 
 export const config = {
