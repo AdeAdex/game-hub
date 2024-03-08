@@ -48,13 +48,13 @@ function MyApp() {
       const response = await axios.post("/api/prompt/login", loginDetails);
 
       if (response.status === 200) {
-        const { token } = response.data;
+        // const { token } = response.data;
         const userInfo = response.data._doc;
 
         dispatch(signInSuccess(userInfo));
-        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userInfo), SECRET_KEY).toString();
-        localforage.setItem('userData', encryptedData);
-        cookies.set("loginToken", token, { secure: true, sameSite: "strict" });
+        // const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userInfo), SECRET_KEY).toString();
+        // localforage.setItem('userData', encryptedData);
+        // cookies.set("loginToken", token, { secure: true, sameSite: "strict" });
         // document.cookie = `loginToken=${token}; Secure; HttpOnly; SameSite=Strict; Path=/`;
         enqueueSnackbar(response.data?.message, {
           variant: "success",

@@ -1,23 +1,20 @@
 // app/api/dashboard/route.ts
 
 import { NextResponse, NextRequest } from "next/server";
-// import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
 import { cookies } from 'next/headers'
+import { getSession } from "next-auth/react";
 
-// export default async function handler(
-//   req: NextApiRequest,
-//   res: NextApiResponse
-// ) {
-// export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
-  export const GET = async (req, res) => {
+
+  export const POST = async (req, res) => {
   try {
-    const authorizationHeader = req.headers.get("authorization");
+    // const authorizationHeader = req.headers.get("authorization");
     const cookieStore = cookies()
+    // const session =getSession({req})
+    // console.log(session)
     const token = cookieStore.get('loginToken').value
-    console.log(token)
     
     // consol.log("here")
     // console.log(authorizationHeader)
@@ -35,19 +32,24 @@ import { cookies } from 'next/headers'
 
     // console.log("token", token);
 
-    if (!token) {
-      return NextResponse.json({
-        success: false,
-        error: "Invalid token format",
-      });
-    }
+    // if (!token) {
+    //   return NextResponse.json({
+    //     success: false,
+    //     error: "Invalid token format",
+    //   });
+    // }
 
     const decodedToken = await verifyToken(token);
-    // console.log(decodedToken);
 
     if (!decodedToken) {
       return NextResponse.json({ success: false, error: "Invalid token" });
     }
+
+    if (decodedToken.exp && decodedToken.exp < Math.floor(Date.now() / 1000)) {
+      console.log("Token has expired in middleware");
+      return errorResponse(res, "Token has expired in dashboard", StatusCodes.UNAUTHORIZED);
+    }
+   
 
     await connectToDb(); // Connect to the database
     const user = await User.findOne({ email: decodedToken.email }).select(
@@ -69,70 +71,3 @@ import { cookies } from 'next/headers'
   }
 };
 
-
-
-
-
-
-
-
-
-// import { NextApiRequest, NextApiResponse } from "next";
-// import { connectToDb } from "../../../utils/database";
-// import User from "../../../models/user";
-// import { verifyToken } from "../../../utils/jwtUtils.js";
-
-// export const getHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   try {
-//     const url = new URL(req.url || "", "http://localhost");
-//     const token = url.searchParams.get("token");
-
-//     if (!token) {
-//       return res.status(400).json({ success: false, error: "Invalid token format" });
-//     }
-
-//     const decodedToken = await verifyToken(token);
-
-//     if (!decodedToken) {
-//       return res.status(401).json({ success: false, error: "Invalid token" });
-//     }
-
-//     await connectToDb();
-//     const user = await User.findOne({ email: decodedToken.email }).select(
-//       "-password"
-//     );
-
-//     if (!user) {
-//       return res.status(404).json({ success: false, error: "User not found" });
-//     }
-
-//     return res.status(200).json({ success: true, user });
-//   } catch (error) {
-//     console.error("Error handling GET request:", error);
-//     return res.status(500).json({ success: false, error: "Internal Server Error" });
-//   }
-// }
-
-// export const postHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   // POST request handling logic
-// };
-
-// export const putHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   // PUT request handling logic
-// };
-
-// export const deleteHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   // DELETE request handling logic
-// };
-
-// export const patchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   // PATCH request handling logic
-// };
-
-// export const headHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   // HEAD request handling logic
-// };
-
-// export const optionsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   // OPTIONS request handling logic
-// };

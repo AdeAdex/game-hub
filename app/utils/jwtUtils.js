@@ -17,9 +17,11 @@ export const generateToken = (payload) => {
 export const verifyToken = (token) => {
   try {
     const decodedToken = jwt.verify(token, secretKey);
+    console.log("jwt token", decodedToken)
     return decodedToken;
   } catch (error) {
-    return null; // Token verification failed
+    console.log("jwt error message", error.message)
+    // return null; // Token verification failed
   }
 };
 
