@@ -1,20 +1,23 @@
 import { NextResponse, NextRequest } from "next/server";
+import { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
 
-export const GET = async (req, res) => {
+export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const authorizationHeader = req.headers.get("authorization");
+    // const authorizationHeader = req.headers.get("authorization");
 
-    if (!authorizationHeader) {
-      return NextResponse.json({
-        success: false,
-        error: "Authorization header missing",
-      });
-    }
+    // if (!authorizationHeader) {
+    //   return NextResponse.json({
+    //     success: false,
+    //     error: "Authorization header missing",
+    //   });
+    // }
 
-    const token = authorizationHeader.split("Bearer ")[1];
+    // const token = authorizationHeader.split("Bearer ")[1];
+    const url = new URL(req.url || '', 'http://localhost'); // Assuming localhost as the base URL
+    const token = url.searchParams.get('token');
 
 
 
