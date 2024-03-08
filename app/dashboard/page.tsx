@@ -36,7 +36,6 @@ const DashboardPage = () => {
         const encryptedData = await localforage.getItem<string>("userData");
         if (!encryptedData) {
           throw new Error("User data not found in local storage");
-          return; // If no data found, return early
         }
 
         const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
@@ -63,19 +62,18 @@ const DashboardPage = () => {
           console.error("Token is missing or invalid");
           throw new Error("Token is missing or invalid");
           // router.push("/login");
-          return; // Add return statement to prevent further execution
         }
         
 
-        const response = await axios.get("/api/prompt/dashboard", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
+        // const response = await axios.get("/api/prompt/dashboard", {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //     "Content-Type": "application/json",
+        //     Accept: "application/json",
+        //   },
+        // });
 
-        // const response = await axios.get(`/api/prompt/dashboard?token=${token}`);
+        const response = await axios.get(`/api/prompt/dashboard?token=${token}`);
 
         setUserResponse(response.data); // Update userResponse with response.data directly
         console.log(response.data);

@@ -5,6 +5,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
+import { cookies } from 'next/headers'
 
 // export default async function handler(
 //   req: NextApiRequest,
@@ -14,19 +15,25 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
   export const GET = async (req, res) => {
   try {
     const authorizationHeader = req.headers.get("authorization");
+    const cookieStore = cookies()
+    const token = cookieStore.get('loginToken').value
+    console.log(token)
+    
+    // consol.log("here")
+    // console.log(authorizationHeader)
+    // if (!authorizationHeader) {
+    //   return NextResponse.json({
+    //     success: false,
+    //     error: "Authorization header missing",
+    //   });
+    // }
 
-    if (!authorizationHeader) {
-      return NextResponse.json({
-        success: false,
-        error: "Authorization header missing",
-      });
-    }
-
-    const token = authorizationHeader.split("Bearer ")[1];
+    // const token = authorizationHeader.split("Bearer ")[1];
     // const url = new URL(req.url || "", "http://localhost"); 
     // const token = url.searchParams.get("token");
+    // const token = req.query
 
-    console.log("token", token);
+    // console.log("token", token);
 
     if (!token) {
       return NextResponse.json({
