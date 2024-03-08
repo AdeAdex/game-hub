@@ -77,16 +77,15 @@ const DashboardPage = () => {
         const response = await axios.post(`/api/prompt/dashboard`);
         // let response = await fetch('/api/prompt/dashboard')
         // response = await response.json();
-console.log(response)
-        // setUserResponse(response.user); // Update userResponse with response.data directly
 
 
-        // if (response.success === false) {
-        //   console.log(response);
-        //   setTimeout(() => {
-        //     // router.push("/login");
-        //   }, 3000);
-        // }
+        if (response.data.success === true) {
+          setUserResponse(response.data)
+          setUserData(response.data.user)
+          setTimeout(() => {
+            // router.push("/login");
+          }, 3000);
+        }
       } catch (error:any) {
         console.error("Error fetching user data:", error.message);
       }finally {
