@@ -1,7 +1,6 @@
 // app/api/logout/route.js
 
 import { cookies } from "next/headers";
-// app/api/logout/route.js
 import { NextResponse } from "next/server";
 
 export default async function logoutHandler(req, res) {

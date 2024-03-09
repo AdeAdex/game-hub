@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "@/app/redux/authSlice";
 import Cookies from "universal-cookie";
-import localforage from "localforage";
-import CryptoJS from 'crypto-js';
+// import localforage from "localforage";
+// import CryptoJS from 'crypto-js';
 
 const cookies = new Cookies();
 
@@ -33,7 +33,7 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const SECRET_KEY = 'YOUR_SECRET_KEY';
+  // const SECRET_KEY = 'YOUR_SECRET_KEY';
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,10 +47,7 @@ function MyApp() {
     try {
       const response = await axios.post("/api/prompt/login", loginDetails);
 
-      if (response.status === 200) {
-        // const { token } = response.data;
-        // console.log("user", response.data._doc);
-        
+      if (response.status === 200) {        
         const userInfo = response.data._doc;
 
         dispatch(signInSuccess(userInfo));

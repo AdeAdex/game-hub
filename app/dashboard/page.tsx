@@ -5,12 +5,12 @@ export const dynamic = 'force-dynamic'
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 // import Cookies from "universal-cookie";
 import localforage from "localforage";
 import CryptoJS from "crypto-js";
+import Navbar from "../components/navbar/Navbar";
 
 
 interface UserData {
@@ -102,8 +102,8 @@ const DashboardPage = () => {
 
   return (
     <div>
+      <Navbar/>
       <h2>User Data</h2>
-      {/* <Link href="/">Home</Link> */}
       {userData && userResponse && userResponse.success === true && (
         <div>
           <div>

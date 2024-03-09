@@ -11,11 +11,9 @@ import Dropdown from "./links/Dropdown";
 import { useSession, signOut } from "next-auth/react";
 // import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
-// import { cookies } from "next/headers";
-import Cookies from "universal-cookie";
 
 interface AuthState {
   // userInfo: {
@@ -34,12 +32,10 @@ const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false);
   // const userInfo = useSelector((state: any) => state.auth.userInformation);
   
-  // const [userData, setUserData] = useState<UserData | null>(null);
   const [userInfo, setUserInfo] = useState<AuthState | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const cookies = new Cookies();
 
   // const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +67,6 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    // const token = cookies.get("loginToken");
 
     const fetchData = async () => {
       try {

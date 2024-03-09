@@ -5,12 +5,11 @@ import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { verifyToken } from "../../../utils/jwtUtils.js";
 import { cookies } from 'next/headers'
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 
 
   export const POST = async (req, res) => {
   try {
-    // const authorizationHeader = req.headers.get("authorization");
     const cookieStore = cookies()
     // const session =getSession({req})
     // console.log(session)
