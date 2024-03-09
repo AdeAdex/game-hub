@@ -1,3 +1,5 @@
+// app/api/prompt/login/route.js
+
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
 import { comparePassword } from "../../../utils/bcrypt";

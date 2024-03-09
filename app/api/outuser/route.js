@@ -1,9 +1,9 @@
-// app/api/logout/route.js
+// app/api/outuser/route.js
 
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export default async function logoutHandler(req, res) {
+async function logoutHandler(req, res) {
   try {
     cookies().set("loginToken", "", {
       expires: new Date(0), // Set expiration date to a past time to clear the cookie
