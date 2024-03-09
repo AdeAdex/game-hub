@@ -14,30 +14,17 @@ import { getSession } from "next-auth/react";
     const cookieStore = cookies()
     // const session =getSession({req})
     // console.log(session)
-    const token = cookieStore.get('loginToken').value
-    
-    // consol.log("here")
-    // console.log(authorizationHeader)
-    // if (!authorizationHeader) {
-    //   return NextResponse.json({
-    //     success: false,
-    //     error: "Authorization header missing",
-    //   });
-    // }
+    const tokenDetails = cookieStore.get('loginToken')
 
-    // const token = authorizationHeader.split("Bearer ")[1];
-    // const url = new URL(req.url || "", "http://localhost"); 
-    // const token = url.searchParams.get("token");
-    // const token = req.query
+    if (!tokenDetails) {
+      console.log("Invalid token format")
+      return NextResponse.json({
+        success: false,
+        error: "Invalid token format",
+      });
+    }
 
-    // console.log("token", token);
-
-    // if (!token) {
-    //   return NextResponse.json({
-    //     success: false,
-    //     error: "Invalid token format",
-    //   });
-    // }
+    const token = tokenDetails.value
 
     const decodedToken = await verifyToken(token);
 

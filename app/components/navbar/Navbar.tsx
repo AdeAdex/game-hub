@@ -14,7 +14,8 @@ import { FaAngleDown } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
-// import Cookies from "universal-cookie";
+// import { cookies } from "next/headers";
+import Cookies from "universal-cookie";
 
 interface AuthState {
   // userInfo: {
@@ -38,6 +39,8 @@ const Navbar: React.FC = () => {
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const cookies = new Cookies();
+
   // const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdown = () => {
@@ -46,22 +49,26 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     await signOut();
+    try {
+      // Call the logout API route
+      const response = await fetch('/api/logout', {
+        method: 'POST', // Send a POST request to the logout endpoint
+      });
+  
+      if (response.ok) {
+        // Clear local session or perform any other necessary actions
+        console.log('Logout successful');
+        // Redirect the user to the login page or another page if needed
+      } else {
+        console.error('Logout failed:', response.statusText);
+        // Handle logout failure
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+      // Handle network errors or other exceptions
+    }
+        
   };
-
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-  //       setDropdown(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("click", handleClickOutside);
-
-  //   return () => {
-  //     window.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, []);
 
   useEffect(() => {
     // const token = cookies.get("loginToken");

@@ -33,7 +33,8 @@ export async function middleware(request) {
 
       if (decodedToken.exp && decodedToken.exp < currentTimestamp) {
         console.log("Token has expired, redirect to login");
-        return Response.redirect(new URL('/login', request.url));
+        request.cookies.delete('loginToken');
+        // return Response.redirect(new URL('/login', request.url));
       }
 
       // Token is valid and not expired, allow access to dashboard
