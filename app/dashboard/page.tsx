@@ -59,25 +59,9 @@ const DashboardPage = () => {
 
     const fetchData = async () => {
       try {
-        // if (!token) {
-        //   console.error("Token is missing or invalid");
-        //   throw new Error("Token is missing or invalid");
-        //   // router.push("/login");
-        // }
         
-
-        // const response = await axios.get("/api/prompt/dashboard", {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //     "Content-Type": "application/json",
-        //     Accept: "application/json",
-        //   },
-        // });
-
         const response = await axios.post(`/api/prompt/dashboard`);
-        // let response = await fetch('/api/prompt/dashboard')
-        // response = await response.json();
-
+        
 
         if (response.data.success === true) {
           setUserResponse(response.data)
