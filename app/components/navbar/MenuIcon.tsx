@@ -17,7 +17,7 @@ const MenuIcon: React.FC<MenuIconProps> = ({
   return (
     <>
       <div
-        className={`md:hidden my-auto ${isMobileMenuOpen ? "menu-open" : ""}`}
+        className={`md:hidden my-auto cursor-pointer ${isMobileMenuOpen ? "menu-open" : ""}`}
         onClick={toggleMobileMenu}
       >
         {isMobileMenuOpen ? (
