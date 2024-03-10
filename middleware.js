@@ -1,35 +1,26 @@
 
-// export function middleware(request) {
-//   const token = request.cookies.get('loginToken')?.value
- 
-//   if (token && !request.nextUrl.pathname.startsWith('/dashboard')) {
-//     return Response.redirect(new URL('/dashboard', request.url))
-//   }
- 
-//   if (!token && !request.nextUrl.pathname.startsWith('/login')) {
-//     return Response.redirect(new URL('/login', request.url))
-//   }
-// }
- 
-// export const config = {
-//   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-// }
-
-import jwt from "jsonwebtoken"; // Import JWT library for decoding tokens
-import { useSession } from "next-auth/react";
-
+import jwt from "jsonwebtoken";
+import { getSession } from "next-auth/react"
 
 export async function middleware(request) {
   const token = request.cookies.get('loginToken')?.value;
-  const { data: session } = useSession();
+  const session = await getSession({ req: request });
 
+  console.log("session", session);
+
+  if (session) {
+    console.log("session", session);
+    
+  } else {
+    console.log("no session at all bro");
+  }
  
   // Exclude the homepage ("/") from token validation
   if (request.nextUrl.pathname === '/') {
     return;
   }
  
-  if ((token || session?.user) && !request.nextUrl.pathname.startsWith('/dashboard')) {
+  if ((token/*  || session?.user */) && !request.nextUrl.pathname.startsWith('/dashboard')) {
     // Decode the token to check if it's expired
     try {
       const decodedToken = jwt.decode(token);
@@ -50,7 +41,7 @@ export async function middleware(request) {
     }
   }
  
-  if ((!token || !session?.user) && !request.nextUrl.pathname.startsWith('/login')) {
+  if ((!token/*  || !session?.user */) && !request.nextUrl.pathname.startsWith('/login')) {
     // No token found, redirect to login
     return Response.redirect(new URL('/login', request.url));
   }
@@ -61,3 +52,23 @@ export async function middleware(request) {
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
 }
+
+
+
+  
+
+// export function middleware(request) {
+//   const token = request.cookies.get('loginToken')?.value
+ 
+//   if (token && !request.nextUrl.pathname.startsWith('/dashboard')) {
+//     return Response.redirect(new URL('/dashboard', request.url))
+//   }
+ 
+//   if (!token && !request.nextUrl.pathname.startsWith('/login')) {
+//     return Response.redirect(new URL('/login', request.url))
+//   }
+// }
+ 
+// export const config = {
+//   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+// }

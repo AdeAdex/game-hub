@@ -3,11 +3,11 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
-// import CredentialsProvider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../models/user";
 import { connectToDb } from "../../../utils/database";
-// import { comparePassword } from "../../../utils/bcrypt";
-// import { generateToken } from "../../../utils/jwtUtils";
+import { comparePassword } from "../../../utils/bcrypt";
+import { generateToken } from "../../../utils/jwtUtils";
 
 
 const handler = NextAuth({
@@ -20,6 +20,51 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
+
+    // CredentialsProvider({
+    //   async authorize(credentials) {
+    //     const { email, password } = credentials;
+    
+    //     try {
+    //       await connectToDb();
+    //       // Find user by email or username
+    //       const user = await User.findOne({
+    //         $or: [{ email }, { userName: email }],
+    //       });
+    
+    //       if (!user) {
+    //         throw new Error("Invalid email or password");
+    //       }
+    
+    //       // Compare hashed password
+    //       const isValidPassword = await comparePassword(password, user.password);
+    //       if (!isValidPassword) {
+    //         throw new Error("Invalid email or password");
+    //       }
+    
+    //       // Generate JWT token
+    //       const token = generateToken({ email: user.email });
+    
+    //       // Set loginToken cookie
+    //       cookies.set("loginToken", token, {
+    //         httpOnly: true,
+    //         maxAge: 60 * 60 * 24,
+    //         path: "/",
+    //         sameSite: "strict",
+    //       });
+    
+    //       // Clear password field before returning user data
+    //       user.password = undefined;
+    
+    //       // Return user data along with token
+    //       return { ...user.toJSON(), token, message: "Login successful" };
+    //     } catch (error) {
+    //       console.error("Error during login:", error);
+    //       throw new Error("Error during login");
+    //     }
+    //   },
+    // }),
+    
 
   ],
   callbacks: {
