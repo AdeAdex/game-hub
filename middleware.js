@@ -1,19 +1,19 @@
 
 import jwt from "jsonwebtoken";
-import { getSession } from "next-auth/react"
+// import { getSession } from "next-auth/react"
 
 export async function middleware(request) {
   const token = request.cookies.get('loginToken')?.value;
-  const session = await getSession({ req: request });
+  // const session = await getSession({ req: request });
 
-  console.log("session", session);
+  // console.log("session", session);
 
-  if (session) {
-    console.log("session", session);
+  // if (session) {
+  //   console.log("session", session);
     
-  } else {
-    console.log("no session at all bro");
-  }
+  // } else {
+  //   console.log("no session at all bro");
+  // }
  
   // Exclude the homepage ("/") from token validation
   if (request.nextUrl.pathname === '/') {
