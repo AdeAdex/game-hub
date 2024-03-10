@@ -59,8 +59,7 @@ const Navbar: React.FC = () => {
           setUserInfo(null); // Clear user info
           setUserResponse(null); // Clear user response
           setLoading(true);
-          router.push("login");
-          // Redirect the user to the login page or another page if needed
+          router.push("login"); // Redirect the user to the login page or another page if needed
         } else {
           console.error("Logout failed:", response.statusText);
           // Handle logout failure
