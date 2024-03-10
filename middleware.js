@@ -16,7 +16,7 @@ export async function middleware(request) {
   }
  
   // Exclude the homepage ("/") from token validation
-  if (request.nextUrl.pathname === '/') {
+  if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/register' ) {
     return;
   }
  
