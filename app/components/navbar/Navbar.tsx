@@ -44,7 +44,6 @@ const Navbar: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    // await signOut();
     try {
       if (session) {
         // Sign out from Google or GitHub
