@@ -14,9 +14,8 @@ import { FaAngleDown } from "react-icons/fa6";
 // import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
-import avatar from "../../../public/images/robot.png"
-
-
+import avatar from "../../../public/images/robot.png";
+import { useRouter } from "next/navigation";
 
 interface AuthState {
   // userInfo: {
@@ -38,26 +37,35 @@ const Navbar: React.FC = () => {
   const [userInfo, setUserInfo] = useState<AuthState | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
 
   const handleLogout = async () => {
-    
     // await signOut();
     try {
-      const response = await fetch("/api/outuser", {
-        method: "POST", // Send a POST request to the logout endpoint
-      });
-
-      if (response.ok) {
-        // Clear local session or perform any other necessary actions
-        console.log("Logout successful");
-        // Redirect the user to the login page or another page if needed
+      if (session) {
+        // Sign out from Google or GitHub
+        await signOut();
       } else {
-        console.error("Logout failed:", response.statusText);
-        // Handle logout failure
+        const response = await fetch("/api/outuser", {
+          method: "POST", // Send a POST request to the logout endpoint
+        });
+
+        if (response.ok) {
+          // Clear local session or perform any other necessary actions
+          console.log("Logout successful");
+          setUserInfo(null); // Clear user info
+          setUserResponse(null); // Clear user response
+          setLoading(true);
+          router.push("login");
+          // Redirect the user to the login page or another page if needed
+        } else {
+          console.error("Logout failed:", response.statusText);
+          // Handle logout failure
+        }
       }
     } catch (error) {
       console.error("Error logging out:", error);
@@ -109,7 +117,6 @@ const Navbar: React.FC = () => {
                   className="flex gap-3 cursor-pointer"
                   onClick={handleDropdown}
                 >
-                
                   {session?.user || userInfo?.image ? (
                     <Image
                       src={(session?.user?.image || userInfo?.image) as string}
