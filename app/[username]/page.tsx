@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { users } from "@/app/data/userData";
 import axios from "axios";
+import avatar from "../../public/images/robot.png"
+import Image from "next/image";
 
 interface User {
   _id: number;
@@ -61,14 +63,26 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
           <div className="min-h-screen py-6 flex flex-col">
             <div className="relative py-3 sm:max-w-xl sm:mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+              <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20 ">
                 <div className="max-w-md mx-auto">
                   <div className="text-center">
-                    {/* <img
-                      src={user.profilePicture}
-                      alt="Profile Picture"
-                      className="w-32 h-32 mx-auto rounded-full"
-                    /> */}
+                  {user.profilePicture ? (
+                      <Image
+                        src={user.profilePicture}
+                        alt="Profile Picture"
+                        width={128}
+                        height={128}
+                        className="mx-auto rounded-full"
+                      />
+                    ) : (
+                      <Image
+                        src={avatar}
+                        alt="Avatar"
+                        width={128}
+                        height={128}
+                        className="mx-auto rounded-full"
+                      />
+                    )}
                     <h1 className="mt-4 text-3xl font-extrabold text-gray-900">
                       {user.firstName} {""} {user.lastName}
                     </h1>
@@ -79,15 +93,13 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   <div className="mt-8">
                     <div className="flex justify-between">
                       <p className="text-lg font-semibold text-gray-700">
-                        User ID:
+                        User ID:  {user._id}
                       </p>
-                      <p className="text-lg text-gray-700">{user._id}</p>
                     </div>
                     <div className="flex justify-between">
                       <p className="text-lg font-semibold text-gray-700">
-                        Email:
+                        Email: {user.email}
                       </p>
-                      <p className="text-lg text-gray-700">{user.email}</p>
                     </div>
                     {/* Add more user details here */}
                   </div>
