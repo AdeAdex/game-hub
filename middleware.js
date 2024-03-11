@@ -18,7 +18,7 @@ export async function middleware(request) {
   if (
     request.nextUrl.pathname === "/" ||
     request.nextUrl.pathname === "/register" ||
-    request.nextUrl.pathname === "/username" ||
+    request.nextUrl.pathname === "/${username}" ||
     request.nextUrl.pathname === "/forgot-password"
   ) {
     return;
