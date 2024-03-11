@@ -132,7 +132,7 @@ function MyApp() {
               className="py-2 px-3 bg-[#F9F9F9] mt-[5px]"
               style={{ userSelect: "none" }}
             >
-              https://game-hub-adex2210.vercel.app/username
+              https://adex-game-hub.vercel.app/username
             </div>
           </div>
           <div className="w-full flex flex-col gap-[5px]">
