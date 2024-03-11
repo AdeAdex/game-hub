@@ -14,16 +14,16 @@ export async function middleware(request) {
   //   console.log("no session at all bro");
   // }
 
-  const urlSearchParams = new URLSearchParams(request.url.search);
-  const username = urlSearchParams.get("username");
+  // const urlSearchParams = new URLSearchParams(request.url.search);
+  // const username = urlSearchParams.get("username");
 
-  console.log("Username:", username);
+  // console.log("Username:", username);
 
   // Exclude the homepage ("/") from token validation
   if (
     request.nextUrl.pathname === "/" ||
     request.nextUrl.pathname === "/register" ||
-    request.nextUrl.pathname === `/username/${username}` ||
+    // request.nextUrl.pathname === `/username/${username}` ||
     request.nextUrl.pathname === "/forgot-password"
   ) {
     return;
