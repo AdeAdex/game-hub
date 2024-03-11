@@ -140,7 +140,7 @@ const Navbar: React.FC = () => {
                 </div>
                 {dropdown && (
                   <ProfileDropdown
-                    handleClick={handleLogout} /*  ref={dropdownRef} */
+                    handleClick={handleLogout} username={session?.user?.name || userInfo?.userName || ""}/*  ref={dropdownRef} */
                   />
                 )}
               </div>
