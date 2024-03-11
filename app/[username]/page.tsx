@@ -25,9 +25,11 @@ interface UserPageProps {
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
+  
 
   // const user = users.find((user: User) => user.username === username);
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,11 +40,17 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       } catch (error) {
         console.error("Error fetching user:", error);
         router.push("/not-found"); // Redirect to 404 page if user not found
+      }finally {
+        setLoading(false);
       }
     };
 
     fetchUser();
   }, [username, router]);
+
+  if (loading) {
+    return <p>Loading...</p>; // Display loading indicator or message
+  }
 
 
   return (
