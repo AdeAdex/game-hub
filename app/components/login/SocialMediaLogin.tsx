@@ -40,6 +40,22 @@ const SocialMediaLogin = () => {
     } 
   }, [session, router]);
 
+
+  const handleSignIn = async (providerId: string) => {
+    // Clear token before signing in with the provider
+    const response = await fetch("/api/outuser", {
+      method: "POST", // Send a POST request to the logout endpoint
+    });
+
+    if (response.ok) {
+      console.log("Logout successful");
+    } else {
+      console.error("Logout failed:", response.statusText);
+    }
+
+    signIn(providerId);
+  };
+
   return (
     <>
       <div className="py-[25px]">
@@ -50,7 +66,7 @@ const SocialMediaLogin = () => {
             <button
               className="flex gap-3 mt-[10px] border border-[#FF2E51] py-[5px] px-4 rounded-sm justify-center"
               type="button"
-              onClick={() => signIn(provider.id)}
+              onClick={() => handleSignIn(provider.id)}
               key={provider.name}
             >
               {provider.name == "Google" ? (

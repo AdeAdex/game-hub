@@ -50,7 +50,6 @@ function MyApp() {
     try {
 
       if (session) {
-        // If there is an active session, sign out before proceeding with login
         await signOut();
       }
 
