@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "@/app/redux/authSlice";
 import Cookies from "universal-cookie";
+import { signOut, useSession } from "next-auth/react";
+
 // import localforage from "localforage";
 // import CryptoJS from 'crypto-js';
 
@@ -33,6 +35,7 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const { data: session } = useSession();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -45,6 +48,12 @@ function MyApp() {
     };
 
     try {
+
+      if (session) {
+        // If there is an active session, sign out before proceeding with login
+        await signOut();
+      }
+
       const response = await axios.post("/api/prompt/login", loginDetails);
 
       if (response.status === 200) {        
