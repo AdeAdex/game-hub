@@ -1,23 +1,22 @@
 import jwt from "jsonwebtoken";
-// import { getSession } from "next-auth/react"
+import { getSession } from "next-auth/react"
 
 export async function middleware(request) {
   const token = request.cookies.get("loginToken")?.value;
-  // const session = await getSession({ req: request });
+  const session = await getSession({ req: request });
 
-  // console.log("session", session);
+  console.log("session", session);
 
-  // if (session) {
-  //   console.log("session", session);
+  if (session) {
+    console.log("session", session);
 
-  // } else {
-  //   console.log("no session at all bro");
-  // }
+  } else {
+    console.log("no session at all bro");
+  }
 
-  // const urlSearchParams = new URLSearchParams(request.url.search);
-  // const username = urlSearchParams.get("username");
+  const urlSearchParams = new URLSearchParams(request.url.search);
+  const username = urlSearchParams.get("username");
 
-  // console.log("Username:", username);
 
   // Exclude the homepage ("/") from token validation
   if (
@@ -66,18 +65,5 @@ export const config = {
   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };
 
-// export function middleware(request) {
-//   const token = request.cookies.get('loginToken')?.value
 
-//   if (token && !request.nextUrl.pathname.startsWith('/dashboard')) {
-//     return Response.redirect(new URL('/dashboard', request.url))
-//   }
 
-//   if (!token && !request.nextUrl.pathname.startsWith('/login')) {
-//     return Response.redirect(new URL('/login', request.url))
-//   }
-// }
-
-// export const config = {
-//   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-// }

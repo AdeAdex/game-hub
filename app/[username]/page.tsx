@@ -7,6 +7,7 @@ import { users } from "@/app/data/userData";
 import axios from "axios";
 import avatar from "../../public/images/robot.png"
 import Image from "next/image";
+import Navbar from "../components/navbar/Navbar";
 
 interface User {
   _id: number;
@@ -57,6 +58,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
+      <Navbar/>
       {user ? (
         <div className="max-w-7xl mx-auto px-4 py-8 flex gap-[50px]">
           {/* Sidebar */}
