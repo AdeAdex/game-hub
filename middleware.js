@@ -1,18 +1,19 @@
 import jwt from "jsonwebtoken";
-import { getSession } from "next-auth/react"
+// import { getSession } from "next-auth/react"
 
 export async function middleware(request) {
   const token = request.cookies.get("loginToken")?.value;
-  const session = await getSession({ req: request });
+  // const session = await getSession({ req: request });
+  // const session = request.cookies.get('next-auth.session-token')
 
-  console.log("session", session);
 
-  if (session) {
-    console.log("session", session);
+  // if (session?.value) {
+  //   console.log("session", session?.value);
 
-  } else {
-    console.log("no session at all bro");
-  }
+  // } else {
+  //   console.log("no session at all bro");
+  // }
+
 
   const urlSearchParams = new URLSearchParams(request.url.search);
   const username = urlSearchParams.get("username");
@@ -29,7 +30,7 @@ export async function middleware(request) {
   }
 
   if (
-    token /*  || session?.user */ &&
+    (token /* || session?.value */ ) &&
     !request.nextUrl.pathname.startsWith("/dashboard")
   ) {
     // Decode the token to check if it's expired
@@ -53,7 +54,7 @@ export async function middleware(request) {
   }
 
   if (
-    !token /*  || !session?.user */ &&
+    (!token/*  || !session?.value */) &&
     !request.nextUrl.pathname.startsWith("/login")
   ) {
     // No token found, redirect to login

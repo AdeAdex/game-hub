@@ -14,8 +14,9 @@ import { cookies } from 'next/headers'
     // const session =getSession({req})
     // console.log(session)
     const tokenDetails = cookieStore.get('loginToken')
+    const session = req.cookies.get('next-auth.session-token')
 
-    if (!tokenDetails) {
+    if (!tokenDetails/*  || !session?.value */) {
       console.log("Invalid token format")
       return NextResponse.json({
         success: false,

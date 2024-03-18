@@ -20,50 +20,6 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-
-    // CredentialsProvider({
-    //   async authorize(credentials) {
-    //     const { email, password } = credentials;
-    
-    //     try {
-    //       await connectToDb();
-    //       // Find user by email or username
-    //       const user = await User.findOne({
-    //         $or: [{ email }, { userName: email }],
-    //       });
-    
-    //       if (!user) {
-    //         throw new Error("Invalid email or password");
-    //       }
-    
-    //       // Compare hashed password
-    //       const isValidPassword = await comparePassword(password, user.password);
-    //       if (!isValidPassword) {
-    //         throw new Error("Invalid email or password");
-    //       }
-    
-    //       // Generate JWT token
-    //       const token = generateToken({ email: user.email });
-    
-    //       // Set loginToken cookie
-    //       cookies.set("loginToken", token, {
-    //         httpOnly: true,
-    //         maxAge: 60 * 60 * 24,
-    //         path: "/",
-    //         sameSite: "strict",
-    //       });
-    
-    //       // Clear password field before returning user data
-    //       user.password = undefined;
-    
-    //       // Return user data along with token
-    //       return { ...user.toJSON(), token, message: "Login successful" };
-    //     } catch (error) {
-    //       console.error("Error during login:", error);
-    //       throw new Error("Error during login");
-    //     }
-    //   },
-    // }),
     
 
   ],
@@ -117,6 +73,40 @@ const handler = NextAuth({
     },
     
   },
+
+
+
+
+
+  providers: [
+    CredentialsProvider({
+      async authorize(credentials) {
+        console.log(credentials)
+        try {
+          await connectToDb();
+          const { email, password } = credentials;
+          const user = await User.findOne({ email });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          const passwordMatch = await comparePassword(password, user.password);
+
+          if (!passwordMatch) {
+            throw new Error("Invalid email or password");
+          }
+
+          console.log(user)
+          // Generate and return token upon successful login
+          const token = generateToken({ email: user.email });
+          return { email: user.email, token };
+        } catch (error) {
+          throw new Error(error.message);
+        }
+      }
+    })
+  ],
 });
 
 export { handler as GET, handler as POST };

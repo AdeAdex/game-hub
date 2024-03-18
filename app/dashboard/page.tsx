@@ -1,15 +1,15 @@
 // app/dashboard/page.tsx
 
 "use client";
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 // import Cookies from "universal-cookie";
-import localforage from "localforage";
-import CryptoJS from "crypto-js";
+// import localforage from "localforage";
+// import CryptoJS from "crypto-js";
 import Navbar from "../components/navbar/Navbar";
 
 
