@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, getProviders, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface Provider {
   id: string;
@@ -15,43 +15,60 @@ interface Provider {
 }
 
 const SocialMediaLogin = () => {
-  const [providers, setProviders] = useState<Record<string, Provider> | null>(
-    null
-  );
+  // const [providers, setProviders] = useState<Record<string, Provider> | null>(
+  //   null
+  // );
+  const [providers, setProviders] = useState<Record<string, Provider>>({});
   const { data: session } = useSession();
   const router = useRouter();
 
-  useEffect(
-    () => {
-      const setUpProvider = async () => {
-        const response = await getProviders();
-        setProviders(response as Record<string, Provider>);
-        // console.log(response);
+  // useEffect(
+  //   () => {
+  //     const setUpProvider = async () => {
+  //       const response = await getProviders();
+  //       setProviders(response as Record<string, Provider>);
+  //       console.log(response);
         
-      };
-      setUpProvider();
-    },
-    []
-  );
+  //     };
+  //     setUpProvider();
+  //   },
+  //   []
+  // );
+
+  useEffect(() => {
+    const setUpProvider = async () => {
+      const response = await getProviders();
+      const filteredProviders = Object.values(response  || {}).filter(
+        (provider) => provider.name === "Google" || provider.name === "GitHub"
+      );
+      const providersObject = filteredProviders.reduce((acc, curr) => {
+        acc[curr.id] = curr;
+        return acc;
+      }, {} as Record<string, Provider>);
+      setProviders(providersObject);
+    };
+    setUpProvider();
+  }, []);
+  
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/dashboard");
+      redirect("/dashboard")      
     } 
   }, [session, router]);
 
 
   const handleSignIn = async (providerId: string) => {
     // Clear token before signing in with the provider
-    const response = await fetch("/api/outuser", {
-      method: "POST", // Send a POST request to the logout endpoint
-    });
+    // const response = await fetch("/api/outuser", {
+    //   method: "POST", // Send a POST request to the logout endpoint
+    // });
 
-    if (response.ok) {
-      console.log("Logout successful");
-    } else {
-      console.error("Logout failed:", response.statusText);
-    }
+    // if (response.ok) {
+    //   console.log("Logout successful");
+    // } else {
+    //   console.error("Logout failed:", response.statusText);
+    // }
 
     signIn(providerId);
   };

@@ -5,12 +5,11 @@ import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import axios from "axios";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "@/app/redux/authSlice";
 import Cookies from "universal-cookie";
-import { signOut, useSession } from "next-auth/react";
-
+import { signIn, signOut, useSession } from "next-auth/react";
 // import localforage from "localforage";
 // import CryptoJS from 'crypto-js';
 
@@ -47,53 +46,85 @@ function MyApp() {
       password,
     };
 
+    // try {
+
+    //   // if (session) {
+    //   //   await signOut();
+    //   // }
+
+    //   const response = await axios.post("/api/auth/callback/credentials", loginDetails);      
+      
+    //   console.log(response)
+
+    //   // if (response.status === 200) {        
+    //   //   const userInfo = response.data._doc;
+
+    //   //   dispatch(signInSuccess(userInfo));
+    //   //   // const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userInfo), SECRET_KEY).toString();
+    //   //   // localforage.setItem('userData', encryptedData);
+    //   //   // cookies.set("loginToken", token, { secure: true, sameSite: "strict" });
+    //   //   // document.cookie = `loginToken=${token}; Secure; HttpOnly; SameSite=Strict; Path=/`;
+    //   //   enqueueSnackbar(response.data?.message, {
+    //   //     variant: "success",
+    //   //   });
+    //   //   router.push("/dashboard");
+    //   // } else {
+    //   //   console.log(response.data);
+    //   //   enqueueSnackbar("Unexpected error occurred", {
+    //   //     variant: "error",
+    //   //   });
+    //   // }
+    // } catch (error: any) {
+    //   console.log(error)
+    //   // if (
+    //   //   error.response &&
+    //   //   (error.response.status === 404 || error.response.status === 401)
+    //   // ) {
+    //   //   const errorMessage =
+    //   //     error.response.data?.message || "Invalid email or password";
+    //   //   enqueueSnackbar(errorMessage, {
+    //   //     variant: "error",
+    //   //   });
+    //   // } else {
+    //   //   console.log(error);
+    //   //   enqueueSnackbar("Error during login", {
+    //   //     variant: "error",
+    //   //   });
+    //   // }
+    // } finally {
+    //   setSubmitting(false);
+    // }
+
+
     try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false, // Prevent automatic redirection after sign-in
+      });
 
-      if (session) {
-        await signOut();
-      }
-
-      const response = await axios.post("/api/prompt/login", loginDetails);      
-
-      if (response.status === 200) {        
-        const userInfo = response.data._doc;
-
-        dispatch(signInSuccess(userInfo));
-        // const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userInfo), SECRET_KEY).toString();
-        // localforage.setItem('userData', encryptedData);
-        // cookies.set("loginToken", token, { secure: true, sameSite: "strict" });
-        // document.cookie = `loginToken=${token}; Secure; HttpOnly; SameSite=Strict; Path=/`;
-        enqueueSnackbar(response.data?.message, {
-          variant: "success",
-        });
-        router.push("/dashboard");
+      if (result && !result.error) {
+        console.log(result);
+        enqueueSnackbar("Login Successfully", {
+                variant: "success",
+              });
+        redirect("/dashboard")
+        // router.push("/dashboard");
       } else {
-        console.log(response.data);
-        enqueueSnackbar("Unexpected error occurred", {
-          variant: "error",
-        });
+        const errorMessage = result?.error || "Error during login";
+        enqueueSnackbar(errorMessage, { variant: "error" });
       }
     } catch (error: any) {
-      console.log(error)
-      if (
-        error.response &&
-        (error.response.status === 404 || error.response.status === 401)
-      ) {
-        const errorMessage =
-          error.response.data?.message || "Invalid email or password";
-        enqueueSnackbar(errorMessage, {
-          variant: "error",
-        });
-      } else {
-        console.log(error);
-        enqueueSnackbar("Error during login", {
-          variant: "error",
-        });
-      }
+      console.error("Error during login:", error);
+      enqueueSnackbar("Error during login", { variant: "error" });
     } finally {
       setSubmitting(false);
     }
+
+
+
   };
+  
 
   return (
     <form action="" onSubmit={handleSubmit}>

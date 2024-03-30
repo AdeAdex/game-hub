@@ -18,14 +18,13 @@ import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
 
 interface AuthState {
-  // userInfo: {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
+  name: string;
   email: string;
-  userName: string;
+  userName?: string;
   image: string;
-  // };
-  // token: string;
+  profilePicture?: string;  
 }
 
 const Navbar: React.FC = () => {
@@ -46,24 +45,7 @@ const Navbar: React.FC = () => {
   const handleLogout = async () => {
     try {
       if (session) {
-        // Sign out from Google or GitHub
         await signOut();
-      } else {
-        const response = await fetch("/api/outuser", {
-          method: "POST", // Send a POST request to the logout endpoint
-        });
-
-        if (response.ok) {
-          // Clear local session or perform any other necessary actions
-          console.log("Logout successful");
-          setUserInfo(null); // Clear user info
-          setUserResponse(null); // Clear user response
-          setLoading(true);
-          router.push("login"); // Redirect the user to the login page or another page if needed
-        } else {
-          console.error("Logout failed:", response.statusText);
-          // Handle logout failure
-        }
       }
     } catch (error) {
       console.error("Error logging out:", error);
@@ -71,24 +53,27 @@ const Navbar: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(`/api/prompt/dashboard`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post(`/api/prompt/dashboard`);
 
-        if (response.data.success === true) {
-          setUserResponse(response.data);
-          setUserInfo(response.data.user);
-        }
-      } catch (error: any) {
-        console.error("Error fetching user data:", error.message);
-      } finally {
-        setLoading(false); // Set loading to false regardless of success or error
-      }
-    };
+  //       if (response.data.success === true) {
+  //         setUserResponse(response.data);
+  //         // setUserInfo(response.data.user);
+  //       }
+  //     } catch (error: any) {
+  //       console.error("Error fetching user data:", error.message);
+  //     } finally {
+  //       setLoading(false); // Set loading to false regardless of success or error
+  //     }
+  //   };
 
-    fetchData();
-  }, [session]);
+  //   fetchData();
+    
+  // }, [session]);
+
+  
 
   return (
     <main>
@@ -109,15 +94,15 @@ const Navbar: React.FC = () => {
         <SearchBox />
         <div className="flex gap-8">
           <div className="my-auto flex">
-            {session?.user || userInfo?.email ? (
+            {session?.user ? (
               <div className="flex flex-col relative">
                 <div
                   className="flex gap-3 cursor-pointer"
                   onClick={handleDropdown}
                 >
-                  {session?.user || userInfo?.image ? (
+                  {session?.user.image || (session?.user as AuthState)?.profilePicture ? (
                     <Image
-                      src={(session?.user?.image || userInfo?.image) as string}
+                      src={(session?.user.image || (session?.user as AuthState)?.profilePicture) as string}
                       alt="profile"
                       width={32}
                       height={32}
@@ -133,14 +118,15 @@ const Navbar: React.FC = () => {
                     />
                   )}
 
+
                   <span className="my-auto text-[14px] font-bold">
-                    {session?.user?.name || `${userInfo?.userName}`}
+                    {(session?.user?.name || (session?.user as AuthState)?.userName) || ""}
                   </span>
                   <FaAngleDown size={18} className="my-auto" />
                 </div>
                 {dropdown && (
                   <ProfileDropdown
-                    handleClick={handleLogout} username={session?.user?.name || userInfo?.userName || ""}/*  ref={dropdownRef} */
+                    handleClick={handleLogout} username={session?.user?.name || ""}/*  ref={dropdownRef} */
                   />
                 )}
               </div>
@@ -149,7 +135,7 @@ const Navbar: React.FC = () => {
             )}
           </div>
           <div className="my-auto hidden md:flex">
-            {session?.user || userInfo?.email ? (
+            {session?.user ? (
               <div></div>
             ) : (
               <AuthButton title="register" to="/register" />

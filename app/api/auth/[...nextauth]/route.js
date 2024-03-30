@@ -9,7 +9,6 @@ import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
 
-
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -20,71 +19,13 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-    
-
-  ],
-  callbacks: {
-    async session({ session }) {
-      const sessionUser = await User.findOne({
-        email: session.user.email,
-      });
-      session.user.id = sessionUser._id.toString();
-
-      return session;
-    },
-
-    async signIn({ profile }) {
-      try {
-        await connectToDb();
-        const userExists = await User.findOne({ email: profile.email });
-    
-        if (!userExists) {    
-          const nameParts = profile.name.split(" ");
-          const firstName = nameParts.slice(1).join(" ");
-          const lastName = nameParts[0];
-    
-          let image;
-          let userNames;
-          if (profile.avatar_url) {
-            image = profile.avatar_url;
-            userNames = profile.login;
-          } else {
-            image = profile.picture;
-            userNames = profile.email;
-          }
-
-          const userObject = {
-            email: profile.email,
-            firstName: firstName,
-            lastName: lastName,
-            userName: userNames,
-            profilePicture: image // Include profilePicture field
-          };
-    
-          // Use Mongoose's 'strict: false' option to allow dynamic fields
-          const user = new User(userObject);
-          await user.save();
-        }
-        return true;
-      } catch (error) {
-        console.error("Error occurred during signIn:", error);
-        return false;
-      }
-    },
-    
-  },
-
-
-
-
-
-  providers: [
     CredentialsProvider({
+      credentials: {},
       async authorize(credentials) {
-        console.log(credentials)
         try {
           await connectToDb();
           const { email, password } = credentials;
+          console.log(email);
           const user = await User.findOne({ email });
 
           if (!user) {
@@ -97,16 +38,91 @@ const handler = NextAuth({
             throw new Error("Invalid email or password");
           }
 
-          console.log(user)
-          // Generate and return token upon successful login
+          // Include all user information you need in the returned object
           const token = generateToken({ email: user.email });
-          return { email: user.email, token };
+          return { email: user.email, token, ...user.toObject() };
         } catch (error) {
           throw new Error(error.message);
         }
       }
     })
   ],
+  session: {
+    jwt: true,
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+  pages: {
+    signIn: "/",
+  },
+  callbacks: {
+    async session({ session }) {
+      try {
+        await connectToDb();
+        const sessionUser = await User.findOne({ email: session.user.email });
+
+        if (sessionUser) {
+          session.user.id = sessionUser._id.toString();
+          session.user.firstName = sessionUser.firstName;
+          session.user.lastName = sessionUser.lastName;
+          session.user.userName = sessionUser.userName;
+          session.user.profilePicture = sessionUser.profilePicture;
+        }
+
+        return session;
+      } catch (error) {
+        console.error("Error retrieving user details:", error);
+        return session;
+      }
+    },
+    async signIn({ profile, credentials }) {
+      try {
+        await connectToDb();
+
+        if (credentials) {
+          const user = await User.findOne({ email: credentials.email });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          const passwordMatch = await comparePassword(credentials.password, user.password);
+
+          if (!passwordMatch) {
+            throw new Error("Invalid email or password");
+          }
+
+          return true;
+        } else if (profile) {
+          const userExists = await User.findOne({ email: profile.email });
+
+          if (!userExists) {
+            const nameParts = profile.name.split(" ");
+            const firstName = nameParts.slice(1).join(" ");
+            const lastName = nameParts[0];
+            const profilePicture = profile.avatar_url || profile.picture;
+            const userName = profile.login || profile.email;
+
+            const newUser = new User({
+              email: profile.email,
+              firstName,
+              lastName,
+              userName: userName,
+              profilePicture: profilePicture,
+            });
+
+            await newUser.save();
+          }
+
+          return true;
+        }
+      } catch (error) {
+        console.error("Error occurred during signIn:", error);
+        return false;
+      }
+    },
+  }
 });
 
 export { handler as GET, handler as POST };
