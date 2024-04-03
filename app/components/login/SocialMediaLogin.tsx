@@ -53,6 +53,7 @@ const SocialMediaLogin = () => {
 
   useEffect(() => {
     if (session?.user) {
+      console.log("socialMedia session: ",session?.user)
       redirect("/dashboard")      
     } 
   }, [session, router]);

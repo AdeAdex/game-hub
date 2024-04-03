@@ -1,12 +1,12 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { signIn, signOut, useSession } from "next-auth/react";
+// import { useDispatch } from "react-redux";
 // import Cookies from "universal-cookie";
 // import axios from "axios";
 // import { signInSuccess } from "@/app/redux/authSlice";
@@ -32,10 +32,20 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  const { data: session } = useSession();
   // const router = useRouter();
   // const dispatch = useDispatch();
-  // const { data: session } = useSession();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
+
+
+  
+  useEffect(() => {
+    if (session?.user) {
+      console.log("form session", session)
+      redirect("/dashboard")      
+    } 
+  }, [session]);
+
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -104,18 +114,18 @@ function MyApp() {
       });
 
       if (result && !result.error) {
-        console.log(result);
+        console.log(session?.user)
         enqueueSnackbar("Login Successfully", {
                 variant: "success",
               });
-        redirect("/dashboard")
+        // redirect("/dashboard")
         // router.push("/dashboard");
       } else {
         const errorMessage = result?.error || "Error during login";
         enqueueSnackbar(errorMessage, { variant: "error" });
       }
     } catch (error: any) {
-      console.error("Error during login:", error);
+      console.error("Error during login:", error.message);
       enqueueSnackbar("Error during login", { variant: "error" });
     } finally {
       setSubmitting(false);

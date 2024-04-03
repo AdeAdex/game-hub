@@ -8,6 +8,8 @@ import User from "../../../models/user";
 import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
+import { cookies } from "next/headers";
+
 
 const handler = NextAuth({
   providers: [
@@ -40,12 +42,22 @@ const handler = NextAuth({
 
           // Include all user information you need in the returned object
           const token = generateToken({ email: user.email });
+          // Set token as a cookie
+          
+          cookies().set("authToken", token, {
+            httpOnly: true, // Ensures the cookie is not accessible by client-side JavaScript
+            maxAge: 60 * 60 * 24, // Expires after 24 hours (adjust as needed)
+            path: "/", // Cookie is accessible from all paths on the domain
+            sameSite: 'strict',
+            // Add other options if needed (e.g., secure: true if using HTTPS)
+          });
+
           return { email: user.email, token, ...user.toObject() };
         } catch (error) {
           throw new Error(error.message);
         }
-      }
-    })
+      },
+    }),
   ],
   session: {
     jwt: true,
@@ -81,13 +93,18 @@ const handler = NextAuth({
         await connectToDb();
 
         if (credentials) {
+          // Credentials provider
+
           const user = await User.findOne({ email: credentials.email });
 
           if (!user) {
             throw new Error("User not found");
           }
 
-          const passwordMatch = await comparePassword(credentials.password, user.password);
+          const passwordMatch = await comparePassword(
+            credentials.password,
+            user.password
+          );
 
           if (!passwordMatch) {
             throw new Error("Invalid email or password");
@@ -95,6 +112,8 @@ const handler = NextAuth({
 
           return true;
         } else if (profile) {
+          // Google or Github provider
+
           const userExists = await User.findOne({ email: profile.email });
 
           if (!userExists) {
@@ -122,7 +141,7 @@ const handler = NextAuth({
         return false;
       }
     },
-  }
+  },
 });
 
 export { handler as GET, handler as POST };

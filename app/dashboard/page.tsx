@@ -62,6 +62,7 @@ const DashboardPage = () => {
         
         const response = await axios.post(`/api/prompt/dashboard`);
         
+        console.log(response)
 
         if (response.data.success === true) {
           setUserResponse(response.data)
