@@ -11,11 +11,11 @@ import Dropdown from "./links/Dropdown";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
-// import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
+// import { useSelector } from "react-redux";
 
 interface AuthState {
   firstName?: string;

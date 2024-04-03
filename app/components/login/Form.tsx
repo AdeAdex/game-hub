@@ -3,17 +3,17 @@
 import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import axios from "axios";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { redirect, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { signInSuccess } from "@/app/redux/authSlice";
-import Cookies from "universal-cookie";
 import { signIn, signOut, useSession } from "next-auth/react";
+// import Cookies from "universal-cookie";
+// import axios from "axios";
+// import { signInSuccess } from "@/app/redux/authSlice";
 // import localforage from "localforage";
 // import CryptoJS from 'crypto-js';
 
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
 const Form = () => {
   return (
@@ -32,19 +32,19 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const { data: session } = useSession();
+  // const router = useRouter();
+  // const dispatch = useDispatch();
+  // const { data: session } = useSession();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
 
-    const loginDetails = {
-      email,
-      password,
-    };
+    // const loginDetails = {
+    //   email,
+    //   password,
+    // };
 
     // try {
 
@@ -192,3 +192,5 @@ function MyApp() {
 }
 
 export default Form;
+
+
