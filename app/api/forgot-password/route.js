@@ -28,7 +28,10 @@ export const POST = async (req, res) => {
 
 
     // Generate reset password link here, assuming you have a route for resetting password
-    const resetLink = "https://example.com/reset-password"; // Replace with your actual reset password link
+    const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`; // Replace with your actual reset password link
+
+
+//     const resetLink = `${process.env.BASE_URL}/reset-password?token=${resetToken}`; // Assuming you have BASE_URL set in your environment variables
 
     // Send reset password email
     await sendResetPasswordEmail(email, resetLink);

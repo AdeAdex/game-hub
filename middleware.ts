@@ -1,37 +1,6 @@
 
 // middleware.js
 
-// import { NextResponse } from 'next/server';
-// import type { NextRequest } from 'next/server';
-
-// export function middleware(request: NextRequest) {
-//   const token = request.cookies.get('authToken')?.value;
-
-//   if (!token && request.nextUrl.pathname !== '/login') {
-//     // If token is not present and user tries to access any page other than login, redirect to login
-//     return NextResponse.redirect(new URL('/login', request.url));
-//   }
-
-//   if (token && request.nextUrl.pathname === '/login') {
-//     // If token is present and user tries to access login, redirect to dashboard
-//     return NextResponse.redirect(new URL('/dashboard', request.url));
-//   }
-
-//   if (!token && request.nextUrl.pathname === '/dashboard') {
-//     // If token is not present and user tries to access dashboard, redirect to login
-//     return NextResponse.redirect(new URL('/login', request.url));
-//   }
-
-//   // If no redirection conditions are met, allow the request to continue
-//   return NextResponse.next();
-// }
-
-// export const config = {
-//   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
-// };
-
-
-
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
@@ -40,7 +9,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('authToken')?.value;
 
   // List of routes accessible to users without authentication
-  const publicRoutes = ['/', '/register', '/forgot-password'];
+  const publicRoutes = ['/', '/register', '/forgot-password', '/reset-password'];
 
   // List of routes accessible to authenticated users
   const privateRoutes = ['/', '/[username]'];
