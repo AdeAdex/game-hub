@@ -60,10 +60,10 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="w-100 h-screen flex flex-col md:flex-row w-full">
+      <main className="w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative">
         {/* Side Bare */}
         <SideBar links={links} links2={links2} />
-        <section className="mt-1 w-full md:w-[83%] bg-[#F4F4F4]">
+        <section className="mt-1 w-full md:w-[83%] bg-[#F4F4F4] md:ml-[16.6%]">
           <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] bg-white py-[30px] px-[30px]">
             {cards}
             <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">

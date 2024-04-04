@@ -9,7 +9,7 @@
   transform-origin: left;
   opacity: 0;
   position: absolute;
-  top: 68px;
+  top: 62px;
   left: 0;
   width: 70%;
   transition: transform 0.3s, opacity 0.3s;

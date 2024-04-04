@@ -19,7 +19,7 @@ const Dropdown: React.FC<SideBarProps> = ({
   return (
     <>
       <section
-        className={`md:hidden bg-[#F4F4F4] w-full px-[15px] pt-[15px] overflow-y-auto nav-list  ${
+        className={`md:hidden bg-[#F4F4F4] w-full px-[15px] pt-[15px] pb-[80px] overflow-y-auto h-screen nav-list relative ${
           isMobileMenuOpen ? "open" : ""
         } `}
       >
