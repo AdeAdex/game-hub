@@ -1,4 +1,6 @@
 // pages/reset-password.js
+'use client'
+
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/router";
 // import { resetPassword } from "../../api/forgot-password/route"; // Your API function to reset password
