@@ -10,7 +10,7 @@ const forgotPasswordPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior
-    setSubmitting(true)
+    setSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
@@ -29,7 +29,6 @@ const forgotPasswordPage = () => {
       const responseData = await response.json();
       // Handle response data as needed
       console.log(responseData);
-      
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -50,10 +49,7 @@ const forgotPasswordPage = () => {
             link to reset your password.
           </small>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          className="text-[13px] text-[#434343]"
-        >
+        <form onSubmit={handleSubmit} className="text-[13px] text-[#434343]">
           <div className="w-full flex flex-col gap-[5px]">
             <label className="w-full font-bold text-[#434343]" htmlFor="email">
               Email:
