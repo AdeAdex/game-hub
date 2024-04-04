@@ -20,6 +20,8 @@ export const POST = async (req, res) => {
     // Generate reset password token using JWT
     const resetTokenPayload = { email: user.email };
     const resetToken = generateToken(resetTokenPayload);
+
+    console.log(resetToken)
     
     // Store reset token in the database, along with user's email and expiration time
     user.resetPasswordToken = resetToken;

@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const gamehubLogo =
-  "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1696412102/g6rc63rwcygeqzbavdsj.png";
+  "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1694532366/ade_ljooff.png";
 
 export const sendWelcomeEmail = async (email, firstName) => {
   const mailOptions = {
