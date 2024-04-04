@@ -5,26 +5,27 @@
 
 
 import { useState, FormEvent } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 // import { resetPassword } from "../../api/forgot-password/route"; // Your API function to reset password
 
 export default function ResetPassword() {
   const router = useRouter();
-  const { token } = router.query;
+//   const { token } = router.query;
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      if (typeof token === "string") {
-        // await resetPassword(token, password);
-        setSuccess(true);
-      }
-    } catch (error: any) {
-      setError(error.message);
-    }
+//     try {
+//       if (typeof token === "string") {
+//         // await resetPassword(token, password);
+//         setSuccess(true);
+//       }
+//     } catch (error: any) {
+//       setError(error.message);
+//     }
   };
 
   if (success) {

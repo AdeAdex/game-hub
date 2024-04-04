@@ -24,8 +24,8 @@ export function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL('/login', request.url));
   // }
 
-  // If the user is not authenticated and the route is not public and not redirected to reset-password, redirect to login
-  if (!token && request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/reset-password') {
+   // If the user is not authenticated and the route is not public and not redirected to login or reset-password, redirect to login
+   if (!token && request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/reset-password') {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
