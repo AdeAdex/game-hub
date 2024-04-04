@@ -7,7 +7,7 @@ import RegisterForm from "@/app/components/register/form/RegisterForm";
 
 const RegisterPage = () => {
   return (
-    <main className="w-full bg-[#F4F4F4]">
+    <main className="w-full bg-[#F4F4F4] pt-[50px] md:pt-[75px] relative">
       <Navbar />
       <div className="w-full lg:w-[60%] mx-auto mt-[1px] md:mt-6 bg-white rounded-sm border-2 border-gray-300">
         <h3 className="py-[30px] border-b border-gray-300 px-[10px] md:px-[30px] font-bold text-[#434343] md:text-[20px] ">

@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
 
   return (
     <main>
-      <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white fixed z-50">
+      <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white fixed z-50 top-0">
         <div className="flex gap-5">
           <MenuIcon
             isMobileMenuOpen={isMobileMenuOpen}
