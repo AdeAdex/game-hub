@@ -5,7 +5,7 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const forgotPasswordPage = () => {
+const ForgotPasswordPage = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,4 +93,4 @@ const forgotPasswordPage = () => {
   );
 };
 
-export default forgotPasswordPage;
+export default ForgotPasswordPage;
