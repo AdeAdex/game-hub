@@ -24,7 +24,7 @@ interface AuthState {
   email: string;
   userName?: string;
   image: string;
-  profilePicture?: string;  
+  profilePicture?: string;
 }
 
 const Navbar: React.FC = () => {
@@ -45,7 +45,12 @@ const Navbar: React.FC = () => {
   const handleLogout = async () => {
     try {
       if (session) {
-        await signOut();
+        const response = await axios.post(`/api/outuser`);
+
+        if (response.status === 200) {
+          console.log(response.data.message);
+          await signOut();
+        }
       }
     } catch (error) {
       console.error("Error logging out:", error);
@@ -53,7 +58,7 @@ const Navbar: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
+  useEffect(() => {
   //   const fetchData = async () => {
   //     try {
   //       const response = await axios.post(`/api/prompt/dashboard`);
@@ -70,10 +75,8 @@ const Navbar: React.FC = () => {
   //   };
 
   //   fetchData();
-    
-  // }, [session]);
 
-  
+  }, [session]);
 
   return (
     <main>
@@ -100,9 +103,14 @@ const Navbar: React.FC = () => {
                   className="flex gap-3 cursor-pointer"
                   onClick={handleDropdown}
                 >
-                  {session?.user.image || (session?.user as AuthState)?.profilePicture ? (
+                  {session?.user.image ||
+                  (session?.user as AuthState)?.profilePicture ? (
                     <Image
-                      src={(session?.user.image || (session?.user as AuthState)?.profilePicture) as string}
+                      src={
+                        (session?.user.image ||
+                          (session?.user as AuthState)
+                            ?.profilePicture) as string
+                      }
                       alt="profile"
                       width={32}
                       height={32}
@@ -118,15 +126,19 @@ const Navbar: React.FC = () => {
                     />
                   )}
 
-
                   <span className="my-auto text-[14px] font-bold">
-                    {(session?.user?.name || (session?.user as AuthState)?.userName) || ""}
+                    {session?.user?.name ||
+                      (session?.user as AuthState)?.userName ||
+                      ""}
                   </span>
                   <FaAngleDown size={18} className="my-auto" />
                 </div>
                 {dropdown && (
                   <ProfileDropdown
-                    handleClick={handleLogout} username={session?.user?.name || ""}/*  ref={dropdownRef} */
+                    handleClick={handleLogout}
+                    username={
+                      session?.user?.name || ""
+                    } /*  ref={dropdownRef} */
                   />
                 )}
               </div>

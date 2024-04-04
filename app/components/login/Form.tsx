@@ -41,7 +41,7 @@ function MyApp() {
   
   useEffect(() => {
     if (session?.user) {
-      console.log("form session", session)
+      // console.log("form session", session)
       redirect("/dashboard")      
     } 
   }, [session]);

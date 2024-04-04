@@ -10,7 +10,6 @@ const expiresIn = process.env.JWT_DURATION
 export const generateToken = (payload) => {
   try {
     const token = jwt.sign(payload, secretKey, { expiresIn });
-    console.log("generated token :", token)
     return token;
   } catch (error) {
     console.error("Error generating token:", error);
@@ -21,7 +20,6 @@ export const generateToken = (payload) => {
 export const verifyToken = (token) => {
   try {
     const decodedToken = jwt.verify(token, secretKey);
-    console.log("jwt token", decodedToken)
     return decodedToken;
   } catch (error) {
     console.log("jwt error message", error.message)

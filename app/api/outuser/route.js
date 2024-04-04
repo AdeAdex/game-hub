@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 async function logoutHandler(req, res) {
   try {
-    cookies().set("loginToken", "", {
+    cookies().set("authToken", "", {
       expires: new Date(0), // Set expiration date to a past time to clear the cookie
       path: "/", // Specify the path of the cookie
       sameSite: "strict", // Specify the SameSite attribute of the cookie
