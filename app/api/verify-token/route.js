@@ -23,18 +23,6 @@ export const POST = async (req, res) => {
   
       // Verify the token
       
-      // Connect to the database
-      await connectToDb();
-      
-      // Find the user by the reset password token
-      const user = await User.findOne({ resetPasswordToken: token });
-      const username = user.userName
-      
-      if (!user) {
-        console.log("User not found")
-        return NextResponse.json({ error: "User not found" }, { status: 404 });
-      }
-
       const decodedToken = await verifyToken(token);
       
       if (!decodedToken) {
@@ -46,6 +34,19 @@ export const POST = async (req, res) => {
     if (decodedToken.exp < currentTime) {
       return NextResponse.json({ message: "Token has expired" }, { status: 400 });
     }
+
+    
+      // Connect to the database
+      await connectToDb();
+      
+      // Find the user by the reset password token
+      const user = await User.findOne({ resetPasswordToken: token });
+      const username = user.userName
+      
+      if (!user) {
+        console.log("User not found")
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+      }
   
       // Token is valid
       return NextResponse.json({ username: username,  message: "Password reset request successful!" }, { status: 200 });

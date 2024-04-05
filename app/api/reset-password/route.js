@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import User from "../../models/user";
 import { connectToDb } from "../../utils/database";
-import { hashPassword } from "@/app/utils/bcrypt";
+import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
 
 export const POST = async (req, res) => {
   if (req.method !== "POST") {
@@ -25,8 +25,16 @@ export const POST = async (req, res) => {
     const user = await User.findOne({ resetPasswordToken: token });
 
     if (!user) {
-      console.log("User not found")
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      console.log("Invalid token or user not found")
+      return NextResponse.json({ error: "Invalid token or user not found" }, { status: 404 });
+    }
+    
+
+    // Check if the new password is the same as the existing password
+    const isSamePassword = await comparePassword(password, user.password);
+    if (isSamePassword) {
+      console.log("New password matches existing password");
+      return NextResponse.json({ error: "New password cannot be the same as the existing password" }, { status: 400 });
     }
 
     const hashedPassword = await hashPassword(password);
