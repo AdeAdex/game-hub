@@ -20,6 +20,7 @@ const ResetPassword = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const queryToken = new URLSearchParams(window.location.search).get("token");
@@ -32,7 +33,10 @@ const ResetPassword = () => {
           const response = await axios.post("/api/verify-token", {
             token: queryToken,
           });
+
+          // console.log(response.data.username)
           if (response.status === 200) {
+            setUsername(response.data.username)
             setSuccess(true);
             setMessage(response.data.message);
           } else {
@@ -82,7 +86,7 @@ const ResetPassword = () => {
               <div>
                 {success ? (
                   <small>
-                    Please provide a new password for the account Adex2210.
+                    Please provide a new password for the account {username}.
                   </small>
                 ) : (
                   <small>

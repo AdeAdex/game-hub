@@ -2,6 +2,8 @@
 
 import { NextResponse } from "next/server";
 import { verifyToken } from "@/app/utils/jwtUtils";
+import User from "@/app/models/user";
+import { connectToDb } from "@/app/utils/database";
 
 
 
@@ -20,8 +22,21 @@ export const POST = async (req, res) => {
       }
   
       // Verify the token
+      
+      // Connect to the database
+      await connectToDb();
+      
+      // Find the user by the reset password token
+      const user = await User.findOne({ resetPasswordToken: token });
+      const username = user.userName
+      
+      if (!user) {
+        console.log("User not found")
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+      }
+
       const decodedToken = await verifyToken(token);
-  
+      
       if (!decodedToken) {
         return NextResponse.json({ message: "Invalid token or Token has expired" }, { status: 400 });
       }
@@ -33,7 +48,7 @@ export const POST = async (req, res) => {
     }
   
       // Token is valid
-      return NextResponse.json({ message: "Password reset request successful!" }, { status: 200 });
+      return NextResponse.json({ username: username,  message: "Password reset request successful!" }, { status: 200 });
     } catch (error) {
       console.error("Error verifying token:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
