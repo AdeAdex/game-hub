@@ -28,7 +28,10 @@ const handler = NextAuth({
           await connectToDb();
           const { email, password } = credentials;
           console.log(email);
-          const user = await User.findOne({ email });
+          
+          const user = await User.findOne({
+            $or: [{ email: email }, { userName: email }],
+          });
 
           if (!user) {
             throw new Error("User not found");
@@ -95,7 +98,9 @@ const handler = NextAuth({
         if (credentials) {
           // Credentials provider
 
-          const user = await User.findOne({ email: credentials.email });
+          const user = await User.findOne({
+            $or: [{ email: credentials.email }, { userName: credentials.email }],
+          });
 
           if (!user) {
             throw new Error("User not found");
