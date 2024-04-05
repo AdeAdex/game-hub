@@ -21,28 +21,28 @@ export const POST = async (req, res) => {
     const resetTokenPayload = { email: user.email };
     const resetToken = generateToken(resetTokenPayload);
 
-    console.log(resetToken)
-    
+    console.log(resetToken);
+
     // Store reset token in the database, along with user's email and expiration time
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = Date.now() + 600000; // Token expiry time (10 minutes)
     await user.save();
-
+    
 
     // Generate reset password link here, assuming you have a route for resetting password
-    const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`; // Replace with your actual reset password link
+    const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`; // Replace with your actual reset password link
 
+    //     const resetLink = `${process.env.BASE_URL}/reset-password?token=${resetToken}`; // Assuming you have BASE_URL set in your environment variables
 
-//     const resetLink = `${process.env.BASE_URL}/reset-password?token=${resetToken}`; // Assuming you have BASE_URL set in your environment variables
+    const username = user.userName;
 
     // Send reset password email
-    await sendResetPasswordEmail(email, resetLink);
+    await sendResetPasswordEmail(email, resetLink, username);
 
     return NextResponse.json(
       { message: "Reset password email sent" },
       { status: 200 }
     );
-    return NextResponse.json({ message: "User found" }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

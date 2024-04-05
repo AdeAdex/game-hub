@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 // import localforage from "localforage";
 // import CryptoJS from "crypto-js";
 import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
 
 
 interface UserData {
@@ -88,9 +89,10 @@ const DashboardPage = () => {
   return (
     <div>
       <Navbar/>
-      <h2>User Data</h2>
+      <div className="flex flex-col items-center justify-center pt-[80px] md:pt-[100px] w-full h-screen">
+      <h2 className="py-[30px]">User Data</h2>
       {userData && userResponse && userResponse.success === true && (
-        <div>
+        <div className="">
           <div>
             <strong>UserName:</strong> {userData.userName}
           </div>
@@ -105,6 +107,9 @@ const DashboardPage = () => {
           </div>
         </div>
       )}
+      </div>
+      <Footer/>
+     
     </div>
   );
 };

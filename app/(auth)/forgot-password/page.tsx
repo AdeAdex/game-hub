@@ -3,10 +3,12 @@
 import Footer from "@/app/components/footer/Footer";
 import Navbar from "@/app/components/navbar/Navbar";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const ForgotPasswordPage = () => {
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -27,8 +29,12 @@ const ForgotPasswordPage = () => {
       });
 
       const responseData = await response.json();
-      // Handle response data as needed
-      console.log(responseData);
+      const status = response.status; // Access the status from the response object
+
+
+      if (status === 200) {
+        router.push('/forgot-password-email-sent')
+      }
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -58,8 +64,9 @@ const ForgotPasswordPage = () => {
               type="email"
               autoComplete="on"
               name="email"
-              className={`w-[65%] border border-2 px-3 py-[5px] border-gray-300`}
+              className={`w-[100%] md:w-[65%] border border-2 px-3 py-[5px] border-gray-300`}
               placeholder="Required"
+              required
             />
           </div>
           <div className="py-[25px] flex gap-4">

@@ -51,60 +51,6 @@ function MyApp() {
     e.preventDefault();
     setSubmitting(true);
 
-    // const loginDetails = {
-    //   email,
-    //   password,
-    // };
-
-    // try {
-
-    //   // if (session) {
-    //   //   await signOut();
-    //   // }
-
-    //   const response = await axios.post("/api/auth/callback/credentials", loginDetails);      
-      
-    //   console.log(response)
-
-    //   // if (response.status === 200) {        
-    //   //   const userInfo = response.data._doc;
-
-    //   //   dispatch(signInSuccess(userInfo));
-    //   //   // const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userInfo), SECRET_KEY).toString();
-    //   //   // localforage.setItem('userData', encryptedData);
-    //   //   // cookies.set("loginToken", token, { secure: true, sameSite: "strict" });
-    //   //   // document.cookie = `loginToken=${token}; Secure; HttpOnly; SameSite=Strict; Path=/`;
-    //   //   enqueueSnackbar(response.data?.message, {
-    //   //     variant: "success",
-    //   //   });
-    //   //   router.push("/dashboard");
-    //   // } else {
-    //   //   console.log(response.data);
-    //   //   enqueueSnackbar("Unexpected error occurred", {
-    //   //     variant: "error",
-    //   //   });
-    //   // }
-    // } catch (error: any) {
-    //   console.log(error)
-    //   // if (
-    //   //   error.response &&
-    //   //   (error.response.status === 404 || error.response.status === 401)
-    //   // ) {
-    //   //   const errorMessage =
-    //   //     error.response.data?.message || "Invalid email or password";
-    //   //   enqueueSnackbar(errorMessage, {
-    //   //     variant: "error",
-    //   //   });
-    //   // } else {
-    //   //   console.log(error);
-    //   //   enqueueSnackbar("Error during login", {
-    //   //     variant: "error",
-    //   //   });
-    //   // }
-    // } finally {
-    //   setSubmitting(false);
-    // }
-
 
     try {
       const result = await signIn("credentials", {
