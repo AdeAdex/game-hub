@@ -59,7 +59,6 @@ function MyApp() {
         redirect: false, // Prevent automatic redirection after sign-in
       });
 
-      console.log(result)
       if (result && !result.error) {
         console.log(session?.user)
         enqueueSnackbar("Login Successfully", {
