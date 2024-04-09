@@ -82,7 +82,7 @@ const ResetPassword = () => {
     };
 
     verifyTokenValidity();
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <div>

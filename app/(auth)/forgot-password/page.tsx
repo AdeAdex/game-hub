@@ -5,10 +5,27 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { SnackbarProvider, useSnackbar } from "notistack";
+
 
 const ForgotPasswordPage = () => {
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp />
+    </SnackbarProvider>
+  );
+ 
+};
+
+
+function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -30,10 +47,14 @@ const ForgotPasswordPage = () => {
 
       const responseData = await response.json();
       const status = response.status; // Access the status from the response object
+      console.log(responseData);
+      
 
 
       if (status === 200) {
         router.push('/forgot-password-email-sent')
+      } else {
+        enqueueSnackbar(responseData.message, { variant: "error" });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -98,6 +119,6 @@ const ForgotPasswordPage = () => {
       <Footer />
     </div>
   );
-};
+}
 
 export default ForgotPasswordPage;

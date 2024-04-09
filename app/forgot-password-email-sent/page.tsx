@@ -23,7 +23,6 @@ const ForgotPasswordEmailSentPage = () => {
               <Link href="/" className="text-[#FF2E51] underline flex">
               <IoIosArrowRoundBack className='my-auto' size={20}/> Return home
               </Link>
-              .
             </small>
           </div>
         </div>

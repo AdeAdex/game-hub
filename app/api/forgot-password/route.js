@@ -13,8 +13,8 @@ export const POST = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      console.log("We couldn't find an account associated with this email address. ");
+      return NextResponse.json({ message: "We couldn't find an account associated with this email address. " }, { status: 404 });
     }
 
     // Generate reset password token using JWT

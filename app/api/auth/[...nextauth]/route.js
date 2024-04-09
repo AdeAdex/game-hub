@@ -25,41 +25,7 @@ const handler = NextAuth({
       credentials: {},
       async authorize(credentials) {
         return handleAuthentication(credentials);
-        // try {
-        //   await connectToDb();
-        //   const { email, password } = credentials;
-        //   console.log(email);
-
-        //   const user = await User.findOne({
-        //      $or: [{ email: email }, { userName: email }],
-        //    });
-
-        //   if (!user) {
-        //     throw new Error("User not found");
-        //   }
-
-        //   const passwordMatch = await comparePassword(password, user.password);
-
-        //   if (!passwordMatch) {
-        //     throw new Error("Invalid email or password");
-        //   }
-
-        //   // Include all user information you need in the returned object
-        //   const token = generateToken({ email: user.email });
-        //   // Set token as a cookie
-          
-        //   cookies().set("authToken", token, {
-        //     httpOnly: true, // Ensures the cookie is not accessible by client-side JavaScript
-        //     maxAge: 60 * 60 * 24, // Expires after 24 hours (adjust as needed)
-        //     path: "/", // Cookie is accessible from all paths on the domain
-        //     sameSite: 'strict',
-        //     // Add other options if needed (e.g., secure: true if using HTTPS)
-        //   });
-
-        //   return { email: user.email, token, ...user.toObject() };
-        // } catch (error) {
-        //   throw new Error(error.message);
-        // }
+        
       },
     }),
   ],
@@ -101,71 +67,6 @@ const handler = NextAuth({
         return false;
       }
       
-      // try {
-      //   await connectToDb();
-
-      //   if (credentials) {
-      //     // Credentials provider
-
-      //     const user = await User.findOne({
-      //        $or: [{ email: credentials.email }, { userName: credentials.email }],
-      //      });
-
-      //     if (!user) {
-      //       throw new Error("User not found");
-      //     }
-
-      //     const passwordMatch = await comparePassword(
-      //       credentials.password,
-      //       user.password
-      //     );
-
-      //     if (!passwordMatch) {
-      //       throw new Error("Invalid email or password");
-      //     }
-
-      //     return true;
-      //   } else if (profile) {
-      //     // Google or Github provider
-
-      //     const userExists = await User.findOne({ email: profile.email });
-
-      //     if (!userExists) {
-      //       const nameParts = profile.name.split(" ");
-      //       const firstName = nameParts.slice(1).join(" ");
-      //       const lastName = nameParts[0];
-      //       const profilePicture = profile.avatar_url || profile.picture;
-      //       const userName = profile.login || profile.email;
-
-      //       const newUser = new User({
-      //         email: profile.email,
-      //         firstName,
-      //         lastName,
-      //         userName: userName,
-      //         profilePicture: profilePicture,
-      //       });
-
-      //       await newUser.save();
-      //     }
-
-      //     const token = generateToken({ email: profile.email });
-      //     // Set token as a cookie
-          
-      //     cookies().set("authToken", token, {
-      //       httpOnly: true, // Ensures the cookie is not accessible by client-side JavaScript
-      //       maxAge: 60 * 60 * 24, // Expires after 24 hours (adjust as needed)
-      //       path: "/", // Cookie is accessible from all paths on the domain
-      //       sameSite: 'strict',
-      //       // Add other options if needed (e.g., secure: true if using HTTPS)
-      //     });
-
-
-      //     return true;
-      //   }
-      // } catch (error) {
-      //   console.error("Error occurred during signIn:", error);
-      //   return false;
-      // }
     },
   },
 });
@@ -178,6 +79,7 @@ async function handleAuthentication(credentials, profile) {
 
     if (credentials) {
       const { email, password } = credentials;
+      
       const user = await User.findOne({
         $or: [{ email: email }, { userName: email }],
       });
