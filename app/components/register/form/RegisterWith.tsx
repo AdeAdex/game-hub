@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 
 const RegisterWith = () => {
   const [dropdown, setDropdown] = useState(false);
-  const { data: session } = useSession();
-  const router = useRouter();
+  // const { data: session } = useSession();
+  // const router = useRouter();
 
   const handleDropdown = () => {
     if (dropdown == false) {
@@ -19,11 +19,11 @@ const RegisterWith = () => {
     }
   };
 
-  useEffect(() => {
-    if (session && session?.user) {
-      router.push("/dashboard");
-    } 
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session && session?.user) {
+  //     router.push("/dashboard");
+  //   } 
+  // }, [session, router]);
 
   const handleGithubSignIn = async () => {
     await signIn("github");

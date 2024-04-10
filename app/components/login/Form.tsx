@@ -40,10 +40,9 @@ function MyApp() {
 
   
   useEffect(() => {
-    if (session?.user) {
-      // console.log("form session", session)
-      // redirect("/dashboard")      
-    } 
+    // if (session?.user) {
+       
+    // } 
   }, [session]);
 
 

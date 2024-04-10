@@ -71,8 +71,6 @@ const Navbar: React.FC = () => {
       console.log(response)
 
       if (response.data.success === true) {
-        // setUserResponse(response.data)
-        // setUserData(response.data.user)
         setToken(true)
        
       }

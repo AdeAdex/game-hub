@@ -19,8 +19,8 @@ const SocialMediaLogin = () => {
   //   null
   // );
   const [providers, setProviders] = useState<Record<string, Provider>>({});
-  const { data: session } = useSession();
-  const router = useRouter();
+  // const { data: session } = useSession();
+  // const router = useRouter();
 
   // useEffect(
   //   () => {
@@ -50,12 +50,12 @@ const SocialMediaLogin = () => {
     setUpProvider();
   }, []);
 
-  useEffect(() => {
-    if (session?.user) {
-      console.log("socialMedia session: ", session?.user);
-      // redirect("/dashboard")
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     console.log("socialMedia session: ", session?.user);
+  //     // redirect("/dashboard")
+  //   }
+  // }, [session, router]);
 
   const handleSignIn = async (providerId: string) => {
     signIn(providerId);
