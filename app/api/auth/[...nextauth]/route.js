@@ -79,7 +79,6 @@ async function handleAuthentication(credentials, profile) {
 
     if (credentials) {
       const { email, password } = credentials;
-      
       const user = await User.findOne({
         $or: [{ email: email }, { userName: email }],
       });

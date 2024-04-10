@@ -56,7 +56,7 @@ const DashboardPage = () => {
   // }, []);
 
   useEffect(() => {
-    // const token = cookies.get("loginToken");
+    // const token = cookies.get("authToken");
 
     const fetchData = async () => {
       try {
@@ -68,9 +68,7 @@ const DashboardPage = () => {
         if (response.data.success === true) {
           setUserResponse(response.data)
           setUserData(response.data.user)
-          setTimeout(() => {
-            // router.push("/login");
-          }, 3000);
+          
         }
       } catch (error:any) {
         console.error("Error fetching user data:", error.message);

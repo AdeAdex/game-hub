@@ -36,6 +36,7 @@ const Navbar: React.FC = () => {
   const [userInfo, setUserInfo] = useState<AuthState | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [token, setToken] = useState<boolean>(false);
   const router = useRouter();
 
   const handleDropdown = () => {
@@ -59,22 +60,30 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.post(`/api/prompt/dashboard`);
+  //  console.log("session", session)
+    // const token = cookies.get("authToken");
 
-  //       if (response.data.success === true) {
-  //         setUserResponse(response.data);
-  //         // setUserInfo(response.data.user);
-  //       }
-  //     } catch (error: any) {
-  //       console.error("Error fetching user data:", error.message);
-  //     } finally {
-  //       setLoading(false); // Set loading to false regardless of success or error
-  //     }
-  //   };
+  const fetchData = async () => {
+    try {
+      
+      const response = await axios.post(`/api/prompt/dashboard`);
+      
+      console.log(response)
 
-  //   fetchData();
+      if (response.data.success === true) {
+        // setUserResponse(response.data)
+        // setUserData(response.data.user)
+        setToken(true)
+       
+      }
+    } catch (error:any) {
+      console.error("Error fetching user data:", error.message);
+    }finally {
+      setLoading(false); // Set loading to false regardless of success or error
+    }
+  };
+
+  fetchData();
 
   }, [session]);
 
@@ -97,7 +106,7 @@ const Navbar: React.FC = () => {
         <SearchBox />
         <div className="flex gap-8">
           <div className="my-auto flex">
-            {session?.user ? (
+            {session?.user && token ? (
               <div className="flex flex-col relative">
                 <div
                   className="flex gap-3 cursor-pointer"
@@ -147,7 +156,7 @@ const Navbar: React.FC = () => {
             )}
           </div>
           <div className="my-auto hidden md:flex">
-            {session?.user ? (
+            {session?.user && token ? (
               <div></div>
             ) : (
               <AuthButton title="register" to="/register" />
