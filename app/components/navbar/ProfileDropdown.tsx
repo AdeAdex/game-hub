@@ -31,7 +31,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ handleClick, username
         </small>
         <Link href={`/${username}`} className="px-4 nav-dropdown">View profile
         </Link>
-
          <div className="px-4 nav-dropdown">Settings</div>
         <div className="px-4 nav-dropdown" onClick={handleClick}>
           logout
