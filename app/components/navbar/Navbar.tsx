@@ -134,7 +134,7 @@ const Navbar: React.FC = () => {
                   )}
 
                   <span className="my-auto text-[14px] font-bold">
-                    {session?.user?.name.split(' ')[0]} ||
+                    {session?.user?.name.split(' ')[0] ||
                       (session?.user as AuthState)?.userName ||
                       ""}
                   </span>
