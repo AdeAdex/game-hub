@@ -24,7 +24,7 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
       }
 
       const token = sessionToken.value
-      console.log("token:", token);
+      // console.log("token:", token);
 
   
       // Verify the session token
@@ -55,7 +55,7 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
       );
   
       if (!user) {
-        console.log("User not found");
+        console.log("this User not found");
         return NextResponse.json({ success: false, error: "User not found" });
       }
   

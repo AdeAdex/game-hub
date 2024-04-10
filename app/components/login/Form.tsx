@@ -33,7 +33,7 @@ function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
   const { data: session } = useSession();
-  // const router = useRouter();
+  const router = useRouter();
   // const dispatch = useDispatch();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
 
@@ -64,8 +64,7 @@ function MyApp() {
         enqueueSnackbar("Login Successfully", {
                 variant: "success",
               });
-        // redirect("/dashboard")
-        // router.push("/dashboard");
+        router.push("/dashboard");
       } else {
         const errorMessage = result?.error || "Error during login";
         enqueueSnackbar(errorMessage, { variant: "error" });

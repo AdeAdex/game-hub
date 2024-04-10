@@ -1,36 +1,61 @@
-// // middleware.js
 
-// import { NextResponse } from 'next/server';
-// import type { NextRequest } from 'next/server';
-// import { verifyToken } from './app/utils/jwtUtils';
+// // /middleware.js
+
+// import { NextResponse } from "next/server";
+// import type { NextRequest } from "next/server";
+// import jwt from "jsonwebtoken";
+
+
 
 // export function middleware(request: NextRequest) {
-//   const token = request.cookies.get('authToken')?.value;
+//   const token = request.cookies.get("authToken")?.value;
 
 //   // List of routes accessible to users without authentication
-//   const publicRoutes = ['/', '/register', '/forgot-password', '/reset-password'];
+//   const publicRoutes = [
+//     "/",
+//     "/register",
+//     "/forgot-password",
+//     "/reset-password",
+//     "/forgot-password-email-sent",
+//   ];
 
 //   // List of routes accessible to authenticated users
-//   const privateRoutes = ['/'];
+//   const privateRoutes = ["/", "/[username]"];
 
-//   // If the requested route is a public route, allow access
-//   if (publicRoutes.includes(request.nextUrl.pathname)) {
+//   // If the requested route is a public route or one of the special routes like /forgot-password or /reset-password, allow access
+//   if (
+//     publicRoutes.includes(request.nextUrl.pathname) ||
+//     request.nextUrl.pathname.startsWith("/forgot-password") ||
+//     request.nextUrl.pathname.startsWith("/reset-password") ||
+//     request.nextUrl.pathname.startsWith("/forgot-password-email-sent")
+//   ) {
 //     return NextResponse.next();
 //   }
 
-//  // If the user is not authenticated and the route is not public, redirect to login
-//  if (!token && request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/reset-password') {
-//   return NextResponse.redirect(new URL('/login', request.url));
+// // If the user is not authenticated and the route is not public or a special route, redirect to login
+// if (!token && request.nextUrl.pathname !== "/login") {
+//   return NextResponse.redirect(new URL("/login", request.url));
 // }
 
+// // Decode token and check for expiration
+// if (token) {
+//   const decodedToken = jwt.decode(token) as { exp?: number };
+//   const currentTimestamp = Math.floor(Date.now() / 1000); // Current time in seconds
+
+//   if (decodedToken.exp !== undefined && decodedToken.exp < currentTimestamp) {
+//     console.log("Token has expired");
+//     return NextResponse.redirect(new URL("/login", request.url));
+//   }
+// }
+ 
 //   // If the user is authenticated and the route is a private route, allow access
 //   if (token && privateRoutes.includes(request.nextUrl.pathname)) {
 //     return NextResponse.next();
 //   }
 
 //   // If the user is authenticated but the route is not private, redirect to dashboard
-//   if (token && request.nextUrl.pathname !== '/dashboard') {
-//     return NextResponse.redirect(new URL('/dashboard', request.url));
+//   if (token && request.nextUrl.pathname !== "/dashboard") {
+//     return NextResponse.redirect(new URL("/dashboard", request.url));
 //   }
 
 //   // For any other scenario, allow access
@@ -45,13 +70,21 @@
 
 
 
-// /middleware.js
+
+
+
+
+
+
+
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import jwt from "jsonwebtoken";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("authToken")?.value;
+  const { pathname } = request.nextUrl;
 
   // List of routes accessible to users without authentication
   const publicRoutes = [
@@ -60,37 +93,48 @@ export function middleware(request: NextRequest) {
     "/forgot-password",
     "/reset-password",
     "/forgot-password-email-sent",
+    "/login"
   ];
 
-  // List of routes accessible to authenticated users
-  const privateRoutes = ["/", "/[username]"];
-
-  // If the requested route is a public route or one of the special routes like /forgot-password or /reset-password, allow access
-  if (
-    publicRoutes.includes(request.nextUrl.pathname) ||
-    request.nextUrl.pathname.startsWith("/forgot-password") ||
-    request.nextUrl.pathname.startsWith("/reset-password") ||
-    request.nextUrl.pathname.startsWith("/forgot-password-email-sent")
-  ) {
+  // If the requested route is public, allow access
+  if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
-  // If the user is not authenticated and the route is not public or a special route, redirect to login
-  if (!token && request.nextUrl.pathname !== "/login") {
+  // If the user is not authenticated, redirect to login
+  if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // If the user is authenticated and the route is a private route, allow access
-  if (token && privateRoutes.includes(request.nextUrl.pathname)) {
-    return NextResponse.next();
+  // Decode token and check for expiration
+  const decodedToken = jwt.decode(token) as { exp?: number };
+  const currentTimestamp = Math.floor(Date.now() / 1000); // Current time in seconds
+
+  if (decodedToken.exp !== undefined && decodedToken.exp < currentTimestamp) {
+    console.log("Token has expired");
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // If the user is authenticated but the route is not private, redirect to dashboard
-  if (token && request.nextUrl.pathname !== "/dashboard") {
+  // If the user is authenticated and trying to access the login page, redirect to dashboard
+  if (pathname === "/login") {
+    // Check if the user is already in the dashboard, if yes, remain in the dashboard
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // For any other scenario, allow access
+  // List of routes accessible to authenticated users
+  const privateRoutes = ["/", "/[username]", "/dashboard"];
+
+  // If the user is authenticated and the route is private, allow access
+  if (privateRoutes.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  // If the route is not public or private, redirect to dashboard
+  if (pathname !== "/dashboard") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  // If the user is already in the dashboard, allow access
   return NextResponse.next();
 }
 
