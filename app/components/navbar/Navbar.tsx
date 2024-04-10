@@ -134,10 +134,9 @@ const Navbar: React.FC = () => {
                   )}
 
                   <span className="my-auto text-[14px] font-bold">
-                    {session?.user?.name ||
-                      (session?.user as AuthState)?.userName ||
-                      ""}
-                  </span>
+  {session?.user?.name ? session.user.name.split(' ')[0] : ((session?.user as AuthState)?.userName || "")}
+</span>
+
                   <FaAngleDown size={18} className="my-auto" />
                 </div>
                 {dropdown && (
