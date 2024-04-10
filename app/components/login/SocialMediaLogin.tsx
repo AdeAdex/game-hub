@@ -20,7 +20,7 @@ const SocialMediaLogin = () => {
   // );
   const [providers, setProviders] = useState<Record<string, Provider>>({});
   // const { data: session } = useSession();
-  // const router = useRouter();
+   const router = useRouter();
 
   // useEffect(
   //   () => {
