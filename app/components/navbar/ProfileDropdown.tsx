@@ -29,9 +29,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ handleClick, username
         <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">
           Account
         </small>
-        <Link href="/[username]" as={`/${username}`}>
-  <a className="px-4 nav-dropdown">View profile</a>
-</Link>
+        <Link href={`/${username}`} className="px-4 nav-dropdown">View profile
+        </Link>
 
          <div className="px-4 nav-dropdown">Settings</div>
         <div className="px-4 nav-dropdown" onClick={handleClick}>
