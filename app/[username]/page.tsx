@@ -35,12 +35,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        if (!user) {
-                console.error("User is null");
-                      return;
-                          }
-        
-        const response = await axios.post(
+
+
+      const response = await axios.post(
           `/api/prompt/profile?username=${username}`,
           { username }
         );
@@ -61,6 +58,11 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
     const handlePost = async () => {
         try {
+          if (!user) {
+                  console.error("User is null");
+                        return;
+                            }
+          
               const response = await axios.post('/api/post', {
                       content: postContent,
                               userId: user._id // Assuming user ID is available in the user object
