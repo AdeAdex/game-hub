@@ -1,4 +1,4 @@
-// pages/api/reactions/index.ts
+// /api/reactions/route.ts
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import Reaction from "../../../models/reaction";
@@ -14,4 +14,9 @@ export const POST = async (req) => {
                             return NextResponse.error(new Error("Failed to create reaction"), { status: 500 });
                               }
                               };
+
+
+export const GET = async (request, response) => {
+  // Implement GET method logic here if needed
+};
                               
