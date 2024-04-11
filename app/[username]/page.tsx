@@ -27,8 +27,8 @@ interface UserPageProps {
 interface Post {
   _id: number;
   content: string;
-  userId: number;
-  timestamp: Date;
+  timestamp: string;
+  userId: User;
 }
 
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
@@ -250,10 +250,20 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 <div>
                   {posts.map((post) => (
                   <div key={post._id} className="mb-4">
-                    <div>
-                      <p className="text-gray-700">{post.content}</p>
-                      <p className="text-gray-500">{post.timestamp.toLocaleString()}</p>
+                    <div className="flex items-center mb-2">
+                      <div className="relative w-8 h-8 mr-2">
+                        <Image
+                          src={post.userId.profilePicture}
+                          alt="Profile Picture"
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded-full"
+                        />
+                      </div>
+                      <p className="text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
                     </div>
+                    <p className="text-gray-700">{post.content}</p>
+                    <p className="text-gray-500">{post.timestamp).toLocaleString()}</p>
                   </div>
                 ))}
                 </div> 
