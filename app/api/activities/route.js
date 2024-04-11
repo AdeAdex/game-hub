@@ -1,7 +1,7 @@
 // /api/reactions/route.ts
 import { NextResponse } from "next/server";
-import { connectToDb } from "../../../utils/database";
-import Reaction from "../../../models/reaction";
+import { connectToDb } from "../../utils/database";
+import Reaction from "../../models/reaction";
 
 export const POST = async (req) => {
   try {
