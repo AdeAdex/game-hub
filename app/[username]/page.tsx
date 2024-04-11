@@ -247,7 +247,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Posts</h2>
-                <div>
                   {posts.map((post) => (
                   <div key={post._id} className="mb-4">
                     <div className="flex items-center mb-2">
@@ -266,7 +265,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                     <p className="text-gray-500">{post.timestamp).toLocaleString()}</p>
                   </div>
                 ))}
-                </div> 
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Photos</h2>
