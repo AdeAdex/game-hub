@@ -24,6 +24,13 @@ interface UserPageProps {
   };
 }
 
+interface Post {
+  _id: number;
+  content: string;
+  userId: number;
+  timestamp: Date;
+}
+
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
