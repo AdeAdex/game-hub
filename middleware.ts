@@ -1,7 +1,4 @@
-
-// // /middleware.js
-
-
+//middleware.ts
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
@@ -46,8 +43,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
+  // If the route is a dynamic username page and the user is authenticated, allow access
+  if (pathname.startsWith("/")) {
+    const segments = pathname.split("/");
+    if (segments.length === 2 && segments[1] !== "") {
+      // It's a dynamic username page
+      return NextResponse.next();
+    }
+  }
+
   // List of routes accessible to authenticated users
-  const privateRoutes = ["/", "/[username]", "/dashboard"];
+  const privateRoutes = ["/", "/dashboard"];
 
   // If the user is authenticated and the route is private, allow access
   if (privateRoutes.includes(pathname)) {

@@ -20,7 +20,7 @@ const SocialMediaLogin = () => {
   // );
   const [providers, setProviders] = useState<Record<string, Provider>>({});
   // const { data: session } = useSession();
-  // const router = useRouter();
+   const router = useRouter();
 
   // useEffect(
   //   () => {
@@ -58,7 +58,20 @@ const SocialMediaLogin = () => {
   // }, [session, router]);
 
   const handleSignIn = async (providerId: string) => {
-    signIn(providerId);
+    
+    try {
+      const result = await signIn(providerId);
+
+      if (result && !result.error) {
+        router.push("/dashboard");
+      } else {
+        const errorMessage = result?.error || "Error during login";
+        // enqueueSnackbar(errorMessage, { variant: "error" });
+      }
+    } catch (error: any) {
+      console.error("Error during login:", error.message);
+    } 
+
   };
 
   return (

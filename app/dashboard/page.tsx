@@ -87,25 +87,32 @@ const DashboardPage = () => {
   return (
     <div>
       <Navbar/>
-      <div className="flex flex-col items-center justify-center pt-[80px] md:pt-[100px] w-full h-screen">
-      <h2 className="py-[30px]">User Data</h2>
-      {userData && userResponse && userResponse.success === true && (
-        <div className="">
-          <div>
-            <strong>UserName:</strong> {userData.userName}
-          </div>
-          <div>
-            <strong>First Name:</strong> {userData.firstName}
-          </div>
-          <div>
-            <strong>Last Name:</strong> {userData.lastName}
-          </div>
-          <div>
-            <strong>Email:</strong> {userData.email}
-          </div>
+      <div className="flex flex-col items-center justify-center pt-16 md:pt-20 h-screen">
+        <h2 className="py-8 text-3xl font-semibold">User Data</h2>
+        <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
+          {userData && userResponse && userResponse.success === true && (
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <strong className="mr-2">UserName:</strong>
+                <span>{userData.userName}</span>
+              </div>
+              <div className="flex items-center">
+                <strong className="mr-2">First Name:</strong>
+                <span>{userData.firstName}</span>
+              </div>
+              <div className="flex items-center">
+                <strong className="mr-2">Last Name:</strong>
+                <span>{userData.lastName}</span>
+              </div>
+              <div className="flex items-center">
+                <strong className="mr-2">Email:</strong>
+                <span>{userData.email}</span>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-      </div>
+        {/* Flow Diagram */}
+          </div>
       <Footer/>
      
     </div>
