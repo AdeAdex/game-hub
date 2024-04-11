@@ -110,7 +110,8 @@ async function handleAuthentication(credentials, profile) {
         const firstName = nameParts.slice(1).join(" ");
         const lastName = nameParts[0];
         const profilePicture = profile.avatar_url || profile.picture;
-        const userName = profile.login || profile.email;
+       // const userName = profile.login || profile.email;
+        const userName = firstName;
 
         const newUser = new User({
           email: profile.email,
