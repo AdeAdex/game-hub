@@ -15,7 +15,14 @@ export const POST = async (req) => {
                               }
                               };
 
-                             
+
 export const GET = async (request, response) => {
-      // Implement GET method logic here if needed
-      };
+  try {
+    await connectToDb();
+    const posts = await Post.find().sort({ timestamp: -1 }).populate('userId', 'profilePicture firstName lastName');
+    return NextResponse.json(posts, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return NextResponse.error(new Error("Failed to fetch posts"), { status: 500 });
+  }
+};
