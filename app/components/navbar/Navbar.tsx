@@ -15,6 +15,7 @@ import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
+import Backdrop from "@mui/material/Backdrop";
 // import { useSelector } from "react-redux";
 
 interface AuthState {
@@ -37,6 +38,7 @@ const Navbar: React.FC = () => {
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<boolean>(false);
+  const [userData, setUserData] = useState<AuthState | null>(null);
   const router = useRouter();
 
   const handleDropdown = () => {
@@ -60,29 +62,27 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-  //  console.log("session", session)
+    //  console.log("session", session)
     // const token = cookies.get("authToken");
 
-  const fetchData = async () => {
-    try {
-      
-      const response = await axios.post(`/api/prompt/dashboard`);
-      
-      console.log(response)
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`/api/prompt/dashboard`);
 
-      if (response.data.success === true) {
-        setToken(true)
-       
+        console.log(response);
+
+        if (response.data.success === true) {
+          setToken(true);
+          setUserData(response.data.user);
+        }
+      } catch (error: any) {
+        console.error("Error fetching user data:", error.message);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or error
       }
-    } catch (error:any) {
-      console.error("Error fetching user data:", error.message);
-    }finally {
-      setLoading(false); // Set loading to false regardless of success or error
-    }
-  };
+    };
 
-  fetchData();
-
+    fetchData();
   }, [session]);
 
   return (
@@ -96,12 +96,19 @@ const Navbar: React.FC = () => {
           <Logo />
         </div>
         <Links />
-        <Dropdown
-          links={links}
-          links2={links2}
-          isMobileMenuOpen={isMobileMenuOpen}
-        />
-        <SearchBox />
+        <Backdrop
+          open={isMobileMenuOpen}
+          onClick={() => setMobileMenuOpen(false)}
+          className="bg-black bg-opacity-50"
+        >
+          <Dropdown
+            links={links}
+            links2={links2}
+            isMobileMenuOpen={isMobileMenuOpen}
+          />
+        </Backdrop>
+
+               <SearchBox ClassName={`hidden md:flex`} />
         <div className="flex gap-8">
           <div className="my-auto flex">
             {session?.user && token ? (
@@ -134,17 +141,15 @@ const Navbar: React.FC = () => {
                   )}
 
                   <span className="my-auto text-[14px] font-bold">
-  {session?.user?.name ? session.user.name.split(' ')[0] : ((session?.user as AuthState)?.userName || "")}
-</span>
+                    {userData?.userName || ""}
+                  </span>
 
                   <FaAngleDown size={18} className="my-auto" />
                 </div>
                 {dropdown && (
                   <ProfileDropdown
                     handleClick={handleLogout}
-                    username={
-                      session?.user?.name || ""
-                    } /*  ref={dropdownRef} */
+                    username={userData?.userName || ""}
                   />
                 )}
               </div>

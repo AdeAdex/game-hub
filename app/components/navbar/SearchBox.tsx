@@ -1,9 +1,13 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 
-const SearchBox = () => {
+interface SearchBoxProps {
+  ClassName?: string;
+} 
+
+const SearchBox: React.FC<SearchBoxProps> = ({ ClassName }: SearchBoxProps) => {
   return (
-    <div className="hidden md:flex">
+    <div className={`${ClassName}`}>
       <input
         type="text"
         placeholder="Search for games or creator"

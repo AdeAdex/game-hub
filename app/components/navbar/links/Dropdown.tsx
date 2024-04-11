@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Section from "../../sidebar/Section";
+import SearchBox from "../SearchBox";
 
 interface LinkItem {
   title: string;
@@ -23,6 +24,7 @@ const Dropdown: React.FC<SideBarProps> = ({
           isMobileMenuOpen ? "open" : ""
         } `}
       >
+        <SearchBox ClassName={`mb-[10px]`}/>
         <Section title="popular tags" links={links} />
         <Link href="" className="text-[14px] capitalize leading-[28px]">
           browse all tags →
