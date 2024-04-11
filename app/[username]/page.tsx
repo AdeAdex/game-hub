@@ -52,6 +52,22 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUser();
   }, [username, router]);
 
+  const [postContent, setPostContent] = useState<string>('');
+
+    const handlePost = async () => {
+        try {
+              const response = await axios.post('/api/post', {
+                      content: postContent,
+                              userId: user._id // Assuming user ID is available in the user object
+                                    });
+                                          console.log(response.data);
+                                                // Optionally, you can fetch the updated list of posts here and update the UI
+                                                    } catch (error) {
+                                                          console.error("Error creating post:", error);
+                                                                // Handle error
+                                                                    }
+                                                                      };
+
   if (loading) {
     return (
       <div className="bg-gray-100 min-h-screen">
@@ -167,6 +183,18 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   </div>
                 </div>
               </div>
+              <textarea
+                                  value={postContent}
+                                                      onChange={(e) => setPostContent(e.target.value)}
+                                                                          placeholder="Write your post..."
+                                                                                              className="w-full h-32 px-3 py-2 mt-4 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+                                                                                                                />
+                                                                                                                                  <button
+                                                                                                                                                      onClick={handlePost}
+                                                                                                                                                                          className="w-full px-4 py-2 mt-4 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                                                                                                                                                                                            >
+                                                                                                                                                                                                                Post
+                                                                                                                                                                                                                                  </button>
               <div className="mt-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                   <h2 className="text-xl font-semibold mb-4">Notifications</h2>

@@ -1,4 +1,4 @@
-// /api/reactions/route.ts
+// /api/activities/route.ts
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../utils/database";
 import Reaction from "../../models/reaction";
