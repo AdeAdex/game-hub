@@ -31,6 +31,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   // const user = users.find((user: User) => user.username === username);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -51,8 +52,20 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       }
     };
 
+  const fetchPosts = async () => {
+      try {
+        const response = await axios.get("/api/post");
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
     fetchUser();
+    fetchPosts(); 
   }, [username, router]);
+
+
 
   const [postContent, setPostContent] = useState<string>('');
 
@@ -227,7 +240,25 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Posts</h2>
-                {/* Add posts component */}
+                <div>
+                  {posts.map((post) => (
+                    <div key={post._id} className="flex items-center mb-4">
+                      <div className="mr-4">
+                        <Image
+                          src={user.profilePicture || avatar}
+                          alt="Profile Picture"
+                          width={48}
+                          height={48}
+                          className="rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-gray-700">{post.content}</p>
+                        <p className="text-gray-500">{post.timestamp}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div> 
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Photos</h2>
