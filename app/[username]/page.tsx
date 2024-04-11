@@ -262,7 +262,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                       <p className="text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
                     </div>
                     <p className="text-gray-700">{post.content}</p>
-                    <p className="text-gray-500">{post.timestamp).toLocaleString()}</p>
+                    <p className="text-gray-500">{(post.timestamp).toLocaleString()}</p>
                   </div>
                 ))}
               </div>
