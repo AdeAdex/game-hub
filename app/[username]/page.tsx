@@ -164,7 +164,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
