@@ -249,22 +249,13 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 <h2 className="text-xl font-semibold mb-4">Posts</h2>
                 <div>
                   {posts.map((post) => (
-                    <div key={post._id} className="flex items-center mb-4">
-                      <div className="mr-4">
-                        <Image
-                          src={user.profilePicture || avatar}
-                          alt="Profile Picture"
-                          width={48}
-                          height={48}
-                          className="rounded-full"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-gray-700">{post.content}</p>
-                        <p className="text-gray-500">{post.timestamp}</p>
-                      </div>
+                  <div key={post._id} className="mb-4">
+                    <div>
+                      <p className="text-gray-700">{post.content}</p>
+                      <p className="text-gray-500">{post.timestamp.toLocaleString()}</p>
                     </div>
-                  ))}
+                  </div>
+                ))}
                 </div> 
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
