@@ -60,9 +60,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                       content: postContent,
                               userId: user._id // Assuming user ID is available in the user object
                                     });
-                                          console.log(response.data);
+                                          console.log(response);
                                                 // Optionally, you can fetch the updated list of posts here and update the UI
-                                                    } catch (error) {
+                                                    } catch (error:any) {
                                                           console.error("Error creating post:", error);
                                                                 // Handle error
                                                                     }
