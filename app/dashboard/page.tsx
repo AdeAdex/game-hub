@@ -81,7 +81,22 @@ const DashboardPage = () => {
   }, [session]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Navbar />
+        <div className="flex flex-col items-center justify-center pt-16 md:pt-20 h-screen">
+          <div className="animate-pulse bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
+            <div className="space-y-4">
+              <div className="h-6 bg-gray-200 rounded"></div>
+              <div className="h-6 bg-gray-200 rounded"></div>
+              <div className="h-6 bg-gray-200 rounded"></div>
+              <div className="h-6 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   return (
