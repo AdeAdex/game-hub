@@ -259,7 +259,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                                                                                                                                                                                             >
                                                                                                                                                                                                                 Post
                                                                                                                                                                                                                                   </button>
-              <div className="mt-8">
+              <div className="mt-8 hidden md:flex flex-col">
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                   <h2 className="text-xl font-semibold mb-4">Notifications</h2>
                   {/* Add notifications component */}
