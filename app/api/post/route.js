@@ -26,3 +26,33 @@ export const GET = async (request, response) => {
     return NextResponse.error(new Error("Failed to fetch posts"), { status: 500 });
   }
 };
+
+
+
+export const PUT = async (req) => {
+  try {
+    const { postId, action } = await req.json();
+    await connectToDb();
+    let updatedPost;
+
+    switch (action) {
+      case "like":
+        updatedPost = await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 } }, { new: true });
+        break;
+      case "dislike":
+        updatedPost = await Post.findByIdAndUpdate(postId, { $inc: { dislikes: 1 } }, { new: true });
+        break;
+      case "comment":
+        const { comment } = await req.json();
+        updatedPost = await Post.findByIdAndUpdate(postId, { $push: { comments: comment } }, { new: true });
+        break;
+      default:
+        throw new Error("Invalid action");
+    }
+
+    return NextResponse.json(updatedPost);
+  } catch (error) {
+    console.error("Error updating post:", error.message);
+    return NextResponse.error(new Error("Failed to update post"), { status: 500 });
+  }
+};
