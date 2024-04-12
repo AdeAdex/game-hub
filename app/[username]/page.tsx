@@ -295,7 +295,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                           className="rounded-full"
                         />
                       </div>
-                      <p className="text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
+                      <p className="text-[10px] text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
                     </div>
                     <p className="text-gray-700">
                       <small>{post.content}</small>
