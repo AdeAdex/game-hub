@@ -285,7 +285,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Posts</h2>
                    {posts.map((post) => (
-                  <div key={post._id} className="mb-4">
+                  <div key={post._id} className="mb-4 rounded-lg shadow-lg ">
                     <div className="flex items-center mb-2">
                       <div className="relative w-8 h-8 mr-2">
                         <Image
