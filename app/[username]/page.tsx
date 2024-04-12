@@ -132,7 +132,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                                                                     }
                                                                       };
 
-  if (loading) {
+if (loading) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -154,7 +154,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-8">
+            <div className="mt-8 hidden md:flex flex-col">
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
                 <h2 className="text-xl font-semibold mb-4">Notifications</h2>
                 {/* Add notifications component skeleton */}
@@ -167,41 +167,35 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 <h2 className="text-xl font-semibold mb-4">Profile Summary</h2>
                 {/* Add profile summary component skeleton */}
               </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
+                <h2 className="text-xl font-semibold mb-4">Photos</h2>
+                {/* Add photos component skeleton */}
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
+                <h2 className="text-xl font-semibold mb-4">Albums</h2>
+                {/* Add albums component skeleton */}
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
+                <h2 className="text-xl font-semibold mb-4">Activities</h2>
+                {/* Add activities component skeleton */}
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
+                <h2 className="text-xl font-semibold mb-4">Friends</h2>
+                {/* Add friends list component skeleton */}
+              </div>
             </div>
           </div>
           <div className="md:col-span-2">
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              <h2 className="text-xl font-semibold mb-4">About</h2>
-              {/* <p className="text-gray-700">{user.bio}</p> */}
-              {/* Add more profile information sections like work experience, education, etc. */}
+            <div className="">
+              {/* Placeholder for posts skeleton */}
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              <h2 className="text-xl font-semibold mb-4">Posts</h2>
-              {/* Add posts component skeleton */}
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              <h2 className="text-xl font-semibold mb-4">Photos</h2>
-              {/* Add photos component skeleton */}
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              <h2 className="text-xl font-semibold mb-4">Albums</h2>
-              {/* Add albums component skeleton */}
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              <h2 className="text-xl font-semibold mb-4">Activities</h2>
-              {/* Add activities component skeleton */}
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              <h2 className="text-xl font-semibold mb-4">Friends</h2>
-              {/* Add friends list component skeleton */}
-            </div>
-            {/* Add more sections like events, groups, etc. */}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 
   return (
