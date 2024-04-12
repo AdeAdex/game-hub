@@ -282,10 +282,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 {/* <p className="text-gray-700">{user.bio}</p> */}
                 {/* Add more profile information sections like work experience, education, etc. */}
               </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Posts</h2>
+              <div className="bg-white">
                    {posts.map((post) => (
-                  <div key={post._id} className="mb-4 rounded-lg shadow-lg ">
+                  <div key={post._id} className="mb-4 p-4 rounded-lg shadow-lg ">
                     <div className="flex items-center mb-2">
                       <div className="relative w-8 h-8 mr-2">
                         <Image
