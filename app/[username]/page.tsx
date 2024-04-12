@@ -31,6 +31,8 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   // const user = users.find((user: User) => user.username === username);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [myImage, setMyImage] = useState("");
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -51,6 +53,29 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
     fetchUser();
   }, [username, router]);
+
+
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => { // Define type for event parameter
+    // setIsLoading(true);
+    const selectedImage = e.target.files && e.target.files[0];
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+      reader.onload = () => {
+        setMyImage(reader.result as string); // Cast to string
+        const endpoint = "/api/prompt/upload";
+        axios
+          .post(endpoint, { newImage: reader.result, email: user?.email })
+          .then((response) => {
+            // setIsLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+    }
+  };
 
   if (loading) {
     return (
@@ -84,7 +109,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   {/* Add settings component skeleton */}
                 </div>
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                  <h2 className="text-xl font-semibold mb-4">Profile Summary</h2>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Profile Summary
+                  </h2>
                   {/* Add profile summary component skeleton */}
                 </div>
               </div>
@@ -132,23 +159,32 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
             <div className="md:col-span-1">
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <div className="text-center">
-                  {user.profilePicture ? (
-                    <Image
-                      src={user.profilePicture}
-                      alt="Profile Picture"
-                      width={128}
-                      height={128}
-                      className="mx-auto rounded-full"
-                    />
-                  ) : (
-                    <Image
-                      src={avatar}
-                      alt="Avatar"
-                      width={128}
-                      height={128}
-                      className="mx-auto rounded-full"
-                    />
-                  )}
+                  <label htmlFor="avatarInput" style={{ cursor: "pointer" }}>
+                    {user.profilePicture ? (
+                      <Image
+                        src={user.profilePicture}
+                        alt="Profile Picture"
+                        width={128}
+                        height={128}
+                        className="mx-auto rounded-full"
+                      />
+                    ) : (
+                      <Image
+                        src={avatar}
+                        alt="Avatar"
+                        width={128}
+                        height={128}
+                        className="mx-auto rounded-full"
+                      />
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleFileSelect}
+                  />
                   <h1 className="mt-4 text-3xl font-extrabold text-gray-900">
                     {user.firstName} {user.lastName}
                   </h1>
