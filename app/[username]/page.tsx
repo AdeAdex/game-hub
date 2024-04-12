@@ -301,6 +301,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                     <p className="text-gray-700">
                       <small>{post.content}</small>
                     </p>
+                    <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
                       <button onClick={() => handleReaction(post._id)} className="text-[8px]">
                         <FaHeart className="mx-auto" /> Like
