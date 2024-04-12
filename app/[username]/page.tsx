@@ -302,13 +302,13 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                       <small>{post.content}</small>
                     </p>
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                      <button onClick={() => handleReaction(post._id)} className="">
+                      <button onClick={() => handleReaction(post._id)} className="text-[8px]">
                         <FaHeart className="mx-auto" /> Like
                       </button>
-                      <button onClick={() => handleComment(post._id)} className="">
+                      <button onClick={() => handleComment(post._id)} className="text-[8px]">
                         <FaComment className="mx-auto" /> Comment
                       </button>
-                      <button onClick={() => handleShare(post._id)}>
+                      <button onClick={() => handleShare(post._id)} className="text-[8px]">
                         <FaShare className="mx-auto" /> Share
                       </button>
                     </div>
