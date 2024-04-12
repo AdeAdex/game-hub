@@ -298,7 +298,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                       </div>
                       <p className="text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
                     </div>
-                    <p className="text-gray-700">{post.content}</p>
+                    <p className="text-gray-700">
+                      <small>{post.content}</small>
+                    </p>
                     <div className="flex items-center mt-2 text-gray-500">
                       <button onClick={() => handleReaction(post._id)} className="mr-4">
                         <FaHeart className="mr-1" /> Like
