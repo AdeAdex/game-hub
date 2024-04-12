@@ -80,7 +80,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         const userResponse = await axios.post(`/api/prompt/profile?username=${username}`, { username });
         setUser(userResponse.data);
         
-        const postsResponse = await axios.get("/api/posts"); // Fetch all posts
+        const postsResponse = await axios.get("/api/post"); // Fetch all posts
         setPosts(postsResponse.data);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
