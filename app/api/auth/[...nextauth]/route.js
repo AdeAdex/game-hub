@@ -111,7 +111,6 @@ async function handleAuthentication(credentials, profile) {
         const lastName = nameParts[0];
         const profilePicture = profile.avatar_url || profile.picture;
         const userName = profile.login ? profile.login : lastName;
-      } 
 
         
         const newUser = new User({
