@@ -247,24 +247,57 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Posts</h2>
-                  {posts.map((post) => (
-                  <div key={post._id} className="mb-4">
-                    <div className="flex items-center mb-2">
-                      <div className="relative w-8 h-8 mr-2">
-                        <Image
-                          src={post.userId.profilePicture}
-                          alt="Profile Picture"
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-full"
-                        />
-                      </div>
-                      <p className="text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
-                    </div>
-                    <p className="text-gray-700">{post.content}</p>
-                    <p className="text-gray-500">{(post.timestamp).toLocaleString()}</p>
-                  </div>
-                ))}
+                    {posts.map((post) => (
+    <div key={post._id} className="mb-4">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center">
+          <div className="flex-shrink-0">
+            <Image
+              src={post.user.profilePicture}
+              alt="Profile Picture"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </div>
+          <div className="ml-2">
+            <p className="text-sm font-medium text-gray-900">
+              {post.user.firstName} {post.user.lastName}
+            </p>
+            <p className="text-sm text-gray-500">{formatTimestamp(post.timestamp)}</p>
+          </div>
+        </div>
+        <div className="flex items-center space-x-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-700"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 3a5 5 0 00-5 5v2H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-1V8a5 5 0 00-5-5zM5 8v2a3 3 0 006 0V8H5z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-700"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12.586a1 1 0 01-.293.707l-4.707 4.707a1 1 0 01-1.414 0L4.293 17.293A1 1 0 014 16.586V4zm14-2a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2 0 012-2h12z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <span className="text-sm text-gray-500">23 Likes</span>
+        </div>
+      </div>
+      <p className="text-gray-700">{post.content}</p>
+    </div>
+  ))}
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Photos</h2>
