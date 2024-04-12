@@ -295,10 +295,10 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                           className="rounded-full"
                         />
                       </div>
-                      <p className="text-[10px] text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
+                      <p className="text-[12px] text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
                     </div>
                     <p className="text-gray-700">
-                      <small>{post.content}</small>
+                      <small className="text-[9px]">{post.content}</small>
                     </p>
                     <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
