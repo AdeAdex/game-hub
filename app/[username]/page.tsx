@@ -7,6 +7,8 @@ import axios from "axios";
 import avatar from "../../public/images/robot.png";
 import Image from "next/image";
 import Navbar from "../components/navbar/Navbar";
+import { FaHeart, FaComment, FaShare } from "react-icons/fa"; // Importing icons from React Icons
+
 
 interface User {
   _id: number;
@@ -40,7 +42,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<Post[]>([]);
 
-  useEffect(() => {
+/*  useEffect(() => {
     const fetchUser = async () => {
       try {
 
@@ -70,7 +72,42 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
     fetchUser();
     fetchPosts(); 
+  }, [username, router]); */
+
+  useEffect(() => {
+    const fetchUserAndPosts = async () => {
+      try {
+        const userResponse = await axios.post(`/api/prompt/profile?username=${username}`, { username });
+        setUser(userResponse.data);
+        
+        const postsResponse = await axios.get("/api/posts"); // Fetch all posts
+        setPosts(postsResponse.data);
+      } catch (error) {
+        console.error("Error fetching user or posts:", error);
+        router.push("/not-found"); // Redirect to 404 page if user or posts not found
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserAndPosts();
   }, [username, router]);
+
+
+  const handleReaction = async (postId: number) => {
+    // Logic to handle reaction (like or dislike)
+    console.log(`Reacting to post with ID ${postId}`);
+  };
+
+  const handleComment = async (postId: number) => {
+    // Logic to handle commenting
+    console.log(`Commenting on post with ID ${postId}`);
+  };
+
+  const handleShare = async (postId: number) => {
+    // Logic to handle sharing
+    console.log(`Sharing post with ID ${postId}`);
+  };
 
 
 
@@ -262,9 +299,19 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                       <p className="text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
                     </div>
                     <p className="text-gray-700">{post.content}</p>
-                    <p className="text-gray-500">{new Date(post.timestamp).toLocaleString()}</p>
+                    <div className="flex items-center mt-2 text-gray-500">
+                      <button onClick={() => handleReaction(post._id)} className="mr-4">
+                        <FaHeart className="mr-1" /> Like
+                      </button>
+                      <button onClick={() => handleComment(post._id)} className="mr-4">
+                        <FaComment className="mr-1" /> Comment
+                      </button>
+                      <button onClick={() => handleShare(post._id)}>
+                        <FaShare className="mr-1" /> Share
+                      </button>
+                    </div>
                   </div>
-                ))} 
+                ))}
          
               </div>
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
