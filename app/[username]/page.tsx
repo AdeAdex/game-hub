@@ -274,14 +274,25 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   </h2>
                   {/* Add profile summary component */}
                 </div>
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 className="text-xl font-semibold mb-4">Photos</h2>
+                {/* Add photos component */}
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 className="text-xl font-semibold mb-4">Albums</h2>
+                {/* Add albums component */}
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 className="text-xl font-semibold mb-4">Activities</h2>
+                {/* Add activities component */}
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 className="text-xl font-semibold mb-4">Friends</h2>
+                {/* Add friends list component */}
+              </div>
               </div>
             </div>
             <div className="md:col-span-2">
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">About</h2>
-                {/* <p className="text-gray-700">{user.bio}</p> */}
-                {/* Add more profile information sections like work experience, education, etc. */}
-              </div>
               <div className="">
                    {posts.map((post) => (
                   <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
@@ -316,23 +327,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 ))}
          
               </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Photos</h2>
-                {/* Add photos component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Albums</h2>
-                {/* Add albums component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Activities</h2>
-                {/* Add activities component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Friends</h2>
-                {/* Add friends list component */}
-              </div>
-              {/* Add more sections like events, groups, etc. */}
             </div>
           </div>
         </div>
