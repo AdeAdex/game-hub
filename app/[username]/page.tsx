@@ -301,15 +301,15 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                     <p className="text-gray-700">
                       <small>{post.content}</small>
                     </p>
-                    <div className="flex items-center mt-2 text-gray-500">
-                      <button onClick={() => handleReaction(post._id)} className="mr-4">
-                        <FaHeart className="mr-1" /> Like
+                    <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
+                      <button onClick={() => handleReaction(post._id)} className="">
+                        <FaHeart className="mx-auto" /> Like
                       </button>
-                      <button onClick={() => handleComment(post._id)} className="mr-4">
-                        <FaComment className="mr-1" /> Comment
+                      <button onClick={() => handleComment(post._id)} className="">
+                        <FaComment className="mx-auto" /> Comment
                       </button>
                       <button onClick={() => handleShare(post._id)}>
-                        <FaShare className="mr-1" /> Share
+                        <FaShare className="mx-auto" /> Share
                       </button>
                     </div>
                   </div>
