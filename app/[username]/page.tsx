@@ -1,17 +1,16 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { users } from "@/app/data/userData";
 import axios from "axios";
 import avatar from "../../public/images/robot.png";
+import { FaHeart, FaComment, FaShare } from "react-icons/fa";
 import Image from "next/image";
 import Navbar from "../components/navbar/Navbar";
-import { FaHeart, FaComment, FaShare } from "react-icons/fa"; // Importing icons from React Icons
-
+import LoadingSkeleton from "../components/userPage/LoadingSkeleton";
+import ImageSkeleton from "../components/userPage/ImageSkeleton";
 
 interface User {
-  _id: number;
+  _id: string;
   firstName: string;
   lastName: string;
   userName: string;
@@ -27,7 +26,7 @@ interface UserPageProps {
 }
 
 interface Post {
-  _id: number;
+  _id: string;
   content: string;
   timestamp: string;
   userId: User;
@@ -36,50 +35,52 @@ interface Post {
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
-
-  // const user = users.find((user: User) => user.username === username);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [postContent, setPostContent] = useState<string>("");
+  const [newImage, setNewImage] = useState("");
+  const [cloudImage, setCloudImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-/*  useEffect(() => {
-    const fetchUser = async () => {
-      try {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true);
+    const files = e.target.files;
+    if (!files || !files[0]) {
+      console.error("No file selected");
+      return;
+    }
 
-
-      const response = await axios.post(
-          `/api/prompt/profile?username=${username}`,
-          { username }
-        );
-        console.log(response.data);
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        router.push("/not-found"); // Redirect to 404 page if user not found
-      } finally {
-        setLoading(false);
-      }
+    let selectedImage = files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(selectedImage);
+    reader.onload = () => {
+      setNewImage(reader.result as string);
+      const endpoint = "/api/username/upload";
+      axios
+        .post(endpoint, { newImage: reader.result, email: user?.email })
+        .then((response) => {
+          console.log(response.data.cloudLinkForProfilePicture);
+          setCloudImage(response.data.cloudLinkForProfilePicture);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        });
     };
-
-  const fetchPosts = async () => {
-      try {
-        const response = await axios.get("/api/post");
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchUser();
-    fetchPosts(); 
-  }, [username, router]); */
+  };
 
   useEffect(() => {
     const fetchUserAndPosts = async () => {
       try {
-        const userResponse = await axios.post(`/api/prompt/profile?username=${username}`, { username });
+        const userResponse = await axios.post(
+          `/api/username/profile?username=${username}`,
+          { username }
+        );
         setUser(userResponse.data);
-        
-        const postsResponse = await axios.get("/api/post"); // Fetch all posts
+
+        const postsResponse = await axios.get("/api/posts"); // Fetch all posts
         setPosts(postsResponse.data);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
@@ -90,85 +91,45 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     };
 
     fetchUserAndPosts();
-  }, [username, router]);
+  }, [username, router, cloudImage]);
+
+  const handleReaction = async (postId: string) => {
+    // Logic to handle reaction (like or dislike)
+    console.log(`Reacting to post with ID ${postId}`);
+  };
+
+  const handleComment = async (postId: string) => {
+    // Logic to handle commenting
+    console.log(`Commenting on post with ID ${postId}`);
+  };
+
+  const handleShare = async (postId: string) => {
+    // Logic to handle sharing
+    console.log(`Sharing post with ID ${postId}`);
+  };
+
+  const handlePost = async () => {
+    try {
+      if (!user) {
+        console.error("User is null");
+        return;
+      }
+
+      const response = await axios.post("/api/posts", {
+        content: postContent,
+        userId: user._id, // Assuming user ID is available in the user object
+      });
+      console.log(response);
+      // Optionally, you can fetch the updated list of posts here and update the UI
+    } catch (error: any) {
+      console.error("Error creating post:", error);
+      // Handle error
+    }
+  };
 
   if (loading) {
-    return (
-      <div className="bg-gray-100 min-h-screen">
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8  mt-[60px]">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg p-6 animate-pulse">
-                <div className="text-center">
-                  <div className="rounded-full bg-gray-300 h-24 w-24 mx-auto mb-4" />
-                  <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-2" />
-                  <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto" />
-                </div>
-                <div className="mt-8">
-                  <div className="flex justify-between">
-                    <div className="h-4 bg-gray-300 rounded w-1/4" />
-                  </div>
-                  <div className="flex justify-between mt-2">
-                    <div className="h-4 bg-gray-300 rounded w-1/2" />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8">
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                  <h2 className="text-xl font-semibold mb-4">Notifications</h2>
-                  {/* Add notifications component skeleton */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                  <h2 className="text-xl font-semibold mb-4">Settings</h2>
-                  {/* Add settings component skeleton */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                  <h2 className="text-xl font-semibold mb-4">Profile Summary</h2>
-                  {/* Add profile summary component skeleton */}
-                </div>
-              </div>
-            </div>
-            <div className="md:col-span-2">
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                <h2 className="text-xl font-semibold mb-4">About</h2>
-                {/* <p className="text-gray-700">{user.bio}</p> */}
-                {/* Add more profile information sections like work experience, education, etc. */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                <h2 className="text-xl font-semibold mb-4">Posts</h2>
-                {/* Add posts component skeleton */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                <h2 className="text-xl font-semibold mb-4">Photos</h2>
-                {/* Add photos component skeleton */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                <h2 className="text-xl font-semibold mb-4">Albums</h2>
-                {/* Add albums component skeleton */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                <h2 className="text-xl font-semibold mb-4">Activities</h2>
-                {/* Add activities component skeleton */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                <h2 className="text-xl font-semibold mb-4">Friends</h2>
-                {/* Add friends list component skeleton */}
-              </div>
-            </div>
-          </div>
-          <div className="md:col-span-2">
-            <div className="">
-              {/* Placeholder for posts skeleton */}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
+    return <LoadingSkeleton />;
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -180,7 +141,10 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <div className="text-center">
                   <label htmlFor="avatarInput" style={{ cursor: "pointer" }}>
-                    {user.profilePicture ? (
+                    
+                    {isLoading ? (
+                      <ImageSkeleton /> // Render skeleton while image is loading
+                    ) : user.profilePicture ? (
                       <Image
                         src={user.profilePicture}
                         alt="Profile Picture"
@@ -224,17 +188,17 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 </div>
               </div>
               <textarea
-                                  value={postContent}
-                                                      onChange={(e) => setPostContent(e.target.value)}
-                                                                          placeholder="Write your post..."
-                                                                                              className="w-full h-32 px-3 py-2 mt-4 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-                                                                                                                />
-                                                                                                                                  <button
-                                                                                                                                                      onClick={handlePost}
-                                                                                                                                                                          className="w-full px-4 py-2 mt-4 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-                                                                                                                                                                                            >
-                                                                                                                                                                                                                Post
-                                                                                                                                                                                                                                  </button>
+                value={postContent}
+                onChange={(e) => setPostContent(e.target.value)}
+                placeholder="Write your post..."
+                className="w-full h-32 px-3 py-2 mt-4 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              />
+              <button
+                onClick={handlePost}
+                className="w-full px-4 py-2 mt-4 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+              >
+                Post
+              </button>
               <div className="mt-8 hidden md:flex flex-col">
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                   <h2 className="text-xl font-semibold mb-4">Notifications</h2>
@@ -251,57 +215,74 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   {/* Add profile summary component */}
                 </div>
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Photos</h2>
-                {/* Add photos component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Albums</h2>
-                {/* Add albums component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Activities</h2>
-                {/* Add activities component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Friends</h2>
-                {/* Add friends list component */}
-              </div>
+                  <h2 className="text-xl font-semibold mb-4">Photos</h2>
+                  {/* Add photos component */}
+                </div>
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                  <h2 className="text-xl font-semibold mb-4">Albums</h2>
+                  {/* Add albums component */}
+                </div>
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                  <h2 className="text-xl font-semibold mb-4">Activities</h2>
+                  {/* Add activities component */}
+                </div>
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                  <h2 className="text-xl font-semibold mb-4">Friends</h2>
+                  {/* Add friends list component */}
+                </div>
               </div>
             </div>
             <div className="md:col-span-2">
               <div className="">
-                   {posts.map((post) => (
-                  <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
+                {posts.map((post) => (
+                  <div
+                    key={post._id}
+                    className="bg-white mb-4 p-4 rounded-lg shadow-md "
+                  >
                     <div className="flex items-center mb-2">
                       <div className="relative w-8 h-8 mr-2">
-                        <Image
-                          src={post.userId.profilePicture}
-                          alt="Profile Picture"
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-full"
-                        />
+                        {post.userId.profilePicture && (
+                          <div className="relative w-8 h-8 mr-2">
+                            <Image
+                              src={post.userId.profilePicture}
+                              alt="Profile Picture"
+                              layout="fill"
+                              objectFit="cover"
+                              className="rounded-full"
+                            />
+                          </div>
+                        )}
                       </div>
-                      <p className="text-[12px] text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
+                      <p className="text-[12px] text-gray-700 font-semibold">
+                        {post.userId.firstName} {post.userId.lastName}
+                      </p>
                     </div>
                     <p className="text-gray-700">
                       <small className="text-[9px]">{post.content}</small>
                     </p>
                     <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                      <button onClick={() => handleReaction(post._id)} className="text-[8px]">
+                      <button
+                        onClick={() => handleReaction(post._id)}
+                        className="text-[8px]"
+                      >
                         <FaHeart className="mx-auto" /> Like
                       </button>
-                      <button onClick={() => handleComment(post._id)} className="text-[8px]">
+                      <button
+                        onClick={() => handleComment(post._id)}
+                        className="text-[8px]"
+                      >
                         <FaComment className="mx-auto" /> Comment
                       </button>
-                      <button onClick={() => handleShare(post._id)} className="text-[8px]">
+                      <button
+                        onClick={() => handleShare(post._id)}
+                        className="text-[8px]"
+                      >
                         <FaShare className="mx-auto" /> Share
                       </button>
                     </div>
                   </div>
                 ))}
-         
               </div>
             </div>
           </div>

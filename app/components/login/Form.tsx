@@ -43,7 +43,7 @@ function MyApp() {
     // if (session?.user) {
        
     // } 
-  }, [session]);
+  }, [session, ]);
 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -59,10 +59,10 @@ function MyApp() {
       });
 
       if (result && !result.error) {
-        console.log(session?.user)
-        enqueueSnackbar("Login Successfully", {
-                variant: "success",
-              });
+        // console.log(session?.user)
+        // enqueueSnackbar("Login Successfully", {
+        //         variant: "success",
+        //       });
         router.push("/dashboard");
       } else {
         const errorMessage = result?.error || "Error during login";

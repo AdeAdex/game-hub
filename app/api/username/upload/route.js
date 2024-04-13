@@ -13,6 +13,8 @@ cloudinary.config({
 export const POST = async (req, res) => {
   try {
     const { newImage, email } = await req.json();
+    // console.log(newImage)
+    // console.log(email)
     const profilePicture = await cloudinary.uploader.upload(newImage);
 
     const cloudLinkForProfilePicture = profilePicture.secure_url;
@@ -23,7 +25,7 @@ export const POST = async (req, res) => {
       { new: true }
     );
 
-    return NextResponse.json(cloudLinkForProfilePicture);
+    return NextResponse.json({cloudLinkForProfilePicture: user.profilePicture});
   } catch (err) {
     console.error(err);
    return NextResponse.error(new Error("Internal Server Error"));
