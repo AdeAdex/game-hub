@@ -7,6 +7,7 @@ const postSchema = new mongoose.Schema(
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     likes: { type: Number, default: 0 },
     dislikes: { type: Number, default: 0 },
+    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // New field to store user IDs who liked the post
     comments: [{ type: String }],
     timestamp: { type: Date, default: Date.now }
   },
