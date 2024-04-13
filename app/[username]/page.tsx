@@ -101,56 +101,46 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
 const handleReaction = async (postId: string) => {
   try {
-    // Check if the user ID is defined
     const userId = user?._id;
     if (!userId) {
       console.error("User ID is undefined");
       return;
     }
 
-    // Find the index of the post in the posts array
     const postIndex = posts.findIndex(post => post._id === postId);
     if (postIndex === -1) {
       console.error("Post not found");
       return;
     }
 
-    // Check if the user already liked the post
     const isLiked = posts[postIndex].likedBy.includes(userId);
     const action = isLiked ? "unlike" : "like";
 
-    // Send a request to the backend to update the reaction count for the post
     const response = await axios.post(`/api/posts/react`, { postId, action });
     const updatedPost = response.data;
     
-    // Update the posts state to reflect the updated reaction count and likedBy array
-    setPosts(prevPosts => {
-      return prevPosts.map((post, index) => {
-        if (index === postIndex) {
-          let newLikedBy;
-          if (isLiked) {
-            // If the user already liked the post, remove their like
-            newLikedBy = post.likedBy.filter(id => id !== userId);
-          } else {
-            // If the user hasn't liked the post, add their like
-            newLikedBy = [...post.likedBy, userId];
+    if (response.status === 200) {
+      setPosts(prevPosts => {
+        return prevPosts.map((post, index) => {
+          if (index === postIndex) {
+            return {
+              ...post,
+              likes: updatedPost.likes,
+              likedBy: updatedPost.likedBy
+            };
           }
-
-          return {
-            ...post,
-            likes: isLiked ? post.likes - 1 : post.likes + 1, // Update like count accordingly
-            likedBy: newLikedBy // Update likedBy array
-          };
-        }
-        return post;
+          return post;
+        });
       });
-    });
-    
-    console.log(`Reacted to post with ID ${postId}`);
+      console.log(`Reacted to post with ID ${postId}`);
+    } else {
+      console.error("Failed to react to post:", response.data.message);
+    }
   } catch (error: any) {
     console.error("Error reacting to post:", error.message);
   }
 };
+
 
 
   
