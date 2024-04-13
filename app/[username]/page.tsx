@@ -30,7 +30,11 @@ interface Post {
   content: string;
   timestamp: string;
   userId: User;
+  likes: number;
+  dislikes: number;
+  likedBy: string[]; // Add the likedBy property here
 }
+
 
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
