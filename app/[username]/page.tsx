@@ -94,29 +94,51 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   }, [username, router, cloudImage]);
 
   const handleReaction = async (postId: string) => {
-    try {
-      // Send a request to the backend to update the reaction count for the post
-      console.log(postId)
-      const response = await axios.post(`/api/posts/react`, { postId, action: "like" });
-      
-      // Update the posts state to reflect the updated reaction count
-      setPosts(prevPosts => {
-        return prevPosts.map(post => {
-          if (post._id === postId) {
-            return {
-              ...post,
-              reactions: response.data.reactions // Assuming the response contains the updated reactions count
-            };
-          }
-          return post;
-        });
-      });
-      
-      console.log(`Reacted to post with ID ${postId}`);
-    } catch (error: any) {
-      console.error("Error reacting to post:", error.message);
+  try {
+    // Check if the user already liked the post
+    const postIndex = posts.findIndex(post => post._id === postId);
+    if (postIndex === -1) {
+      console.error("Post not found");
+      return;
     }
-  };
+
+    const isLiked = posts[postIndex].likedBy.includes(user?._id);
+    const action = isLiked ? "unlike" : "like";
+
+    // Send a request to the backend to update the reaction count for the post
+    const response = await axios.post(`/api/posts/react`, { postId, action });
+    const updatedPost = response.data;
+    
+    // Update the posts state to reflect the updated reaction count
+    setPosts(prevPosts => {
+      return prevPosts.map((post, index) => {
+        if (index === postIndex) {
+          let newLikedBy;
+          if (isLiked) {
+            // If the user already liked the post, remove their like
+            newLikedBy = post.likedBy.filter(userId => userId !== user?._id);
+          } else {
+            // If the user hasn't liked the post, add their like
+            newLikedBy = [...post.likedBy, user?._id];
+          }
+
+          return {
+            ...post,
+            likes: isLiked ? post.likes - 1 : post.likes + 1, // Update like count accordingly
+            likedBy: newLikedBy // Update likedBy array
+          };
+        }
+        return post;
+      });
+    });
+    
+    console.log(`Reacted to post with ID ${postId}`);
+  } catch (error: any) {
+    console.error("Error reacting to post:", error.message);
+  }
+};
+
+
   
 
   const handleComment = async (postId: string) => {
@@ -281,15 +303,26 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                       <small className="text-[9px]">{post.content}</small>
                     </p>
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                      </div>
+  <p>Total Reactions: {post.likedBy.length}</p>
+</div>
+
                     <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
                       <button
-                        onClick={() => handleReaction(post._id)}
-                        className="text-[8px]"
-                      >
-                        <FaHeart className="mx-auto" size={12} /> Like
-                      </button>
+  onClick={() => handleReaction(post._id)}
+  className="text-[8px]"
+>
+  {post.likedBy.includes(user?._id) ? (
+    <>
+      <FaHeart className="mx-auto" size={12} /> Unlike
+    </>
+  ) : (
+    <>
+      <FaHeart className="mx-auto" size={12} /> Like
+    </>
+  )}
+</button>
+
                       <button
                         onClick={() => handleComment(post._id)}
                         className="text-[8px]"
