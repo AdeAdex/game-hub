@@ -98,6 +98,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   }, [username, router, cloudImage]);
 
   
+
 const handleReaction = async (postId: string) => {
   try {
     // Check if the user ID is defined
@@ -122,14 +123,14 @@ const handleReaction = async (postId: string) => {
     const response = await axios.post(`/api/posts/react`, { postId, action });
     const updatedPost = response.data;
     
-    // Update the posts state to reflect the updated reaction count
+    // Update the posts state to reflect the updated reaction count and likedBy array
     setPosts(prevPosts => {
       return prevPosts.map((post, index) => {
         if (index === postIndex) {
           let newLikedBy;
           if (isLiked) {
             // If the user already liked the post, remove their like
-            newLikedBy = post.likedBy.filter(userId => userId !== userId);
+            newLikedBy = post.likedBy.filter(id => id !== userId);
           } else {
             // If the user hasn't liked the post, add their like
             newLikedBy = [...post.likedBy, userId];
