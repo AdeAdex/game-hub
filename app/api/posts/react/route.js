@@ -14,7 +14,14 @@ export const POST = async (req) => {
       case "like":
         updatedPost = await Post.findByIdAndUpdate(
           postId,
-          { $inc: { likes: 1 } },
+          { $inc: { likes: 1 }, $addToSet: { likedBy: req.user._id } }, // Add user ID to likedBy array
+          { new: true }
+        );
+        break;
+      case "unlike":
+        updatedPost = await Post.findByIdAndUpdate(
+          postId,
+          { $inc: { likes: -1 }, $pull: { likedBy: req.user._id } }, // Remove user ID from likedBy array
           { new: true }
         );
         break;
