@@ -7,6 +7,8 @@ import axios from "axios";
 import avatar from "../../public/images/robot.png";
 import Image from "next/image";
 import Navbar from "../components/navbar/Navbar";
+import { FaHeart, FaComment, FaShare } from "react-icons/fa"; // Importing icons from React Icons
+
 
 interface User {
   _id: number;
@@ -24,6 +26,13 @@ interface UserPageProps {
   };
 }
 
+interface Post {
+  _id: number;
+  content: string;
+  timestamp: string;
+  userId: User;
+}
+
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
@@ -31,13 +40,13 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   // const user = users.find((user: User) => user.username === username);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [myImage, setMyImage] = useState("");
 
-
-  useEffect(() => {
+/*  useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.post(
+
+
+      const response = await axios.post(
           `/api/prompt/profile?username=${username}`,
           { username }
         );
@@ -51,31 +60,37 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       }
     };
 
+  const fetchPosts = async () => {
+      try {
+        const response = await axios.get("/api/post");
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
     fetchUser();
+    fetchPosts(); 
+  }, [username, router]); */
+
+  useEffect(() => {
+    const fetchUserAndPosts = async () => {
+      try {
+        const userResponse = await axios.post(`/api/prompt/profile?username=${username}`, { username });
+        setUser(userResponse.data);
+        
+        const postsResponse = await axios.get("/api/post"); // Fetch all posts
+        setPosts(postsResponse.data);
+      } catch (error) {
+        console.error("Error fetching user or posts:", error);
+        router.push("/not-found"); // Redirect to 404 page if user or posts not found
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserAndPosts();
   }, [username, router]);
-
-
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => { // Define type for event parameter
-    // setIsLoading(true);
-    const selectedImage = e.target.files && e.target.files[0];
-    if (selectedImage) {
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedImage);
-      reader.onload = () => {
-        setMyImage(reader.result as string); // Cast to string
-        const endpoint = "/api/prompt/upload";
-        axios
-          .post(endpoint, { newImage: reader.result, email: user?.email })
-          .then((response) => {
-            // setIsLoading(false);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      };
-    }
-  };
 
   if (loading) {
     return (
@@ -109,9 +124,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   {/* Add settings component skeleton */}
                 </div>
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-                  <h2 className="text-xl font-semibold mb-4">
-                    Profile Summary
-                  </h2>
+                  <h2 className="text-xl font-semibold mb-4">Profile Summary</h2>
                   {/* Add profile summary component skeleton */}
                 </div>
               </div>
@@ -142,13 +155,20 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 <h2 className="text-xl font-semibold mb-4">Friends</h2>
                 {/* Add friends list component skeleton */}
               </div>
-              {/* Add more sections like events, groups, etc. */}
+            </div>
+          </div>
+          <div className="md:col-span-2">
+            <div className="">
+              {/* Placeholder for posts skeleton */}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -203,7 +223,19 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   </div>
                 </div>
               </div>
-              <div className="mt-8">
+              <textarea
+                                  value={postContent}
+                                                      onChange={(e) => setPostContent(e.target.value)}
+                                                                          placeholder="Write your post..."
+                                                                                              className="w-full h-32 px-3 py-2 mt-4 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+                                                                                                                />
+                                                                                                                                  <button
+                                                                                                                                                      onClick={handlePost}
+                                                                                                                                                                          className="w-full px-4 py-2 mt-4 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                                                                                                                                                                                            >
+                                                                                                                                                                                                                Post
+                                                                                                                                                                                                                                  </button>
+              <div className="mt-8 hidden md:flex flex-col">
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                   <h2 className="text-xl font-semibold mb-4">Notifications</h2>
                   {/* Add notifications component */}
@@ -218,19 +250,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   </h2>
                   {/* Add profile summary component */}
                 </div>
-              </div>
-            </div>
-            <div className="md:col-span-2">
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">About</h2>
-                {/* <p className="text-gray-700">{user.bio}</p> */}
-                {/* Add more profile information sections like work experience, education, etc. */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Posts</h2>
-                {/* Add posts component */}
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Photos</h2>
                 {/* Add photos component */}
               </div>
@@ -246,7 +266,43 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 <h2 className="text-xl font-semibold mb-4">Friends</h2>
                 {/* Add friends list component */}
               </div>
-              {/* Add more sections like events, groups, etc. */}
+              </div>
+            </div>
+            <div className="md:col-span-2">
+              <div className="">
+                   {posts.map((post) => (
+                  <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
+                    <div className="flex items-center mb-2">
+                      <div className="relative w-8 h-8 mr-2">
+                        <Image
+                          src={post.userId.profilePicture}
+                          alt="Profile Picture"
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded-full"
+                        />
+                      </div>
+                      <p className="text-[12px] text-gray-700 font-semibold">{post.userId.firstName} {post.userId.lastName}</p>
+                    </div>
+                    <p className="text-gray-700">
+                      <small className="text-[9px]">{post.content}</small>
+                    </p>
+                    <hr className="my-4 border-gray-300" />
+                    <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
+                      <button onClick={() => handleReaction(post._id)} className="text-[8px]">
+                        <FaHeart className="mx-auto" /> Like
+                      </button>
+                      <button onClick={() => handleComment(post._id)} className="text-[8px]">
+                        <FaComment className="mx-auto" /> Comment
+                      </button>
+                      <button onClick={() => handleShare(post._id)} className="text-[8px]">
+                        <FaShare className="mx-auto" /> Share
+                      </button>
+                    </div>
+                  </div>
+                ))}
+         
+              </div>
             </div>
           </div>
         </div>
