@@ -280,6 +280,8 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                     <p className="text-gray-700">
                       <small className="text-[9px]">{post.content}</small>
                     </p>
+                    <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
+                      </div>
                     <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
                       <button
