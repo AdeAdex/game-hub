@@ -141,7 +141,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <div className="text-center">
                   <label htmlFor="avatarInput" style={{ cursor: "pointer" }}>
-                    
                     {isLoading ? (
                       <ImageSkeleton /> // Render skeleton while image is loading
                     ) : user.profilePicture ? (
