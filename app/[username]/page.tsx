@@ -94,9 +94,30 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   }, [username, router, cloudImage]);
 
   const handleReaction = async (postId: string) => {
-    // Logic to handle reaction (like or dislike)
-    console.log(`Reacting to post with ID ${postId}`);
+    try {
+      // Send a request to the backend to update the reaction count for the post
+      console.log(postId)
+      const response = await axios.post(`/api/posts/react`, { postId, action: "like" });
+      
+      // Update the posts state to reflect the updated reaction count
+      setPosts(prevPosts => {
+        return prevPosts.map(post => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              reactions: response.data.reactions // Assuming the response contains the updated reactions count
+            };
+          }
+          return post;
+        });
+      });
+      
+      console.log(`Reacted to post with ID ${postId}`);
+    } catch (error: any) {
+      console.error("Error reacting to post:", error.message);
+    }
   };
+  
 
   const handleComment = async (postId: string) => {
     // Logic to handle commenting
