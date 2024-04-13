@@ -266,19 +266,19 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                         onClick={() => handleReaction(post._id)}
                         className="text-[8px]"
                       >
-                        <FaHeart className="mx-auto" /> Like
+                        <FaHeart className="mx-auto" size={12} /> Like
                       </button>
                       <button
                         onClick={() => handleComment(post._id)}
                         className="text-[8px]"
                       >
-                        <FaComment className="mx-auto" /> Comment
+                        <FaComment className="mx-auto" size={12} /> Comment
                       </button>
                       <button
                         onClick={() => handleShare(post._id)}
                         className="text-[8px]"
                       >
-                        <FaShare className="mx-auto" /> Share
+                        <FaShare className="mx-auto" size={12} /> Share
                       </button>
                     </div>
                   </div>
