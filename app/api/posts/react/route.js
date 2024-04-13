@@ -1,9 +1,5 @@
 // /api/posts/react/route.ts
 
-import { NextResponse } from "next/server";
-import { connectToDb } from "../../../utils/database";
-import Post from "../../../models/post";
-
 export const POST = async (req) => {
   try {
     const { postId, action } = await req.json();
@@ -14,14 +10,14 @@ export const POST = async (req) => {
       case "like":
         updatedPost = await Post.findByIdAndUpdate(
           postId,
-          { $inc: { likes: 1 }, $addToSet: { likedBy: req.user._id } }, // Add user ID to likedBy array
+          { $inc: { likes: 1 }, $addToSet: { likedBy: req.user._id } },
           { new: true }
         );
         break;
       case "unlike":
         updatedPost = await Post.findByIdAndUpdate(
           postId,
-          { $inc: { likes: -1 }, $pull: { likedBy: req.user._id } }, // Remove user ID from likedBy array
+          { $inc: { likes: -1 }, $pull: { likedBy: req.user._id } },
           { new: true }
         );
         break;
@@ -36,7 +32,13 @@ export const POST = async (req) => {
         throw new Error("Invalid action");
     }
 
-    return NextResponse.json(updatedPost);
+    if (updatedPost) {
+      return NextResponse.json(updatedPost, { status: 200 });
+    } else {
+      return NextResponse.error(new Error("Failed to update post"), {
+        status: 500,
+      });
+    }
   } catch (error) {
     console.error("Error updating post:", error.message);
     return NextResponse.error(new Error("Failed to update post"), {
