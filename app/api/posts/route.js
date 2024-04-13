@@ -22,7 +22,8 @@ export const GET = async (request, response) => {
     await connectToDb();
     const posts = await Post.find()
       .sort({ timestamp: -1 })
-      .populate("userId", "profilePicture firstName lastName");
+      .populate("userId", "profilePicture firstName lastName")
+      .populate("likedBy"); // Populate the likedBy array
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
     console.error("Error fetching posts:", error.message);
@@ -31,4 +32,5 @@ export const GET = async (request, response) => {
     });
   }
 };
+
 
