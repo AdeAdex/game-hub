@@ -97,16 +97,25 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
-  const handleReaction = async (postId: string) => {
+  
+const handleReaction = async (postId: string) => {
   try {
-    // Check if the user already liked the post
+    // Check if the user ID is defined
+    const userId = user?._id;
+    if (!userId) {
+      console.error("User ID is undefined");
+      return;
+    }
+
+    // Find the index of the post in the posts array
     const postIndex = posts.findIndex(post => post._id === postId);
     if (postIndex === -1) {
       console.error("Post not found");
       return;
     }
 
-    const isLiked = posts[postIndex].likedBy.includes(user?._id);
+    // Check if the user already liked the post
+    const isLiked = posts[postIndex].likedBy.includes(userId);
     const action = isLiked ? "unlike" : "like";
 
     // Send a request to the backend to update the reaction count for the post
@@ -120,10 +129,10 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
           let newLikedBy;
           if (isLiked) {
             // If the user already liked the post, remove their like
-            newLikedBy = post.likedBy.filter(userId => userId !== user?._id);
+            newLikedBy = post.likedBy.filter(userId => userId !== userId);
           } else {
             // If the user hasn't liked the post, add their like
-            newLikedBy = [...post.likedBy, user?._id];
+            newLikedBy = [...post.likedBy, userId];
           }
 
           return {
