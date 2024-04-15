@@ -9,7 +9,7 @@ const MobileUserProfileSection = () => {
       <button className="hover:bg-gray-300 py-1 px-2 rounded-sm">
         Friends
       </button>
-      <button className="hover:bg-gray-300 py-1 px-2 rounded-sm">Album</button>
+      {/* <button className="hover:bg-gray-300 py-1 px-2 rounded-sm">Album</button> */}
     </div>
   );
 };
