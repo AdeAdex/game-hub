@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FaHeart, FaComment, FaShare } from "react-icons/fa";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import MediaCarousel from "./MediaCarousel";
+import avatar from "../../../public/images/robot.png";
 
 interface User {
   _id: string;
@@ -78,7 +79,7 @@ const PostComponent: React.FC<PostProps> = ({
           </p>
           <>
           {showCarousel && <MediaCarousel images={[post.image]}/>} 
-            {post.image && (
+            {post.image ? (
               <Image
                 src={post.image}
                 alt="PostImage"
@@ -88,7 +89,17 @@ const PostComponent: React.FC<PostProps> = ({
                 priority
                 onClick={() => openImage(post.image)}
               />
-            )}
+            ) : (
+          <Image
+                src={avatar}
+                alt="PostImage"
+                width={400}
+                height={400}
+                className="w-full cursor-pointer"
+                priority
+                onClick={() => openImage(post.image)}
+              />
+            ) }
           </>
           <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
             {likedPosts.includes(post._id) ? (
