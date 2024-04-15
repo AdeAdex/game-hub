@@ -1,7 +1,10 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import Image from "next/image";
 import { FaHeart, FaComment, FaShare } from "react-icons/fa";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import MediaCarousel from "./MediaCarousel";
 
 interface User {
   _id: string;
@@ -39,6 +42,13 @@ const PostComponent: React.FC<PostProps> = ({
   handleComment,
   handleShare,
 }) => {
+  const [showCarousel, setShowCarousel] = useState(false);
+
+  const openImage = (image: string) => {
+    console.log(image);
+    // setShowCarousel(true);
+  };
+
   return (
     <div className="">
       {posts.map((post) => (
@@ -67,14 +77,16 @@ const PostComponent: React.FC<PostProps> = ({
             )}
           </p>
           <>
+          {showCarousel && <MediaCarousel images={[post.image]}/>} 
             {post.image && (
               <Image
                 src={post.image}
                 alt="PostImage"
                 width={400}
                 height={400}
-                className="w-full"
+                className="w-full cursor-pointer"
                 priority
+                onClick={() => openImage(post.image)}
               />
             )}
           </>
