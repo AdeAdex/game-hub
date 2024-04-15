@@ -112,6 +112,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
       const isLiked = posts[postIndex].likedBy.includes(userId);
       const action = isLiked ? "unlike" : "like";
+      console.log(isLiked)
 
       const response = await axios.post(`/api/posts/react`, { postId, action });
       const updatedPost = response.data;
