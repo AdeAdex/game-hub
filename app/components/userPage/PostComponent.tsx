@@ -56,7 +56,7 @@ const PostComponent: React.FC<PostProps> = ({
         <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
           <div className="flex items-center mb-2">
             <div className="relative w-8 h-8 mr-2">
-              {post.userId.profilePicture && (
+              {post.userId.profilePicture ? (
                 <div className="relative w-8 h-8 mr-2">
                   <Image
                     src={post.userId.profilePicture}
@@ -66,7 +66,15 @@ const PostComponent: React.FC<PostProps> = ({
                     className="rounded-full"
                   />
                 </div>
-              )}
+              ) : (
+          <Image
+                    src={avatar}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+              ) }
             </div>
             <p className="text-[12px] text-gray-700 font-semibold">
               {post.userId.firstName} {post.userId.lastName}
@@ -79,7 +87,7 @@ const PostComponent: React.FC<PostProps> = ({
           </p>
           <>
           {showCarousel && <MediaCarousel images={[post.image]}/>} 
-            {post.image ? (
+            {post.image && (
               <Image
                 src={post.image}
                 alt="PostImage"
@@ -89,17 +97,7 @@ const PostComponent: React.FC<PostProps> = ({
                 priority
                 onClick={() => openImage(post.image)}
               />
-            ) : (
-          <Image
-                src={avatar}
-                alt="PostImage"
-                width={400}
-                height={400}
-                className="w-full cursor-pointer"
-                priority
-                onClick={() => openImage(post.image)}
-              />
-            ) }
+            )}
           </>
           <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
             {likedPosts.includes(post._id) ? (
