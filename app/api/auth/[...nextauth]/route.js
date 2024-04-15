@@ -111,6 +111,7 @@ async function handleAuthentication(credentials, profile) {
         const lastName = nameParts[0];
         const profilePicture = profile.avatar_url || profile.picture;
         const userName = profile.login ? profile.login : lastName;
+        const socialId = profile.id
 
         
         const newUser = new User({
@@ -119,6 +120,7 @@ async function handleAuthentication(credentials, profile) {
           lastName,
           userName: userName,
           profilePicture: profilePicture,
+          socialId
         });
 
         await newUser.save();
