@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { FaCamera } from "react-icons/fa";
 import ImageSkeleton from "./ImageSkeleton";
-import avatar from "../../../public/images/avatar.png";
+import avatar from "../../../public/images/robot.png";
 import MobileUserProfileSection from "./MobileUserProfileSection";
 
 interface User {
