@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
+import avatar from "../../../public/images/robot.png";
 
 const style = {
   position: "absolute" as "absolute",
@@ -96,7 +97,7 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
     <div>
       <div className="flex gap-2 bg-white mb-4 p-4 rounded-lg shadow-md mt-6 ">
         <div className="relative w-8 h-8 mr-2">
-          {user.profilePicture && (
+          {user.profilePicture ? (
             <div className="relative w-10 h-10 mr-2">
               <Image
                 src={user.profilePicture}
@@ -106,7 +107,17 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
                 className="rounded-full"
               />
             </div>
-          )}
+          ) : (
+      <div className="relative w-10 h-10 mr-2">
+              <Image
+                src={avatar}
+                alt="Profile Picture"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+          ) }
         </div>
         <input
           onClick={handleOpen}
