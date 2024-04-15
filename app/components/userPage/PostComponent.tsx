@@ -62,20 +62,26 @@ const PostComponent: React.FC<PostProps> = ({
             </p>
           </div>
           <p className="text-gray-700">
-          {post.content && (
-            <small className="text-[9px]">{post.content}</small>
-          )}
+            {post.content && (
+              <small className="text-[9px]">{post.content}</small>
+            )}
           </p>
           <p>
-          {post.image && ( // Conditionally render image if it exists
-            <div className="mt-2 ">
-              <Image src={post.image} alt="Post Image" width={400} height={400} className="border w-full"/>
-            </div>
-          )}
+            {post.image && ( // Conditionally render image if it exists
+              <div className="mt-2 ">
+                <Image
+                  src={post.image}
+                  alt="Post Image"
+                  width={400}
+                  height={400}
+                  className="border w-full"
+                />
+              </div>
+            )}
           </p>
           <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
             <p>
-              {likedPosts.includes(post._id) ? (
+              {likedPosts.includes(post._id) && post.likedBy.length > 1 ? (
                 <small>You and {post.likedBy.length - 1} others </small>
               ) : (
                 <small>{post.likedBy.length}</small>
