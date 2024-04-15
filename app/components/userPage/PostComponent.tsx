@@ -61,9 +61,9 @@ const PostComponent: React.FC<PostProps> = ({
               {post.userId.firstName} {post.userId.lastName}
             </p>
           </div>
-          <p className="text-gray-700">
+          <p className="text-gray-700 mb-2">
             {post.content && (
-              <small className="text-[9px]">{post.content}</small>
+              <small className="text-[14px]">{post.content}</small>
             )}
           </p>
           <>
