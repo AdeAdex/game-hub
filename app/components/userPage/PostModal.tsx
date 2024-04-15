@@ -147,11 +147,11 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
           <button
             onClick={handleSubmit}
             className={`w-full rounded-lg py-2 ${
-              postContent || selectedFile
+              postContent || postImage
                 ? "bg-blue-500 text-white"
                 : "bg-gray-400"
             }`}
-            //     disabled={!postContent || !selectedFile}
+                disabled={!postContent &&  !postImage}
           >
             Post
           </button>
