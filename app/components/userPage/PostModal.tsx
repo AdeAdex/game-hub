@@ -59,13 +59,12 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
     reader.onload = () => {
       const imageData = reader.result as string;
       setPostImage(imageData);
-//       console.log("Image Data:", imageData);
+      //       console.log("Image Data:", imageData);
     };
     reader.readAsDataURL(selectedImage);
   };
 
   const handleSubmit = async () => {
-
     try {
       if (!user) {
         console.error("User is null");
@@ -123,10 +122,29 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} className="rounded-md shadow-sm border-none">
           <Typography variant="h6" component="h2">
             Create a Post
           </Typography>
+          <hr />
+          <div className="flex py-2 gap-2">
+            <div className="relative w-8 h-8 mr-2">
+              {user.profilePicture && (
+                <div className="relative w-10 h-10 mr-2">
+                  <Image
+                    src={user.profilePicture}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="text-[12px] fw-bold">
+              {user.lastName} {user.firstName}
+            </div>
+          </div>
           <TextField
             label={`What's on your mind ${user.firstName}`}
             multiline
@@ -151,7 +169,7 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
                 ? "bg-blue-500 text-white"
                 : "bg-gray-400"
             }`}
-                disabled={!postContent &&  !postImage}
+            disabled={!postContent && !postImage}
           >
             Post
           </button>
