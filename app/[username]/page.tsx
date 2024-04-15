@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import avatar from "../../public/images/robot.png";
-import { FaHeart, FaComment, FaShare } from "react-icons/fa";
 import Image from "next/image";
 import Navbar from "../components/navbar/Navbar";
 import LoadingSkeleton from "../components/userPage/LoadingSkeleton";
 import ImageSkeleton from "../components/userPage/ImageSkeleton";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-
+import UserProfileSection from "../components/userPage/UserProfileSection";
+import Post from "../components/userPage/PostComponent";
+import { FaHeart, FaComment, FaShare, FaCamera } from "react-icons/fa";
+import MobileUserProfileSection from "../components/userPage/MobileUserProfileSection";
+import UserAvatarSection from "../components/userPage/UserAvatarSection";
+import PostModal from "../components/userPage/PostModal";
 
 const LIKED_POSTS_KEY = "likedPosts";
 
@@ -37,6 +40,8 @@ interface Post {
   likes: number;
   dislikes: number;
   likedBy: string[]; // Add the likedBy property here
+  image: string;
+
 }
 
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
@@ -50,6 +55,12 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [cloudImage, setCloudImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [likedPosts, setLikedPosts] = useState<string[]>([]);
+  const [slowTransitionOpened, setSlowTransitionOpened] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -64,6 +75,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     reader.readAsDataURL(selectedImage);
     reader.onload = () => {
       setNewImage(reader.result as string);
+      // console.log(reader.result)
       const endpoint = "/api/username/upload";
       axios
         .post(endpoint, { newImage: reader.result, email: user?.email })
@@ -91,7 +103,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         const postsResponse = await axios.get("/api/posts"); // Fetch all posts
         setPosts(postsResponse.data);
 
-        const storedLikedPosts = JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || "[]");
+        const storedLikedPosts = JSON.parse(
+          localStorage.getItem(LIKED_POSTS_KEY) || "[]"
+        );
         setLikedPosts(storedLikedPosts);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
@@ -104,9 +118,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
-
-
-  
   const handleReaction = async (postId: string) => {
     try {
       const userId = user?._id;
@@ -125,7 +136,11 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       const action = isLiked ? "unlike" : "like";
 
       // Send reaction request to server
-      const response = await axios.post(`/api/posts/react`, { postId, action, userId });
+      const response = await axios.post(`/api/posts/react`, {
+        postId,
+        action,
+        userId,
+      });
       const updatedPost = response.data;
 
       if (response.status === 200) {
@@ -150,7 +165,10 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         setLikedPosts(updatedLikedPosts);
 
         // Store updated liked posts in local storage
-        localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify(updatedLikedPosts));
+        localStorage.setItem(
+          LIKED_POSTS_KEY,
+          JSON.stringify(updatedLikedPosts)
+        );
       } else {
         console.error("Failed to react to post:", response.data.message);
       }
@@ -159,9 +177,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     }
   };
 
-
-  
-  
   const handleComment = async (postId: string) => {
     // Logic to handle commenting
     console.log(`Commenting on post with ID ${postId}`);
@@ -195,6 +210,8 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     return <LoadingSkeleton />;
   }
 
+  
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -203,165 +220,26 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-1">
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="text-center">
-                  <label htmlFor="avatarInput" style={{ cursor: "pointer" }}>
-                    {isLoading ? (
-                      <ImageSkeleton /> // Render skeleton while image is loading
-                    ) : user.profilePicture ? (
-                      <Image
-                        src={user.profilePicture}
-                        alt="Profile Picture"
-                        width={128}
-                        height={128}
-                        className="mx-auto rounded-full"
-                      />
-                    ) : (
-                      <Image
-                        src={avatar}
-                        alt="Avatar"
-                        width={128}
-                        height={128}
-                        className="mx-auto rounded-full"
-                      />
-                    )}
-                  </label>
-                  <input
-                    type="file"
-                    id="avatarInput"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={handleFileSelect}
-                  />
-                  <h1 className="mt-4 text-3xl font-extrabold text-gray-900">
-                    {user.firstName} {user.lastName}
-                  </h1>
-                  <p className="mt-1 text-lg text-gray-500">{user.userName}</p>
-                </div>
-                <div className="mt-8">
-                  <div className="flex justify-between">
-                    {/* <p className="text-lg font-semibold text-gray-700">
-                      User ID: {user._id}
-                    </p> */}
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-lg font-semibold text-gray-700">
-                      Email: {user.email}
-                    </p>
-                  </div>
-                </div>
+                <UserAvatarSection
+                  isLoading={isLoading}
+                  user={user}
+                  handleFileSelect={handleFileSelect}
+                />
               </div>
-              <textarea
-                value={postContent}
-                onChange={(e) => setPostContent(e.target.value)}
-                placeholder="Write your post..."
-                className="w-full h-32 px-3 py-2 mt-4 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-              />
-              <button
-                onClick={handlePost}
-                className="w-full px-4 py-2 mt-4 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-              >
-                Post
-              </button>
+              <PostModal user={user} />
+             
               <div className="mt-8 hidden md:flex flex-col">
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Notifications</h2>
-                  {/* Add notifications component */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Settings</h2>
-                  {/* Add settings component */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">
-                    Profile Summary
-                  </h2>
-                  {/* Add profile summary component */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Photos</h2>
-                  {/* Add photos component */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Albums</h2>
-                  {/* Add albums component */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Activities</h2>
-                  {/* Add activities component */}
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Friends</h2>
-                  {/* Add friends list component */}
-                </div>
+                <UserProfileSection />
               </div>
             </div>
             <div className="md:col-span-2">
-              <div className="">
-                {posts.map((post) => (
-                  <div
-                    key={post._id}
-                    className="bg-white mb-4 p-4 rounded-lg shadow-md "
-                  >
-                    <div className="flex items-center mb-2">
-                      <div className="relative w-8 h-8 mr-2">
-                        {post.userId.profilePicture && (
-                          <div className="relative w-8 h-8 mr-2">
-                            <Image
-                              src={post.userId.profilePicture}
-                              alt="Profile Picture"
-                              layout="fill"
-                              objectFit="cover"
-                              className="rounded-full"
-                            />
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-[12px] text-gray-700 font-semibold">
-                        {post.userId.firstName} {post.userId.lastName}
-                      </p>
-                    </div>
-                    <p className="text-gray-700">
-                      <small className="text-[9px]">{post.content}</small>
-                    </p>
-                    <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                      <p>Total Reactions: {post.likedBy.length}</p>
-                    </div>
-
-                    <hr className="my-4 border-gray-300" />
-                    <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                    <button
-                        onClick={() => handleReaction(post._id)}
-                        className="text-[8px]"
-                      >
-                        {likedPosts.includes(post._id) ? (
-                          <>
-                            <AiFillLike className="mx-auto text-blue-500" />{" "}
-                            Unlike
-                          </>
-                        ) : (
-                          <>
-                            <AiOutlineLike className="mx-auto" size={12} />{" "}
-                            Like
-                          </>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => handleComment(post._id)}
-                        className="text-[8px]"
-                      >
-                        <FaComment className="mx-auto" size={12} /> Comment
-                      </button>
-                      <button
-                        onClick={() => handleShare(post._id)}
-                        className="text-[8px]"
-                      >
-                        <FaShare className="mx-auto" size={12} /> Share
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <Post
+                posts={posts}
+                likedPosts={likedPosts}
+                handleReaction={handleReaction}
+                handleComment={handleComment}
+                handleShare={handleShare}
+              />
             </div>
           </div>
         </div>
