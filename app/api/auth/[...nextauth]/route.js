@@ -10,7 +10,6 @@ import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
 import { cookies } from "next/headers";
 
-
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -25,7 +24,6 @@ const handler = NextAuth({
       credentials: {},
       async authorize(credentials) {
         return handleAuthentication(credentials);
-        
       },
     }),
   ],
@@ -66,12 +64,9 @@ const handler = NextAuth({
         console.error("Error occurred during signIn:", error);
         return false;
       }
-      
     },
   },
 });
-
-
 
 async function handleAuthentication(credentials, profile) {
   try {
@@ -88,29 +83,38 @@ async function handleAuthentication(credentials, profile) {
       }
 
       if (user.socialId && !user.password) {
-          // Check if the user with the provided socialId exists
-          const socialUser = await User.findOne({
-            socialId: user.socialId,
-          });
+        // Check if the user with the provided socialId exists
+        const socialUser = await User.findOne({
+          socialId: user.socialId,
+        });
+
+        const token = generateToken({ email: user.email });
+        cookies().set("authToken", token, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24,
+          path: "/",
+          sameSite: "strict",
+        });
+
+        return { email: user.email, token, ...user.toObject() };
       } else {
         const passwordMatch = await comparePassword(password, user.password);
 
-      if (!passwordMatch) {
-        throw new Error("Invalid email or password");
+        if (!passwordMatch) {
+          throw new Error("Invalid email or password");
+        }
+
+        const token = generateToken({ email: user.email });
+        cookies().set("authToken", token, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24,
+          path: "/",
+          sameSite: "strict",
+        });
+
+        return { email: user.email, token, ...user.toObject() };
       }
-
-      const token = generateToken({ email: user.email });
-      cookies().set("authToken", token, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24,
-        path: "/",
-        sameSite: "strict",
-      });
-
-      return { email: user.email, token, ...user.toObject() };
-      } 
-
-         } else if (profile) {
+    } else if (profile) {
       const userExists = await User.findOne({ email: profile.email });
 
       if (!userExists) {
@@ -119,16 +123,15 @@ async function handleAuthentication(credentials, profile) {
         const lastName = nameParts[0];
         const profilePicture = profile.avatar_url || profile.picture;
         const userName = profile.login ? profile.login : lastName;
-        const socialId = profile.id
+        const socialId = profile.id;
 
-        
         const newUser = new User({
           email: profile.email,
           firstName,
           lastName,
           userName: userName,
           profilePicture: profilePicture,
-          socialId
+          socialId,
         });
 
         await newUser.save();
