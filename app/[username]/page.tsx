@@ -35,7 +35,6 @@ interface Post {
   likedBy: string[]; // Add the likedBy property here
 }
 
-
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
@@ -97,53 +96,47 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
-  
+  const handleReaction = async (postId: string) => {
+    try {
+      const userId = user?._id;
+      if (!userId) {
+        console.error("User ID is undefined");
+        return;
+      }
 
-const handleReaction = async (postId: string) => {
-  try {
-    const userId = user?._id;
-    if (!userId) {
-      console.error("User ID is undefined");
-      return;
-    }
+      const postIndex = posts.findIndex((post) => post._id === postId);
+      if (postIndex === -1) {
+        console.error("Post not found");
+        return;
+      }
 
-    const postIndex = posts.findIndex(post => post._id === postId);
-    if (postIndex === -1) {
-      console.error("Post not found");
-      return;
-    }
+      const isLiked = posts[postIndex].likedBy.includes(userId);
+      const action = isLiked ? "unlike" : "like";
 
-    const isLiked = posts[postIndex].likedBy.includes(userId);
-    const action = isLiked ? "unlike" : "like";
+      const response = await axios.post(`/api/posts/react`, { postId, action });
+      const updatedPost = response.data;
 
-    const response = await axios.post(`/api/posts/react`, { postId, action });
-    const updatedPost = response.data;
-    
-    if (response.status === 200) {
-      setPosts(prevPosts => {
-        return prevPosts.map((post, index) => {
-          if (index === postIndex) {
-            return {
-              ...post,
-              likes: updatedPost.likes,
-              likedBy: updatedPost.likedBy
-            };
-          }
-          return post;
+      if (response.status === 200) {
+        setPosts((prevPosts) => {
+          return prevPosts.map((post, index) => {
+            if (index === postIndex) {
+              return {
+                ...post,
+                likes: updatedPost.likes,
+                likedBy: updatedPost.likedBy,
+              };
+            }
+            return post;
+          });
         });
-      });
-      console.log(`Reacted to post with ID ${postId}`);
-    } else {
-      console.error("Failed to react to post:", response.data.message);
+        console.log(`Reacted to post with ID ${postId}`);
+      } else {
+        console.error("Failed to react to post:", response.data.message);
+      }
+    } catch (error: any) {
+      console.error("Error reacting to post:", error.message);
     }
-  } catch (error: any) {
-    console.error("Error reacting to post:", error.message);
-  }
-};
-
-
-
-  
+  };
 
   const handleComment = async (postId: string) => {
     // Logic to handle commenting
@@ -307,25 +300,25 @@ const handleReaction = async (postId: string) => {
                       <small className="text-[9px]">{post.content}</small>
                     </p>
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-  <p>Total Reactions: {post.likedBy.length}</p>
-</div>
+                      <p>Total Reactions: {post.likedBy.length}</p>
+                    </div>
 
                     <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
                       <button
-  onClick={() => handleReaction(post._id)}
-  className="text-[8px]"
->
-  {post.likedBy.includes(user?._id) ? (
-    <>
-      <FaHeart className="mx-auto" size={12} /> Unlike
-    </>
-  ) : (
-    <>
-      <FaHeart className="mx-auto" size={12} /> Like
-    </>
-  )}
-</button>
+                        onClick={() => handleReaction(post._id)}
+                        className="text-[8px]"
+                      >
+                        {post.likedBy.includes(user?._id) ? (
+                          <>
+                            <FaHeart className="mx-auto" size={12} /> Unlike
+                          </>
+                        ) : (
+                          <>
+                            <FaHeart className="mx-auto" size={12} /> Like
+                          </>
+                        )}
+                      </button>
 
                       <button
                         onClick={() => handleComment(post._id)}
