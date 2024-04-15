@@ -87,7 +87,13 @@ async function handleAuthentication(credentials, profile) {
         throw new Error("User not found");
       }
 
-      const passwordMatch = await comparePassword(password, user.password);
+      if (user.socialId && !user.password) {
+          // Check if the user with the provided socialId exists
+          const socialUser = await User.findOne({
+            socialId: user.socialId,
+          });
+      } else {
+        const passwordMatch = await comparePassword(password, user.password);
 
       if (!passwordMatch) {
         throw new Error("Invalid email or password");
@@ -102,7 +108,9 @@ async function handleAuthentication(credentials, profile) {
       });
 
       return { email: user.email, token, ...user.toObject() };
-    } else if (profile) {
+      } 
+
+         } else if (profile) {
       const userExists = await User.findOne({ email: profile.email });
 
       if (!userExists) {
