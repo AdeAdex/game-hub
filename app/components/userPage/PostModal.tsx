@@ -140,7 +140,7 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
           <hr />
           <div className="flex py-2 gap-2">
             <div className="relative w-8 h-8 mr-2">
-              {user.profilePicture && (
+              {user.profilePicture ? (
                 <div className="relative w-10 h-10 mr-2">
                   <Image
                     src={user.profilePicture}
@@ -150,7 +150,17 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
                     className="rounded-full"
                   />
                 </div>
-              )}
+              ) : (
+        <div className="relative w-10 h-10 mr-2">
+              <Image
+                src={avatar}
+                alt="Profile Picture"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+              ) }
             </div>
             <div className="text-[12px] fw-bold">
               {user.lastName} {user.firstName}
