@@ -17,7 +17,7 @@ export const POST = async (req) => {
   }
 };
 
-export const GET = async (request, response) => {
+export const GET = async (req, res) => {
   try {
     await connectToDb();
     const posts = await Post.find()

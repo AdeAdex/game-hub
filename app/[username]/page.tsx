@@ -8,6 +8,10 @@ import Image from "next/image";
 import Navbar from "../components/navbar/Navbar";
 import LoadingSkeleton from "../components/userPage/LoadingSkeleton";
 import ImageSkeleton from "../components/userPage/ImageSkeleton";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+
+
+const LIKED_POSTS_KEY = "likedPosts";
 
 interface User {
   _id: string;
@@ -45,6 +49,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [newImage, setNewImage] = useState("");
   const [cloudImage, setCloudImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [likedPosts, setLikedPosts] = useState<string[]>([]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -85,6 +90,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
         const postsResponse = await axios.get("/api/posts"); // Fetch all posts
         setPosts(postsResponse.data);
+
+        const storedLikedPosts = JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || "[]");
+        setLikedPosts(storedLikedPosts);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
         router.push("/not-found"); // Redirect to 404 page if user or posts not found
@@ -96,6 +104,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
+
+
+  
   const handleReaction = async (postId: string) => {
     try {
       const userId = user?._id;
@@ -110,14 +121,15 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         return;
       }
 
-      const isLiked = posts[postIndex].likedBy.includes(userId);
+      const isLiked = likedPosts.includes(postId); // Check if the post is liked by the user
       const action = isLiked ? "unlike" : "like";
-      console.log(isLiked)
 
-      const response = await axios.post(`/api/posts/react`, { postId, action });
+      // Send reaction request to server
+      const response = await axios.post(`/api/posts/react`, { postId, action, userId });
       const updatedPost = response.data;
 
       if (response.status === 200) {
+        // Update posts state with the updated post
         setPosts((prevPosts) => {
           return prevPosts.map((post, index) => {
             if (index === postIndex) {
@@ -130,7 +142,15 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
             return post;
           });
         });
-        console.log(`Reacted to post with ID ${postId}`);
+
+        // Toggle the liked state for the post
+        const updatedLikedPosts = isLiked
+          ? likedPosts.filter((id) => id !== postId)
+          : [...likedPosts, postId];
+        setLikedPosts(updatedLikedPosts);
+
+        // Store updated liked posts in local storage
+        localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify(updatedLikedPosts));
       } else {
         console.error("Failed to react to post:", response.data.message);
       }
@@ -139,6 +159,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     }
   };
 
+
+  
+  
   const handleComment = async (postId: string) => {
     // Logic to handle commenting
     console.log(`Commenting on post with ID ${postId}`);
@@ -306,17 +329,19 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
                     <hr className="my-4 border-gray-300" />
                     <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                      <button
+                    <button
                         onClick={() => handleReaction(post._id)}
                         className="text-[8px]"
                       >
-                        {post.likedBy.includes(user?._id) ? (
+                        {likedPosts.includes(post._id) ? (
                           <>
-                            <FaHeart className="mx-auto" size={12} /> Unlike
+                            <AiFillLike className="mx-auto text-blue-500" />{" "}
+                            Unlike
                           </>
                         ) : (
                           <>
-                            <FaHeart className="mx-auto" size={12} /> Like
+                            <AiOutlineLike className="mx-auto" size={12} />{" "}
+                            Like
                           </>
                         )}
                       </button>
