@@ -66,27 +66,30 @@ const PostComponent: React.FC<PostProps> = ({
               <small className="text-[9px]">{post.content}</small>
             )}
           </p>
-          <p>
-            {post.image && ( // Conditionally render image if it exists
-              <div className="mt-2 ">
-                <Image
-                  src={post.image}
-                  alt="Post Image"
-                  width={400}
-                  height={400}
-                  className="border w-full"
-                />
-              </div>
+          <>
+            {post.image && (
+              <Image
+                src={post.image}
+                alt="PostImage"
+                width={400}
+                height={400}
+                className="w-full"
+                priority
+              />
             )}
-          </p>
+          </>
           <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
-            <p>
-              {likedPosts.includes(post._id) && post.likedBy.length > 1 ? (
-                <small>You and {post.likedBy.length - 1} others </small>
-              ) : (
-                <small>{post.likedBy.length}</small>
-              )}
-            </p>
+            {likedPosts.includes(post._id) ? (
+              <>
+                {post.likedBy.length > 1 ? (
+                  <small>You and {post.likedBy.length - 1} others</small>
+                ) : (
+                  <small>{post.likedBy.length}</small>
+                )}
+              </>
+            ) : (
+              <small>{post.likedBy.length}</small>
+            )}
           </div>
 
           <hr className="my-2 border-gray-300" />
