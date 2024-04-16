@@ -3,6 +3,10 @@ import { Modal, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png"; // Ensure avatar is imported correctly
 import { FaUserPlus } from "react-icons/fa";
+import axios from "axios";
+import { SnackbarProvider, useSnackbar } from "notistack";
+
+
 
 const style = {
   // position: "absolute" as "absolute",
@@ -24,13 +28,43 @@ const style = {
 // //   likedBy: User[]; // Define the likedBy prop as an array of User objects
 // }
 
-const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
+const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({ open, handleClose, likedBy }) => {
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp open={open} handleClose={handleClose} likedBy={likedBy} />
+    </SnackbarProvider>
+  );
+ 
+};
+
+function MyApp({
   open,
   handleClose,
   likedBy,
-}) => {
-  console.log("liked", likedBy);
+}) {
 
+  console.log("liked", likedBy);
+  const { enqueueSnackbar } = useSnackbar();
+
+
+  const handleAddFriend = async (userId) => {
+    try {
+      // Make a POST request to the backend API
+      const response = await axios.post("/api/username/add-friends", {
+        userId,
+      });
+      console.log(response.data); // Logging the response for now
+      enqueueSnackbar(response.data.message, { variant: "success" });
+
+      // Optionally, update UI or perform any other action after adding friend
+    } catch (error) {
+      console.error("Error adding friend:", error);
+      enqueueSnackbar("Error adding friend", { variant: "error" });
+    }
+  };
   return (
     <Modal
       open={open}
@@ -38,7 +72,10 @@ const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="rounded-md shadow-sm border-none w-[400px] md:w-[600px]">
+      <Box
+        sx={style}
+        className="rounded-md shadow-sm border-none w-[400px] md:w-[600px]"
+      >
         <Typography variant="h6" component="h2" className="text-[14px]">
           Users Who Liked This Post
         </Typography>
@@ -58,21 +95,29 @@ const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
                     />
                   </div>
                   <div className="text-[12px] fw-bold">
-                  {user.firstName} {user.lastName} 
+                    {user.firstName} {user.lastName}
                   </div>
                 </div>
-                <button className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1">
-                  <FaUserPlus className="my-auto" /> <span className="my-auto">Add Friend</span>
+                <button
+                  className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                  onClick={() => handleAddFriend(user._id)}
+                >
+                  <FaUserPlus className="my-auto" />{" "}
+                  <span className="my-auto">Add Friend</span>
                 </button>
               </div>
             ))
           ) : (
-            <Typography key="empty" variant="body2">No users liked this post.</Typography>
+            <Typography key="empty" variant="body2">
+              No users liked this post.
+            </Typography>
           )}
         </div>
       </Box>
     </Modal>
   );
-};
+}
 
 export default LikedUserModal;
+
+

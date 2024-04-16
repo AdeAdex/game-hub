@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
     socialId: { type: String, default: ""},
     profilePicture: { type: String },
     resetPasswordToken: { type: String },
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] 
   },
   { timestamps: true }
 );

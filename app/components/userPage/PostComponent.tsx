@@ -64,111 +64,116 @@ const PostComponent: React.FC<PostProps> = ({
 
   return (
     <div className="">
-      {posts.map((post) => (
-        <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
-          <div className="flex items-center mb-2">
-            <div className="relative w-8 h-8 mr-2">
-              {post.userId.profilePicture ? (
-                <div className="relative w-8 h-8 mr-2">
+      {posts.length > 0 ? ( // Check if there are posts available
+        posts.map((post) => (
+          <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
+            <div className="flex items-center mb-2">
+              <div className="relative w-8 h-8 mr-2">
+                {post.userId.profilePicture ? (
+                  <div className="relative w-8 h-8 mr-2">
+                    <Image
+                      src={post.userId.profilePicture}
+                      alt="Profile Picture"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-full"
+                    />
+                  </div>
+                ) : (
                   <Image
-                    src={post.userId.profilePicture}
+                    src={avatar}
                     alt="Profile Picture"
                     layout="fill"
                     objectFit="cover"
                     className="rounded-full"
                   />
-                </div>
-              ) : (
+                )}
+              </div>
+              <p className="text-[12px] text-gray-700 font-semibold">
+                {post.userId.firstName} {post.userId.lastName}
+              </p>
+            </div>
+            <p className="text-gray-700 mb-2">
+              {post.content && (
+                <small className="text-[14px]">{post.content}</small>
+              )}
+            </p>
+            <>
+              {showCarousel && <MediaCarousel images={[post.image]} />}
+              {post.image && (
                 <Image
-                  src={avatar}
-                  alt="Profile Picture"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-full"
+                  src={post.image}
+                  alt="PostImage"
+                  width={400}
+                  height={400}
+                  className="w-full cursor-pointer"
+                  priority
+                  onClick={() => openImage(post.image)}
                 />
               )}
+            </>
+            <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
+              <small
+                className="cursor-pointer"
+                onClick={() => handleLikeUser(post.likedBy)}
+              >
+                {post.likedBy.length > 1 ? (
+                  <>You and {post.likedBy.length - 1} others</>
+                ) : (
+                  <>{post.likedBy.length} like</>
+                )}
+              </small>
+  
+              {open && (
+                <LikedUserModal
+                  open={open}
+                  handleClose={handleClose}
+                  likedBy={selectedPostLikedBy}
+                />
+              )}
+              
             </div>
-            <p className="text-[12px] text-gray-700 font-semibold">
-              {post.userId.firstName} {post.userId.lastName}
-            </p>
+  
+            <hr className="my-2 border-gray-300" />
+            <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
+              <button
+                onClick={() => handleReaction(post._id)}
+                className="text-[8px]"
+              >
+                {likedPosts.includes(post._id) ? (
+                  <>
+                    <AiFillLike className="mx-auto text-blue-500" size={15} />
+                    Unlike
+                  </>
+                ) : (
+                  <>
+                    <AiOutlineLike className="mx-auto" size={15} />
+                    Like
+                  </>
+                )}
+              </button>
+  
+              <button
+                onClick={() => handleComment(post._id)}
+                className="text-[8px]"
+              >
+                <FaComment className="mx-auto" size={12} /> Comment
+              </button>
+              <button
+                onClick={() => handleShare(post._id)}
+                className="text-[8px]"
+              >
+                <FaShare className="mx-auto" size={12} /> Share
+              </button>
+            </div>
           </div>
-          <p className="text-gray-700 mb-2">
-            {post.content && (
-              <small className="text-[14px]">{post.content}</small>
-            )}
-          </p>
-          <>
-            {showCarousel && <MediaCarousel images={[post.image]} />}
-            {post.image && (
-              <Image
-                src={post.image}
-                alt="PostImage"
-                width={400}
-                height={400}
-                className="w-full cursor-pointer"
-                priority
-                onClick={() => openImage(post.image)}
-              />
-            )}
-          </>
-          <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
-            <small
-              className="cursor-pointer"
-              onClick={() => handleLikeUser(post.likedBy)}
-            >
-              {post.likedBy.length > 1 ? (
-                <>You and {post.likedBy.length - 1} others</>
-              ) : (
-                <>{post.likedBy.length} like</>
-              )}
-            </small>
-
-            {open && (
-              <LikedUserModal
-                open={open}
-                handleClose={handleClose}
-                likedBy={selectedPostLikedBy}
-              />
-            )}
-            
-          </div>
-
-          <hr className="my-2 border-gray-300" />
-          <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-            <button
-              onClick={() => handleReaction(post._id)}
-              className="text-[8px]"
-            >
-              {likedPosts.includes(post._id) ? (
-                <>
-                  <AiFillLike className="mx-auto text-blue-500" size={15} />
-                  Unlike
-                </>
-              ) : (
-                <>
-                  <AiOutlineLike className="mx-auto" size={15} />
-                  Like
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={() => handleComment(post._id)}
-              className="text-[8px]"
-            >
-              <FaComment className="mx-auto" size={12} /> Comment
-            </button>
-            <button
-              onClick={() => handleShare(post._id)}
-              className="text-[8px]"
-            >
-              <FaShare className="mx-auto" size={12} /> Share
-            </button>
-          </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No posts to show</p> // Display this message if there are no posts
+      )}
     </div>
   );
+  
 };
 
 export default PostComponent;
