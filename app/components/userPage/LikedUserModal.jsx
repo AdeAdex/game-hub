@@ -1,4 +1,4 @@
-import React from "react";
+import React/* , { useEffect } */ from "react";
 import { Modal, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png"; // Ensure avatar is imported correctly
@@ -28,13 +28,13 @@ const style = {
 // //   likedBy: User[]; // Define the likedBy prop as an array of User objects
 // }
 
-const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({ open, handleClose, likedBy }) => {
+const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({ open, handleClose, likedBy, loggedInUserId }) => {
   return (
     <SnackbarProvider
       maxSnack={1}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <MyApp open={open} handleClose={handleClose} likedBy={likedBy} />
+      <MyApp open={open} handleClose={handleClose} likedBy={likedBy} loggedInUserId={loggedInUserId}/>
     </SnackbarProvider>
   );
  
@@ -44,9 +44,11 @@ function MyApp({
   open,
   handleClose,
   likedBy,
+  loggedInUserId
 }) {
 
   console.log("liked", likedBy);
+  console.log("loggedInUserId", loggedInUserId);
   const { enqueueSnackbar } = useSnackbar();
 
 
@@ -65,6 +67,14 @@ function MyApp({
       enqueueSnackbar(error.response.data.message, { variant: "error" });
     }
   };
+
+  // useEffect(() => {
+    
+  // }, [])
+  
+  const filteredLikedBy = likedBy.filter(user => user._id !== loggedInUserId);
+
+  
   return (
     <Modal
       open={open}
@@ -81,8 +91,8 @@ function MyApp({
         </Typography>
         <hr />
         <div className="flex flex-wrap flex-col py-2 gap-2">
-          {likedBy.length > 0 ? (
-            likedBy.map((user) => (
+          {filteredLikedBy.length > 0 ? (
+            filteredLikedBy.map((user) => (
               <div className="flex justify-between" key={user._id}>
                 <div className="flex items-center">
                   <div className="relative w-10 h-10 mr-2">

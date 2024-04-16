@@ -37,12 +37,13 @@ interface PostProps {
   handleShare: (postId: string) => void;
 }
 
-const PostComponent: React.FC<PostProps> = ({
+const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   posts,
   likedPosts,
   handleReaction,
   handleComment,
   handleShare,
+  loggedInUserId,
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
   const [open, setOpen] = useState(false);
@@ -129,6 +130,7 @@ const PostComponent: React.FC<PostProps> = ({
                   open={open}
                   handleClose={handleClose}
                   likedBy={selectedPostLikedBy}
+                  loggedInUserId={loggedInUserId}
                 />
               )}
               

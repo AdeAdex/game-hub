@@ -182,6 +182,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 handleReaction={handleReaction}
                 handleComment={handleComment}
                 handleShare={handleShare}
+                loggedInUserId={user._id}
               />
             </div>
           </div>
