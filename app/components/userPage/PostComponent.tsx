@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -67,14 +67,14 @@ const PostComponent: React.FC<PostProps> = ({
                   />
                 </div>
               ) : (
-          <Image
-                    src={avatar}
-                    alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-full"
-                  />
-              ) }
+                <Image
+                  src={avatar}
+                  alt="Profile Picture"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              )}
             </div>
             <p className="text-[12px] text-gray-700 font-semibold">
               {post.userId.firstName} {post.userId.lastName}
@@ -86,7 +86,7 @@ const PostComponent: React.FC<PostProps> = ({
             )}
           </p>
           <>
-          {showCarousel && <MediaCarousel images={[post.image]}/>} 
+            {showCarousel && <MediaCarousel images={[post.image]} />}
             {post.image && (
               <Image
                 src={post.image}

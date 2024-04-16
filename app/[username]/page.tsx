@@ -100,13 +100,18 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         );
         setUser(userResponse.data);
 
-        const postsResponse = await axios.get("/api/posts"); // Fetch all posts
-        setPosts(postsResponse.data);
+        // const postsResponse = await axios.get("/api/posts"); // Fetch all posts
+        // setPosts(postsResponse.data);
 
-        const storedLikedPosts = JSON.parse(
-          localStorage.getItem(LIKED_POSTS_KEY) || "[]"
-        );
-        setLikedPosts(storedLikedPosts);
+        // const storedLikedPosts = JSON.parse(
+        //   localStorage.getItem(LIKED_POSTS_KEY) || "[]"
+        // );
+        // setLikedPosts(storedLikedPosts);
+
+        // Fetch all posts and liked posts with user ID
+      const postsResponse = await axios.post(`/api/posts`, { userId: userResponse.data._id });
+      setPosts(postsResponse.data.posts);
+      setLikedPosts(postsResponse.data.likedPosts);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
         router.push("/not-found"); // Redirect to 404 page if user or posts not found
@@ -118,6 +123,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
+
   const handleReaction = async (postId: string) => {
     try {
       const userId = user?._id;
@@ -126,48 +132,21 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         return;
       }
 
-      const postIndex = posts.findIndex((post) => post._id === postId);
-      if (postIndex === -1) {
-        console.error("Post not found");
-        return;
-      }
-
-      const isLiked = likedPosts.includes(postId); // Check if the post is liked by the user
-      const action = isLiked ? "unlike" : "like";
-
-      // Send reaction request to server
       const response = await axios.post(`/api/posts/react`, {
         postId,
-        action,
+        action: likedPosts.includes(postId) ? "unlike" : "like",
         userId,
       });
       const updatedPost = response.data;
 
       if (response.status === 200) {
-        // Update posts state with the updated post
-        setPosts((prevPosts) => {
-          return prevPosts.map((post, index) => {
-            if (index === postIndex) {
-              return {
-                ...post,
-                likes: updatedPost.likes,
-                likedBy: updatedPost.likedBy,
-              };
-            }
-            return post;
-          });
-        });
-
-        // Toggle the liked state for the post
-        const updatedLikedPosts = isLiked
-          ? likedPosts.filter((id) => id !== postId)
-          : [...likedPosts, postId];
-        setLikedPosts(updatedLikedPosts);
-
-        // Store updated liked posts in local storage
-        localStorage.setItem(
-          LIKED_POSTS_KEY,
-          JSON.stringify(updatedLikedPosts)
+        setPosts((prevPosts) =>
+          prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
+        );
+        setLikedPosts((prevLikedPosts) =>
+          likedPosts.includes(postId)
+            ? prevLikedPosts.filter((id) => id !== postId)
+            : [...prevLikedPosts, postId]
         );
       } else {
         console.error("Failed to react to post:", response.data.message);
@@ -176,6 +155,65 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       console.error("Error reacting to post:", error.message);
     }
   };
+
+  // const handleReaction = async (postId: string) => {
+  //   try {
+  //     const userId = user?._id;
+  //     if (!userId) {
+  //       console.error("User ID is undefined");
+  //       return;
+  //     }
+
+  //     const postIndex = posts.findIndex((post) => post._id === postId);
+  //     if (postIndex === -1) {
+  //       console.error("Post not found");
+  //       return;
+  //     }
+
+  //     const isLiked = likedPosts.includes(postId); // Check if the post is liked by the user
+  //     const action = isLiked ? "unlike" : "like";
+
+  //     // Send reaction request to server
+  //     const response = await axios.post(`/api/posts/react`, {
+  //       postId,
+  //       action,
+  //       userId,
+  //     });
+  //     const updatedPost = response.data;
+
+  //     if (response.status === 200) {
+  //       // Update posts state with the updated post
+  //       setPosts((prevPosts) => {
+  //         return prevPosts.map((post, index) => {
+  //           if (index === postIndex) {
+  //             return {
+  //               ...post,
+  //               likes: updatedPost.likes,
+  //               likedBy: updatedPost.likedBy,
+  //             };
+  //           }
+  //           return post;
+  //         });
+  //       });
+
+  //       // Toggle the liked state for the post
+  //       const updatedLikedPosts = isLiked
+  //         ? likedPosts.filter((id) => id !== postId)
+  //         : [...likedPosts, postId];
+  //       setLikedPosts(updatedLikedPosts);
+
+  //       // Store updated liked posts in local storage
+  //       localStorage.setItem(
+  //         LIKED_POSTS_KEY,
+  //         JSON.stringify(updatedLikedPosts)
+  //       );
+  //     } else {
+  //       console.error("Failed to react to post:", response.data.message);
+  //     }
+  //   } catch (error: any) {
+  //     console.error("Error reacting to post:", error.message);
+  //   }
+  // };
 
   const handleComment = async (postId: string) => {
     // Logic to handle commenting

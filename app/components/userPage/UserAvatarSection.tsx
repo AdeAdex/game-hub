@@ -78,7 +78,9 @@ const UserAvatarSection: React.FC<UserAvatarSectionProps> = ({
         </h1>
         <p className="mt-1 text-lg text-gray-500">{user.userName}</p>
       </div>
-      <div className="mt-8 md:hidden"><MobileUserProfileSection/></div>
+      <div className="mt-8 md:hidden">
+        <MobileUserProfileSection />
+      </div>
     </>
   );
 };

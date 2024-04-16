@@ -98,7 +98,6 @@ async function handleAuthentication(credentials, profile) {
 
         return { email: user.email, token, ...user.toObject() };
       } else {
-        
         const passwordMatch = await comparePassword(password, user.password);
 
         if (!passwordMatch) {

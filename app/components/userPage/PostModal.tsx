@@ -108,7 +108,7 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
               />
             </div>
           ) : (
-      <div className="relative w-10 h-10 mr-2">
+            <div className="relative w-10 h-10 mr-2">
               <Image
                 src={avatar}
                 alt="Profile Picture"
@@ -117,7 +117,7 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
                 className="rounded-full"
               />
             </div>
-          ) }
+          )}
         </div>
         <input
           onClick={handleOpen}
@@ -151,16 +151,16 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
                   />
                 </div>
               ) : (
-        <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={avatar}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-              ) }
+                <div className="relative w-10 h-10 mr-2">
+                  <Image
+                    src={avatar}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
+              )}
             </div>
             <div className="text-[12px] fw-bold">
               {user.lastName} {user.firstName}
