@@ -18,7 +18,7 @@ export const POST = async (req, res) => {
     // Fetch all posts and liked posts for the user
     const likedPosts = await Post.find({ likedBy: userId }).populate(
       "userId",
-      "profilePicture firstName lastName"
+      "profilePicture firstName lastName userName"
     );
 
     //     console.log("liked", likedPosts)

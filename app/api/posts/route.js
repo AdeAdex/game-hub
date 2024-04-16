@@ -45,7 +45,11 @@ export const GET = async (req, res) => {
     const posts = await Post.find()
       .sort({ timestamp: -1 })
       .populate("userId", "profilePicture firstName lastName")
-      .populate("likedBy"); // Populate the likedBy array
+      .populate({
+        path: "likedBy",
+        select: "-socialId -password", // Exclude socialId and password
+      });
+      // .populate("likedBy"); // Populate the likedBy array
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
     console.error("Error fetching posts:", error.message);

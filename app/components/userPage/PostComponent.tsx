@@ -6,6 +6,7 @@ import { FaHeart, FaComment, FaShare } from "react-icons/fa";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import MediaCarousel from "./MediaCarousel";
 import avatar from "../../../public/images/robot.png";
+import LikedUserModal from "./LikedUserModal";
 
 interface User {
   _id: string;
@@ -24,7 +25,7 @@ interface Post {
   userId: User;
   likes: number;
   dislikes: number;
-  likedBy: string[];
+  likedBy: string[]; 
   image: string;
 }
 
@@ -44,10 +45,21 @@ const PostComponent: React.FC<PostProps> = ({
   handleShare,
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const openImage = (image: string) => {
     console.log(image);
     // setShowCarousel(true);
+  };
+
+  const handleLikeUser = (likedBy: string[]) => {
+    setSelectedPostLikedBy(likedBy);
+    setOpen(true);
   };
 
   return (
@@ -100,17 +112,25 @@ const PostComponent: React.FC<PostProps> = ({
             )}
           </>
           <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
-            {likedPosts.includes(post._id) ? (
-              <>
-                {post.likedBy.length > 1 ? (
-                  <small>You and {post.likedBy.length - 1} others</small>
-                ) : (
-                  <small>{post.likedBy.length}</small>
-                )}
-              </>
-            ) : (
-              <small>{post.likedBy.length}</small>
+            <small
+              className="cursor-pointer"
+              onClick={() => handleLikeUser(post.likedBy)}
+            >
+              {post.likedBy.length > 1 ? (
+                <>You and {post.likedBy.length - 1} others</>
+              ) : (
+                <>{post.likedBy.length} like</>
+              )}
+            </small>
+
+            {open && (
+              <LikedUserModal
+                open={open}
+                handleClose={handleClose}
+                likedBy={selectedPostLikedBy}
+              />
             )}
+            
           </div>
 
           <hr className="my-2 border-gray-300" />
