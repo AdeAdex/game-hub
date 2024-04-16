@@ -58,7 +58,7 @@ const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
                     />
                   </div>
                   <div className="text-[12px] fw-bold">
-                    {user.lastName} {user.firstName}
+                  {user.firstName} {user.lastName} 
                   </div>
                 </div>
                 <button className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1">

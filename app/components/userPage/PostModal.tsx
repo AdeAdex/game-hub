@@ -180,7 +180,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
               )}
             </div>
             <div className="text-[12px] fw-bold">
-              {user.lastName} {user.firstName}
+            {user.firstName} {user.lastName} 
             </div>
           </div>
           <TextField
