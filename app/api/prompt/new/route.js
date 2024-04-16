@@ -11,11 +11,18 @@ export const POST = async (req) => {
   const { prompt } = await req.json();
   try {
     await connectToDb();
-    const existingUser = await User.findOne({ email: prompt.email });
 
-    if (existingUser) {
+    const existingUserWithEmail = await User.findOne({ email: prompt.email });
+    const existingUserWithUsername = await User.findOne({ userName: prompt.userName });
+
+    if (existingUserWithEmail) {
       console.log("Email already exists");
       return NextResponse.json({ message: "Email already exists" }, { status: 400 });
+    }
+
+    if (existingUserWithUsername) {
+      console.log("Username already exists");
+      return NextResponse.json({ message: "Username already exists" }, { status: 400 });
     }
 
     const hashedPassword = await hashPassword(prompt.password);
