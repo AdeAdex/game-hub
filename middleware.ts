@@ -52,6 +52,12 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // If the user is authenticated, allow access to the dashboard
+if (pathname === "/dashboard") {
+  return NextResponse.next();
+}
+
+
   // List of routes accessible to authenticated users
   const privateRoutes = ["/", "/dashboard"];
 

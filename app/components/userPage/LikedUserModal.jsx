@@ -46,8 +46,8 @@ const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
         <div className="flex flex-wrap flex-col py-2 gap-2">
           {likedBy.length > 0 ? (
             likedBy.map((user) => (
-              <div className="flex justify-between">
-                <div key={user._id} className="flex items-center">
+              <div className="flex justify-between" key={user._id}>
+                <div className="flex items-center">
                   <div className="relative w-10 h-10 mr-2">
                     <Image
                       src={user.profilePicture || avatar}
@@ -67,7 +67,7 @@ const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
               </div>
             ))
           ) : (
-            <Typography variant="body2">No users liked this post.</Typography>
+            <Typography key="empty" variant="body2">No users liked this post.</Typography>
           )}
         </div>
       </Box>
