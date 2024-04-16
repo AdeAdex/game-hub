@@ -26,11 +26,23 @@ interface User {
   bio: string;
 }
 
-interface PostModalProps {
-  user: User;
+interface Post {
+  _id: string;
+  content: string;
+  timestamp: string;
+  userId: User;
+  likes: number;
+  dislikes: number;
+  likedBy: string[]; // Add the likedBy property here
+  image: string;
 }
 
-const PostModal: React.FC<PostModalProps> = ({ user }) => {
+interface PostModalProps {
+  user: User;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+}
+
+const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
   const [open, setOpen] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -85,6 +97,11 @@ const PostModal: React.FC<PostModalProps> = ({ user }) => {
 
       const response = await axios.post("/api/posts", postData);
       console.log(response);
+
+      // After posting, update the UI with the new post
+      const newPost = response.data; // Assuming the response contains the newly created post data
+      // You can add the new post to the beginning of the posts array
+      setPosts((prevPosts) => [newPost, ...prevPosts]);
     } catch (error: any) {
       console.error("Error creating post:", error);
       // Handle error
