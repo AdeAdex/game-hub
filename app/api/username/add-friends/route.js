@@ -19,6 +19,10 @@ export const POST = async (req) => {
       return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
     }
     
+    // Check if the friend ID already exists in the user's friends list
+    if (user.friends.includes(userId)) {
+      return NextResponse.json({ success: false, message: 'Friend already exists in the user\'s friend list' }, { status: 400 });
+    }
     // Assuming userId is the ID of the friend to be added
     user.friends.push(userId); // Add the friend to the user's friends list
     await user.save(); // Save the updated user

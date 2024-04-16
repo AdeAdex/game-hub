@@ -61,8 +61,8 @@ function MyApp({
 
       // Optionally, update UI or perform any other action after adding friend
     } catch (error) {
-      console.error("Error adding friend:", error);
-      enqueueSnackbar("Error adding friend", { variant: "error" });
+      console.error(error.response.data.message);
+      enqueueSnackbar(error.response.data.message, { variant: "error" });
     }
   };
   return (
