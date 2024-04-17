@@ -57,6 +57,7 @@ function MyApp({
       // Make a POST request to the backend API
       const response = await axios.post("/api/username/add-friends", {
         userId,
+      loggedInUserId,
       });
       console.log(response.data); // Logging the response for now
       enqueueSnackbar(response.data.message, { variant: "success" });
