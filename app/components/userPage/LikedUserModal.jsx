@@ -87,7 +87,7 @@ function MyApp({
         sx={style}
         className="rounded-md shadow-sm border-none w-[400px] md:w-[600px]"
       >
-        <Typography variant="h6" component="h2" className="text-[14px]">
+        <Typography variant="h6" component="h2" className="text-[12px]">
           Users Who Liked This Post
         </Typography>
         <hr />
