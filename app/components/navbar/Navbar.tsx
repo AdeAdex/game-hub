@@ -114,7 +114,7 @@ const Navbar: React.FC = () => {
         <div className="flex gap-8">
           <IoMdNotifications size={25} className="my-auto"/>
           <div className="my-auto flex">
-            {session?.user && token ? (
+            {userData && token ? (
               loading ? (
                 <div className="flex flex-col relative">
                   <div className="flex gap-3 cursor-pointer" onClick={handleDropdown}>
@@ -128,11 +128,10 @@ const Navbar: React.FC = () => {
               ) : (
                 <div className="flex flex-col relative">
                   <div className="flex gap-3 cursor-pointer" onClick={handleDropdown}>
-                    {session?.user.image || (session?.user as AuthState)?.profilePicture ? (
+                    {UserDate?.profilePicture ? (
                       <Image
                         src={
-                          (session?.user.image ||
-                            (session?.user as AuthState)?.profilePicture) as string
+                          ((UserDate?.profilePicture) as string
                         }
                         alt="profile"
                         width={32}
@@ -164,7 +163,7 @@ const Navbar: React.FC = () => {
             )}
           </div>
           <div className="my-auto hidden md:flex">
-            {session?.user && token ? (
+            {userData && token ? (
               <div></div>
             ) : (
               <AuthButton title="register" to="/register" />
