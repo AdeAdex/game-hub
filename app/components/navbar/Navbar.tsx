@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
           <div className="flex relative">
           <IoMdNotifications size={25} className="my-auto" />
           {userData && userData.incomingFriendRequests && (
-  <small className="absolute flex items-center justify-center rounded-full bg-red-500 text-white w-3 h-3 top-3 right-1 transform translate-x-1/2 -translate-y-1/2">
+  <small className="absolute flex items-center justify-center rounded-full p-1 bg-red-500 text-white w-3 h-3 top-3 right-1 transform translate-x-1/2 -translate-y-1/2">
     {userData.incomingFriendRequests.length}
   </small>
 )}
