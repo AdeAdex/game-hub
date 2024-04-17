@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
     };
 
     fetchData();
-  }, [session, userData]);
+  }, [session]);
 
   return (
     <main>
