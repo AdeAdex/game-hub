@@ -62,29 +62,40 @@ const LoadingSkeleton = () => {
             </div>
           </div>
           <div className="md:col-span-2">
-            {/* Posts Skeleton */}
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
-              {/* Loading skeleton for posts */}
-              {[...Array(5)].map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-white mb-4 p-4 rounded-lg shadow-md "
-                >
-                  <div className="flex items-center mb-2">
-                    <div className="relative w-8 h-8 mr-2 bg-gray-300 rounded-full"></div>
-                    <p className="text-[12px] text-gray-700 font-semibold bg-gray-300 h-4 w-24 rounded"></p>
-                  </div>
-                  <p className="text-gray-700 bg-gray-300 h-4 rounded"></p>
-                  <hr className="my-4 border-gray-300" />
-                  <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
-                    <button className="text-[8px] bg-gray-300 h-6 w-16 rounded"></button>
-                    <button className="text-[8px] bg-gray-300 h-6 w-20 rounded"></button>
-                    <button className="text-[8px] bg-gray-300 h-6 w-20 rounded"></button>
-                  </div>
-                </div>
-              ))}
-            </div>
+  {/* Posts Skeleton */}
+  <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
+    {/* Loading skeleton for posts */}
+    {[...Array(5)].map((_, index) => (
+      <div
+        key={index}
+        className="bg-white mb-4 p-4 rounded-lg shadow-md "
+      >
+        <div className="flex items-center mb-4">
+          <div className="relative w-12 h-12 mr-4 bg-gray-300 rounded-full"></div>
+          <div>
+            <div className="text-gray-700 bg-gray-300 h-3 w-24 mb-2 rounded"></div>
+            <div className="text-gray-500 bg-gray-300 h-2 w-20 rounded"></div>
           </div>
+        </div>
+        <div className="text-gray-700 bg-gray-300 h-3 mb-4 rounded"></div>
+        {/* Loading skeleton for image or media carousel */}
+        <div className="aspect-w-16 aspect-h-9 bg-gray-300 mb-4"></div>
+        <div className="flex justify-between items-center text-gray-500">
+          <div className="flex">
+            <button className="text-[8px] bg-gray-300 h-6 w-16 rounded mr-2"></button>
+            <button className="text-[8px] bg-gray-300 h-6 w-16 rounded mr-2"></button>
+            <button className="text-[8px] bg-gray-300 h-6 w-16 rounded"></button>
+          </div>
+          <div>
+            <button className="text-[8px] bg-gray-300 h-6 w-16 rounded mr-2"></button>
+            <button className="text-[8px] bg-gray-300 h-6 w-16 rounded mr-2"></button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
         </div>
       </div>
     </div>
