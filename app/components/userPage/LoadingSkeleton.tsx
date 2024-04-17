@@ -14,14 +14,17 @@ const LoadingSkeleton = () => {
                 <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-2" />
                 <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto" />
               </div>
-              <div className="mt-8">
-                <div className="flex justify-between">
-                  <div className="h-4 bg-gray-300 rounded w-1/4" />
-                </div>
-                <div className="flex justify-between mt-2">
-                  <div className="h-4 bg-gray-300 rounded w-1/2" />
-                </div>
-              </div>
+              {/* Mobile User Profile Section Skeleton */}
+<div className="mt-8 md:hidden">
+  {/* Buttons Skeleton */}
+  <div className="flex justify-between">
+    <button className="hover:bg-gray-300 py-1 px-2 rounded-sm bg-gray-200"></button>
+    <button className="hover:bg-gray-300 py-1 px-2 rounded-sm bg-gray-200"></button>
+    <button className="hover:bg-gray-300 py-1 px-2 rounded-sm bg-gray-200"></button>
+    <button className="hover:bg-gray-300 py-1 px-2 rounded-sm bg-gray-200"></button>
+  </div>
+</div>
+
             </div>
             {/* Post Input Skeleton */}
 <div className="flex gap-2 bg-white mb-4 p-4 rounded-lg shadow-md mt-6 ">
