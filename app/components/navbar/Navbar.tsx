@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
 
         <SearchBox ClassName={`hidden md:flex`} />
         <div className="flex gap-8">
-          <IoMdNotifications size={18} className="my-auto"/>
+          <IoMdNotifications size={25} className="my-auto"/>
           <div className="my-auto flex">
             {session?.user && token ? (
               loading ? (
