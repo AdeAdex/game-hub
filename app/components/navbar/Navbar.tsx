@@ -115,9 +115,12 @@ const Navbar: React.FC = () => {
         <div className="flex gap-8">
           <div className="flex relative">
           <IoMdNotifications size={25} className="my-auto" />
-            <small className="absolute flex items-center justify-center rounded-full bg-red-500 text-white w-4 h-4 top-2 right-0 transform translate-x-1/2 -translate-y-1/2">
-              {userData && userData.incomingFriendRequests && userData.incomingFriendRequests.length}
+          {userData && userData.incomingFriendRequests && (
+  <small className="absolute flex items-center justify-center rounded-full bg-red-500 text-white w-4 h-4 top-3 right-0 transform translate-x-1/2 -translate-y-1/2">
+    {userData.incomingFriendRequests.length}
   </small>
+)}
+ 
           </div>
           <div className="my-auto flex">
             {userData && token ? (
