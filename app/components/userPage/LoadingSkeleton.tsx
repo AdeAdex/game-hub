@@ -23,6 +23,23 @@ const LoadingSkeleton = () => {
                 </div>
               </div>
             </div>
+            {/* Post Input Skeleton */}
+<div className="flex gap-2 bg-white mb-4 p-4 rounded-lg shadow-md mt-6 ">
+  {/* Profile Picture Skeleton */}
+  <div className="relative w-8 h-8 mr-2 bg-gray-300 rounded-full">
+    {/* Profile Picture Image Skeleton */}
+    <div className="relative w-10 h-10 mr-2 bg-gray-300 rounded-full"></div>
+  </div>
+  {/* Input Skeleton */}
+  <div className="flex-1">
+    <input
+      type="text"
+      placeholder="What's on your mind"
+      className="hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
+    />
+  </div>
+</div>
+
             <div className="mt-8 hidden md:flex flex-col">
               {/* Notifications Skeleton */}
               <div className="bg-white rounded-lg shadow-lg p-6 mb-8 animate-pulse">
