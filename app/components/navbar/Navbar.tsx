@@ -114,7 +114,10 @@ const Navbar: React.FC = () => {
         <div className="flex gap-8">
           <div className="flex relative">
           <IoMdNotifications size={25} className="my-auto" />
-          <div className="absolute rounded-full w-8 h-8">{userData.incomingFriendRequests.length}</div>
+            <div className="absolute rounded-full w-8 h-8">
+  {userData && userData.incomingFriendRequestsIds && userData.incomingFriendRequestsIds.length}
+</div>
+ 
           </div>
           <div className="my-auto flex">
             {userData && token ? (
