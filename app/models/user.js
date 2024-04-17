@@ -11,8 +11,10 @@ const userSchema = new mongoose.Schema(
     socialId: { type: String, default: ""},
     profilePicture: { type: String },
     resetPasswordToken: { type: String },
-    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] 
-  },
+    currentFriends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		incomingFriendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		outgoingFriendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] 
+      },
   { timestamps: true }
 );
 
