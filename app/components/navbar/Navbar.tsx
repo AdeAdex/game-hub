@@ -16,6 +16,7 @@ import axios from "axios";
 import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
 import Backdrop from "@mui/material/Backdrop";
+import { IoMdNotifications } from "react-icons/io";
 // import { useSelector } from "react-redux";
 
 interface AuthState {
@@ -87,88 +88,6 @@ const Navbar: React.FC = () => {
   }, [session]);
 
   return (
-    // <main>
-    //   <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white fixed z-50 top-0">
-    //     <div className="flex gap-5">
-    //       <MenuIcon
-    //         isMobileMenuOpen={isMobileMenuOpen}
-    //         setMobileMenuOpen={setMobileMenuOpen}
-    //       />
-    //       <Logo />
-    //     </div>
-    //     <Links />
-    //     <Backdrop
-    //       open={isMobileMenuOpen}
-    //       onClick={() => setMobileMenuOpen(false)}
-    //       className="bg-black bg-opacity-50"
-    //     >
-    //       <Dropdown
-    //         links={links}
-    //         links2={links2}
-    //         isMobileMenuOpen={isMobileMenuOpen}
-    //       />
-    //     </Backdrop>
-
-    //            <SearchBox ClassName={`hidden md:flex`} />
-    //     <div className="flex gap-8">
-    //       <div className="my-auto flex">
-    //         {session?.user && token ? (
-    //           <div className="flex flex-col relative">
-    //             <div
-    //               className="flex gap-3 cursor-pointer"
-    //               onClick={handleDropdown}
-    //             >
-    //               {session?.user.image ||
-    //               (session?.user as AuthState)?.profilePicture ? (
-    //                 <Image
-    //                   src={
-    //                     (session?.user.image ||
-    //                       (session?.user as AuthState)
-    //                         ?.profilePicture) as string
-    //                   }
-    //                   alt="profile"
-    //                   width={32}
-    //                   height={32}
-    //                   className="rounded-full"
-    //                 />
-    //               ) : (
-    //                 <Image
-    //                   src={avatar}
-    //                   alt="profile"
-    //                   width={32}
-    //                   height={32}
-    //                   className="rounded-full border border-gray-500"
-    //                 />
-    //               )}
-
-    //               <span className="my-auto text-[14px] font-bold">
-    //                 {userData?.userName || ""}
-    //               </span>
-
-    //               <FaAngleDown size={18} className="my-auto" />
-    //             </div>
-    //             {dropdown && (
-    //               <ProfileDropdown
-    //                 handleClick={handleLogout}
-    //                 username={userData?.userName || ""}
-    //               />
-    //             )}
-    //           </div>
-    //         ) : (
-    //           <AuthButton title="login" to="/login" />
-    //         )}
-    //       </div>
-    //       <div className="my-auto hidden md:flex">
-    //         {session?.user && token ? (
-    //           <div></div>
-    //         ) : (
-    //           <AuthButton title="register" to="/register" />
-    //         )}
-    //       </div>
-    //     </div>
-    //   </nav>
-    // </main>
-
     <main>
       <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white fixed z-50 top-0">
         <div className="flex gap-5">
@@ -193,6 +112,7 @@ const Navbar: React.FC = () => {
 
         <SearchBox ClassName={`hidden md:flex`} />
         <div className="flex gap-8">
+          <IoMdNotifications size={18} className="my-auto"/>
           <div className="my-auto flex">
             {session?.user && token ? (
               loading ? (
@@ -200,7 +120,7 @@ const Navbar: React.FC = () => {
                   <div className="flex gap-3 cursor-pointer" onClick={handleDropdown}>
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
                     <span className="my-auto text-[14px] font-bold">
-                      Loading...
+                      ...
                     </span>
                     <FaAngleDown size={18} className="my-auto" />
                   </div>
