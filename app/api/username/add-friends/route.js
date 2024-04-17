@@ -22,6 +22,10 @@ export const POST = async (req) => {
     if (!loggedInUser || loggedInUser.outgoingFriendRequests.includes(userId)) {
       return NextResponse.json({ success: false, message: 'Friend request already sent or user not found' }, { status: 400 });
     }
+
+    if (loggedInUser.currentFriends.includes(userId)) {
+      return NextResponse.json({ success: false, message: "You're already a friend" }, { status: 400 });
+    }
     
     // Add the friend ID to the logged-in user's outgoingFriendRequests
     loggedInUser.outgoingFriendRequests.push(userId);
