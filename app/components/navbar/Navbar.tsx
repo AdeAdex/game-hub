@@ -27,6 +27,7 @@ interface AuthState {
   userName?: string;
   image: string;
   profilePicture?: string;
+  incomingFriendRequests: any[];
 }
 
 const Navbar: React.FC = () => {
