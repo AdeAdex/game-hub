@@ -1,7 +1,5 @@
 //  /api/username/add-friends
 
-// /api/username/add-friends.js
-
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
@@ -9,7 +7,7 @@ import User from "../../../models/user";
 export const POST = async (req) => {
   try {
     const body = await req.json();
-    const { userId } = body;
+    const { userId, loggedInUserId } = body; // Added loggedInUserId
 
     await connectToDb();
     
@@ -19,18 +17,25 @@ export const POST = async (req) => {
       return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
     }
     
-    // Check if the friend ID already exists in the user's friends list
-    if (user.friends.includes(userId)) {
-      return NextResponse.json({ success: false, message: 'Friend already exists in the user\'s friend list' }, { status: 400 });
+    // Check if the logged-in user's outgoingFriendRequests already include the friend's ID
+    const loggedInUser = await User.findById(loggedInUserId);
+    if (!loggedInUser || loggedInUser.outgoingFriendRequests.includes(userId)) {
+      return NextResponse.json({ success: false, message: 'Friend request already sent or user not found' }, { status: 400 });
     }
-    // Assuming userId is the ID of the friend to be added
-    user.friends.push(userId); // Add the friend to the user's friends list
-    await user.save(); // Save the updated user
+    
+    // Add the friend ID to the logged-in user's outgoingFriendRequests
+    loggedInUser.outgoingFriendRequests.push(userId);
+    
+    // Save the updated logged-in user
+    await loggedInUser.save(); 
 
-    return NextResponse.json({ success: true, message: 'Friend added successfully' });
+    // Update the friend's incomingFriendRequests
+    user.incomingFriendRequests.push(loggedInUserId);
+    await user.save();
+
+    return NextResponse.json({ success: true, message: 'Friend request sent successfully' });
   } catch (error) {
     console.error("Error handling request:", error.message);
     return NextResponse.error(new Error("Internal Server Error"));
   }
 };
-
