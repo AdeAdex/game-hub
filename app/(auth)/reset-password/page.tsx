@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -11,7 +10,7 @@ import Link from "next/link";
 import Navbar from "@/app/components/navbar/Navbar";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SnackbarProvider, useSnackbar } from "notistack";
-
+import Loader from "@/app/components/Loader";
 
 const ResetPassword = () => {
   return (
@@ -22,11 +21,9 @@ const ResetPassword = () => {
       <MyApp />
     </SnackbarProvider>
   );
-}
+};
 
-
-
-  function MyApp() {
+function MyApp() {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,7 +34,6 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const { enqueueSnackbar } = useSnackbar();
-
 
   useEffect(() => {
     const queryToken = new URLSearchParams(window.location.search).get("token");
@@ -53,12 +49,15 @@ const ResetPassword = () => {
 
           // console.log(response.data.username)
           if (response.status === 200) {
-            setUsername(response.data.username)
+            setUsername(response.data.username);
             setSuccess(true);
             setMessage(response.data.message);
-            enqueueSnackbar(response.data.message || "Password reset request successful!", {
-              variant: "success",
-            });
+            enqueueSnackbar(
+              response.data.message || "Password reset request successful!",
+              {
+                variant: "success",
+              }
+            );
           } else {
             setMessage(response.data.message || "Invalid token");
             enqueueSnackbar(response.data.message || "Invalid token", {
@@ -87,23 +86,11 @@ const ResetPassword = () => {
   return (
     <div>
       <Navbar />
+      <main className="bg-[#F4F4F4] h-screen  pt-[80px] md:pt-[100px] ">
       {loading ? (
-        <div className="loading flex flex-col items-center justify-center  pt-[80px] md:pt-[100px]">
-        <svg viewBox="0 0 187.3 93.7" height="200px" width="300px" className="svgbox">
-         <defs>
-           <linearGradient y2="0%" x2="100%" y1="0%" x1="0%" id="gradient">
-             <stop stopColor="pink" offset="0%"></stop>
-             
-                <stop stopColor="blue" offset="100%"></stop>
-           </linearGradient>
-         </defs>
-       
-         <path stroke="url(#gradient)" d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z"></path>
-       </svg>
-       
-       </div>
+        <Loader/>
       ) : (
-        <div className="bg-[#F4F4F4] pt-[80px] md:pt-[100px] h-screen">
+        <div className="">
           <div className="relative  w-full lg:w-[60%] mx-auto bg-white rounded-sm border-2 border-gray-300 py-[30px] px-[10px] md:px-[30px]">
             <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] ">
               Reset Password
@@ -145,15 +132,14 @@ const ResetPassword = () => {
                       token,
                       password: values.password,
                     });
-                    console.log(response.data)
+                    console.log(response.data);
 
                     if (response.status === 200) {
                       setSuccess(true);
                       enqueueSnackbar(response.data.message, {
                         variant: "success",
                       });
-                      router.push('/login')
-
+                      router.push("/login");
                     } else {
                       setError(
                         response.data.error || "Failed to reset password"
@@ -164,10 +150,15 @@ const ResetPassword = () => {
                     }
                   } catch (error: any) {
                     console.error(error.response.data.error);
-                    setError(error.response.data.error || "Internal server error");
-                    enqueueSnackbar(error.response.data.error || "Internal server error", {
-                      variant: "error",
-                    });
+                    setError(
+                      error.response.data.error || "Internal server error"
+                    );
+                    enqueueSnackbar(
+                      error.response.data.error || "Internal server error",
+                      {
+                        variant: "error",
+                      }
+                    );
                   } finally {
                     setSubmitting(false);
                   }
@@ -196,7 +187,9 @@ const ResetPassword = () => {
                       />
                       <button
                         type="button"
-                        className={`absolute right-[20px] top-[50%] ${errors.password ? 'transform -translate-y-1/2' : ''} bg-transparent border-none cursor-pointer`}
+                        className={`absolute right-[20px] top-[50%] ${
+                          errors.password ? "transform -translate-y-1/2" : ""
+                        } bg-transparent border-none cursor-pointer`}
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
@@ -232,7 +225,11 @@ const ResetPassword = () => {
                       />
                       <button
                         type="button"
-                        className={`absolute right-[20px] top-[50%] ${errors.confirmPassword ? 'transform -translate-y-1/2' : ''} bg-transparent border-none cursor-pointer`}
+                        className={`absolute right-[20px] top-[50%] ${
+                          errors.confirmPassword
+                            ? "transform -translate-y-1/2"
+                            : ""
+                        } bg-transparent border-none cursor-pointer`}
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
@@ -275,8 +272,10 @@ const ResetPassword = () => {
       )}
 
       <Footer />
+      </main>
+
     </div>
   );
-};
+}
 
 export default ResetPassword;
