@@ -60,7 +60,6 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
   }, [likedBy, loggedInUserId]);
 
   const handleAddFriend = async (userId) => {
-    setRelationshipStatus(null)
     try {
       // Make a POST request to the backend API
       const response = await axios.post("/api/username/add-friends", {
