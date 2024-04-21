@@ -58,10 +58,17 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     // setShowCarousel(true);
   };
 
+  //const handleLikeUser = (likedBy: string[]) => {
+   // setSelectedPostLikedBy(likedBy);
+  //  setOpen(true);
+ // };
+
   const handleLikeUser = (likedBy: string[]) => {
-    setSelectedPostLikedBy(likedBy);
-    setOpen(true);
-  };
+  const filteredLikedBy = likedBy.filter(id => id !== loggedInUserId);
+  setSelectedPostLikedBy(filteredLikedBy);
+  setOpen(true);
+};
+
 
   return (
     <div className="">
