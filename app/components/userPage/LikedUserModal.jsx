@@ -115,6 +115,12 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
               default:
                 return user;
             }
+          } else if (user._id === loggedInUserId && actionType === "addFriend") {
+            // Update the loggedInUser object to show "cancel request" button
+            return {
+              ...user,
+              outgoingFriendRequests: [...user.outgoingFriendRequests, userId],
+            };
           }
           return user;
         })
