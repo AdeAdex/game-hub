@@ -82,7 +82,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       console.log(response.data);
 
       if (response.data.success) {
-       // enqueueSnackbar(response.data.message, { variant: "success" });
+        enqueueSnackbar(response.data.message, { variant: "success" });
 
         // Update filteredLikedBy based on the action type
       switch (actionType) {
