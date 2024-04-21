@@ -85,19 +85,19 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
         enqueueSnackbar(response.data.message, { variant: "success" });
 
         // Update filteredLikedBy based on the action type
-        switch (actionType) {
-          case "addFriend":
-            setFilteredLikedBy(filteredLikedBy.filter(user => user._id !== userId));
-            break;
-          case "acceptRequest":
-            setFilteredLikedBy(filteredLikedBy.filter(user => user._id !== userId && user._id !== loggedInUserId));
-            break;
-          case "cancelRequest":
-            setFilteredLikedBy(filteredLikedBy.filter(user => user._id !== userId));
-            break;
-          default:
-            break;
-        }
+      switch (actionType) {
+        case "addFriend":
+          setFilteredLikedBy(filteredLikedBy.filter(id => id !== userId));
+          break;
+        case "acceptRequest":
+          setFilteredLikedBy(filteredLikedBy.filter(id => id !== userId));
+          break;
+        case "cancelRequest":
+          setFilteredLikedBy(filteredLikedBy.filter(id => id !== userId));
+          break;
+        default:
+          break;
+      }
       }
     } catch (error) {
       console.error(error.response.data.message);
