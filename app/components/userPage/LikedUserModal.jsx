@@ -86,7 +86,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId, handleReaction}) {
       if (response.data.success) {
         enqueueSnackbar(response.data.message, { variant: "success" });
 
-        / Update filteredLikedBy based on the action type
+        // Update filteredLikedBy based on the action type
         switch (actionType) {
           case "addFriend":
           case "acceptRequest":
