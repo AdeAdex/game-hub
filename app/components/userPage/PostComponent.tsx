@@ -138,6 +138,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   handleClose={handleClose}
                   likedBy={selectedPostLikedBy}
                   loggedInUserId={loggedInUserId}
+                  handleReaction={handleReaction}
                 />
               )}
               
