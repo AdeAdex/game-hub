@@ -28,7 +28,6 @@ const LikedUserModal = ({
   handleClose,
   likedBy,
   loggedInUserId,
-  handleReaction
 }) => {
   return (
     <SnackbarProvider
@@ -39,14 +38,13 @@ const LikedUserModal = ({
         open={open}
         handleClose={handleClose}
         likedBy={likedBy} 
-        loggedInUserId={loggedInUserId}
-        handleReaction={handleReaction} 
+        loggedInUserId={loggedInUserId} 
       />
     </SnackbarProvider>
   );
 };
 
-function MyApp({ open, handleClose, likedBy, loggedInUserId, handleReaction}) {
+function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
   const { enqueueSnackbar } = useSnackbar();
   const [filteredLikedBy, setFilteredLikedBy] = useState([]);
 
@@ -91,7 +89,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId, handleReaction}) {
           case "addFriend":
           case "acceptRequest":
           case "cancelRequest":
-            handleReaction(userId); // Call handleReaction to update liked users
+            
             break;
           default:
             break;
