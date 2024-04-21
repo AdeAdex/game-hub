@@ -23,14 +23,7 @@ const style = {
   p: 4,
 };
 
-// interface LikedUserModalProps {
-//   open: boolean;
-//   handleClose: () => void;
-//   likedBy: string[];
-// //   likedBy: User[]; // Define the likedBy prop as an array of User objects
-// }
-
-const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
+const LikedUserModal = ({
   open,
   handleClose,
   likedBy,
@@ -44,14 +37,14 @@ const LikedUserModal /* : React.FC<LikedUserModalProps>  */ = ({
       <MyApp
         open={open}
         handleClose={handleClose}
-        likedBy={likedBy} // Pass updatedLikedBy to MyApp
+        likedBy={likedBy} 
         loggedInUserId={loggedInUserId}
       />
     </SnackbarProvider>
   );
 };
 
-function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
+function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
   const { enqueueSnackbar } = useSnackbar();
   const [filteredLikedBy, setFilteredLikedBy] = useState([]);
 
@@ -59,77 +52,49 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
     setFilteredLikedBy(likedBy.filter((user) => user._id !== loggedInUserId));
   }, [likedBy, loggedInUserId]);
 
-  const handleAddFriend = async (userId) => {
+  const handleAction = async (userId, actionType) => {
     try {
-      // Make a POST request to the backend API
-      const response = await axios.post("/api/username/add-friends", {
+      let endpoint = "";
+      let successMessage = "";
+
+      switch (actionType) {
+        case "addFriend":
+          endpoint = "/api/username/add-friends";
+          successMessage = "Friend added successfully.";
+          break;
+        case "acceptRequest":
+          endpoint = "/api/username/accept-friends";
+          successMessage = "Friend request accepted successfully.";
+          break;
+        case "cancelRequest":
+          endpoint = "/api/username/cancel-friends";
+          successMessage = "Friend request canceled successfully.";
+          break;
+        default:
+          return;
+      }
+
+      const response = await axios.post(endpoint, {
         userId,
         loggedInUserId,
       });
-      console.log(response.data); // Logging the response for now
-      
+
+      console.log(response.data);
+
       if (response.data.success) {
-       
-        enqueueSnackbar(response.data.message, { variant: "success" });
-        setFilteredLikedBy(filteredLikedBy.filter((user) => user._id !== userId));
-        
+        enqueueSnackbar(successMessage, { variant: "success" });
+
+        if (actionType === "cancelRequest") {
+          setFilteredLikedBy(filteredLikedBy.filter(user => user._id !== userId));
+        } else {
+          setFilteredLikedBy(filteredLikedBy.filter(user => user._id !== userId && user._id !== loggedInUserId));
         }
-
-      // Optionally, update UI or perform any other action after adding friend
-    } catch (error) {
-      console.error(error.response.data.message);
-      enqueueSnackbar(error.response.data.message, { variant: "error" });
-    }
-  };
-
-  const handleAcceptRequest = async (userId) => {
-    try {
-      // Make a POST request to the backend API
-      const response = await axios.post("/api/username/accept-friends", {
-        userId,
-        loggedInUserId,
-      });
-      console.log(response.data); // Logging the response for now
-      
-      if (response.data.success) {
-        
-      enqueueSnackbar(response.data.message, { variant: "success" });
-      setFilteredLikedBy(filteredLikedBy.filter((user) => user._id !== userId && user._id !== loggedInUserId));
       }
     } catch (error) {
       console.error(error.response.data.message);
       enqueueSnackbar(error.response.data.message, { variant: "error" });
     }
   };
-
-
-  const handleCancelRequest = async (userId) => {
-    try {
-      // Make a POST request to the backend API
-      const response = await axios.post("/api/username/cancel-friends", {
-        userId,
-        loggedInUserId,
-      });
-      console.log(response.data); // Logging the response for now
-
-      if (response.data.success) {
-       
-      enqueueSnackbar(response.data.message, { variant: "success" });
-      setFilteredLikedBy(filteredLikedBy.filter((user) => user._id !== userId));
-      }
-    } catch (error) {
-      console.error(error.response.data.message);
-      enqueueSnackbar(error.response.data.message, { variant: "error" });
-    }
-  };
-
-
-  // useEffect(() => {
-
-  // }, [likedBy, loggedInUserId]);
-  
-
-  // const filteredLikedBy  = likedBy.filter((user) => user._id !== loggedInUserId);
 
   return (
     <Modal
@@ -167,7 +132,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
                 {user.currentFriends.includes(loggedInUserId) ? (
                   <button
                     className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
-                    onClick={() => handleMessage(user._id)}
+                    onClick={() => handleAction(user._id, "sendMessage")}
                   >
                     <FiMessageCircle className="my-auto" />{" "}
                     <span className="my-auto">Message</span>
@@ -175,15 +140,15 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
                 ) : user.outgoingFriendRequests.includes(loggedInUserId) ? (
                   <button
                     className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
-                    onClick={() => handleAcceptRequest(user._id)}
+                    onClick={() => handleAction(user._id, "acceptRequest")}
                   >
                     <FaUserCheck className="my-auto" />{" "}
                     <span className="my-auto">Accept Request</span>
                   </button>
-                ): user.incomingFriendRequests.includes(loggedInUserId) ? (
+                ) : user.incomingFriendRequests.includes(loggedInUserId) ? (
                   <button
                     className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
-                    onClick={() => handleCancelRequest(user._id)}
+                    onClick={() => handleAction(user._id, "cancelRequest")}
                   >
                     <FaUserCheck className="my-auto" />{" "}
                     <span className="my-auto">Cancel Request</span>
@@ -191,7 +156,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
                 ) : (
                   <button
                     className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
-                    onClick={() => handleAddFriend(user._id)}
+                    onClick={() => handleAction(user._id, "addFriend")}
                   >
                     <FaUserPlus className="my-auto" />{" "}
                     <span className="my-auto">Add Friend</span>
@@ -211,6 +176,3 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId}) {
 }
 
 export default LikedUserModal;
-
-
-
