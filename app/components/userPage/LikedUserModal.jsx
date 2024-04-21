@@ -28,6 +28,7 @@ const LikedUserModal = ({
   handleClose,
   likedBy,
   loggedInUserId,
+  handleReaction
 }) => {
   return (
     <SnackbarProvider
@@ -39,12 +40,13 @@ const LikedUserModal = ({
         handleClose={handleClose}
         likedBy={likedBy} 
         loggedInUserId={loggedInUserId}
+        handleReaction={handleReaction} 
       />
     </SnackbarProvider>
   );
 };
 
-function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
+function MyApp({ open, handleClose, likedBy, loggedInUserId, handleReaction}) {
   const { enqueueSnackbar } = useSnackbar();
   const [filteredLikedBy, setFilteredLikedBy] = useState([]);
 
@@ -84,26 +86,16 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       if (response.data.success) {
         enqueueSnackbar(response.data.message, { variant: "success" });
 
-        // Update filteredLikedBy based on the action type
-      switch (actionType) {
-        case "addFriend":
-          setFilteredLikedBy((prevLikedBy) =>
-            prevLikedBy.filter((id) => id !== userId)
-          );
-          break;
-        case "acceptRequest":
-          setFilteredLikedBy((prevLikedBy) =>
-            prevLikedBy.filter((id) => id !== userId)
-          );
-          break;
-        case "cancelRequest":
-          setFilteredLikedBy((prevLikedBy) =>
-            prevLikedBy.filter((id) => id !== userId)
-          );
-          break;
-        default:
-          break;
-        }
+        / Update filteredLikedBy based on the action type
+        switch (actionType) {
+          case "addFriend":
+          case "acceptRequest":
+          case "cancelRequest":
+            handleReaction(userId); // Call handleReaction to update liked users
+            break;
+          default:
+            break;
+      }
       }
     } catch (error) {
       console.error(error.response.data.message);
