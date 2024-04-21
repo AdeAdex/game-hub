@@ -87,17 +87,17 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
         // Update filteredLikedBy based on the action type
       switch (actionType) {
         case "addFriend":
-          setFilteredLikedBy(filteredLikedBy.filter(id => id !== userId));
+          setFilteredLikedBy(prevState => prevState.filter(id => id !== userId));
           break;
         case "acceptRequest":
-          setFilteredLikedBy(filteredLikedBy.filter(id => id !== userId));
+          setFilteredLikedBy(prevState => prevState.filter(id => id !== userId));
           break;
         case "cancelRequest":
-          setFilteredLikedBy(filteredLikedBy.filter(id => id !== userId));
+          setFilteredLikedBy(prevState => prevState.filter(id => id !== userId));
           break;
         default:
           break;
-      }
+          }
       }
     } catch (error) {
       console.error(error.response.data.message);
