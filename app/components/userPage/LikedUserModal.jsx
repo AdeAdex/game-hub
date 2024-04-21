@@ -84,16 +84,26 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       if (response.data.success) {
         enqueueSnackbar(response.data.message, { variant: "success" });
 
-        // Update filteredLikedBy based on the action type
-        switch (actionType) {
-          case "addFriend":
-          case "acceptRequest":
-          case "cancelRequest":
-            
-            break;
-          default:
-            break;
-      }
+        // Update the user object directly based on the action type
+        setFilteredLikedBy((prevLikedBy) => {
+          switch (actionType) {
+            case "addFriend":
+              return prevLikedBy.map(user => user._id === userId ? {...user, currentFriends: [...user.currentFriends, loggedInUserId] } : user);
+            case "acceptRequest":
+              return prevLikedBy.map(user => user._id === userId ? {
+                ...user,
+                currentFriends: [...user.currentFriends, loggedInUserId],
+                incomingFriendRequests: user.incomingFriendRequests.filter((id) => id !== loggedInUserId),
+              } : user);
+            case "cancelRequest":
+              return prevLikedBy.map(user => user._id === userId ? {
+                ...user,
+                outgoingFriendRequests: user.outgoingFriendRequests.filter((id) => id !== loggedInUserId),
+              } : user);
+            default:
+              return prevLikedBy;
+          }
+        });
       }
     } catch (error) {
       console.error(error.response.data.message);
