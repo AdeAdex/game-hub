@@ -82,7 +82,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       console.log(response.data);
 
       if (response.data.success) {
-        enqueueSnackbar(successMessage, { variant: "success" });
+        enqueueSnackbar(response.data.message, { variant: "success" });
 
         if (actionType === "cancelRequest") {
           setFilteredLikedBy(filteredLikedBy.filter(user => user._id !== userId));
