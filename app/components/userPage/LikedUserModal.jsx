@@ -84,47 +84,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       if (response.data.success) {
         enqueueSnackbar(response.data.message, { variant: "success" });
 
-        // Update the user object directly based on the action type
-        setFilteredLikedBy((prevLikedBy) =>
-        prevLikedBy.map((user) => {
-          if (user._id === userId) {
-            switch (actionType) {
-              case "addFriend":
-                return {
-                  ...user,
-                  outgoingFriendRequests: [...user.outgoingFriendRequests, loggedInUserId],
-                };
-              case "acceptRequest":
-                return {
-                  ...user,
-                  incomingFriendRequests: user.incomingFriendRequests.filter(
-                    (id) => id !== loggedInUserId
-                  ),
-                  currentFriends: [...user.currentFriends, loggedInUserId],
-                };
-              case "cancelRequest":
-                return {
-                  ...user,
-                  incomingFriendRequests: user.incomingFriendRequests.filter(
-                    (id) => id !== loggedInUserId
-                  ),
-                  outgoingFriendRequests: user.outgoingFriendRequests.filter(
-                    (id) => id !== loggedInUserId
-                  ),
-                };
-              default:
-                return user;
-            }
-          } else if (user._id === loggedInUserId && actionType === "addFriend") {
-            // Update the loggedInUser object to show "cancel request" button
-            return {
-              ...user,
-              outgoingFriendRequests: [...user.outgoingFriendRequests, userId],
-            };
-          }
-          return user;
-        })
-      );
+        
       }
     } catch (error) {
       console.error(error.response.data.message);
