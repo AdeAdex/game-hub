@@ -82,13 +82,13 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       console.log(response.data);
 
       if (response.data.success) {
-        enqueueSnackbar(response.data.message, { variant: "success" });
+      enqueueSnackbar(response.data.message, { variant: "success" });
 
-        const updatedLikedBy = filteredLikedBy.map((user) =>
+      // Update the filteredLikedBy state with the updated user object
+      const updatedLikedBy = filteredLikedBy.map((user) =>
         user._id === userId ? response.data.updatedUser : user
       );
       setFilteredLikedBy(updatedLikedBy);
-      }
       }
     } catch (error) {
       console.error(error.response.data.message);
