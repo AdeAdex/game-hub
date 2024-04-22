@@ -63,7 +63,10 @@ function MyApp() {
         // enqueueSnackbar("Login Successfully", {
         //         variant: "success",
         //       });
-        router.push("/dashboard");
+        //router.push("/dashboard");
+        // Redirect to the dashboard page
+      redirect({ destination: "/dashboard", permanent: false });
+    
       } else {
         const errorMessage = result?.error || "Error during login";
         enqueueSnackbar(errorMessage, { variant: "error" });
