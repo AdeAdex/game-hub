@@ -65,7 +65,7 @@ function MyApp() {
         //       });
         //router.push("/dashboard");
         // Redirect to the dashboard page
-      redirect({ destination: "/dashboard", permanent: false });
+      redirect("/dashboard");
     
       } else {
         const errorMessage = result?.error || "Error during login";
