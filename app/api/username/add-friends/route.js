@@ -41,7 +41,7 @@ export const POST = async (req) => {
     user.incomingFriendRequests.push(loggedInUserId);
     await user.save();
 
-    return NextResponse.json({ updatedUser: user success: true, message: 'Friend request sent successfully' });
+    return NextResponse.json({ updatedUser: user, success: true, message: 'Friend request sent successfully' });
   } catch (error) {
     console.error("Error handling request:", error.message);
     return NextResponse.error(new Error("Internal Server Error"));
