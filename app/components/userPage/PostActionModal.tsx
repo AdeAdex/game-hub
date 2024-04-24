@@ -79,9 +79,9 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           <Typography variant="h6" component="h2" className="bg-white" >
             Take Action
           </Typography>
-          <hr className="bg-red-500" />
+          <hr className="bg-red-500 mb-4" />
           {post.userId._id === loggedInUserId && (
-          <div className="my-4 bg-white rounded-lg shadow-lg p-2">
+          <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
                 onClick={() => handleAction("delete", post._id )}
