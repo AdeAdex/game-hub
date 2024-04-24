@@ -14,13 +14,36 @@ const style = {
   p: 4,
 };
 
-interface PostActionModalProps {
-  open: boolean;
-  handleOpen: () => void;
-  handleClose: () => void;
+interface Post {
+  _id: string;
+  content: string;
+  timestamp: string;
+  userId: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    profilePicture: string;
+    bio: string;
+  };
+  likes: number;
+  dislikes: number;
+  likedBy: string[];
+  image: string;
 }
 
-const PostActionModal: React.FC<PostActionModalProps> = ( { open, handleClose }) => {
+interface PostActionModalProps {
+  open: boolean;
+  handleClose: () => void;
+  post: Post;
+  loggedInUserId: string;
+}
+
+const PostActionModal: React.FC<PostActionModalProps> = ( { open,
+  handleClose,
+  post,
+  loggedInUserId, }) => {
  
   return (
     <div>
@@ -35,7 +58,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open, handleClose })
             Take Action
           </Typography>
           <hr />
-          <div className="flex py-2 gap-2"></div>
+          <div className="flex py-2 gap-2">
+            {post.userId._id === loggedInUserId && (
+          <>
+            <Button onClick={handleDelete}>Delete</Button>
+            <Button onClick={handleEdit}>Edit</Button>
+          </>
+        )}
+          </div>
         </Box>
       </Modal>
     </div>
