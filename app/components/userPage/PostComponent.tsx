@@ -110,7 +110,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                 </p>
               </div>
               <CiMenuKebab
-                className="cursor-pointer"
+                className="flex cursor-pointer my-auto"
                 onClick={handleToggleModal}
               />
             
