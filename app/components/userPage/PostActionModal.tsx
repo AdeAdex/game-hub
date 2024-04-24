@@ -76,7 +76,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="bg-gray-100 rounded-md shadow-sm border-none">
-          <Typography variant="h6" component="h2" className="bg-white" >
+          <Typography variant="h6" component="h2" className="bg-white p-2" >
             Take Action
           </Typography>
           <hr className="bg-red-500 mb-4" />
