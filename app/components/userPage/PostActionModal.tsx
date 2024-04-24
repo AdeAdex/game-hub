@@ -83,7 +83,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           <hr />
           {post.userId._id === loggedInUserId && (
           <div className="mb-4 rounded-md shadow-md ">
-            <div className="flex space-x-4">
+            <div className="flex flex-col space-y-2">
               <button
                 onClick={() => handleAction("delete", post._id )}
                 className="w-full bg-red-500 hover:bg-red-600"
@@ -102,7 +102,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           </div>
         )}
         <div className="mb-4 rounded-md shadow-md">
-          <div className="flex space-x-4">
+          <div className="flex flex-col space-y-2">
             <button
               onClick={() => handleAction("hide", post._id)}
               className="w-full bg-gray-500 hover:bg-gray-600"
