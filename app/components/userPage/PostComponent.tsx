@@ -48,6 +48,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [showCarousel, setShowCarousel] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
+  const [selectedPostId, setSelectedPostId] = useState<string>("");
 
   const handleClose = () => {
     setOpen(false);
@@ -58,9 +59,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     // setShowCarousel(true);
   };
 
-  const handleLikeUser = (likedBy: string[]) => {
+  const handleLikeUser = (likedBy: string[] , postId: string) => {
     setSelectedPostLikedBy(likedBy);
     setOpen(true);
+    setSelectedPostId(postId);
   };
 
   return (
@@ -116,7 +118,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
               <small
                 className="cursor-pointer"
-                onClick={() => handleLikeUser(post.likedBy)}
+                onClick={() => handleLikeUser(post.likedBy, post._id)}
               >
                 {post.likedBy.length > 1 ? (
                   <>You and {post.likedBy.length - 1} others</>
@@ -131,6 +133,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   handleClose={handleClose}
                   likedBy={selectedPostLikedBy}
                   loggedInUserId={loggedInUserId}
+                  postId={selectedPostId}
                 />
               )}
               
