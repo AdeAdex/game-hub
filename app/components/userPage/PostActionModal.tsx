@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
-
+import axios from "axios" 
 
 
 const style = {
@@ -47,25 +47,44 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   loggedInUserId, }) => {
 
   const handleAction = (action: string, post_id: string) => {
-  switch (action) {
-    case "delete":
-      alert(action) 
-      break;
-    case "edit":
-      alert(action) 
-      break;
-    case "hide":
-      alert(action)
-      break;
-    case "save":
-      alert(action)
-      break;
-    case "report":
-      alert(action)
-      break;
-    default:
-      break;
+  try {
+      let endpoint = "";
+      let successMessage = "";
+
+      switch (action) {
+        case "delete":
+          endpoint = `/api/posts/delete/${postId}`;
+          successMessage = "Post deleted successfully.";
+          break;
+        case "edit":
+          endpoint = `/api/posts/edit/${postId}`;
+          successMessage = "Post deleted successfully.";
+          break;
+        case "hide":
+          endpoint = `/api/posts/hide/${postId}`;
+          successMessage = "Post hidden successfully.";
+          break;
+        case "save":
+          endpoint = `/api/posts/save/${postId}`;
+          successMessage = "Post saved successfully.";
+          break;
+        case "report":
+          endpoint = `/api/posts/report/${postId}`;
+          successMessage = "Post deleted successfully.";
+          break;
+        default:
+          break;
+      }
+
+      if (endpoint !== "") {
+        const response = await axios.post(endpoint, { userId: loggedInUserId });
+        setActionResponse(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
   }
+      
 };
   return (
     <div>
