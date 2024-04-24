@@ -81,46 +81,46 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           </Typography>
           <hr />
           {post.userId._id === loggedInUserId && (
-          <div className="mb-4 bg-white rounded-lg shadow-lg ">
+          <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
                 onClick={() => handleAction("delete", post._id )}
                 className="w-full hover:bg-gray-300 flex my-auto"
               >
-                <MdDelete className="mr-2" />
+                <MdDelete className="mr-2 my-auto " />
                 Delete
               </button>
               <button
                 onClick={() => handleAction("edit", post._id)}
                 className="w-full  hover:bg-gray-300 flex my-auto"
               >
-                <MdEdit className="mr-2" />
+                <MdEdit className="mr-2 my-auto" />
                 Edit
               </button>
             </div>
           </div>
         )}
-        <div className="mb-4 bg-white rounded-lg shadow-lg">
+        <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
           <div className="flex flex-col space-y-2">
             <button
               onClick={() => handleAction("hide", post._id)}
               className="w-full hover:bg-gray-300 flex my-auto"
             >
-              <MdVisibility className="mr-2" />
+              <MdVisibility className="mr-2 my-auto" />
               Hide Post
             </button>
             <button
               onClick={() => handleAction("save", post._id)}
               className="w-full hover:bg-gray-300 flex my-auto"
             >
-              <MdBookmark className="mr-2" />
+              <MdBookmark className="mr-2 my-auto" />
               Save Post
             </button>
             <button
               onClick={() => handleAction("report", post._id)}
               className="w-full hover:bg-gray-300 flex my-auto"
             >
-              <MdReport className="mr-2" />
+              <MdReport className="mr-2 my-auto" />
               Report Post
             </button>
           </div>
