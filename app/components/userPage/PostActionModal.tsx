@@ -45,13 +45,27 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   post,
   loggedInUserId, }) => {
 
-  const handleDelete = () => {
-    alert(post.userId._id)
-  };
-
-  const handleEdit = () => {
-    alert(post._id)
-  };
+  const handleAction = (action: string, post_id: string) => {
+  switch (action) {
+    case "delete":
+      alert(action) 
+      break;
+    case "edit":
+      alert(action) 
+      break;
+    case "hide":
+      alert(action)
+      break;
+    case "save":
+      alert(action)
+      break;
+    case "report":
+      alert(action)
+      break;
+    default:
+      break;
+  }
+};
   return (
     <div>
       <Modal
@@ -65,19 +79,59 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
             Take Action
           </Typography>
           <hr />
-          <div className="flex flex-col py-2 gap-2">
-            {post.userId._id === loggedInUserId && (
-          <>
-            <Button onClick={handleDelete}>Delete</Button>
-            <Button onClick={handleEdit}>Edit</Button>
-          </>
-        )}
-            <Button >Hide Post</Button>
-        <Button >Save Post</Button>
-        <Button >Report Post</Button>
-        <Button >Close</Button>
-      
+          {post.userId._id === loggedInUserId && (
+          <div className="mb-4">
+            <div className="flex space-x-4">
+              <Button
+                variant="contained"
+                onClick={() => handleAction("delete, post._id")}
+                className="w-full bg-red-500 hover:bg-red-600"
+              >
+                Delete
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleAction("edit, post._id")}
+                className="w-full bg-blue-500 hover:bg-blue-600"
+              >
+                Edit
+              </Button>
+            </div>
           </div>
+        )}
+        <div className="mb-4">
+          <div className="flex space-x-4">
+            <Button
+              variant="contained"
+              onClick={() => handleAction("hide, post._id")}
+              className="w-full bg-gray-500 hover:bg-gray-600"
+            >
+              Hide Post
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleAction("save, post._id")}
+              className="w-full bg-yellow-500 hover:bg-yellow-600"
+            >
+              Save Post
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleAction("report, post._id")}
+              className="w-full bg-orange-500 hover:bg-orange-600"
+            >
+              Report Post
+            </Button>
+          </div>
+        </div>
+        <div>
+          <Button
+            onClick={handleClose}
+            className="w-full bg-gray-200 hover:bg-gray-300"
+          >
+            Close
+          </Button>
+        </div>
         </Box>
       </Modal>
     </div>
