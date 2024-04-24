@@ -65,6 +65,11 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
             <Button onClick={handleEdit}>Edit</Button>
           </>
         )}
+            <Button >Hide Post</Button>
+        <Button >Save Post</Button>
+        <Button >Report Post</Button>
+        <Button >Close</Button>
+      
           </div>
         </Box>
       </Modal>
