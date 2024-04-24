@@ -5,8 +5,8 @@ import Post from "../../../models/post";
 
 export const PUT = async (req, res) => {
   try {
-    const postId = req.query.postId;
-    const { content } = await req.json();
+    const body = await req.json();
+		const { postId, content, image} = body; 
 
     await connectToDb();
 
