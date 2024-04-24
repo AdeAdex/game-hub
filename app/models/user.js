@@ -12,8 +12,11 @@ const userSchema = new mongoose.Schema(
     profilePicture: { type: String },
     resetPasswordToken: { type: String },
     currentFriends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-		incomingFriendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-		outgoingFriendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] 
+    incomingFriendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    outgoingFriendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
+    savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }], // Array to store saved post IDs
+    reportedPosts: [{ postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' }, reason: String }], // Array to store reported post IDs and reasons
+ 
       },
   { timestamps: true }
 );
