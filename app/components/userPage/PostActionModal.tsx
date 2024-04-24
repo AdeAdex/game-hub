@@ -44,7 +44,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   handleClose,
   post,
   loggedInUserId, }) => {
- 
+
+  const handleDelete = () => {
+    alert(post.userId._id)
+  };
+
+  const handleEdit = () => {
+    alert(post._id)
+  };
   return (
     <div>
       <Modal
