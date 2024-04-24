@@ -19,9 +19,13 @@ export const PUT = async (req, res) => {
 
     // Implement logic to hide the post with the given postId
     // For example, update a field in the post document to indicate it's hidden
-    await Post.findByIdAndUpdate({ _id: postId} , { hidden: true });
+    const updatedPost = await Post.findByIdAndUpdate({ _id: postId} , { hidden: true }, { new: true });
 
-    return NextResponse.json({ success: true, message: "Post hidden successfully." }, { status: 200 });
+    if (!updatedPost) {
+      return NextResponse.json({ success: false, message: "Failed to hide post."}, { status: 200 });
+    }
+
+    return NextResponse.json({ success: true, message: "Post hidden successfully."}, { status: 200 });
   } catch (error) {
     console.error("Error hiding post:", error.message);
     return NextResponse.error(new Error("Failed to hide post"), {
