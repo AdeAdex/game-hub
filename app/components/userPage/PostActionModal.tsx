@@ -65,7 +65,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
             Take Action
           </Typography>
           <hr />
-          <div className="flex py-2 gap-2">
+          <div className="flex flex-col py-2 gap-2">
             {post.userId._id === loggedInUserId && (
           <>
             <Button onClick={handleDelete}>Delete</Button>
