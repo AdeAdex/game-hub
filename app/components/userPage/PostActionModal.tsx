@@ -85,14 +85,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
             <div className="flex flex-col space-y-2">
               <button
                 onClick={() => handleAction("delete", post._id )}
-                className="w-full hover:bg-gray-300 flex my-auto py-2"
+                className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md "
               >
                 <MdDelete className="mr-2 my-auto size={12}" />
                 Delete
               </button>
               <button
                 onClick={() => handleAction("edit", post._id)}
-                className="w-full  hover:bg-gray-300 flex my-auto py-2 "
+                className="w-full  hover:bg-gray-300 flex my-auto p-2 rounded-md "
               >
                 <MdEdit className="mr-2 my-auto" size={12} />
                 Edit
@@ -104,21 +104,21 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           <div className="flex flex-col space-y-2">
             <button
               onClick={() => handleAction("hide", post._id)}
-              className="w-full hover:bg-gray-300 flex my-auto py-2 "
+              className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
             >
               <MdVisibility className="mr-2 my-auto size={12}" />
               Hide Post
             </button>
             <button
               onClick={() => handleAction("save", post._id)}
-              className="w-full hover:bg-gray-300 flex my-auto py-2"
+              className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
             >
               <MdBookmark className="mr-2 my-auto size={12}" />
               Save Post
             </button>
             <button
               onClick={() => handleAction("report", post._id)}
-              className="w-full hover:bg-gray-300 flex my-auto py-2"
+              className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
             >
               <MdReport className="mr-2 my-auto size={12}" />
               Report Post
