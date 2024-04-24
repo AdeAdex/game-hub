@@ -124,7 +124,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
               <small
                 className="cursor-pointer"
-                onClick={() => handleLikeUser(post.likedBy, post._id)}
+                onClick={() => handleLikeUser(post.likedBy)}
               >
                 {post.likedBy.length > 1 ? (
                   <>You and {post.likedBy.length - 1} others</>
