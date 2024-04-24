@@ -11,7 +11,7 @@ export const DELETE = async (req, res) => {
     await connectToDb();
 
     // Check if the post exists
-    const post = await Post.findById(postId);
+    const post = await Post.findById({ _id: postId });
     if (!post) {
       return NextResponse.json({ success: false, message: "Post not found."}, { status: 200 });
     }
