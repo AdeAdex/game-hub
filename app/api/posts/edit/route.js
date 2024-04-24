@@ -26,13 +26,22 @@ export const PUT = async (req, res) => {
     let imageData;
 
     if (image) {
-      const postPicture = await cloudinary.uploader.upload(image);
-      imageData = postPicture.secure_url;
+      // Upload image to Cloudinary
+      const uploadedImage = await cloudinary.uploader.upload(image);
+      imageData = uploadedImage.secure_url;
     }
 
-    // Implement logic to update the content of the post with the given postId
-    await Post.findByIdAndUpdate(postId, { content });
+    // Update content and image if provided
+    if (content) {
+      post.content = content;
+    }
+    if (imageData) {
+      post.image = imageData;
+    }
 
+    // Save the updated post
+    await post.save();
+    
     return NextResponse.json({ success: true, message: "Post edited successfully." }, { status: 200 });
   } catch (error) {
     console.error("Error editing post:", error.message);
