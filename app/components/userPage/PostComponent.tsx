@@ -52,6 +52,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const handleClose = () => {
     setOpen(false);
@@ -68,8 +69,12 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     setOpen(true);
   };
 
-  const handleToggleModal = () => {
-    setOpenModal(!openModal);
+  const handleToggleModal = (postId: string) => {
+    const post = posts.find((post) => post._id === postId);
+    if (post) {
+      setSelectedPost(post);
+      setOpenModal(true);
+    }
   };
 
   return (
@@ -111,15 +116,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
               </div>
               <CiMenuKebab
                 className="flex cursor-pointer "
-                onClick={handleToggleModal}
+                onClick={() => handleToggleModal(post._id) }
               />
             
             </div>
-            <PostActionModal
-                open={openModal}
-                handleClose={() => setOpenModal(false)}
-                handleOpen={() => setOpenModal(true)}
-              />
             <p className="text-gray-700 mb-2">
               {post.content && (
                 <small className="text-[14px]">{post.content}</small>
@@ -197,6 +197,14 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
         ))
       ) : (
         <p>No posts to show</p> // Display this message if there are no posts
+      )}
+      {selectedPost && (
+        <PostActionModal
+          open={openModal}
+          handleClose={() => setOpenModal(false)}
+          post={selectedPost}
+          loggedInUserId={loggedInUserId}
+        />
       )}
     </div>
   );
