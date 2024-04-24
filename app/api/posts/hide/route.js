@@ -1,4 +1,4 @@
-// /api/posts/hide/[postId]/route.ts
+// /api/posts/hide/route.ts
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import Post from "../../../models/post";
