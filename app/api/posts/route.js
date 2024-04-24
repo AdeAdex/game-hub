@@ -30,7 +30,12 @@ export const POST = async (req) => {
       image: imageData,
     });
 
-    return NextResponse.json(newPost, { status: 201 });
+    // Populate userId with profilePicture, firstName, lastName fields
+    const populatedPost = await Post.findById(newPost._id)
+      .populate("userId", "profilePicture firstName lastName")
+      .exec();
+
+    return NextResponse.json(populatedPost, { status: 201 });
   } catch (error) {
     console.error("Error creating post:", error.message);
     return NextResponse.error(new Error("Failed to create post"), {
@@ -41,7 +46,7 @@ export const POST = async (req) => {
 
 export const GET = async (req, res) => {
   try {
-        await connectToDb();
+    await connectToDb();
     const posts = await Post.find()
       .sort({ timestamp: -1 })
       .populate("userId", "profilePicture firstName lastName")
@@ -49,7 +54,7 @@ export const GET = async (req, res) => {
         path: "likedBy",
         select: "-socialId -password", // Exclude socialId and password
       });
-      // .populate("likedBy"); // Populate the likedBy array
+    // .populate("likedBy"); // Populate the likedBy array
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
     console.error("Error fetching posts:", error.message);

@@ -7,6 +7,8 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import MediaCarousel from "./MediaCarousel";
 import avatar from "../../../public/images/robot.png";
 import LikedUserModal from "./LikedUserModal";
+import { CiMenuKebab } from "react-icons/ci";
+import PostActionModal from "./PostActionModal";
 
 interface User {
   _id: string;
@@ -49,6 +51,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [open, setOpen] = useState(false);
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
+  const [openModal, setOpenModal] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -59,15 +62,14 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     // setShowCarousel(true);
   };
 
-  //const handleLikeUser = (likedBy: string[]) => {
-  // setSelectedPostLikedBy(likedBy);
-  //  setOpen(true);
-  // };
-
   const handleLikeUser = (likedBy: string[]) => {
     const filteredLikedBy = likedBy.filter((id) => id !== loggedInUserId);
     setSelectedPostLikedBy(filteredLikedBy);
     setOpen(true);
+  };
+
+  const handleToggleModal = () => {
+    setOpenModal(!openModal);
   };
 
   return (
@@ -78,31 +80,44 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             key={post._id}
             className="bg-white mb-4 p-4 rounded-lg shadow-md "
           >
-            <div className="flex items-center mb-2">
-              <div className="relative w-8 h-8 mr-2">
-                {post.userId.profilePicture ? (
-                  <div className="relative w-8 h-8 mr-2">
+            <div className="flex justify-between">
+              <div className="flex items-center mb-2">
+                <div className="relative w-8 h-8 mr-2">
+                  {post.userId.profilePicture ? (
+                    <div className="relative w-8 h-8 mr-2">
+                      <Image
+                        src={post.userId.profilePicture}
+                        alt="Profile Picture"
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-full"
+                      />
+                    </div>
+                  ) : (
                     <Image
-                      src={post.userId.profilePicture}
+                      src={avatar}
                       alt="Profile Picture"
                       layout="fill"
                       objectFit="cover"
                       className="rounded-full"
                     />
-                  </div>
-                ) : (
-                  <Image
-                    src={avatar}
-                    alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-full"
-                  />
-                )}
+                  )}
+                </div>
+                <p className="text-[12px] text-gray-700 font-semibold">
+                  {post.userId
+                    ? `${post.userId.firstName} ${post.userId.lastName}`
+                    : "Unknown User"}
+                </p>
               </div>
-              <p className="text-[12px] text-gray-700 font-semibold">
-                {post.userId.firstName} {post.userId.lastName}
-              </p>
+              <CiMenuKebab
+                className="cursor-pointer"
+                onClick={handleToggleModal}
+              />
+              <PostActionModal
+                open={openModal}
+                handleClose={() => setOpenModal(false)}
+                handleOpen={() => setOpenModal(true)}
+              />
             </div>
             <p className="text-gray-700 mb-2">
               {post.content && (

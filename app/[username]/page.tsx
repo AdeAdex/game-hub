@@ -65,7 +65,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       axios
         .post(endpoint, { newImage: reader.result, email: user?.email })
         .then((response) => {
-          console.log(response.data.cloudLinkForProfilePicture);
+          // console.log(response.data.cloudLinkForProfilePicture);
           setCloudImage(response.data.cloudLinkForProfilePicture);
           setIsLoading(false);
         })

@@ -60,13 +60,11 @@ function MyApp() {
 
       if (result && !result.error) {
         // console.log(session?.user)
-        // enqueueSnackbar("Login Successfully", {
-        //         variant: "success",
-        //       });
-        //router.push("/dashboard");
-        // Redirect to the dashboard page
-      redirect("/dashboard");
-    
+        enqueueSnackbar("Login Successfully", {
+                variant: "success",
+              });
+        router.push("/dashboard");
+           
       } else {
         const errorMessage = result?.error || "Error during login";
         enqueueSnackbar(errorMessage, { variant: "error" });

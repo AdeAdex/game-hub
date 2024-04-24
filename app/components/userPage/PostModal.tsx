@@ -98,7 +98,6 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
       console.log(postData);
 
       const response = await axios.post("/api/posts", postData);
-      console.log(response);
 
       // After posting, update the UI with the new post
       const newPost = response.data; // Assuming the response contains the newly created post data
