@@ -84,14 +84,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
             <div className="flex space-x-4">
               <Button
                 variant="contained"
-                onClick={() => handleAction("delete, post._id")}
+                onClick={() => handleAction("delete", post._id )}
                 className="w-full bg-red-500 hover:bg-red-600"
               >
                 Delete
               </Button>
               <Button
                 variant="contained"
-                onClick={() => handleAction("edit, post._id")}
+                onClick={() => handleAction("edit", post._id)}
                 className="w-full bg-blue-500 hover:bg-blue-600"
               >
                 Edit
@@ -103,21 +103,21 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           <div className="flex space-x-4">
             <Button
               variant="contained"
-              onClick={() => handleAction("hide, post._id")}
+              onClick={() => handleAction("hide", post._id)}
               className="w-full bg-gray-500 hover:bg-gray-600"
             >
               Hide Post
             </Button>
             <Button
               variant="contained"
-              onClick={() => handleAction("save, post._id")}
+              onClick={() => handleAction("save", post._id)}
               className="w-full bg-yellow-500 hover:bg-yellow-600"
             >
               Save Post
             </Button>
             <Button
               variant="contained"
-              onClick={() => handleAction("report, post._id")}
+              onClick={() => handleAction("report", post._id)}
               className="w-full bg-orange-500 hover:bg-orange-600"
             >
               Report Post
