@@ -59,11 +59,17 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     // setShowCarousel(true);
   };
 
-  const handleLikeUser = (likedBy: string[] , postId: string) => {
-    setSelectedPostLikedBy(likedBy);
-    setOpen(true);
-    setSelectedPostId(postId);
-  };
+  //const handleLikeUser = (likedBy: string[]) => {
+   // setSelectedPostLikedBy(likedBy);
+  //  setOpen(true);
+ // };
+
+  const handleLikeUser = (likedBy: string[]) => {
+  const filteredLikedBy = likedBy.filter(id => id !== loggedInUserId);
+  setSelectedPostLikedBy(filteredLikedBy);
+  setOpen(true);
+};
+
 
   return (
     <div className="">
@@ -133,7 +139,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   handleClose={handleClose}
                   likedBy={selectedPostLikedBy}
                   loggedInUserId={loggedInUserId}
-                  postId={selectedPostId}
                 />
               )}
               

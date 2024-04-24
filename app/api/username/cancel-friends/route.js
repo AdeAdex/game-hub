@@ -47,6 +47,7 @@ export const POST = async (req) => {
 
 
     return NextResponse.json({
+      updatedUser: user,
       success: true,
       message: "Friend request canceled successfully",
     });
