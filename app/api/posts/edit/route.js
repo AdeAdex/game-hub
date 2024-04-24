@@ -1,4 +1,4 @@
-// /api/posts/edit/[postId]/route.ts
+// /api/posts/edit/route.js
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import Post from "../../../models/post";
