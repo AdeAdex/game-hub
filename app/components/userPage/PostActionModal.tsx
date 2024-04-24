@@ -46,7 +46,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   post,
   loggedInUserId, }) => {
 
-  const handleAction = (action: string, post_id: string) => {
+  const handleAction = async (action: string, post_id: string) => {
   try {
       let endpoint = "";
       let successMessage = "";
