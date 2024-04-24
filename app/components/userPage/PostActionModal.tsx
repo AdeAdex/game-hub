@@ -93,8 +93,10 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           url: endpoint,
           data: { userId: loggedInUserId, postId: post_id },
         });
-        setActionResponse(response.data.message);
+        if (response.data.success) {
+          setActionResponse(response.data.message);
         alert(response.data.message) 
+        }  
       }
     } catch (error) {
       console.error("Error:", error);
