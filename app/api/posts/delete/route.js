@@ -5,7 +5,8 @@ import Post from "../../../models/post";
 
 export const DELETE = async (req, res) => {
   try {
-    const postId = req.query.postId;
+    const body = await req.json();
+    const postId = body.data
 
     await connectToDb();
 
