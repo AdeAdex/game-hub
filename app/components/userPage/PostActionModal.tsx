@@ -10,7 +10,6 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -76,7 +75,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="bg-gray-100 rounded-md shadow-sm border-none">
+        <Box sx={style} className="bg-gray-200 rounded-md shadow-sm border-none">
           <Typography variant="h6" component="h2">
             Take Action
           </Typography>
@@ -86,14 +85,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
             <div className="flex flex-col space-y-2">
               <button
                 onClick={() => handleAction("delete", post._id )}
-                className="w-full hover:bg-gray-300"
+                className="w-full hover:bg-gray-300 flex my-auto"
               >
                 <MdDelete className="mr-2" />
                 Delete
               </button>
               <button
                 onClick={() => handleAction("edit", post._id)}
-                className="w-full  hover:bg-gray-300"
+                className="w-full  hover:bg-gray-300 flex my-auto"
               >
                 <MdEdit className="mr-2" />
                 Edit
@@ -105,21 +104,21 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           <div className="flex flex-col space-y-2">
             <button
               onClick={() => handleAction("hide", post._id)}
-              className="w-full hover:bg-gray-300"
+              className="w-full hover:bg-gray-300 flex my-auto"
             >
               <MdVisibility className="mr-2" />
               Hide Post
             </button>
             <button
               onClick={() => handleAction("save", post._id)}
-              className="w-full hover:bg-gray-300"
+              className="w-full hover:bg-gray-300 flex my-auto"
             >
               <MdBookmark className="mr-2" />
               Save Post
             </button>
             <button
               onClick={() => handleAction("report", post._id)}
-              className="w-full hover:bg-gray-300"
+              className="w-full hover:bg-gray-300 flex my-auto"
             >
               <MdReport className="mr-2" />
               Report Post
