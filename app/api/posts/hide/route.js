@@ -5,7 +5,7 @@ import Post from "../../../models/post";
 
 export const PUT = async (req, res) => {
   try {
-    const postId = req.query.postId;
+    
 
     await connectToDb();
 
