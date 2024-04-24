@@ -2,6 +2,13 @@
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import Post from "../../../models/post";
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_KEY_SECRET,
+});
 
 export const PUT = async (req, res) => {
   try {
@@ -15,6 +22,13 @@ export const PUT = async (req, res) => {
     if (!post) {
       return NextResponse.json({ success: false, message: "Post not found."}, { status: 200 });
     } 
+
+    let imageData;
+
+    if (image) {
+      const postPicture = await cloudinary.uploader.upload(image);
+      imageData = postPicture.secure_url;
+    }
 
     // Implement logic to update the content of the post with the given postId
     await Post.findByIdAndUpdate(postId, { content });
