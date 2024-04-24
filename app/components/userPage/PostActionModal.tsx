@@ -54,34 +54,45 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   try {
       let endpoint = "";
       let successMessage = "";
+      let method = "";
+
 
       switch (action) {
         case "delete":
           endpoint = `/api/posts/delete`;
+          method = "DELETE";
           successMessage = "Post deleted successfully.";
           break;
         case "edit":
           endpoint = `/api/posts/edit`;
+          method = "PUT";
           successMessage = "Post deleted successfully.";
           break;
         case "hide":
           endpoint = `/api/posts/hide`;
+          method = "PUT";
           successMessage = "Post hidden successfully.";
           break;
         case "save":
           endpoint = `/api/posts/save`;
+          method = "POST";
           successMessage = "Post saved successfully.";
           break;
         case "report":
           endpoint = `/api/posts/report`;
+          method = "POST";
           successMessage = "Post deleted successfully.";
           break;
         default:
           break;
       }
 
-      if (endpoint !== "") {
-        const response = await axios.post(endpoint, { userId: loggedInUserId, postId: post_id});
+      if (endpoint && method) {
+        const response = await axios({
+          method: method,
+          url: endpoint,
+          data: { userId: loggedInUserId },
+        });
         setActionResponse(response.data.message);
       }
     } catch (error) {
