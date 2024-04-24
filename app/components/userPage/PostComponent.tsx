@@ -113,12 +113,13 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                 className="cursor-pointer"
                 onClick={handleToggleModal}
               />
-              <PostActionModal
+            
+            </div>
+            <PostActionModal
                 open={openModal}
                 handleClose={() => setOpenModal(false)}
                 handleOpen={() => setOpenModal(true)}
               />
-            </div>
             <p className="text-gray-700 mb-2">
               {post.content && (
                 <small className="text-[14px]">{post.content}</small>
