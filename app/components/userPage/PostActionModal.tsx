@@ -1,4 +1,6 @@
-import React from "react";
+'use client' 
+
+import React, { useEffect, useState } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
 import axios from "axios" 
@@ -45,6 +47,8 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   handleClose,
   post,
   loggedInUserId, }) => {
+
+  const [actionResponse, setActionResponse] = useState<string>("");
 
   const handleAction = async (action: string, post_id: string) => {
   try {
