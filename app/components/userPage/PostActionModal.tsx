@@ -91,9 +91,10 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         const response = await axios({
           method: method,
           url: endpoint,
-          data: { userId: loggedInUserId },
+          data: { userId: loggedInUserId, postId: post_id },
         });
         setActionResponse(response.data.message);
+        alert(response.data.message) 
       }
     } catch (error) {
       console.error("Error:", error);
