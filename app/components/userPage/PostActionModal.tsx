@@ -1,5 +1,7 @@
 import React from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
+
 
 
 const style = {
@@ -80,48 +82,48 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           </Typography>
           <hr />
           {post.userId._id === loggedInUserId && (
-          <div className="mb-4">
+          <div className="mb-4 rounded-md shadow-md ">
             <div className="flex space-x-4">
-              <Button
-                variant="contained"
+              <button
                 onClick={() => handleAction("delete", post._id )}
                 className="w-full bg-red-500 hover:bg-red-600"
               >
+                <MdDelete className="mr-2" />
                 Delete
-              </Button>
-              <Button
-                variant="contained"
+              </button>
+              <button
                 onClick={() => handleAction("edit", post._id)}
                 className="w-full bg-blue-500 hover:bg-blue-600"
               >
+                <MdEdit className="mr-2" />
                 Edit
-              </Button>
+              </button>
             </div>
           </div>
         )}
-        <div className="mb-4">
+        <div className="mb-4 rounded-md shadow-md">
           <div className="flex space-x-4">
-            <Button
-              variant="contained"
+            <button
               onClick={() => handleAction("hide", post._id)}
               className="w-full bg-gray-500 hover:bg-gray-600"
             >
+              <MdVisibility className="mr-2" />
               Hide Post
-            </Button>
-            <Button
-              variant="contained"
+            </button>
+            <button
               onClick={() => handleAction("save", post._id)}
               className="w-full bg-yellow-500 hover:bg-yellow-600"
             >
+              <MdBookmark className="mr-2" />
               Save Post
-            </Button>
-            <Button
-              variant="contained"
+            </button>
+            <button
               onClick={() => handleAction("report", post._id)}
               className="w-full bg-orange-500 hover:bg-orange-600"
             >
+              <MdReport className="mr-2" />
               Report Post
-            </Button>
+            </button>
           </div>
         </div>
         <div>
