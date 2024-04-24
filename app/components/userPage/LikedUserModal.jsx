@@ -20,12 +20,7 @@ const style = {
   p: 4,
 };
 
-const LikedUserModal = ({
-  open,
-  handleClose,
-  likedBy,
-  loggedInUserId,
-}) => {
+const LikedUserModal = ({ open, handleClose, likedBy, loggedInUserId }) => {
   return (
     <SnackbarProvider
       maxSnack={1}
@@ -34,8 +29,8 @@ const LikedUserModal = ({
       <MyApp
         open={open}
         handleClose={handleClose}
-        likedBy={likedBy} 
-        loggedInUserId={loggedInUserId} 
+        likedBy={likedBy}
+        loggedInUserId={loggedInUserId}
       />
     </SnackbarProvider>
   );
@@ -79,13 +74,13 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       console.log(response.data);
 
       if (response.data.success) {
-      enqueueSnackbar(response.data.message, { variant: "success" });
+        enqueueSnackbar(response.data.message, { variant: "success" });
 
-      // Update the filteredLikedBy state with the updated user object
-      const updatedLikedBy = filteredLikedBy.map((user) =>
-        user._id === userId ? response.data.updatedUser : user
-      );
-      setFilteredLikedBy(updatedLikedBy);
+        // Update the filteredLikedBy state with the updated user object
+        const updatedLikedBy = filteredLikedBy.map((user) =>
+          user._id === userId ? response.data.updatedUser : user
+        );
+        setFilteredLikedBy(updatedLikedBy);
       }
     } catch (error) {
       console.log(error);
@@ -170,6 +165,6 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       </Box>
     </Modal>
   );
-};
+}
 
 export default LikedUserModal;

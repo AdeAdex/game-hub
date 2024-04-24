@@ -33,26 +33,30 @@ export const POST = async (req) => {
       );
     }
 
- // Add the friend ID to the logged-in user's currentFriends
- loggedInUser.currentFriends.push(userId);
- await loggedInUser.save();
+    // Add the friend ID to the logged-in user's currentFriends
+    loggedInUser.currentFriends.push(userId);
+    await loggedInUser.save();
 
- // Remove userId from loggedInUser's outgoingFriendRequests
- loggedInUser.incomingFriendRequests = loggedInUser.incomingFriendRequests.filter((id) => id.toString() !== userId);
- await loggedInUser.save();
+    // Remove userId from loggedInUser's outgoingFriendRequests
+    loggedInUser.incomingFriendRequests =
+      loggedInUser.incomingFriendRequests.filter(
+        (id) => id.toString() !== userId
+      );
+    await loggedInUser.save();
 
- console.log("log out", loggedInUser.incomingFriendRequests);
+    console.log("log out", loggedInUser.incomingFriendRequests);
 
- // Add loggedInUserId to user's currentFriends
- user.currentFriends.push(loggedInUserId);
- await user.save();
+    // Add loggedInUserId to user's currentFriends
+    user.currentFriends.push(loggedInUserId);
+    await user.save();
 
- // Remove loggedInUserId from user's incomingFriendRequests
- user.outgoingFriendRequests = user.outgoingFriendRequests.filter((id) => id.toString() !== loggedInUserId);
- await user.save();
+    // Remove loggedInUserId from user's incomingFriendRequests
+    user.outgoingFriendRequests = user.outgoingFriendRequests.filter(
+      (id) => id.toString() !== loggedInUserId
+    );
+    await user.save();
 
- console.log("user in", user.outgoingFriendRequests);
-
+    console.log("user in", user.outgoingFriendRequests);
 
     return NextResponse.json({
       updatedUser: user,

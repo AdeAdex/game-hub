@@ -25,7 +25,7 @@ interface Post {
   userId: User;
   likes: number;
   dislikes: number;
-  likedBy: string[]; 
+  likedBy: string[];
   image: string;
 }
 
@@ -60,22 +60,24 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   };
 
   //const handleLikeUser = (likedBy: string[]) => {
-   // setSelectedPostLikedBy(likedBy);
+  // setSelectedPostLikedBy(likedBy);
   //  setOpen(true);
- // };
+  // };
 
   const handleLikeUser = (likedBy: string[]) => {
-  const filteredLikedBy = likedBy.filter(id => id !== loggedInUserId);
-  setSelectedPostLikedBy(filteredLikedBy);
-  setOpen(true);
-};
-
+    const filteredLikedBy = likedBy.filter((id) => id !== loggedInUserId);
+    setSelectedPostLikedBy(filteredLikedBy);
+    setOpen(true);
+  };
 
   return (
     <div className="">
       {posts.length > 0 ? ( // Check if there are posts available
         posts.map((post) => (
-          <div key={post._id} className="bg-white mb-4 p-4 rounded-lg shadow-md ">
+          <div
+            key={post._id}
+            className="bg-white mb-4 p-4 rounded-lg shadow-md "
+          >
             <div className="flex items-center mb-2">
               <div className="relative w-8 h-8 mr-2">
                 {post.userId.profilePicture ? (
@@ -132,7 +134,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   <>{post.likedBy.length} like</>
                 )}
               </small>
-  
+
               {open && (
                 <LikedUserModal
                   open={open}
@@ -141,9 +143,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   loggedInUserId={loggedInUserId}
                 />
               )}
-              
             </div>
-  
+
             <hr className="my-2 border-gray-300" />
             <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
               <button
@@ -162,7 +163,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   </>
                 )}
               </button>
-  
+
               <button
                 onClick={() => handleComment(post._id)}
                 className="text-[8px]"
@@ -183,7 +184,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       )}
     </div>
   );
-  
 };
 
 export default PostComponent;

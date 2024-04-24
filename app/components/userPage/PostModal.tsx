@@ -47,6 +47,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false)
 
   const handleOpen = () => {
     setOpen(true);
@@ -78,6 +79,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true); // Set loading state to true when submitting
     try {
       if (!user) {
         console.error("User is null");
@@ -105,9 +107,11 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
     } catch (error: any) {
       console.error("Error creating post:", error);
       // Handle error
+    } finally {
+      setLoading(false); // Reset loading state after submission
+      handleClose();
     }
 
-    handleClose();
   };
 
   return (
@@ -180,7 +184,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
               )}
             </div>
             <div className="text-[12px] fw-bold">
-            {user.firstName} {user.lastName} 
+              {user.firstName} {user.lastName}
             </div>
           </div>
           <TextField
@@ -209,7 +213,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
             }`}
             disabled={!postContent && !postImage}
           >
-            Post
+            {loading ? "Posting..." : "Post"}
           </button>
         </Box>
       </Modal>

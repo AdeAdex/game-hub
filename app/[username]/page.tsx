@@ -9,7 +9,6 @@ import Post from "../components/userPage/PostComponent";
 import UserAvatarSection from "../components/userPage/UserAvatarSection";
 import PostModal from "../components/userPage/PostModal";
 
-
 interface User {
   _id: string;
   firstName: string;
@@ -35,7 +34,6 @@ interface Post {
   dislikes: number;
   likedBy: string[]; // Add the likedBy property here
   image: string;
-
 }
 
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
@@ -48,8 +46,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [cloudImage, setCloudImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [likedPosts, setLikedPosts] = useState<string[]>([]);
-
-
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -89,14 +85,16 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         );
         setUser(userResponse.data);
 
-        const postsResponse = await axios.get("/api/posts" ); // Fetch all posts
+        const postsResponse = await axios.get("/api/posts"); // Fetch all posts
         setPosts(postsResponse.data);
-       
+
         // Fetch all posts and liked posts with user ID
-      const likedResponse = await axios.post(`/api/posts/my-likes`, { userId: userResponse.data._id });
-      console.log("likedResponse", likedResponse.data)
-      setLikedPosts(likedResponse.data.map((post: Post) => post._id));
-      // setLikedPosts(postsResponse.data);
+        const likedResponse = await axios.post(`/api/posts/my-likes`, {
+          userId: userResponse.data._id,
+        });
+        console.log("likedResponse", likedResponse.data);
+        setLikedPosts(likedResponse.data.map((post: Post) => post._id));
+        // setLikedPosts(postsResponse.data);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
         // router.push("/not-found"); // Redirect to 404 page if user or posts not found
@@ -108,8 +106,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
-
-
   const handleReaction = async (postId: string) => {
     try {
       const userId = user?._id;
@@ -117,17 +113,25 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         console.error("User ID is undefined");
         return;
       }
-  
+
       const action = likedPosts.includes(postId) ? "unlike" : "like";
-      const response = await axios.post(`/api/posts/react`, { postId, action, userId });
+      const response = await axios.post(`/api/posts/react`, {
+        postId,
+        action,
+        userId,
+      });
       const updatedPost = response.data;
-  
+
       if (response.status === 200) {
         setPosts((prevPosts) =>
-          prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
+          prevPosts.map((post) =>
+            post._id === updatedPost._id ? updatedPost : post
+          )
         );
         setLikedPosts((prevLikedPosts) =>
-          action === "like" ? [...prevLikedPosts, postId] : prevLikedPosts.filter((id) => id !== postId)
+          action === "like"
+            ? [...prevLikedPosts, postId]
+            : prevLikedPosts.filter((id) => id !== postId)
         );
       } else {
         console.error("Failed to react to post:", response.data.message);
@@ -136,7 +140,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       console.error("Error reacting to post:", error.message);
     }
   };
-
 
   const handleComment = async (postId: string) => {
     // Logic to handle commenting
@@ -148,12 +151,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     console.log(`Sharing post with ID ${postId}`);
   };
 
- 
   if (loading) {
     return <LoadingSkeleton />;
   }
-
-  
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -169,8 +169,8 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   handleFileSelect={handleFileSelect}
                 />
               </div>
-              <PostModal user={user} setPosts={setPosts}/>
-             
+              <PostModal user={user} setPosts={setPosts} />
+
               <div className="mt-8 hidden md:flex flex-col">
                 <UserProfileSection />
               </div>
