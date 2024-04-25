@@ -19,8 +19,13 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide(openDialog, handleCloseDialog, selectedPost) {
-  
+interface AlertDialogSlideProps {
+  openDialog: boolean;
+  handleCloseDialog: () => void;
+  selectedPost: string;
+}
+
+export default function AlertDialogSlide({ openDialog, handleCloseDialog, selectedPost }: AlertDialogSlideProps) {
   return (
     <React.Fragment>
       <Dialog
