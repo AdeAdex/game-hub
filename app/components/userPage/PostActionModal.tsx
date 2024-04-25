@@ -58,6 +58,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const handleClickOpen = (postId: string) => {
     setSelectedPost(postId);
     setOpenDialog(true);
+    handleClose();
   };
 
   const handleCloseDialog = () => {
