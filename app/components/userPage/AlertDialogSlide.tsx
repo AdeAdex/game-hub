@@ -19,24 +19,12 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export default function AlertDialogSlide(openDialog, handleClose, selectedPost) {
+  
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Delete Post
-      </Button>
       <Dialog
-        open={open}
+        open={openDialog}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
