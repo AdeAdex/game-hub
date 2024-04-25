@@ -24,7 +24,7 @@ interface User {
   email: string;
   profilePicture: string;
   bio: string;
-};
+}
 
 interface Post {
   _id: string;
@@ -35,7 +35,7 @@ interface Post {
   dislikes: number;
   likedBy: string[]; // Add the likedBy property here
   image: string;
-};
+}
 
 interface PostModalProps {
   user: User;
@@ -46,28 +46,28 @@ interface PostModalProps {
   setEditSelectedPost: React.Dispatch<string>;
 }
 
-const PostModal: React.FC<PostModalProps> = ({ 
-  user, 
-  setPosts, 
-  openCreatePostModal, 
-  setOpenCreatePostModal, 
-  editSelectedPost, 
-  setEditSelectedPost
+const PostModal: React.FC<PostModalProps> = ({
+  user,
+  setPosts,
+  openCreatePostModal,
+  setOpenCreatePostModal,
+  editSelectedPost,
+  setEditSelectedPost,
 }) => {
   //const [open, setOpen] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleOpen = () => {
     //setOpen(true);
-    setOpenCreatePostModal(true) 
+    setOpenCreatePostModal(true);
   };
 
   const handleClose = () => {
     //setOpen(false);
-    setOpenCreatePostModal(false)
+    setOpenCreatePostModal(false);
   };
 
   const handlePostContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +123,6 @@ const PostModal: React.FC<PostModalProps> = ({
       setLoading(false); // Reset loading state after submission
       handleClose();
     }
-
   };
 
   return (
@@ -169,7 +168,7 @@ const PostModal: React.FC<PostModalProps> = ({
       >
         <Box sx={style} className="rounded-md shadow-sm border-none">
           <Typography variant="h6" component="h2">
-            {editSelectedPost ? "Edit a Post" : "Create a Post" } 
+            {editSelectedPost ? "Edit a Post" : "Create a Post"}
           </Typography>
           <hr />
           <div className="flex py-2 gap-2">
@@ -226,7 +225,13 @@ const PostModal: React.FC<PostModalProps> = ({
             }`}
             disabled={!postContent && !postImage}
           >
-            {loading ? (editSelectedPost ? "Saving..." : "Posting...") : (editSelectedPost ? "Save" : "Post")}
+            {loading
+              ? editSelectedPost
+                ? "Saving..."
+                : "Posting..."
+              : editSelectedPost
+              ? "Save"
+              : "Post"}
           </button>
         </Box>
       </Modal>

@@ -47,18 +47,17 @@ interface PostProps {
 
 const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   posts,
-  setPosts, 
+  setPosts,
   likedPosts,
   handleReaction,
   handleComment,
   handleShare,
   loggedInUserId,
-  openCreatePostModal, 
-  setOpenCreatePostModal, 
-  user, 
-  editSelectedPost, 
-  setEditSelectedPost, 
-  
+  openCreatePostModal,
+  setOpenCreatePostModal,
+  user,
+  editSelectedPost,
+  setEditSelectedPost,
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
   const [open, setOpen] = useState(false);
@@ -86,7 +85,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     const post = posts.find((post) => post._id === postId);
     if (post) {
       setSelectedPost(post);
-      setOpenModal(true); 
+      setOpenModal(true);
       //setOpenCreatePostModal(true)
     }
   };
@@ -130,9 +129,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
               </div>
               <CiMenuKebab
                 className="flex cursor-pointer "
-                onClick={() => handleToggleModal(post._id) }
+                onClick={() => handleToggleModal(post._id)}
               />
-            
             </div>
             <p className="text-gray-700 mb-2">
               {post.content && (
@@ -214,15 +212,15 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       )}
       {selectedPost && (
         <PostActionModal
-          open={openModal} 
+          open={openModal}
           handleClose={() => setOpenModal(false)}
           post={selectedPost}
           setPosts={setPosts}
           loggedInUserId={loggedInUserId}
-          openCreatePostModal={openCreatePostModal} 
+          openCreatePostModal={openCreatePostModal}
           setOpenCreatePostModal={setOpenCreatePostModal}
           user={user}
-          editSelectedPost={editSelectedPost} 
+          editSelectedPost={editSelectedPost}
           setEditSelectedPost={setEditSelectedPost}
         />
       )}

@@ -12,7 +12,10 @@ export const POST = async (req, res) => {
     // Implement logic to save the post for the user
     await User.findByIdAndUpdate(userId, { $addToSet: { savedPosts: postId } });
 
-    return NextResponse.json({ success: true, message: "Post saved successfully." }, { status: 200 });
+    return NextResponse.json(
+      { success: true, message: "Post saved successfully." },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error saving post:", error.message);
     return NextResponse.error(new Error("Failed to save post"), {

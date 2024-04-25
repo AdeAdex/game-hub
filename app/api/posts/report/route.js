@@ -12,9 +12,14 @@ export const POST = async (req, res) => {
 
     // Implement logic to report the post
     // For example, add the userId and reason to the post's reportedBy array
-    await Post.findByIdAndUpdate(postId, { $addToSet: { reportedBy: { userId, reason } } });
+    await Post.findByIdAndUpdate(postId, {
+      $addToSet: { reportedBy: { userId, reason } },
+    });
 
-    return NextResponse.json({ success: true, message: "Post reported successfully." }, { status: 200 });
+    return NextResponse.json(
+      { success: true, message: "Post reported successfully." },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error reporting post:", error.message);
     return NextResponse.error(new Error("Failed to report post"), {
