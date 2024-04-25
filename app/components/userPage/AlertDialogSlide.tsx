@@ -21,13 +21,13 @@ const Transition = React.forwardRef(function Transition(
 
 interface AlertDialogSlideProps {
   openDialog: boolean;
-  success: boolean;
+  loading: boolean;
   handleCloseDialog: () => void;
   selectedPost: string;
   handleAction: (action: string, postId: string) => void; // Add handleAction prop
 }
 
-export default function AlertDialogSlide({ openDialog, success, handleCloseDialog, selectedPost, handleAction }: AlertDialogSlideProps) {
+export default function AlertDialogSlide({ openDialog, loading, handleCloseDialog, selectedPost, handleAction }: AlertDialogSlideProps) {
   const handleDelete = () => {
     handleAction("delete", selectedPost); // Trigger handleAction with "delete" action
     if (success) {
