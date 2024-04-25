@@ -177,7 +177,8 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               </div>
             </div>
             <div className="md:col-span-2">
-              <Post
+              <Post 
+                user={user}
                 posts={posts}
                 setPosts={setPosts}
                 likedPosts={likedPosts}
