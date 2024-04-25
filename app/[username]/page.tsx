@@ -178,6 +178,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
             <div className="md:col-span-2">
               <Post
                 posts={posts}
+                setPosts={setPosts}
                 likedPosts={likedPosts}
                 handleReaction={handleReaction}
                 handleComment={handleComment}
