@@ -142,6 +142,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
         <input
           onClick={handleOpen}
           type="text"
+          readOnly
           placeholder={`What's on your mind ${user.firstName}`}
           className="hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
         />
