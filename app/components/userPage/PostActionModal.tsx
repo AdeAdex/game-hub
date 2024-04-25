@@ -60,7 +60,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
     setOpenDialog(true);
   };
 
-  const handleClose = () => {
+  const handleCloseDialog = () => {
     setOpenDialog(false);
   };
 
@@ -193,7 +193,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </div>
         </Box>
       </Modal>
-      <AlertDialogSlide  handleClose={handleClose} openDialog={openDialog} />
+      <AlertDialogSlide  handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} />
     </div>
   );
 };
