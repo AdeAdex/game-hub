@@ -47,7 +47,7 @@ interface PostActionModalProps {
 const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   handleClose,
   post,
-  setPost,
+  setPosts,
   loggedInUserId, }) => {
 
   const [actionResponse, setActionResponse] = useState<string>("");
