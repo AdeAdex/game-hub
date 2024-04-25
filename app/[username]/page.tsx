@@ -45,8 +45,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [newImage, setNewImage] = useState("");
   const [cloudImage, setCloudImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [likedPosts, setLikedPosts] = useState<string[]>([]);
-  const [openCreatePostModal, setOpenCreatePostModal] = useState<boolean>(false); 
+  const [likedPosts, setLikedPosts] = useState<string[]>([]); 
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -170,8 +169,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   handleFileSelect={handleFileSelect}
                 />
               </div>
-              <PostModal user={user} setPosts={setPosts} setOpenCreatePostModal={setOpenCreatePostModal}
-                openCreatePostModal={openCreatePostModal} />
+              <PostModal user={user} setPosts={setPosts} />
 
               <div className="mt-8 hidden md:flex flex-col">
                 <UserProfileSection />
@@ -186,8 +184,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 handleComment={handleComment}
                 handleShare={handleShare}
                 loggedInUserId={user._id}
-                setOpenCreatePostModal={setOpenCreatePostModal}
-                openCreatePostModal={openCreatePostModal} 
               />
             </div>
           </div>
