@@ -169,7 +169,7 @@ const PostModal: React.FC<PostModalProps> = ({
       >
         <Box sx={style} className="rounded-md shadow-sm border-none">
           <Typography variant="h6" component="h2">
-            Create a Post
+            {editSelectedPost ? "Edit a Post" : "Create a Post" } 
           </Typography>
           <hr />
           <div className="flex py-2 gap-2">
