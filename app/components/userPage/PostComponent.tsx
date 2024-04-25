@@ -41,6 +41,8 @@ interface PostProps {
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
   user: User;
+  editSelectedPost: string;
+  setEditSelectedPost: React.Dispatch<string>;
 }
 
 const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
@@ -53,7 +55,9 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   loggedInUserId,
   openCreatePostModal, 
   setOpenCreatePostModal, 
-  user
+  user, 
+  editSelectedPost, 
+  setEditSelectedPost, 
   
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
@@ -218,6 +222,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           openCreatePostModal={openCreatePostModal} 
           setOpenCreatePostModal={setOpenCreatePostModal}
           user={user}
+          editSelectedPost={editSelectedPost} 
+          setEditSelectedPost={setEditSelectedPost}
         />
       )}
     </div>
