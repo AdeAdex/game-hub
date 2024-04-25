@@ -56,8 +56,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedPost, setSelectedPost] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [openEditModal, setOpenEditModal] = React.useState(false); 
-    const [open, setOpen] = useState(false);
+  const [openEditModal, setOpenEditModal] = React.useState(false);
 
   const handleClickOpen = (postId: string) => {
     setSelectedPost(postId);
@@ -68,7 +67,6 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const handleUpdate = (postId: string) => {
     setSelectedPost(postId);
     setOpenEditModal(true);
-    setOpen(true);
     handleClose();
   };
 
