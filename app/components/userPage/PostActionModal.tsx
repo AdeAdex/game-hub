@@ -115,9 +115,11 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         console.log(response.data.message) 
           // Update local state after action
           if (action === "delete" || action === "hide") {
-            setPosts((prevPosts) =>
-              prevPosts.filter((post) => post._id !== postId)
-            );
+           // setPosts((prevPosts) =>
+           //   prevPosts.filter((post) => post._id !== postId)
+           // );
+            const newPost = response.data.post ;
+            setPosts((prevPosts) => [newPost, ...prevPosts]);
           }
           handleClose();
         }  
