@@ -59,15 +59,13 @@ const PostModal: React.FC<PostModalProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const handleOpen = () => {
-    //setOpen(true);
-    setOpenCreatePostModal(true);
-  };
+  
 
   const handleClose = () => {
     //setOpen(false);
     setOpenCreatePostModal(false);
+    setEditSelectedPost("")
+    // console.log(editSelectedPost)
   };
 
   const handlePostContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,6 +114,7 @@ const PostModal: React.FC<PostModalProps> = ({
       const newPost = response.data; // Assuming the response contains the newly created post data
       // You can add the new post to the beginning of the posts array
       setPosts((prevPosts) => [newPost, ...prevPosts]);
+      setPostContent("");
     } catch (error: any) {
       console.error("Error creating post:", error);
       // Handle error
@@ -127,38 +126,6 @@ const PostModal: React.FC<PostModalProps> = ({
 
   return (
     <div>
-      <div className="flex gap-2 bg-white mb-4 p-4 rounded-lg shadow-md mt-6 ">
-        <div className="relative w-8 h-8 mr-2">
-          {user.profilePicture ? (
-            <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={user.profilePicture}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-          ) : (
-            <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={avatar}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-          )}
-        </div>
-        <input
-          onClick={handleOpen}
-          type="text"
-          readOnly
-          placeholder={`What's on your mind ${user.firstName}`}
-          className="hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
-        />
-      </div>
 
       <Modal
         open={openCreatePostModal}
@@ -168,7 +135,7 @@ const PostModal: React.FC<PostModalProps> = ({
       >
         <Box sx={style} className="rounded-md shadow-sm border-none">
           <Typography variant="h6" component="h2">
-            {editSelectedPost ? "Edit a Post" : "Create a Post"}
+            {editSelectedPost ? "Edit Post" : "Create a Post"}
           </Typography>
           <hr />
           <div className="flex py-2 gap-2">

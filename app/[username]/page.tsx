@@ -8,6 +8,7 @@ import UserProfileSection from "../components/userPage/UserProfileSection";
 import Post from "../components/userPage/PostComponent";
 import UserAvatarSection from "../components/userPage/UserAvatarSection";
 import PostModal from "../components/userPage/PostModal";
+import PostButton from "../components/userPage/PostButton";
 
 interface User {
   _id: string;
@@ -171,7 +172,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   handleFileSelect={handleFileSelect}
                 />
               </div>
-              <PostModal 
+              <PostButton 
                 user={user} 
                 setPosts={setPosts} 
                 openCreatePostModal={openCreatePostModal} 
