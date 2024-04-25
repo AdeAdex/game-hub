@@ -5,6 +5,7 @@ import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
 import axios from "axios";
 import AlertDialogSlide from './AlertDialogSlide';
+import PostModal from './PostModal' 
 
 
 const style = {
@@ -206,6 +207,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </Box>
       </Modal>
       <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
+      <PostModal handleUpdate={handleUpdate} openEditModal={openEditModal} selectedPost={selectedPost} />
     </div>
   );
 };
