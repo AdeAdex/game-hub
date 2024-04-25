@@ -33,7 +33,7 @@ export default function AlertDialogSlide() {
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Slide in alert dialog
+        Delete Post
       </Button>
       <Dialog
         open={open}
