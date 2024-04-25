@@ -54,7 +54,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const [actionResponse, setActionResponse] = useState<string>("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedPost, setSelectedPost] = useState<string>("");
-  const [success, setSuccess] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleClickOpen = (postId: string) => {
     setSelectedPost(postId);
@@ -68,6 +68,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
 
   const handleAction = async (action: string, postId: string) => {
   try {
+    setLoading(true);
       let endpoint = "";
       let successMessage = "";
       let method = "";
@@ -111,7 +112,6 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         });
         if (response.data.success) {
           setActionResponse(response.data.message);
-          setSuccess(response.data.success)
         console.log(response.data.message) 
           // Update local state after action
           if (action === "delete" || action === "hide") {
@@ -125,6 +125,8 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
     } catch (error) {
       console.error("Error:", error);
       // Handle error
+  } finally {
+      setLoading(false); // Set loading to false when action completes
   }
       
 };
@@ -196,7 +198,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </div>
         </Box>
       </Modal>
-      <AlertDialogSlide success={success} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
+      <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
     </div>
   );
 };
