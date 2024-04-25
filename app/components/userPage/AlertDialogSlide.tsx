@@ -26,7 +26,7 @@ interface AlertDialogSlideProps {
   handleAction: (action: string, postId: string) => void; // Add handleAction prop
 }
 
-export default function AlertDialogSlide({ openDialog, handleCloseDialog, selectedPost }: AlertDialogSlideProps) {
+export default function AlertDialogSlide({ openDialog, handleCloseDialog, selectedPost, handleAction }: AlertDialogSlideProps) {
   const handleDelete = () => {
     handleAction("delete", selectedPost); // Trigger handleAction with "delete" action
     handleCloseDialog(); // Close the dialog
