@@ -194,7 +194,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </div>
         </Box>
       </Modal>
-      <AlertDialogSlide  handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} />
+      <AlertDialogSlide  handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
     </div>
   );
 };
