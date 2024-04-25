@@ -5,7 +5,7 @@ import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
 import axios from "axios";
 import AlertDialogSlide from './AlertDialogSlide';
-import PostModal from './PostModal' 
+//import PostModal from './PostModal' 
 
 
 const style = {
@@ -40,19 +40,16 @@ interface Post {
 
 interface PostActionModalProps {
   open: boolean;
-  openCreatePostModal: boolean;
-  setOpenCreatePostModal: React.Dispatch<boolean>;
   handleClose: () => void;
   post: Post;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   loggedInUserId: string;
 }
 
-const PostActionModal: React.FC<PostActionModalProps> = ( { open,
+const PostActionModal: React.FC<PostActionModalProps> = ( { 
+  open,
   handleClose,
   post,
-  openCreatePostModal, 
-  setOpenCreatePostModal, 
   setPosts,
   loggedInUserId, }) => {
 
@@ -70,8 +67,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
 
   const handleUpdate = (postId: string) => {
     setSelectedPost(postId);
-    //setOpenEditModal(true);
-    setOpenCreatePostModal(true);
+    setOpenEditModal(true);
     handleClose();
   };
 
@@ -212,7 +208,6 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </Box>
       </Modal>
       <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
-      <PostModal openCreatePostModal={openCreatePostModal} setOpenCreatePostModal={setOpenCreatePostModal} />
     </div>
   );
 };
