@@ -19,7 +19,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide(openDialog, handleClose, selectedPost) {
+export default function AlertDialogSlide(openDialog, handleCloseDialog, selectedPost) {
   
   return (
     <React.Fragment>
@@ -27,7 +27,7 @@ export default function AlertDialogSlide(openDialog, handleClose, selectedPost) 
         open={openDialog}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={handleCloseDialog}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Delete Post?"}</DialogTitle>
@@ -37,7 +37,7 @@ export default function AlertDialogSlide(openDialog, handleClose, selectedPost) 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleCloseDialog}>Disagree</Button>
           <Button onClick={handleClose}>Agree</Button>
         </DialogActions>
       </Dialog>
