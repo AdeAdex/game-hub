@@ -209,7 +209,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       {selectedPost && (
         <PostActionModal
           //open={openModal}
-          open={openCreatePostModal} 
+          openCreatePostModal={openCreatePostModal} 
           handleClose={() => setOpenModal(false)}
           post={selectedPost}
           setPosts={setPosts}
