@@ -41,7 +41,7 @@ interface Post {
 interface PostActionModalProps {
   //open: boolean;
   openCreatePostModal: boolean;
-  setOpenCreatePostModal: : React.Dispatch<boolean>;
+  setOpenCreatePostModal: React.Dispatch<boolean>;
   handleClose: () => void;
   post: Post;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
