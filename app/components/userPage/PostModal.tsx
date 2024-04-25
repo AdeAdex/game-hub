@@ -42,10 +42,18 @@ interface PostModalProps {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
-  selectedPost: string;
+  editSelectedPost: string;
+  setEditSelectedPost: React.Dispatch<boolean>;
 }
 
-const PostModal: React.FC<PostModalProps> = ({ user, setPosts, openCreatePostModal, setOpenCreatePostModal, selectedPost }) => {
+const PostModal: React.FC<PostModalProps> = ({ 
+  user, 
+  setPosts, 
+  openCreatePostModal, 
+  setOpenCreatePostModal, 
+  editSelectedPost, 
+  setEditSelectedPost
+}) => {
   //const [open, setOpen] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
