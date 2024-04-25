@@ -5,7 +5,7 @@ import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
 import axios from "axios";
 import AlertDialogSlide from './AlertDialogSlide';
-//import PostModal from './PostModal' 
+import PostModal from './PostModal' 
 
 
 const style = {
@@ -44,6 +44,8 @@ interface PostActionModalProps {
   post: Post;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   loggedInUserId: string;
+  openCreatePostModal: boolean;
+  setOpenCreatePostModal: React.Dispatch<boolean>;
 }
 
 const PostActionModal: React.FC<PostActionModalProps> = ( { 
@@ -51,7 +53,10 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
   handleClose,
   post,
   setPosts,
-  loggedInUserId, }) => {
+  loggedInUserId, 
+  openCreatePostModal, 
+  setOpenCreatePostModal, 
+}) => {
 
   const [actionResponse, setActionResponse] = useState<string>("");
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -68,6 +73,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
   const handleUpdate = (postId: string) => {
     setSelectedPost(postId);
     setOpenEditModal(true);
+    setOpenCreatePostModal(true)
     handleClose();
   };
 
@@ -208,6 +214,13 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
         </Box>
       </Modal>
       <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
+      <PostModal
+  user={user} // Make sure to replace `user` with the actual user object
+  setPosts={setPosts}
+  openCreatePostModal={openCreatePostModal}
+  setOpenCreatePostModal={setOpenCreatePostModal}
+/>
+
     </div>
   );
 };
