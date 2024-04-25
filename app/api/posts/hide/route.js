@@ -6,7 +6,7 @@ import Post from "../../../models/post";
 export const PUT = async (req, res) => {
   try {
     const body = await req.json();
-		const postId = body.postId; 
+    const postId = body.postId; 
 
 
     await connectToDb();
@@ -14,16 +14,11 @@ export const PUT = async (req, res) => {
     // Check if the post exists
     const post = await Post.findById({ _id: postId });
     if (!post) {
-      return NextResponse.json({ success: false, message: "Post not found."}, { status: 200 });
+      return NextResponse.json({ success: false, message: "Post not found."}, { status: 404 });
     }
 
-    // Implement logic to hide the post with the given postId
-    // For example, update a field in the post document to indicate it's hidden
-    const updatedPost = await Post.findByIdAndUpdate({ _id: postId} , { hidden: true }, { new: true });
-
-    if (!updatedPost) {
-      return NextResponse.json({ success: false, message: "Failed to hide post."}, { status: 200 });
-    }
+    post.hidden = true;
+    await post.save();
 
     return NextResponse.json({ success: true, message: "Post hidden successfully."}, { status: 200 });
   } catch (error) {
