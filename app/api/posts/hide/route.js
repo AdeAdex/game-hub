@@ -20,7 +20,7 @@ export const PUT = async (req, res) => {
     post.hidden = true;
     await post.save();
 
-    return NextResponse.json({ success: true, message: "Post hidden successfully."}, { status: 200 });
+    return NextResponse.json({ post, success: true, message: "Post hidden successfully."}, { status: 200 });
   } catch (error) {
     console.error("Error hiding post:", error.message);
     return NextResponse.error(new Error("Failed to hide post"), {
