@@ -152,7 +152,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts, selectedPost, ope
       </div>
 
       <Modal
-        open={open}
+        open={open || openEditModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
