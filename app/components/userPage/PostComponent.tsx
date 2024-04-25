@@ -42,7 +42,7 @@ interface PostProps {
 
 const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   posts,
-  setPost, 
+  setPosts, 
   likedPosts,
   handleReaction,
   handleComment,
