@@ -41,25 +41,21 @@ interface PostModalProps {
   user: User;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   //selectedPost: string;
-  openCreatePostModal:boolean;
-  setOpenCreatePostModal: React.Dispatch<boolean>;
 }
 
-const PostModal: React.FC<PostModalProps> = ({ user, setPosts, openCreatePostModal, setOpenCreatePostModal }) => {
-  //const [open, setOpen] = useState(false);
+const PostModal: React.FC<PostModalProps> = ({ user, setPosts }) => {
+  const [open, setOpen] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false)
 
   const handleOpen = () => {
-    //setOpen(true);
-    setOpenCreatePostModal(true)
+    setOpen(true);
   };
 
   const handleClose = () => {
-    //setOpen(false);
-    setOpenCreatePostModal(false)
+    setOpen(false);
   };
 
   const handlePostContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,7 +150,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts, openCreatePostMod
       </div>
 
       <Modal
-        open={openCreatePostModal}
+        open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
