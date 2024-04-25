@@ -19,7 +19,7 @@ export const DELETE = async (req, res) => {
     // Implement logic to delete the post with the given postId
     await Post.findByIdAndDelete({ _id: postId });
 
-    return NextResponse.json({ post, success: true, message: "Post deleted successfully." }, { status: 200 });
+    return NextResponse.json({ success: true, message: "Post deleted successfully." }, { status: 200 });
   } catch (error) {
     console.error("Error deleting post:", error.message);
     return NextResponse.error(new Error("Failed to delete post"), {
