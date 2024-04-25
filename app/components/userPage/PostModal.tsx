@@ -41,11 +41,11 @@ interface PostModalProps {
   user: User;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   selectedPost: string;
-  handleUpdate: () => void;
+  open: boolean;
 }
 
-const PostModal: React.FC<PostModalProps> = ({ user, setPosts, selectedPost }) => {
-  const [open, setOpen] = useState(false);
+const PostModal: React.FC<PostModalProps> = ({ user, setPosts, selectedPost, open }) => {
+
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
