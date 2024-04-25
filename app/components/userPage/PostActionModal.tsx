@@ -57,6 +57,7 @@ interface PostActionModalProps {
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
   user: User;
+  editSelectedPost: string;
 }
 
 const PostActionModal: React.FC<PostActionModalProps> = ( { 
@@ -67,7 +68,8 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
   loggedInUserId, 
   openCreatePostModal, 
   setOpenCreatePostModal, 
-  user
+  user, 
+  editSelectedPost
 }) => {
 
   const [actionResponse, setActionResponse] = useState<string>("");
@@ -83,7 +85,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
   };
 
   const handleUpdate = (postId: string) => {
-    setSelectedPost(postId);
+    setEditSelectedPost(postId);
     setOpenEditModal(true);
     setOpenCreatePostModal(true)
     handleClose();
@@ -227,11 +229,12 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
       </Modal>
       <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
       <PostModal
-  user={user} // Make sure to replace `user` with the actual user object
-  setPosts={setPosts}
-  openCreatePostModal={openCreatePostModal}
-  setOpenCreatePostModal={setOpenCreatePostModal}
-/>
+ 				user={user} // Make sure to replace `user` with the actual user object
+ 				setPosts={setPosts}
+        editSelectedPost={editSelectedPost} 
+ 				openCreatePostModal={openCreatePostModal}
+ 				setOpenCreatePostModal={setOpenCreatePostModal}
+			/>
 
     </div>
   );
