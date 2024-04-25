@@ -43,7 +43,7 @@ export default function AlertDialogSlide({ openDialog, handleCloseDialog, select
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button >Agree</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
