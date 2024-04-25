@@ -10,7 +10,9 @@ const postSchema = new mongoose.Schema(
     dislikes: { type: Number, default: 0 },
     likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // New field to store user IDs who liked the post
     comments: [{ type: String }],
-    timestamp: { type: Date, default: Date.now }
+    timestamp: { type: Date, default: Date.now },
+    hidden: { type: Boolean, default: false }, // Add a field to indicate if the post is hidden
+    reportedBy: [{ userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, reason: String }], // Array to store user IDs who reported the post and reasons
   },
   { timestamps: true }
 );
