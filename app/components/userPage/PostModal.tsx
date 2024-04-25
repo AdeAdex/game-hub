@@ -24,7 +24,7 @@ interface User {
   email: string;
   profilePicture: string;
   bio: string;
-}
+};
 
 interface Post {
   _id: string;
@@ -35,13 +35,13 @@ interface Post {
   dislikes: number;
   likedBy: string[]; // Add the likedBy property here
   image: string;
-}
+};
 
 interface PostModalProps {
   user: User;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   openCreatePostModal: boolean;
-  setOpenCreatePostModal: React.Dispatch<boolean>;;
+  setOpenCreatePostModal: React.Dispatch<boolean>;
   //selectedPost: string;
 }
 
