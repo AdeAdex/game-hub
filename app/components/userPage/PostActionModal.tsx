@@ -52,7 +52,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
 
   const [actionResponse, setActionResponse] = useState<string>("");
 
-  const handleAction = async (action: string, post_id: string) => {
+  const handleAction = async (action: string, postId: string) => {
   try {
       let endpoint = "";
       let successMessage = "";
@@ -93,7 +93,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         const response = await axios({
           method: method,
           url: endpoint,
-          data: { userId: loggedInUserId, postId: post_id },
+          data: { userId: loggedInUserId, postId },
         });
         if (response.data.success) {
           setActionResponse(response.data.message);
