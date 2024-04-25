@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import CircularProgress from '@mui/material/CircularProgress';
 import { TransitionProps } from '@mui/material/transitions';
 
 const Transition = React.forwardRef(function Transition(
@@ -30,9 +31,6 @@ interface AlertDialogSlideProps {
 export default function AlertDialogSlide({ openDialog, loading, handleCloseDialog, selectedPost, handleAction }: AlertDialogSlideProps) {
   const handleDelete = () => {
     handleAction("delete", selectedPost); // Trigger handleAction with "delete" action
-    if (success) {
-      handleCloseDialog(); // Close the dialog 
-    } 
   };
   return (
     <React.Fragment>
@@ -51,7 +49,9 @@ export default function AlertDialogSlide({ openDialog, loading, handleCloseDialo
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Disagree</Button>
-          <Button onClick={handleDelete}>Agree</Button>
+          <Button onClick={handleDelete} disabled={loading}>
+            {loading ? <CircularProgress size={24} /> : 'Agree'}
+          </Button> 
         </DialogActions>
       </Dialog>
     </React.Fragment>
