@@ -45,7 +45,7 @@ interface PostModalProps {
 }
 
 const PostModal: React.FC<PostModalProps> = ({ user, setPosts, selectedPost, open }) => {
-
+  const [open, setOpen] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
@@ -151,7 +151,7 @@ const PostModal: React.FC<PostModalProps> = ({ user, setPosts, selectedPost, ope
       </div>
 
       <Modal
-        open={open || openEditModal}
+        open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
