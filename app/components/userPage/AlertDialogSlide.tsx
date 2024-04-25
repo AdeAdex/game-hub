@@ -23,6 +23,7 @@ interface AlertDialogSlideProps {
   openDialog: boolean;
   handleCloseDialog: () => void;
   selectedPost: string;
+  handleAction: (action: string, postId: string) => void; // Add handleAction prop
 }
 
 export default function AlertDialogSlide({ openDialog, handleCloseDialog, selectedPost }: AlertDialogSlideProps) {
@@ -43,7 +44,7 @@ export default function AlertDialogSlide({ openDialog, handleCloseDialog, select
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Disagree</Button>
-          <Button >Agree</Button>
+          <Button onClock={() => handleAction("delete", selectedPost) }>Agree</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
