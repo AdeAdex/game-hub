@@ -54,11 +54,18 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const [actionResponse, setActionResponse] = useState<string>("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedPost, setSelectedPost] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = React.useState(false); 
 
   const handleClickOpen = (postId: string) => {
     setSelectedPost(postId);
     setOpenDialog(true);
+    handleClose();
+  };
+
+  const handleUpdate = (postId: string) => {
+    setSelectedPost(postId);
+    setOpenEditModal(true);
     handleClose();
   };
 
@@ -154,7 +161,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
                 Delete
               </button>
               <button
-                onClick={() => handleAction("edit", post._id)}
+                onClick={() => handleUpdate(post._id)}
                 className="w-full  hover:bg-gray-300 flex my-auto p-2 rounded-md "
               >
                 <MdEdit className="mr-2 my-auto" size={12} />
