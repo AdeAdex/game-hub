@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
-import axios from "axios" 
+import axios from "axios";
+import AlertDialogSlide from './AlertDialogSlide';
 
 
 const style = {
@@ -51,6 +52,17 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   loggedInUserId, }) => {
 
   const [actionResponse, setActionResponse] = useState<string>("");
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [selectedPost, setSelectedPost] = useState<string>("");
+
+  const handleClickOpen = (postId: string) => {
+    setSelectedPost(postId);
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   const handleAction = async (action: string, postId: string) => {
   try {
@@ -130,7 +142,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
           <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
-                onClick={() => handleAction("delete", post._id )}
+                onClick={() => handleClickOpen (post._id)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md "
               >
                 <MdDelete className="mr-2 my-auto size={12}" />
@@ -181,6 +193,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </div>
         </Box>
       </Modal>
+      <AlertDialogSlide  handleClose={handleClose} openDialog={openDialog} />
     </div>
   );
 };
