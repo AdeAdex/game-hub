@@ -29,9 +29,13 @@ interface AlertDialogSlideProps {
 }
 
 export default function AlertDialogSlide({ openDialog, loading, handleCloseDialog, selectedPost, handleAction }: AlertDialogSlideProps) {
-  const handleDelete = () => {
-    handleAction("delete", selectedPost); // Trigger handleAction with "delete" action
+  const handleDelete = async () => {
+    // Call the handleAction function
+    await handleAction('delete', selectedPost);
+    // Close the dialog after the action is completed
+    handleCloseDialog();
   };
+
   return (
     <React.Fragment>
       <Dialog
