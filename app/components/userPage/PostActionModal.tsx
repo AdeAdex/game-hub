@@ -56,7 +56,7 @@ interface PostActionModalProps {
   loggedInUserId: string;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
-  user: User[];
+  user: User;
 }
 
 const PostActionModal: React.FC<PostActionModalProps> = ( { 
