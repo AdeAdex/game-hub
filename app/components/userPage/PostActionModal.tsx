@@ -104,6 +104,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
               prevPosts.filter((post) => post._id !== postId)
             );
           }
+          handleClose();
         }  
       }
     } catch (error) {
