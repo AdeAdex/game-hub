@@ -38,6 +38,8 @@ interface PostProps {
   handleComment: (postId: string) => void;
   handleShare: (postId: string) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  openCreatePostModal: boolean;
+  setOpenCreatePostModal: React.Dispatch<boolean>;
 }
 
 const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
@@ -48,6 +50,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   handleComment,
   handleShare,
   loggedInUserId,
+  openCreatePostModal, 
+  setOpenCreatePostModal
   
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
@@ -77,6 +81,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     if (post) {
       setSelectedPost(post);
       setOpenModal(true); 
+      //setOpenCreatePostModal(true)
     }
   };
 
@@ -208,6 +213,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           post={selectedPost}
           setPosts={setPosts}
           loggedInUserId={loggedInUserId}
+          openCreatePostModal={openCreatePostModal} 
+          setOpenCreatePostModal={setOpenCreatePostModal}
         />
       )}
     </div>
