@@ -40,7 +40,7 @@ interface PostProps {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
-  user: User[];
+  user: User;
 }
 
 const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
