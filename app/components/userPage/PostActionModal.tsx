@@ -57,6 +57,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const [selectedPost, setSelectedPost] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = React.useState(false); 
+    const [open, setOpen] = useState(false);
 
   const handleClickOpen = (postId: string) => {
     setSelectedPost(postId);
@@ -67,6 +68,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   const handleUpdate = (postId: string) => {
     setSelectedPost(postId);
     setOpenEditModal(true);
+    setOpen(true);
     handleClose();
   };
 
@@ -207,7 +209,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </Box>
       </Modal>
       <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
-      <PostModal handleUpdate={handleUpdate} openEditModal={openEditModal} selectedPost={selectedPost} />
+      <PostModal handleUpdate={handleUpdate} open={open} selectedPost={selectedPost} />
     </div>
   );
 };
