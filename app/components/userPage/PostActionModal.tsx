@@ -36,7 +36,17 @@ interface Post {
   dislikes: number;
   likedBy: string[];
   image: string;
-}
+};
+
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+};
 
 interface PostActionModalProps {
   open: boolean;
@@ -46,6 +56,7 @@ interface PostActionModalProps {
   loggedInUserId: string;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
+  user: User[];
 }
 
 const PostActionModal: React.FC<PostActionModalProps> = ( { 
@@ -56,6 +67,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( {
   loggedInUserId, 
   openCreatePostModal, 
   setOpenCreatePostModal, 
+  user
 }) => {
 
   const [actionResponse, setActionResponse] = useState<string>("");
