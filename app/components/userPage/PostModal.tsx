@@ -226,7 +226,7 @@ const PostModal: React.FC<PostModalProps> = ({
             }`}
             disabled={!postContent && !postImage}
           >
-            {loading ? "Posting..." : "Post"}
+            {loading ? (editSelectedPost ? "Saving..." : "Posting...") : (editSelectedPost ? "Save" : "Post")}
           </button>
         </Box>
       </Modal>
