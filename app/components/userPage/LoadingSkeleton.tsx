@@ -36,6 +36,7 @@ const LoadingSkeleton = () => {
               <div className="flex-1">
                 <input
                   type="text"
+                  readOnly
                   placeholder="What's on your mind"
                   className="hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
                 />
