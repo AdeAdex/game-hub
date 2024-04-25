@@ -97,7 +97,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         });
         if (response.data.success) {
           setActionResponse(response.data.message);
-        alert(response.data.message) 
+        console.log(response.data.message) 
           // Update local state after action
           if (action === "delete" || action === "hide") {
             setPosts((prevPosts) =>
