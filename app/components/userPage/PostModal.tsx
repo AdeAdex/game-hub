@@ -38,7 +38,7 @@ interface Post {
 }
 
 interface PostModalProps {
-  user: User[];
+  user: User;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;;
