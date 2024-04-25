@@ -39,7 +39,9 @@ interface Post {
 }
 
 interface PostActionModalProps {
-  open: boolean;
+  //open: boolean;
+  openCreatePostModal: boolean;
+  setOpenCreatePostModal: : React.Dispatch<boolean>;
   handleClose: () => void;
   post: Post;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
@@ -49,6 +51,8 @@ interface PostActionModalProps {
 const PostActionModal: React.FC<PostActionModalProps> = ( { open,
   handleClose,
   post,
+  openCreatePostModal, 
+  setOpenCreatePostModal, 
   setPosts,
   loggedInUserId, }) => {
 
@@ -66,7 +70,8 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
 
   const handleUpdate = (postId: string) => {
     setSelectedPost(postId);
-    setOpenEditModal(true);
+    //setOpenEditModal(true);
+    setOpenCreatePostModal(true);
     handleClose();
   };
 
@@ -207,7 +212,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ( { open,
         </Box>
       </Modal>
       <AlertDialogSlide loading={loading} handleCloseDialog={handleCloseDialog} openDialog={openDialog} selectedPost={selectedPost} handleAction={handleAction} />
-      <PostModal open={openEditModal} selectedPost={selectedPost} />
+      <PostModal openCreatePostModal={openCreatePostModal} />
     </div>
   );
 };
