@@ -43,7 +43,7 @@ interface PostModalProps {
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
   editSelectedPost: string;
-  setEditSelectedPost: React.Dispatch<boolean>;
+  setEditSelectedPost: React.Dispatch<string>;
 }
 
 const PostModal: React.FC<PostModalProps> = ({ 
