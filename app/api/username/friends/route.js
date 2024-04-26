@@ -7,13 +7,13 @@ import User from "../../../models/user";
 export const POST = async (req) => {
   try {
     const body = await req.json();
-    const { username } = body;
+    const { userId } = body;
 
     // Connect to the database
     await connectToDb();
 
     // Find the user by username
-    const existingUser = await User.findOne({ userName: username });
+    const existingUser = await User.findOne({ _id: userId });
 
     if (existingUser) {
       // Omit password field from the response
