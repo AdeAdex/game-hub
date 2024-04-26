@@ -198,21 +198,26 @@ const PostModal: React.FC<PostModalProps> = ({
           />
           <div>
           {editSelectedPost ? (
-        <Image
-                    src={postImage}
-                    alt="post Image"
-                    layout="fill"
-                    objectFit="cover"
-                    className=""
-                  />
-          ) : (
-        <input
-            type="file"
-            onChange={handleFileChange}
-            accept="image/*"
-            style={{ margin: "16px 0" }}
-          />
-          ) } 
+  postImage ? (
+    <Image
+      src={postImage}
+      alt="post Image"
+      layout="fill"
+      objectFit="cover"
+      className=""
+    />
+  ) : (
+    <div>No image selected</div>
+  )
+) : (
+  <input
+    type="file"
+    onChange={handleFileChange}
+    accept="image/*"
+    style={{ margin: "16px 0" }}
+  />
+)}
+
           </div>
 
           <button
