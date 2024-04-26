@@ -204,7 +204,7 @@ const PostModal: React.FC<PostModalProps> = ({
       alt="PostImage"
       width={300}
       height={300}
-      className="w-full cursor-pointer"
+      className=" cursor-pointer"
       priority
     />
   ) : (
