@@ -79,7 +79,7 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
           </Typography>
           <hr />
           {friends.map((friend) => (
-        <div className="flex justify-between " key={friend._id} >
+        <div className="flex justify-between mb-4 " key={friend._id} >
             <div className="flex py-2 gap-2">
               <div className="relative w-10 h-10 mr-2">
                 <Image
