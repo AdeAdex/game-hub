@@ -201,10 +201,11 @@ const PostModal: React.FC<PostModalProps> = ({
   postImage ? (
     <Image
       src={postImage}
-      alt="post Image"
-      layout="fill"
-      objectFit="cover"
-      className=""
+      alt="PostImage"
+      width={300}
+      height={300}
+      className="w-full cursor-pointer"
+      priority
     />
   ) : (
     <div>No image selected</div>
