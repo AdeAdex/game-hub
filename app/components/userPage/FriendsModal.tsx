@@ -15,14 +15,27 @@ const style = {
   p: 4,
 };
 
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+  currentFriends?: string[];
+}
+
 interface FriendsModalProps {
   openFriendsDialog: boolean;
   setOpenFriendsDialog: React.Dispatch<boolean>;
+  user: User;
 }
 
 const FriendsModal: React.FC<FriendsModalProps> = ({
   openFriendsDialog,
   setOpenFriendsDialog,
+  user, 
 }) => {
   const handleClose = () => {
     setOpenFriendsDialog(false);
