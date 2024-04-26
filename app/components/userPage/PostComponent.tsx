@@ -43,6 +43,8 @@ interface PostProps {
   user: User;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
+  selectedPost: Post | null;
+  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }
 
 const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
@@ -58,13 +60,15 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   user,
   editSelectedPost,
   setEditSelectedPost,
+  selectedPost,
+  setSelectedPost
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const handleClose = () => {
     setOpen(false);
@@ -212,6 +216,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       )}
       {selectedPost && (
         <PostActionModal
+          selectedPost={selectedPost}
+          setSelectedPost={setSelectedPost}
           open={openModal}
           handleClose={() => setOpenModal(false)}
           post={selectedPost}

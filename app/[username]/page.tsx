@@ -46,9 +46,12 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [newImage, setNewImage] = useState("");
   const [cloudImage, setCloudImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [likedPosts, setLikedPosts] = useState<string[]>([]); 
-  const [openCreatePostModal, setOpenCreatePostModal] = useState<boolean>(false);
+  const [likedPosts, setLikedPosts] = useState<string[]>([]);
+  const [openCreatePostModal, setOpenCreatePostModal] =
+    useState<boolean>(false);
   const [editSelectedPost, setEditSelectedPost] = useState<string>("");
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -172,21 +175,23 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                   handleFileSelect={handleFileSelect}
                 />
               </div>
-              <PostButton 
-                user={user} 
-                setPosts={setPosts} 
-                openCreatePostModal={openCreatePostModal} 
+              <PostButton
+                user={user}
+                setPosts={setPosts}
+                openCreatePostModal={openCreatePostModal}
                 setOpenCreatePostModal={setOpenCreatePostModal}
-                editSelectedPost={editSelectedPost} 
-                setEditSelectedPost={setEditSelectedPost} 
-                />
+                editSelectedPost={editSelectedPost}
+                setEditSelectedPost={setEditSelectedPost}
+                selectedPost={selectedPost}
+                setSelectedPost={setSelectedPost}
+              />
 
               <div className="mt-8 hidden md:flex flex-col">
                 <UserProfileSection />
               </div>
             </div>
             <div className="md:col-span-2">
-              <Post 
+              <Post
                 user={user}
                 posts={posts}
                 setPosts={setPosts}
@@ -195,10 +200,12 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 handleComment={handleComment}
                 handleShare={handleShare}
                 loggedInUserId={user._id}
-                openCreatePostModal={openCreatePostModal} 
+                openCreatePostModal={openCreatePostModal}
                 setOpenCreatePostModal={setOpenCreatePostModal}
-                editSelectedPost={editSelectedPost} 
+                editSelectedPost={editSelectedPost}
                 setEditSelectedPost={setEditSelectedPost}
+                selectedPost={selectedPost}
+                setSelectedPost={setSelectedPost}
               />
             </div>
           </div>

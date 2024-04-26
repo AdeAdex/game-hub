@@ -31,6 +31,8 @@ interface PostButtonProps {
   setOpenCreatePostModal: React.Dispatch<boolean>;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
+  selectedPost: Post | null;
+  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }
 
 const PostButton: React.FC<PostButtonProps> = ({
@@ -40,6 +42,8 @@ const PostButton: React.FC<PostButtonProps> = ({
   setPosts,
   editSelectedPost,
   setEditSelectedPost,
+  selectedPost,
+  setSelectedPost
 }) => {
   const handleOpen = () => {
     setOpenCreatePostModal(true);
@@ -86,6 +90,8 @@ const PostButton: React.FC<PostButtonProps> = ({
         setEditSelectedPost={setEditSelectedPost}
         openCreatePostModal={openCreatePostModal}
         setOpenCreatePostModal={setOpenCreatePostModal}
+        selectedPost={selectedPost}
+        setSelectedPost={setSelectedPost}
       />
     </div>
   );

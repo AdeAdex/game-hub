@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
@@ -44,6 +46,8 @@ interface PostModalProps {
   setOpenCreatePostModal: React.Dispatch<boolean>;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
+  selectedPost: Post | null;
+  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }
 
 const PostModal: React.FC<PostModalProps> = ({
@@ -53,19 +57,30 @@ const PostModal: React.FC<PostModalProps> = ({
   setOpenCreatePostModal,
   editSelectedPost,
   setEditSelectedPost,
+  selectedPost,
+  setSelectedPost,
 }) => {
   //const [open, setOpen] = useState(false);
-  const [postContent, setPostContent] = useState("");
+  // const [postContent, setPostContent] = useState("");
+  const [postContent, setPostContent] = useState(selectedPost ? selectedPost.content : "");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [postImage, setPostImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [myPost, setMyPost] = useState<Post | null>(null);
+
+  useEffect(() => {
+    if (selectedPost) {
+      setPostContent(selectedPost.content);
+    }
+  }, [selectedPost]);
+  
   
 
   const handleClose = () => {
-    //setOpen(false);
-    setOpenCreatePostModal(false);
+    setPostContent("")
     setEditSelectedPost("")
-    // console.log(editSelectedPost)
+    setOpenCreatePostModal(false);
+
   };
 
   const handlePostContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {

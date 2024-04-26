@@ -24,14 +24,14 @@ interface AlertDialogSlideProps {
   openDialog: boolean;
   loading: boolean;
   handleCloseDialog: () => void;
-  selectedPost: string;
+  selectedPostId: string;
   handleAction: (action: string, postId: string) => void; // Add handleAction prop
 }
 
-export default function AlertDialogSlide({ openDialog, loading, handleCloseDialog, selectedPost, handleAction }: AlertDialogSlideProps) {
+export default function AlertDialogSlide({ openDialog, loading, handleCloseDialog, selectedPostId, handleAction }: AlertDialogSlideProps) {
   const handleDelete = async () => {
     // Call the handleAction function
-    await handleAction('delete', selectedPost);
+    await handleAction('delete', selectedPostId);
     // Close the dialog after the action is completed
     handleCloseDialog();
   };
