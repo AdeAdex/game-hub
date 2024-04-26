@@ -204,8 +204,8 @@ const PostModal: React.FC<PostModalProps> = ({
   alt="PostImage"
   width={100}
   height={100}
-  layout="responsive"
-  className="w-full cursor-pointer"
+  layout="fixed"
+  className="w-full h-full object-cover cursor-pointer"
   priority // Optional: indicates that this image is considered high priority
 />
 
