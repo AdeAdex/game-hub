@@ -5,6 +5,7 @@ import { Modal, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import axios from "axios";
+import { FiMessageCircle } from "react-icons/fi";
 
 const style = {
   position: "absolute" as "absolute",
@@ -78,7 +79,8 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
           </Typography>
           <hr />
           {friends.map((friend) => (
-            <div key={friend._id} className="flex py-2 gap-2">
+        <div className="flex justify-between " key={friend._id} >
+            <div className="flex py-2 gap-2">
               <div className="relative w-10 h-10 mr-2">
                 <Image
                   src={friend.profilePicture || avatar}
@@ -92,6 +94,14 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
                 {friend.firstName} {friend.lastName}
               </div>
             </div>
+          <button
+                    className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                    
+                  >
+                    <FiMessageCircle className="my-auto" />{" "}
+                    <span className="my-auto">Message</span>
+                  </button>
+          </div>
           ))}
         </Box>
       </Modal>
