@@ -140,6 +140,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
             ? [...prevLikedPosts, postId]
             : prevLikedPosts.filter((id) => id !== postId)
         );
+        console.log("my liked", likedPosts)
       } else {
         console.error("Failed to react to post:", response.data.message);
       }

@@ -95,6 +95,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     }
   };
 
+  console.log("post mi re", posts)
+
   return (
     <div className="">
       {posts.length > 0 ? ( // Check if there are posts available
@@ -109,7 +111,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   {post.userId.profilePicture ? (
                     <div className="relative w-8 h-8 mr-2">
                       <Image
-                        src={post.userId.profilePicture}
+                        src={post?.userId?.profilePicture}
                         alt="Profile Picture"
                         layout="fill"
                         objectFit="cover"
