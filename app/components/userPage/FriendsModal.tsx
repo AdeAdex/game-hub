@@ -95,7 +95,7 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
               </div>
             </div>
           <button
-                    className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                    className="bg-gray-300 cursor-pointer my-auto hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
                     
                   >
                     <FiMessageCircle className="my-auto" />{" "}
