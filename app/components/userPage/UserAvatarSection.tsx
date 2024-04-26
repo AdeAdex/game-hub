@@ -13,6 +13,7 @@ interface User {
   email: string;
   profilePicture: string;
   bio: string;
+  currentFriends?: string[];
 }
 
 interface UserAvatarSectionProps {
@@ -79,7 +80,7 @@ const UserAvatarSection: React.FC<UserAvatarSectionProps> = ({
         <p className="mt-1 text-lg text-gray-500">{user.userName}</p>
       </div>
       <div className="mt-8 md:hidden">
-        <MobileUserProfileSection />
+        <MobileUserProfileSection user={user} />
       </div>
     </>
   );

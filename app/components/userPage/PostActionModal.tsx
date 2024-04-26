@@ -36,6 +36,7 @@ interface Post {
     email: string;
     profilePicture: string;
     bio: string;
+    currentFriends?: string[];
   };
   likes: number;
   dislikes: number;
@@ -51,6 +52,7 @@ interface User {
   email: string;
   profilePicture: string;
   bio: string;
+  currentFriends?: string[];
 }
 
 interface PostActionModalProps {

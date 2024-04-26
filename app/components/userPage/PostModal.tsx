@@ -26,6 +26,7 @@ interface User {
   email: string;
   profilePicture: string;
   bio: string;
+  currentFriends?: string[];
 }
 
 interface Post {
