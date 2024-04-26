@@ -200,13 +200,15 @@ const PostModal: React.FC<PostModalProps> = ({
           {editSelectedPost ? (
   postImage ? (
     <Image
-      src={postImage}
-      alt="PostImage"
-      width={100}
-      height={100}
-      className="w-full cursor-pointer"
-      priority
-    />
+  src={postImage}
+  alt="PostImage"
+  width={100}
+  height={100}
+  layout="responsive"
+  className="w-full cursor-pointer"
+  priority // Optional: indicates that this image is considered high priority
+/>
+
   ) : (
     <div>No image selected</div>
   )
