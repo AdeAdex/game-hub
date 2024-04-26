@@ -37,6 +37,7 @@ const MobileUserProfileSection: React.FC<MobileUserProfileSectionProps> = ({
       <FriendsModal
         openFriendsDialog={openFriendsDialog}
         setOpenFriendsDialog={setOpenFriendsDialog}
+        user={user} 
       />
     </div>
   );
