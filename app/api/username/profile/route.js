@@ -1,3 +1,5 @@
+// /app/api/username/profile
+
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import User from "../../../models/user";
