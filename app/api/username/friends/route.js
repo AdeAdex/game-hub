@@ -20,7 +20,9 @@ export const POST = async (req) => {
       existingUser.password = undefined;
 
       // Fetch all currentFriends for the existingUser
-      const friendsDetails = await User.find({ _id: { $in: existingUser.currentFriends } });
+      const friendsDetails = await User.find({
+        _id: { $in: existingUser.currentFriends },
+      });
 
       // Omit password field from each friend's details
       const sanitizedFriends = friendsDetails.map((friend) => {
@@ -29,7 +31,7 @@ export const POST = async (req) => {
       });
 
       console.log("Current Friends:", sanitizedFriends);
-      
+
       // Return the sanitized list of currentFriends
       return NextResponse.json(sanitizedFriends);
     } else {
@@ -41,4 +43,3 @@ export const POST = async (req) => {
     return NextResponse.error(new Error("Internal Server Error"));
   }
 };
- 

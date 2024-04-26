@@ -1,4 +1,4 @@
-'use client' 
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Modal, Box, Typography } from "@mui/material";
@@ -79,29 +79,26 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
           </Typography>
           <hr />
           {friends.map((friend) => (
-        <div className="flex justify-between mb-4 " key={friend._id} >
-            <div className="flex py-2 gap-2">
-              <div className="relative w-10 h-10 mr-2">
-                <Image
-                  src={friend.profilePicture || avatar}
-                  alt="Profile Picture"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-full"
-                />
+            <div className="flex justify-between mb-4 " key={friend._id}>
+              <div className="flex py-2 gap-2">
+                <div className="relative w-10 h-10 mr-2">
+                  <Image
+                    src={friend.profilePicture || avatar}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
+                <div className="text-[12px] fw-bold">
+                  {friend.firstName} {friend.lastName}
+                </div>
               </div>
-              <div className="text-[12px] fw-bold">
-                {friend.firstName} {friend.lastName}
-              </div>
+              <button className="bg-gray-300 cursor-pointer my-auto hover:bg-gray-400 py-2 px-2 rounded-lg text-[14px] flex gap-1">
+                <FiMessageCircle className="my-auto" />{" "}
+                <span className="my-auto">Message</span>
+              </button>
             </div>
-          <button
-                    className="bg-gray-300 cursor-pointer my-auto hover:bg-gray-400 py-2 px-2 rounded-lg text-[14px] flex gap-1"
-                    
-                  >
-                    <FiMessageCircle className="my-auto" />{" "}
-                    <span className="my-auto">Message</span>
-                  </button>
-          </div>
           ))}
         </Box>
       </Modal>
