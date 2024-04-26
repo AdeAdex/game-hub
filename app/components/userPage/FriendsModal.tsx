@@ -1,7 +1,10 @@
+'use client' 
+
 import React, { useState, useEffect } from "react";
-import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import { Modal, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
+import axios from "axios";
 
 const style = {
   position: "absolute" as "absolute",
@@ -35,11 +38,32 @@ interface FriendsModalProps {
 const FriendsModal: React.FC<FriendsModalProps> = ({
   openFriendsDialog,
   setOpenFriendsDialog,
-  user, 
+  user,
 }) => {
+  const [friends, setFriends] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const response = await axios.post("/api/username/friends", {
+          userId: user._id,
+        });
+        const sanitizedFriends = response.data;
+        setFriends(sanitizedFriends);
+      } catch (error) {
+        console.error("Error fetching friends:", error);
+      }
+    };
+
+    if (openFriendsDialog) {
+      fetchFriends();
+    }
+  }, [openFriendsDialog, user._id]);
+
   const handleClose = () => {
     setOpenFriendsDialog(false);
   };
+
   return (
     <div>
       <Modal
@@ -53,34 +77,22 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
             Friends
           </Typography>
           <hr />
-          <div className="flex py-2 gap-2">
-            <div className="relative w-8 h-8 mr-2">
-              {/* {user.profilePicture ? (
-                <div className="relative w-10 h-10 mr-2">
-                  <Image
-                    src={user.profilePicture}
-                    alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-full"
-                  />
-                </div>
-              ) : ( */}
+          {friends.map((friend) => (
+            <div key={friend._id} className="flex py-2 gap-2">
               <div className="relative w-10 h-10 mr-2">
                 <Image
-                  src={avatar}
+                  src={friend.profilePicture || avatar}
                   alt="Profile Picture"
                   layout="fill"
                   objectFit="cover"
                   className="rounded-full"
                 />
               </div>
-              {/* )} */}
+              <div className="text-[12px] fw-bold">
+                {friend.firstName} {friend.lastName}
+              </div>
             </div>
-            <div className="text-[12px] fw-bold">
-              {/* {user.firstName} {user.lastName} */}
-            </div>
-          </div>
+          ))}
         </Box>
       </Modal>
     </div>
