@@ -65,13 +65,17 @@ const PostModal: React.FC<PostModalProps> = ({
   // const [postContent, setPostContent] = useState("");
   const [postContent, setPostContent] = useState(selectedPost ? selectedPost.content : "");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [postImage, setPostImage] = useState<string | null>(null);
+  //const [postImage, setPostImage] = useState<string | null>(null);
+  const [postImage, setPostImage] = useState<string | null>(
+    selectedPost ? selectedPost.image : null
+  ); 
   const [loading, setLoading] = useState(false);
   const [myPost, setMyPost] = useState<Post | null>(null);
 
   useEffect(() => {
     if (selectedPost) {
       setPostContent(selectedPost.content);
+      setPostImage(selectedPost.image);
     }
   }, [selectedPost]);
   
@@ -192,12 +196,24 @@ const PostModal: React.FC<PostModalProps> = ({
             fullWidth
             margin="normal"
           />
-          <input
+          <div>
+          {editSelectedPost ? (
+        <Image
+                    src={postImage}
+                    alt="post Image"
+                    layout="fill"
+                    objectFit="cover"
+                    className=""
+                  />
+          ) : (
+        <input
             type="file"
             onChange={handleFileChange}
             accept="image/*"
             style={{ margin: "16px 0" }}
           />
+          ) } 
+          </div>
 
           <button
             onClick={handleSubmit}
