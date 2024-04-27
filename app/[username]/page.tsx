@@ -113,38 +113,74 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
+//  const handleReaction = async (postId: string) => {
+//  try {
+//    const userId = user?._id;
+//    if (!userId) {
+//      console.error("User ID is undefined");
+//      return;
+//    }
+
+//    const action = likedPosts.includes(postId) ? "unlike" : "like";
+//    const response = await axios.post(`/api/posts/react`, {
+//      postId,
+//      action,
+//      userId,
+//    });
+
+//    if (response.status === 200) {
+//      const updatedPost: Post = response.data; // Ensure response data is of type Post
+//      setPosts((prevPosts) =>
+//        prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
+//      );
+//      setLikedPosts((prevLikedPosts) =>
+//        action === "like"
+//          ? [...prevLikedPosts, postId]
+//          : prevLikedPosts.filter((id) => id !== postId)
+//      );
+//    } else {
+//      console.error("Failed to react to post:", response.data.message);
+//    }
+//  } catch (error: any) {
+//    console.error("Error reacting to post:", error.message);
+//  }
+//};
+
   const handleReaction = async (postId: string) => {
-  try {
-    const userId = user?._id;
-    if (!userId) {
-      console.error("User ID is undefined");
-      return;
-    }
+    try {
+      const userId = user?._id;
+      if (!userId) {
+        console.error("User ID is undefined");
+        return;
+      }
 
-    const action = likedPosts.includes(postId) ? "unlike" : "like";
-    const response = await axios.post(`/api/posts/react`, {
-      postId,
-      action,
-      userId,
-    });
+      const action = likedPosts.includes(postId) ? "unlike" : "like";
+      const response = await axios.post(`/api/posts/react`, {
+        postId,
+        action,
+        userId,
+      });
+      const updatedPost = response.data;
 
-    if (response.status === 200) {
-      const updatedPost: Post = response.data; // Ensure response data is of type Post
-      setPosts((prevPosts) =>
-        prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
-      );
-      setLikedPosts((prevLikedPosts) =>
-        action === "like"
-          ? [...prevLikedPosts, postId]
-          : prevLikedPosts.filter((id) => id !== postId)
-      );
-    } else {
-      console.error("Failed to react to post:", response.data.message);
+      if (response.status === 200) {
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === updatedPost._id ? updatedPost : post
+          )
+        );
+        setLikedPosts((prevLikedPosts) =>
+          action === "like"
+            ? [...prevLikedPosts, postId]
+            : prevLikedPosts.filter((id) => id !== postId)
+        );
+        console.log("my liked", likedPosts)
+      } else {
+        console.error("Failed to react to post:", response.data.message);
+      }
+    } catch (error: any) {
+      console.error("Error reacting to post:", error.message);
     }
-  } catch (error: any) {
-    console.error("Error reacting to post:", error.message);
-  }
-};
+  };
 
 
   const handleComment = async (postId: string) => {
