@@ -45,7 +45,13 @@ export const PUT = async (req, res) => {
     // Save the updated post
     await post.save();
 
-    return NextResponse.json( post
+    // Populate userId with specific fields from the User model
+    const populatedPost = await Post.findById(post._id)
+      .populate("userId", "profilePicture firstName lastName")
+      .exec();
+
+
+    return NextResponse.json( populatedPost 
       { success: true, message: "Post edited successfully." },
       { status: 200 }
     );
