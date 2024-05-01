@@ -90,26 +90,26 @@ const Navbar: React.FC = () => {
   }, [session]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const dropdownElement = document.getElementById("profileDropdown");
       const profileElement = document.getElementById("profileSection");
 
       if (
         dropdownElement &&
         profileElement &&
-        !dropdownElement.contains(event.target) &&
-        !profileElement.contains(event.target)
+        !dropdownElement.contains(event.target as Node) &&
+        !profileElement.contains(event.target as Node)
       ) {
-        setDropdown(false); // Close dropdown if click is outside
+        setDropdown(false);
       }
     };
 
     window.addEventListener("click", handleClickOutside);
 
     return () => {
-      window.removeEventListener("click", handleClickOutside); // Cleanup listener on component unmount
+      window.removeEventListener("click", handleClickOutside);
     };
-  }, []); 
+  }, []);
 
   return (
     <main>
