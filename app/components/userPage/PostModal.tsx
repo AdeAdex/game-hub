@@ -93,10 +93,10 @@ const PostModal: React.FC<PostModalProps> = ({
   
 
   const handleClose = () => {
-    setPostContent("")
-    setEditSelectedPost("")
+    setPostContent("");
+    setPostImage(null);
+    setEditSelectedPost(""); // Reset editSelectedPost
     setOpenCreatePostModal(false);
-
   };
 
   const handlePostContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,16 +148,22 @@ const PostModal: React.FC<PostModalProps> = ({
           postId: editSelectedPost,
           postData,
         });
+        setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === updatedPost._id ? updatedPost : post
+        )
+      );
       } else {
         // Create new post
         response = await axios.post("/api/posts", postData);
-      }
-
-      // After posting, update the UI with the new post
+        // After posting, update the UI with the new post
       const newPost = response.data; // Assuming the response contains the newly created post data
       // You can add the new post to the beginning of the posts array
       setPosts((prevPosts) => [newPost, ...prevPosts]);
       setPostContent("");
+      }
+
+      
     } catch (error: any) {
       console.error("Error creating post:", error);
       // Handle error
