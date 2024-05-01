@@ -86,6 +86,20 @@ const Navbar: React.FC = () => {
     };
 
     fetchData();
+
+    // Add event listener to handle clicks outside the dropdown
+    const handleClickOutside = (event: MouseEvent) => {
+      const dropdownElement = document.getElementById("profileDropdown");
+      if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
+        setDropdown(false); // Close dropdown if click is outside
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside); // Cleanup listener on component unmount
+    };
   }, [session]);
 
   return (
