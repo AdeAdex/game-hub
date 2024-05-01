@@ -72,12 +72,23 @@ const PostModal: React.FC<PostModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [myPost, setMyPost] = useState<Post | null>(null);
 
+ // useEffect(() => {
+  //  if (selectedPost) {
+    //  setPostContent(selectedPost.content);
+  //    setPostImage(selectedPost.image);
+ //   }
+//  }, [selectedPost]);
+
   useEffect(() => {
     if (selectedPost) {
       setPostContent(selectedPost.content);
       setPostImage(selectedPost.image);
+    } else {
+      setPostContent("");
+      setPostImage(null);
     }
   }, [selectedPost]);
+
   
   
 
@@ -109,40 +120,80 @@ const PostModal: React.FC<PostModalProps> = ({
     reader.readAsDataURL(selectedImage);
   };
 
-  const handleSubmit = async () => {
-    setLoading(true); // Set loading state to true when submitting
-    try {
-      if (!user) {
-        console.error("User is null");
-        return;
-      }
+ // const handleSubmit = async () => {
+  //  setLoading(true); // Set loading state to true when submitting
+  //  try {
+   //   if (!user) {
+   //     console.error("User is null");
+   //     return;
+   //   }
 
-      let postData: any = {
+   //   let postData: any = {
+    //    content: postContent,
+   //     userId: user._id,
+   //   };
+
+    //  if (postImage) {
+    //    postData.image = postImage;
+  //    }
+
+  //    console.log(postData);
+
+  //    const response = await axios.post("/api/posts", postData);
+
+      // After posting, update the UI with the new post
+//      const newPost = response.data; // Assuming the response contains the newly created post data
+      // You can add the new post to the beginning of the posts array
+//      setPosts((prevPosts) => [newPost, ...prevPosts]);
+ //     setPostContent("");
+ //   } catch (error: any) {
+//      console.error("Error creating post:", error);
+      // Handle error
+//    } finally {
+//      setLoading(false); // Reset loading state after submission
+//      handleClose();
+//    }
+//  };
+
+
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    try {
+      const postData = {
         content: postContent,
+        image: postImage,
         userId: user._id,
       };
 
-      if (postImage) {
-        postData.image = postImage;
+      let response;
+      if (editSelectedPost) {
+        // Edit existing post
+        response = await axios.put(`/api/posts/edit`, {
+          postId: editSelectedPost,
+          ...postData,
+        });
+      } else {
+        // Create new post
+        response = await axios.post("/api/posts", postData);
       }
 
-      console.log(postData);
-
-      const response = await axios.post("/api/posts", postData);
-
-      // After posting, update the UI with the new post
-      const newPost = response.data; // Assuming the response contains the newly created post data
-      // You can add the new post to the beginning of the posts array
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
-      setPostContent("");
-    } catch (error: any) {
-      console.error("Error creating post:", error);
-      // Handle error
+      const updatedPost = response.data;
+      setPosts((prevPosts) => {
+        // Update posts array with updated/new post
+        const updatedPosts = prevPosts.map((post) =>
+          post._id === updatedPost._id ? updatedPost : post
+        );
+        return updatedPosts;
+      });
+    } catch (error) {
+      console.error("Error creating/editing post:", error);
     } finally {
-      setLoading(false); // Reset loading state after submission
+      setLoading(false);
       handleClose();
     }
   };
+
 
   return (
     <div>
