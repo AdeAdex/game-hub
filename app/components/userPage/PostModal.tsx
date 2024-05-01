@@ -146,7 +146,7 @@ const PostModal: React.FC<PostModalProps> = ({
         // Edit existing post
         response = await axios.put(`/api/posts/edit`, {
           postId: editSelectedPost,
-          postData,
+          ...postData,
         });
         
       } else {
