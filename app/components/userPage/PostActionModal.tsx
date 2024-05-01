@@ -113,6 +113,13 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
     setOpenDialog(false);
   };
 
+  const handleCopy = (content) => {
+    setCopied(content);
+    navigator.Clipboard.writeText(content);
+    alert(content) 
+    setTimeout(() => setCopied(""), 3000); 
+  } 
+
   const handleAction = async (action: string, postId: string) => {
     try {
       setLoading(true);
@@ -214,7 +221,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
           <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
-                onClick={() => handleAction("copy", post._id)}
+                onClick={() => handleCopy("copy", post.content)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
                 <MdContentCopy className="mr-2 my-auto size={12}" />
