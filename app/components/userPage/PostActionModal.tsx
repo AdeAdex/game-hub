@@ -115,13 +115,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
     setOpenDialog(false);
   };
 
-  const handleCopy = (content: string) => {
-  setCopiedContent(content);
-  navigator.clipboard.writeText(content);
-  setShowAlert(true);
-  setTimeout(() => setShowAlert(false), 2000);
-  // handleClose();
-};
+  const handleCopy = (copiedContent: string) => {
+    navigator.clipboard.writeText(copiedContent);
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000); // Close the alert after 3 seconds
+  };
 
 
   const handleAction = async (action: string, postId: string) => {
@@ -282,7 +283,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
         setSelectedPost={setSelectedPost}
       />
       {showAlert && (
-  <Alert severity="success" onClose={() => setShowAlert(false)} sx={{ mb: 2 }}>
+  <Alert variant="outlined" severity="success" onClose={() => setShowAlert(false)} sx={{ mb: 2 }}>
     <AlertTitle>Copied!</AlertTitle>
     "{copiedContent}" has been copied.
   </Alert>
