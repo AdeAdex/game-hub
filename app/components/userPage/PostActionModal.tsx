@@ -92,7 +92,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
-  const [copiedContent, setCopiedContent] = useState<string>("");
+  //const [copiedContent, setCopiedContent] = useState<string>("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
 
@@ -118,6 +118,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   const handleCopy = (copiedContent: string) => {
     navigator.clipboard.writeText(copiedContent);
     setShowAlert(true);
+    handleClose();
 
     setTimeout(() => {
       setShowAlert(false);
