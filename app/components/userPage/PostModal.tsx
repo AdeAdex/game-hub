@@ -141,32 +141,35 @@ const PostModal: React.FC<PostModalProps> = ({
 
      // const response = await axios.post("/api/posts", postData);
 
-      
+      let response;
       if (editSelectedPost) {
         // Edit existing post
         const response = await axios.put(`/api/posts/edit`, {
           postId: editSelectedPost,
           ...postData,
         });
-        const updatedPost = response.data;
-      setPosts((prevPosts) => {
-        // Update posts array with updated/new post
-        const updatedPosts = prevPosts.map((post) =>
-          post._id === updatedPost._id ? updatedPost : post
-        );
-        return updatedPosts;
-      });
+        
       } else {
         // Create new post
         const response = await axios.post("/api/posts", postData);
-        // After posting, update the UI with the new post
-      const newPost = response.data; // Assuming the response contains the newly created post data
-      // You can add the new post to the beginning of the posts array
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
-      setPostContent("");
       }
 
-      
+      const updatedPost = response.data;
+
+    // Update the posts state based on whether it's an edit or new post
+    if (editSelectedPost) {
+      // Update existing post in the posts state
+      setPosts((prevPosts) =>
+        prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
+      );
+    } else {
+      // Add new post to the beginning of the posts state
+      setPosts((prevPosts) => [updatedPost, ...prevPosts]);
+    }
+
+    // Clear form fields after successful submission
+    setPostContent("");
+    setPostImage(null);
     } catch (error: any) {
       console.error("Error creating post:", error);
       // Handle error
