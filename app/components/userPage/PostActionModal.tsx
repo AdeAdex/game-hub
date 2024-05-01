@@ -7,7 +7,6 @@ import { useSnackbar, SnackbarProvider } from "notistack";
 import axios from "axios";
 import AlertDialogSlide from "./AlertDialogSlide";
 import PostModal from "./PostModal";
-import { Alert, AlertTitle } from "@mui/material";
 
 // Define Post and User types
 interface User {
@@ -71,7 +70,33 @@ const PostActionModal = ({
   setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const [actionResponse, setActionResponse] = useState<string>("");
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = React.useState(false);
   const [copiedContent, setCopiedContent] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
+  const handleClickOpen = (postId: string) => {
+    setSelectedPostId(postId);
+    setOpenDialog(true);
+    handleClose();
+  };
+
+  const handleUpdate = (postId: string) => {
+    setEditSelectedPost(postId);
+    setOpenEditModal(true);
+    setOpenCreatePostModal(true);
+    setSelectedPost(post); 
+    // console.log(selectedPost?.content)
+    handleClose();
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
 
   const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content);
@@ -126,6 +151,7 @@ const PostActionModal = ({
         });
         if (response.data.success) {
           enqueueSnackbar(response.data.message, { variant: "success" });
+          setActionResponse(response.data.message);
 
           if (action === "delete" || action === "hide") {
             setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
@@ -136,7 +162,9 @@ const PostActionModal = ({
     } catch (error) {
       console.error("Error:", error);
       enqueueSnackbar("An error occurred.", { variant: "error" });
-    }
+    } finally {
+      setLoading(false); // Set loading to false when action completes
+  }
   };
 
   return (
