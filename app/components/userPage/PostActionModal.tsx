@@ -92,7 +92,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
-  //const [copiedContent, setCopiedContent] = useState<string>("");
+  const [copiedContent, setCopiedContent] = useState<string>("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
 
@@ -115,12 +115,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
     setOpenDialog(false);
   };
 
-  const handleCopy = (copiedContent: string) => {
-    navigator.clipboard.writeText(copiedContent);
+  const handleCopy = (content: string) => {
+    navigator.clipboard.writeText(content);
+    setCopiedContent(content);
     setShowAlert(true);
     handleClose();
 
     setTimeout(() => {
+      setCopiedContent("");
       setShowAlert(false);
     }, 3000); // Close the alert after 3 seconds
   };
@@ -287,7 +289,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
 <Box sx={{ width: '100%' }}> 
     <Alert variant="outlined" severity="success" onClose={() => setShowAlert(false)} sx={{ mb: 2 }}>
       <AlertTitle>Copied!</AlertTitle>
-      "{post.content}" has been copied.
+      "{copiedContent}" has been copied.
     </Alert>
 </Box>
 )}
