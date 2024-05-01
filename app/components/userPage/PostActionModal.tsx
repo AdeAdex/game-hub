@@ -1,12 +1,36 @@
 "use client" 
 
 import React, { useState } from "react";
-import { Modal, Box, Typography, Button } from "@mui/material";
-import { MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport, MdContentCopy } from "react-icons/md";
+import { Modal, Box, Typography, Button, Snackbar, Stack } from "@mui/material";
+import { MdContentCopy, MdDelete, MdEdit, MdVisibility, MdBookmark, MdReport } from "react-icons/md";
+import { useSnackbar, SnackbarProvider } from "notistack";
 import axios from "axios";
-import { SnackbarProvider, useSnackbar } from 'notistack'; // Import SnackbarProvider and useSnackbar
 import AlertDialogSlide from "./AlertDialogSlide";
 import PostModal from "./PostModal";
+import { Alert, AlertTitle } from "@mui/material";
+
+// Define Post and User types
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+  currentFriends?: string[];
+}
+
+interface Post {
+  _id: string;
+  content: string;
+  timestamp: string;
+  userId: User;
+  likes: number;
+  dislikes: number;
+  likedBy: string[];
+  image: string;
+}
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,7 +43,20 @@ const style = {
   p: 4,
 };
 
-interface PostActionModalProps {
+const PostActionModal = ({
+  open,
+  handleClose,
+  post,
+  setPosts,
+  loggedInUserId,
+  openCreatePostModal,
+  setOpenCreatePostModal,
+  user,
+  editSelectedPost,
+  setEditSelectedPost,
+  selectedPost,
+  setSelectedPost,
+}: {
   open: boolean;
   handleClose: () => void;
   post: Post;
@@ -32,54 +69,73 @@ interface PostActionModalProps {
   setEditSelectedPost: React.Dispatch<string>;
   selectedPost: Post | null;
   setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
-}
-
-const PostActionModal: React.FC<PostActionModalProps> = ({
-  open,
-  handleClose,
-  post,
-  setPosts,
-  loggedInUserId,
-  openCreatePostModal,
-  setOpenCreatePostModal,
-  user,
-  editSelectedPost,
-  setEditSelectedPost,
-  selectedPost,
-  setSelectedPost
 }) => {
-  const { enqueueSnackbar } = useSnackbar(); // Access enqueueSnackbar from useSnackbar
+  const { enqueueSnackbar } = useSnackbar();
+  const [copiedContent, setCopiedContent] = useState<string>("");
 
   const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content);
-    enqueueSnackbar('Post has been copied.', { variant: 'success' }); // Show success snackbar
+    setCopiedContent(content);
+
+    enqueueSnackbar("Post has been copied.", { variant: "success" });
+
     handleClose();
   };
 
   const handleAction = async (action: string, postId: string) => {
     try {
-      const endpoint = `/api/posts/${action}`;
-      const method = action === "delete" || action === "hide" ? "DELETE" : "PUT";
+      let endpoint = "";
+      let successMessage = "";
+      let method = "";
 
-      const response = await axios({
-        method: method,
-        url: endpoint,
-        data: { userId: loggedInUserId, postId },
-      });
+      switch (action) {
+        case "delete":
+          endpoint = `/api/posts/delete`;
+          method = "DELETE";
+          successMessage = "Post deleted successfully.";
+          break;
+        case "edit":
+          endpoint = `/api/posts/edit`;
+          method = "PUT";
+          successMessage = "Post updated successfully.";
+          break;
+        case "hide":
+          endpoint = `/api/posts/hide`;
+          method = "PUT";
+          successMessage = "Post hidden successfully.";
+          break;
+        case "save":
+          endpoint = `/api/posts/save`;
+          method = "POST";
+          successMessage = "Post saved successfully.";
+          break;
+        case "report":
+          endpoint = `/api/posts/report`;
+          method = "POST";
+          successMessage = "Post reported successfully.";
+          break;
+        default:
+          break;
+      }
 
-      if (response.data.success) {
-        // Update local state after successful action
-        if (action === "delete" || action === "hide") {
-          setPosts((prevPosts) =>
-            prevPosts.filter((p) => p._id !== postId)
-          );
+      if (endpoint && method) {
+        const response = await axios({
+          method: method,
+          url: endpoint,
+          data: { userId: loggedInUserId, postId },
+        });
+        if (response.data.success) {
+          enqueueSnackbar(response.data.message, { variant: "success" });
+
+          if (action === "delete" || action === "hide") {
+            setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+          }
+          handleClose();
         }
-        enqueueSnackbar(response.data.message, { variant: 'success' }); // Show success snackbar with message
-        handleClose();
       }
     } catch (error) {
       console.error("Error:", error);
-      enqueueSnackbar('An error occurred.', { variant: 'error' }); // Show error snackbar
+      enqueueSnackbar("An error occurred.", { variant: "error" });
     }
   };
 
@@ -103,14 +159,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
                   onClick={() => handleAction("delete", post._id)}
                   className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
                 >
-                  <MdDelete className="mr-2 my-auto size={12}" />
+                  <MdDelete className="mr-2 my-auto" size={20} />
                   Delete
                 </button>
                 <button
                   onClick={() => handleAction("edit", post._id)}
                   className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
                 >
-                  <MdEdit className="mr-2 my-auto" size={12} />
+                  <MdEdit className="mr-2 my-auto" size={20} />
                   Edit
                 </button>
               </div>
@@ -122,28 +178,28 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
                 onClick={() => handleCopy(post.content)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
-                <MdContentCopy className="mr-2 my-auto size={12}" />
+                <MdContentCopy className="mr-2 my-auto" size={20} />
                 Copy Post
               </button>
               <button
                 onClick={() => handleAction("hide", post._id)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
-                <MdVisibility className="mr-2 my-auto size={12}" />
+                <MdVisibility className="mr-2 my-auto" size={20} />
                 Hide Post
               </button>
               <button
                 onClick={() => handleAction("save", post._id)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
-                <MdBookmark className="mr-2 my-auto size={12}" />
+                <MdBookmark className="mr-2 my-auto" size={20} />
                 Save Post
               </button>
               <button
                 onClick={() => handleAction("report", post._id)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
-                <MdReport className="mr-2 my-auto size={12}" />
+                <MdReport className="mr-2 my-auto" size={20} />
                 Report Post
               </button>
             </div>
@@ -156,11 +212,10 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
         </Box>
       </Modal>
       <AlertDialogSlide
-        loading={loading}
+        open={open}
         handleCloseDialog={handleClose}
-        openDialog={open}
-        selectedPostId={post._id}
         handleAction={handleAction}
+        post={post}
       />
       <PostModal
         user={user}
