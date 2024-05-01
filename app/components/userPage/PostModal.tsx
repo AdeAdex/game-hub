@@ -156,7 +156,14 @@ const PostModal: React.FC<PostModalProps> = ({
 
       const updatedPost = response.data;
 
-      setPosts((prevPosts) => [updatedPost, ...prevPosts]);
+     // setPosts((prevPosts) => [updatedPost, ...prevPosts]);
+      setPosts((prevPosts) => {
+      // Update posts array with updated/new post
+      const updatedPosts = prevPosts.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+      return updatedPosts;
+    });
 
     // Clear form fields after successful submission
     setPostContent("");
