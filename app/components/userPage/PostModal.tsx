@@ -120,76 +120,48 @@ const PostModal: React.FC<PostModalProps> = ({
     reader.readAsDataURL(selectedImage);
   };
 
- // const handleSubmit = async () => {
-  //  setLoading(true); // Set loading state to true when submitting
-  //  try {
-   //   if (!user) {
-   //     console.error("User is null");
-   //     return;
-   //   }
-
-   //   let postData: any = {
-    //    content: postContent,
-   //     userId: user._id,
-   //   };
-
-    //  if (postImage) {
-    //    postData.image = postImage;
-  //    }
-
-  //    console.log(postData);
-
-  //    const response = await axios.post("/api/posts", postData);
-
-      // After posting, update the UI with the new post
-//      const newPost = response.data; // Assuming the response contains the newly created post data
-      // You can add the new post to the beginning of the posts array
-//      setPosts((prevPosts) => [newPost, ...prevPosts]);
- //     setPostContent("");
- //   } catch (error: any) {
-//      console.error("Error creating post:", error);
-      // Handle error
-//    } finally {
-//      setLoading(false); // Reset loading state after submission
-//      handleClose();
-//    }
-//  };
-
-
   const handleSubmit = async () => {
-    setLoading(true);
-
+    setLoading(true); // Set loading state to true when submitting
     try {
-      const postData = {
+      if (!user) {
+        console.error("User is null");
+        return;
+      }
+
+      let postData: any = {
         content: postContent,
-        image: postImage,
         userId: user._id,
       };
 
-      let response;
+      if (postImage) {
+        postData.image = postImage;
+      }
+
+      console.log(postData);
+
+     // const response = await axios.post("/api/posts", postData);
+
       if (editSelectedPost) {
         // Edit existing post
         response = await axios.put(`/api/posts/edit`, {
           postId: editSelectedPost,
-          ...postData,
+          postData,
         });
       } else {
         // Create new post
         response = await axios.post("/api/posts", postData);
       }
 
-      const updatedPost = response.data;
-      setPosts((prevPosts) => {
-        // Update posts array with updated/new post
-        const updatedPosts = prevPosts.map((post) =>
-          post._id === updatedPost._id ? updatedPost : post
-        );
-        return updatedPosts;
-      });
-    } catch (error) {
-      console.error("Error creating/editing post:", error);
+      // After posting, update the UI with the new post
+      const newPost = response.data; // Assuming the response contains the newly created post data
+      // You can add the new post to the beginning of the posts array
+      setPosts((prevPosts) => [newPost, ...prevPosts]);
+      setPostContent("");
+    } catch (error: any) {
+      console.error("Error creating post:", error);
+      // Handle error
     } finally {
-      setLoading(false);
+      setLoading(false); // Reset loading state after submission
       handleClose();
     }
   };
