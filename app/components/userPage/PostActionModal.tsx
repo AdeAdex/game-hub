@@ -8,6 +8,7 @@ import {
   MdVisibility,
   MdBookmark,
   MdReport,
+  MdContentCopy, 
 } from "react-icons/md";
 import axios from "axios";
 import AlertDialogSlide from "./AlertDialogSlide";
@@ -211,6 +212,13 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
           )}
           <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
+              <button
+                onClick={() => handleAction("copy", post._id)}
+                className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
+              >
+                <MdContentCopy className="mr-2 my-auto size={12}" />
+                Copy Post
+              </button>
               <button
                 onClick={() => handleAction("hide", post._id)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
