@@ -92,6 +92,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
+  const [copied, setCopied] = useState<string>("");
 
   const handleClickOpen = (postId: string) => {
     setSelectedPostId(postId);
