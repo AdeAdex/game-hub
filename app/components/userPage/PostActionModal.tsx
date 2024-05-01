@@ -286,12 +286,12 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
         setSelectedPost={setSelectedPost}
       />
       {showAlert && (
-<Box sx={{ width: '100%' }}> 
+<Stack sx={{ width: '100%' }} className="absolute top-2"> 
     <Alert variant="outlined" severity="success" onClose={() => setShowAlert(false)} sx={{ mb: 2 }}>
       <AlertTitle>Copied!</AlertTitle>
       "{copiedContent}" has been copied.
     </Alert>
-</Box>
+</Stack>
 )}
     </div>
   );
