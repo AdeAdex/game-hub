@@ -13,7 +13,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
 }) => {
   return (
     <>
-      <div className="absolute top-10 right-0 bg-white z-20 w-[200px] flex flex-col gap-[5px] text-[14px] rounded-sm border border-2">
+      <div className="absolute top-12 right-0 bg-white z-20 w-[200px] flex flex-col gap-[5px] text-[14px] rounded-sm border border-2">
         <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">
           Explore
         </small>
