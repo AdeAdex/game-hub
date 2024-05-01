@@ -113,7 +113,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
     setOpenDialog(false);
   };
 
-  const handleCopy = (content) => {
+  const handleCopy = (content: string ) => {
     setCopied(content);
     navigator.Clipboard.writeText(content);
     alert(content) 
