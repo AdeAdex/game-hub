@@ -44,8 +44,9 @@ const Navbar: React.FC = () => {
   const router = useRouter();
 
   const handleDropdown = () => {
-    setDropdown(!dropdown);
-  };
+  setDropdown((prevDropdown) => !prevDropdown);
+};
+
 
   const handleLogout = async () => {
     try {
@@ -86,11 +87,19 @@ const Navbar: React.FC = () => {
     };
 
     fetchData();
+  }, [session]);
 
-    // Add event listener to handle clicks outside the dropdown
-    const handleClickOutside = (event: MouseEvent) => {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
       const dropdownElement = document.getElementById("profileDropdown");
-      if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
+      const profileElement = document.getElementById("profileSection");
+
+      if (
+        dropdownElement &&
+        profileElement &&
+        !dropdownElement.contains(event.target) &&
+        !profileElement.contains(event.target)
+      ) {
         setDropdown(false); // Close dropdown if click is outside
       }
     };
@@ -100,7 +109,7 @@ const Navbar: React.FC = () => {
     return () => {
       window.removeEventListener("click", handleClickOutside); // Cleanup listener on component unmount
     };
-  }, [session]);
+  }, []); 
 
   return (
     <main>
