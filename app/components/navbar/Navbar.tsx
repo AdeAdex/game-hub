@@ -92,15 +92,8 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const dropdownElement = document.getElementById("profileDropdown");
-     // const profileElement = document.getElementById("profileSection");
 
-      if (
-        dropdownElement &&
-     //   profileElement &&
-        !dropdownElement.contains(event.target as Node) 
-        //&&
-        //!profileElement.contains(event.target as Node)
-      ) {
+      if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
         setDropdown(false);
       }
     };
@@ -111,6 +104,7 @@ const Navbar: React.FC = () => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
 
   return (
     <main>
