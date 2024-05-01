@@ -47,6 +47,10 @@ const Navbar: React.FC = () => {
   setDropdown((prevDropdown) => !prevDropdown);
 };
 
+  const closeDropdown = () => {
+    setDropdown(false);
+  };
+
 
   const handleLogout = async () => {
     try {
@@ -88,22 +92,6 @@ const Navbar: React.FC = () => {
 
     fetchData();
   }, [session]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const dropdownElement = document.getElementById("profileDropdown");
-
-      if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
-        setDropdown(false);
-      }
-    };
-
-    window.addEventListener("click", handleClickOutside);
-
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
 
   return (
@@ -184,13 +172,11 @@ const Navbar: React.FC = () => {
                     <FaAngleDown size={18} className="my-auto" />
                   </div>
                   {dropdown && (
-                    <div id="profileDropdown" className="profile-dropdown">
-      {/* Dropdown content */}
-      <ProfileDropdown
-        handleClick={handleLogout}
-        username={userData?.userName || ""}
-      />
-    </div>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={closeDropdown}>
+                      <div className="profile-dropdown">
+                        <ProfileDropdown handleClick={handleLogout} username={userData?.userName || ""} />
+                      </div>
+                    </div>
                   )}
                 </div>
               )
