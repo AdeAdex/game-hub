@@ -52,7 +52,7 @@ export const PUT = async (req, res) => {
 
 
     return NextResponse.json( populatedPost 
-      { success: true, message: "Post edited successfully." },
+      { success: true, message: "Post updated successfully." },
       { status: 200 }
     );
   } catch (error) {
