@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import { Modal, Box, Typography, Button, TextField, Alert, AlertTitle  } from "@mui/material";
 import {
   MdDelete,
   MdEdit,
@@ -92,7 +92,9 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
-  const [copied, setCopied] = useState<string>("");
+  const [copiedContent, setCopiedContent] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
 
   const handleClickOpen = (postId: string) => {
     setSelectedPostId(postId);
@@ -113,12 +115,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
     setOpenDialog(false);
   };
 
-  const handleCopy = (content: string ) => {
-    setCopied(content);
-    navigator.clipboard.writeText(content); 
-    setTimeout(() => setCopied(""), 3000); 
-    handleClose();
-  } 
+  const handleCopy = (content: string) => {
+  setCopiedContent(content);
+  navigator.clipboard.writeText(content);
+  setShowAlert(true);
+  setTimeout(() => setShowAlert(false), 2000);
+  handleClose();
+};
+
 
   const handleAction = async (action: string, postId: string) => {
     try {
@@ -277,6 +281,14 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
         selectedPost={selectedPost}
         setSelectedPost={setSelectedPost}
       />
+      {showAlert && (
+  <Alert severity="success" onClose={() => setShowAlert(false)} sx={{ mb: 2 }}>
+    <AlertTitle>Copied!</AlertTitle>
+    "{copiedContent}" has been copied.
+  </Alert>
+)}
+
+
     </div>
   );
 };
