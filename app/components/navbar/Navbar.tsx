@@ -180,10 +180,13 @@ const Navbar: React.FC = () => {
                     <FaAngleDown size={18} className="my-auto" />
                   </div>
                   {dropdown && (
-                    <ProfileDropdown
-                      handleClick={handleLogout}
-                      username={userData?.userName || ""}
-                    />
+                    <div id="profileDropdown" className="profile-dropdown">
+      {/* Dropdown content */}
+      <ProfileDropdown
+        handleClick={handleLogout}
+        username={userData?.userName || ""}
+      />
+    </div>
                   )}
                 </div>
               )
