@@ -73,6 +73,8 @@ interface PostActionModalProps {
 
 }
 
+
+
 const PostActionModal: React.FC<PostActionModalProps> = ({
   open,
   handleClose,
@@ -124,7 +126,7 @@ function MyApp({
   setEditSelectedPost,
   selectedPost,
   setSelectedPost
-}) {
+}: PostActionModalProps ) {
     const [actionResponse, setActionResponse] = useState<string>("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
