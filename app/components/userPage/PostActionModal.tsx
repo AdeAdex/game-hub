@@ -88,7 +88,44 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   setSelectedPost
 
 }) => {
-  const [actionResponse, setActionResponse] = useState<string>("");
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp
+        open={open}
+  handleClose={handleClose}
+  post={post}
+  setPosts={setPosts}
+  loggedInUserId={loggedInUserId}
+  openCreatePostModal={openCreatePostModal}
+  setOpenCreatePostModal={setOpenCreatePostModal}
+  user={user}
+  editSelectedPost={editSelectedPost}
+  setEditSelectedPost={setEditSelectedPost}
+  selectedPost={selectedPost}
+  setSelectedPost={setSelectedPost }
+      />
+    </SnackbarProvider>
+  );
+};
+
+function MyApp({
+  open,
+  handleClose,
+  post,
+  setPosts,
+  loggedInUserId,
+  openCreatePostModal,
+  setOpenCreatePostModal,
+  user,
+  editSelectedPost,
+  setEditSelectedPost,
+  selectedPost,
+  setSelectedPost
+}) {
+    const [actionResponse, setActionResponse] = useState<string>("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -189,7 +226,6 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   };
   return (
     <div>
-      <SnackbarProvider maxSnack={3}>
       <Modal
         open={open}
         onClose={handleClose}
@@ -266,7 +302,6 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
           </div>
         </Box>
       </Modal>
-        </SnackbarProvider>
       <AlertDialogSlide
         loading={loading}
         handleCloseDialog={handleCloseDialog}
@@ -286,6 +321,6 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
       />
     </div>
   );
-};
+} 
 
 export default PostActionModal;
