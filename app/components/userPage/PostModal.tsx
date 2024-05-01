@@ -146,15 +146,16 @@ const PostModal: React.FC<PostModalProps> = ({
         // Edit existing post
         const response = await axios.put(`/api/posts/edit`, {
           postId: editSelectedPost,
-          postData,
+          ...postData,
         });
         const updatedPost = response.data;
-        
-        setPosts((prevPosts) =>
-        prevPosts.map((post) =>
+      setPosts((prevPosts) => {
+        // Update posts array with updated/new post
+        const updatedPosts = prevPosts.map((post) =>
           post._id === updatedPost._id ? updatedPost : post
-        )
-      );
+        );
+        return updatedPosts;
+      });
       } else {
         // Create new post
         const response = await axios.post("/api/posts", postData);
