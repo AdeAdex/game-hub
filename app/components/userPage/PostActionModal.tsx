@@ -115,8 +115,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
 
   const handleCopy = (content: string ) => {
     setCopied(content);
-    navigator.clipboard.writeText(content);
-    alert(content) 
+    navigator.clipboard.writeText(content); 
     setTimeout(() => setCopied(""), 3000); 
   } 
 
