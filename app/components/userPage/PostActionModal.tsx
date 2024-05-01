@@ -120,7 +120,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   navigator.clipboard.writeText(content);
   setShowAlert(true);
   setTimeout(() => setShowAlert(false), 2000);
-  handleClose();
+  // handleClose();
 };
 
 
