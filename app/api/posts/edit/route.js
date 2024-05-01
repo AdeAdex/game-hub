@@ -46,7 +46,7 @@ export const PUT = async (req, res) => {
     await post.save();
 
     return NextResponse.json(
-      { success: true, message: "Post edited successfully." },
+      { post, success: true, message: "Post edited successfully." },
       { status: 200 }
     );
   } catch (error) {
