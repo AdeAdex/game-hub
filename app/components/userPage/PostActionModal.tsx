@@ -221,7 +221,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
           <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
-                onClick={() => handleCopy("copy", post.content)}
+                onClick={() => handleCopy(post.content)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
                 <MdContentCopy className="mr-2 my-auto size={12}" />
