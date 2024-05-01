@@ -156,16 +156,18 @@ const PostModal: React.FC<PostModalProps> = ({
 
       const updatedPost = response.data;
 
-    // Update the posts state based on whether it's an edit or new post
-    if (editSelectedPost) {
-      // Update existing post in the posts state
-      setPosts((prevPosts) =>
-        prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
-      );
-    } else {
-      // Add new post to the beginning of the posts state
       setPosts((prevPosts) => [updatedPost, ...prevPosts]);
-    }
+
+    // Update the posts state based on whether it's an edit or new post
+   // if (editSelectedPost) {
+      // Update existing post in the posts state
+    //  setPosts((prevPosts) =>
+    //    prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
+    //  );
+   // } else {
+      // Add new post to the beginning of the posts state
+   //   setPosts((prevPosts) => [updatedPost, ...prevPosts]);
+   // }
 
     // Clear form fields after successful submission
     setPostContent("");
