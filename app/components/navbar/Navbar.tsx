@@ -42,9 +42,11 @@ const Navbar: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<boolean>(false);
   const [userData, setUserData] = useState<AuthState | null>(null);
-  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const myBackdropRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
+  
   const handleDropdown = () => {
     setDropdown((prevDropdown) => !prevDropdown);
   };
@@ -57,8 +59,13 @@ const Navbar: React.FC = () => {
       // Click was inside the ProfileDropdown, do not close
       return;
     }
-    // Click was outside the ProfileDropdown, close the dropdown
-    setDropdown(false);
+    // Click was outside the ProfileDropdown, close the my-backdrop
+    if (
+      myBackdropRef.current &&
+      !myBackdropRef.current.contains(event.target as Node)
+    ) {
+      setDropdown(false);
+    }
   };
 
 
@@ -192,10 +199,10 @@ const Navbar: React.FC = () => {
                   </div>
                   {dropdown && (
                   <div
-                    ref={dropdownRef}
+                    ref={myBackdropRef}
                     className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
                   >
-                    <div className="profile-dropdown">
+                    <div ref={dropdownRef} className="profile-dropdown">
                       <ProfileDropdown
                         handleClick={handleLogout}
                         username={userData?.userName || ""}
