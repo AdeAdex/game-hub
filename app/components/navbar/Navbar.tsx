@@ -43,14 +43,24 @@ const Navbar: React.FC = () => {
   const [token, setToken] = useState<boolean>(false);
   const [userData, setUserData] = useState<AuthState | null>(null);
   const router = useRouter();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdown = () => {
-  setDropdown((prevDropdown) => !prevDropdown);
-};
+    setDropdown((prevDropdown) => !prevDropdown);
+  };
 
-  const closeDropdown = () => {
+  const closeDropdown = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      dropdownRef.current.contains(event.target as Node)
+    ) {
+      // Click was inside the ProfileDropdown, do not close
+      return;
+    }
+    // Click was outside the ProfileDropdown, close the dropdown
     setDropdown(false);
   };
+
 
 
   const handleLogout = async () => {
@@ -93,6 +103,14 @@ const Navbar: React.FC = () => {
 
     fetchData();
   }, [session]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", closeDropdown);
+    return () => {
+      document.removeEventListener("mousedown", closeDropdown);
+    };
+  }, []);
+
 
 
   return (
@@ -173,12 +191,18 @@ const Navbar: React.FC = () => {
                     <FaAngleDown size={18} className="my-auto" />
                   </div>
                   {dropdown && (
-                    <div className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={closeDropdown}>
-                      <div className="profile-dropdown">
-                        <ProfileDropdown handleClick={handleLogout} username={userData?.userName || ""} />
-                      </div>
+                  <div
+                    ref={dropdownRef}
+                    className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                  >
+                    <div className="profile-dropdown">
+                      <ProfileDropdown
+                        handleClick={handleLogout}
+                        username={userData?.userName || ""}
+                      />
                     </div>
-                  )}
+                  </div>
+                )}
                 </div>
               )
             ) : (
