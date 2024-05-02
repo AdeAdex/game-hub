@@ -180,7 +180,7 @@ const Navbar: React.FC = () => {
 										onClick={handleDropdownToggle}
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
-			  <PingLoader className="mx-auto " />
+			  <PingLoader />
                     {/* Placeholder for loading state */}
 			  {dropdownOpen ? (
 			  <FaAngleUp size={18} className="my-auto" />
