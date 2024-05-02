@@ -181,9 +181,6 @@ const Navbar: React.FC = () => {
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
 			  <PingLoader className="mx-auto " />
-	  {/*<span className="my-auto text-[14px] font-bold">
-                      Loading...
-                    </span>{" "}*/} 
                     {/* Placeholder for loading state */}
 			  {dropdownOpen ? (
 			  <FaAngleUp size={18} className="my-auto" />
