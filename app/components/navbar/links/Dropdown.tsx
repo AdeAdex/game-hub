@@ -24,7 +24,7 @@ const Dropdown: React.FC<SideBarProps> = ({
           isMobileMenuOpen ? "open" : ""
         } `}
       >
-        <SearchBox ClassName={`mb-[10px] flex`} Placeholder={`Search games & creator`} inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto w-auto `} />
+        <SearchBox ClassName={`mb-[10px] flex`} Placeholder={`Search games & creator`} inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto w-[60%] `} />
         <Section title="popular tags" links={links} />
         <Link href="" className="text-[14px] capitalize leading-[28px]">
           browse all tags →
