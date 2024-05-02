@@ -119,17 +119,19 @@ useEffect(() => {
           <Logo />
         </div>
         <Links />
-        <Backdrop
+        {/*<Backdrop
           open={isMobileMenuOpen}
           onClick={() => setMobileMenuOpen(false)}
           className="bg-black bg-opacity-50"
         >
-          <Dropdown
+          
+        </Backdrop>*/} 
+
+        <Dropdown
             links={links}
             links2={links2}
             isMobileMenuOpen={isMobileMenuOpen}
           />
-        </Backdrop>
 
         <SearchBox ClassName={`hidden md:flex`} />
         <div className="flex gap-8">
