@@ -50,19 +50,20 @@ const Navbar: React.FC = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
   };
 
+
   const closeDropdown = (event: MouseEvent) => {
-  if (
-    dropdownRef.current &&
-    !dropdownRef.current.contains(event.target as Node) &&
-    myBackdropRef.current &&
-    !myBackdropRef.current.contains(event.target as Node)
-  ) {
-    // Click was outside both ProfileDropdown and my-backdrop, close the dropdown
-    setDropdownOpen(false);
-  } else {
-    alert("Inside ProfileDropdown or my-backdrop");
-  }
-};
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node) &&
+      myBackdropRef.current &&
+      !myBackdropRef.current.contains(event.target as Node)
+    ) {
+      // Click was outside both ProfileDropdown and my-backdrop, close the dropdown
+      setDropdownOpen(false);
+    } else {
+      alert("Inside ProfileDropdown or my-backdrop");
+    }
+  };
 
 
 
