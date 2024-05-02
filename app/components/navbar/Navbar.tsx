@@ -10,7 +10,7 @@ import { links, links2 } from "@/app/lib/SideBarLinks";
 import Dropdown from "./links/Dropdown";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
@@ -182,7 +182,11 @@ const Navbar: React.FC = () => {
                       Loading...
                     </span>{" "}
                     {/* Placeholder for loading state */}
-                    <FaAngleDown size={18} className="my-auto" />
+			  {dropdownOpen ? (
+			  <FaAngleUp size={18} className="my-auto" />
+			  ) : (
+				<FaAngleDown size={18} className="my-auto" />  
+			  ) } 
                   </div>
                 </div>
               ) : (
