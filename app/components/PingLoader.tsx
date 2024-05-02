@@ -2,7 +2,7 @@ import React from "react";
 
 const PingLoader = () => {
   return (  
-   <div className="ping"></div>
+   <div className="ping my-auto "></div>
   );
 };
 
