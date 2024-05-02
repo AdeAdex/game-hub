@@ -21,7 +21,7 @@ const SearchBox: React.FC<SearchBoxProps> = (
         // size={40}
         className={`${inputClassName}`}
       />
-      <button className="px-3 h-[30px] bg-[#F4F4F4] my-auto rounded-tr-sm rounded-bt-sm">
+      <button className="border px-3 h-[30px] bg-[#F4F4F4] my-auto rounded-tr-sm rounded-bt-sm">
         <FaSearch size={15} />
       </button>
     </div>
