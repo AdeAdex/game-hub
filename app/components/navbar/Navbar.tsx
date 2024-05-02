@@ -215,7 +215,7 @@ const Navbar: React.FC = () => {
                   </div>
                   {dropdownOpen && (
                   <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-blue bg-opacity-50"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-blue-600 bg-opacity-50"
                   >
                     <div ref={dropdownRef} className="profile-dropdown">
                       <ProfileDropdown
