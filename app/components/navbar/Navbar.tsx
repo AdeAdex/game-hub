@@ -175,7 +175,7 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col relative">
                   <div
                     className="flex gap-3 cursor-pointer"
-onClick={handleDropdownToggle}
+										onClick={handleDropdownToggle}
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
                     <span className="my-auto text-[14px] font-bold">
@@ -215,7 +215,7 @@ onClick={handleDropdownToggle}
                   </div>
                   {dropdownOpen && (
                   <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-blue bg-opacity-50"
                   >
                     <div ref={dropdownRef} className="profile-dropdown">
                       <ProfileDropdown
