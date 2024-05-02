@@ -53,14 +53,14 @@ const Navbar: React.FC = () => {
 
   const closeDropdown = (event: MouseEvent) => {
     if (
-      dropdownRef.current?.contains(event.target as Node) ||
-      myBackdropRef.current?.contains(event.target as Node)
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node) &&
+      myBackdropRef.current &&
+      !myBackdropRef.current.contains(event.target as Node)
     ) {
-      // Click was inside the dropdown or my-backdrop, do not close
-      return;
+      // Click was outside both ProfileDropdown and my-backdrop, close the dropdown
+      setDropdownOpen(false);
     }
-    // Click was outside both dropdown and my-backdrop, close the dropdown
-    setDropdownOpen(false);
   };
 
 
