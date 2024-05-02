@@ -4,9 +4,15 @@ import { FaSearch } from "react-icons/fa";
 interface SearchBoxProps {
   ClassName?: string;
   Placeholder?: string;
+  inputClassName?: string;
 } 
 
-const SearchBox: React.FC<SearchBoxProps> = ({ ClassName, Placeholder }: SearchBoxProps) => {
+const SearchBox: React.FC<SearchBoxProps> = (
+  {
+  ClassName, 
+  Placeholder, 
+  inputClassName 
+}: SearchBoxProps) => {
   return (
     <div className={`${ClassName}`}>
       <input
