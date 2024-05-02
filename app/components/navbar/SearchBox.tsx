@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 
 interface SearchBoxProps {
   ClassName?: string;
-	Placeholder?: string;
+  Placeholder?: string;
 } 
 
 const SearchBox: React.FC<SearchBoxProps> = ({ ClassName, Placeholder }: SearchBoxProps) => {
