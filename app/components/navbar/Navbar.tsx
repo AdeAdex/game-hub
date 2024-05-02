@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
   };
 
 
-const closeDropdown = (event: MouseEvent) => {
+  const closeDropdown = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node) &&
@@ -62,18 +62,6 @@ const closeDropdown = (event: MouseEvent) => {
       setDropdownOpen(false);
     }
   };
-
-  const handleDocumentClick = (event: MouseEvent) => {
-    // Close dropdown if clicking outside both ProfileDropdown and its backdrop
-    if (
-      !dropdownRef.current?.contains(event.target as Node) &&
-      !myBackdropRef.current?.contains(event.target as Node)
-    ) {
-      setDropdownOpen(false);
-    }
-  };
-
-
 
   const handleLogout = async () => {
     try {
@@ -117,10 +105,9 @@ const closeDropdown = (event: MouseEvent) => {
   }, [session]);
 
   useEffect(() => {
-    // Add event listener for document click to close dropdown
-    document.addEventListener("mousedown", handleDocumentClick);
+    document.addEventListener("mousedown", closeDropdown);
     return () => {
-      document.removeEventListener("mousedown", handleDocumentClick);
+      document.removeEventListener("mousedown", closeDropdown);
     };
   }, []);
 
