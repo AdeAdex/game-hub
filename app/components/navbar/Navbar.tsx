@@ -128,7 +128,7 @@ useEffect(() => {
         </Backdrop>*/} 
         { isMobileMenuOpen && (
         <div
-            className="dropdown-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <Dropdown
             links={links}
             links2={links2}
