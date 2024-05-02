@@ -173,7 +173,7 @@ const Navbar: React.FC = () => {
                     <FaAngleDown size={18} className="my-auto" />
                   </div>
                   {dropdown && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={closeDropdown}>
+                    <div className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={closeDropdown}>
                       <div className="profile-dropdown">
                         <ProfileDropdown handleClick={handleLogout} username={userData?.userName || ""} />
                       </div>
