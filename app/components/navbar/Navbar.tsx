@@ -17,7 +17,6 @@ import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
 import Backdrop from "@mui/material/Backdrop";
 import { IoMdNotifications } from "react-icons/io";
-const profileDropdownRef = useRef<HTMLDivElement>(null);
 
 // import { useSelector } from "react-redux";
 
@@ -44,6 +43,8 @@ const Navbar: React.FC = () => {
   const [token, setToken] = useState<boolean>(false);
   const [userData, setUserData] = useState<AuthState | null>(null);
   const router = useRouter();
+
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdown = () => {
   setDropdown((prevDropdown) => !prevDropdown);
