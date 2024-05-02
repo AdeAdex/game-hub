@@ -159,7 +159,7 @@ const Navbar: React.FC = () => {
         </div>
         )} 
 
-        <SearchBox ClassName={`hidden md:flex`} Placeholder={`Search for games or creator`} />
+        <SearchBox ClassName={`hidden md:flex`} Placeholder={`Search for games or creator`} inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto`} />
         <div className="flex gap-8">
           <div className="flex relative">
             <IoMdNotifications size={25} className="my-auto cursor-pointer" />
