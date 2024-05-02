@@ -215,7 +215,11 @@ const Navbar: React.FC = () => {
                     <span className="my-auto text-[14px] font-bold">
                       {userData?.userName || ""}
                     </span>
-                    <FaAngleDown size={18} className="my-auto" />
+                    {dropdownOpen ? (
+			  <FaAngleUp size={18} className="my-auto" />
+			  ) : (
+				<FaAngleDown size={18} className="my-auto" />  
+			  ) }  
                   </div>
                   {dropdownOpen && (
                   <div
