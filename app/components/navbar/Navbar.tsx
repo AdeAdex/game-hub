@@ -126,12 +126,16 @@ useEffect(() => {
         >
           
         </Backdrop>*/} 
-
+        { isMobileMenuOpen && (
+        <div
+            className="dropdown-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <Dropdown
             links={links}
             links2={links2}
             isMobileMenuOpen={isMobileMenuOpen}
           />
+        </div>
+        )} 
 
         <SearchBox ClassName={`hidden md:flex`} />
         <div className="flex gap-8">
@@ -189,7 +193,7 @@ onClick={handleDropdownToggle}
                   </div>
                   {dropdownOpen && (
                   <div
-                    className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
                   >
                     <div ref={dropdownRef} className="profile-dropdown">
                       <ProfileDropdown
