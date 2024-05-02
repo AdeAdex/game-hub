@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
 
 
   const closeDropdown = (event: MouseEvent) => {
-  console.log("Closing dropdown...");
+  alert("Closing dropdown...");
   if (
     dropdownRef.current &&
     !dropdownRef.current.contains(event.target as Node) &&
@@ -105,10 +105,10 @@ const Navbar: React.FC = () => {
 };
 
 useEffect(() => {
-  console.log("Adding event listener for mousedown...");
+  alert("Adding event listener for mousedown...");
   document.addEventListener("mousedown", closeDropdown);
   return () => {
-    console.log("Removing event listener for mousedown...");
+    alert("Removing event listener for mousedown...");
     document.removeEventListener("mousedown", closeDropdown);
   };
 }, []);
