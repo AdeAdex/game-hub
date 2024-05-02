@@ -44,8 +44,6 @@ const Navbar: React.FC = () => {
   const [userData, setUserData] = useState<AuthState | null>(null);
   const router = useRouter();
 
-  const profileDropdownRef = useRef<HTMLDivElement>(null);
-
   const handleDropdown = () => {
   setDropdown((prevDropdown) => !prevDropdown);
 };
@@ -95,20 +93,6 @@ const Navbar: React.FC = () => {
 
     fetchData();
   }, [session]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
-        setDropdown(false);
-      }
-    };
-
-    window.addEventListener("click", handleClickOutside);
-
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
 
   return (
@@ -190,7 +174,7 @@ const Navbar: React.FC = () => {
                   </div>
                   {dropdown && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={closeDropdown}>
-                      <div ref={profileDropdownRef} className="profile-dropdown">
+                      <div className="profile-dropdown">
                         <ProfileDropdown handleClick={handleLogout} username={userData?.userName || ""} />
                       </div>
                     </div>
