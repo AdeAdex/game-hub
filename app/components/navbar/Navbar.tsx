@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
   };
 
 
-  const closeDropdown = (event: MouseEvent) => {
+const closeDropdown = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node) &&
@@ -60,8 +60,16 @@ const Navbar: React.FC = () => {
     ) {
       // Click was outside both ProfileDropdown and my-backdrop, close the dropdown
       setDropdownOpen(false);
-    } else {
-      alert("Inside ProfileDropdown or my-backdrop");
+    }
+  };
+
+  const handleDocumentClick = (event: MouseEvent) => {
+    // Close dropdown if clicking outside both ProfileDropdown and its backdrop
+    if (
+      !dropdownRef.current?.contains(event.target as Node) &&
+      !myBackdropRef.current?.contains(event.target as Node)
+    ) {
+      setDropdownOpen(false);
     }
   };
 
@@ -109,9 +117,10 @@ const Navbar: React.FC = () => {
   }, [session]);
 
   useEffect(() => {
-    document.addEventListener("mousedown", closeDropdown);
+    // Add event listener for document click to close dropdown
+    document.addEventListener("mousedown", handleDocumentClick);
     return () => {
-      document.removeEventListener("mousedown", closeDropdown);
+      document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, []);
 
