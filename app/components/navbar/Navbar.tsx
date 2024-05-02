@@ -92,27 +92,6 @@ const Navbar: React.FC = () => {
   }, [session]);
 
 
-  const closeDropdown = (event: MouseEvent) => {
-  alert("Closing dropdown...");
-  if (
-    dropdownRef.current &&
-    !dropdownRef.current.contains(event.target as Node) &&
-    myBackdropRef.current &&
-    !myBackdropRef.current.contains(event.target as Node)
-  ) {
-    setDropdownOpen(false);
-  }
-};
-
-useEffect(() => {
-  alert("Adding event listener for mousedown...");
-  document.addEventListener("mousedown", closeDropdown);
-  return () => {
-    alert("Removing event listener for mousedown...");
-    document.removeEventListener("mousedown", closeDropdown);
-  };
-}, []);
-
 
 
 
