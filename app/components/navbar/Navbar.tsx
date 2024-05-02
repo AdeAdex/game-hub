@@ -43,7 +43,6 @@ const Navbar: React.FC = () => {
   const [userData, setUserData] = useState<AuthState | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const myBackdropRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const handleDropdownToggle = () => {
@@ -188,7 +187,6 @@ onClick={handleDropdownToggle}
                   </div>
                   {dropdownOpen && (
                   <div
-                    ref={myBackdropRef}
                     className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
                   >
                     <div ref={dropdownRef} className="profile-dropdown">
