@@ -43,6 +43,7 @@ const Navbar: React.FC = () => {
   const [userData, setUserData] = useState<AuthState | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const handleDropdownToggle = () => {
@@ -91,13 +92,31 @@ const Navbar: React.FC = () => {
   }, [session]);
 
 
-useEffect(() => {
+/*useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);*/
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Check if click occurs outside the dropdown or mobile menu backdrop
+      if (
+        (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) ||
+        (mobileMenuBackdropRef.current && !mobileMenuBackdropRef.current.contains(event.target as Node))
+      ) {
+        setDropdownOpen(false);
+        setMobileMenuOpen(false);
       }
     };
 
@@ -129,11 +148,14 @@ useEffect(() => {
         { isMobileMenuOpen && (
         <div
             className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <Dropdown
+          <div ref={mobileMenuBackdropRef} >
+            <Dropdown
             links={links}
             links2={links2}
             isMobileMenuOpen={isMobileMenuOpen}
           />
+          </div>
+        
         </div>
         )} 
 
