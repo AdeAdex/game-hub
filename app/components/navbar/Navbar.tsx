@@ -17,6 +17,8 @@ import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
 import Backdrop from "@mui/material/Backdrop";
 import { IoMdNotifications } from "react-icons/io";
+import PingLoader from '../PingLoader';
+
 
 // import { useSelector } from "react-redux";
 
@@ -178,9 +180,10 @@ const Navbar: React.FC = () => {
 										onClick={handleDropdownToggle}
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
-                    <span className="my-auto text-[14px] font-bold">
+			  <PingLoader className="mx-auto " />
+	  {/*<span className="my-auto text-[14px] font-bold">
                       Loading...
-                    </span>{" "}
+                    </span>{" "}*/} 
                     {/* Placeholder for loading state */}
 			  {dropdownOpen ? (
 			  <FaAngleUp size={18} className="my-auto" />
