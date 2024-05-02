@@ -34,7 +34,6 @@ interface AuthState {
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
-  const [dropdown, setDropdown] = useState(false);
   // const userInfo = useSelector((state: any) => state.auth.userInformation);
 
   const [userInfo, setUserInfo] = useState<AuthState | null>(null);
@@ -42,13 +41,13 @@ const Navbar: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<boolean>(false);
   const [userData, setUserData] = useState<AuthState | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const myBackdropRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  
-  const handleDropdown = () => {
-    setDropdown((prevDropdown) => !prevDropdown);
+  const handleDropdownToggle = () => {
+    setDropdownOpen((prevOpen) => !prevOpen);
   };
 
   const closeDropdown = (event: MouseEvent) => {
@@ -62,7 +61,6 @@ const Navbar: React.FC = () => {
       setDropdownOpen(false);
     }
   };
-
 
 
   const handleLogout = async () => {
@@ -154,7 +152,7 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col relative">
                   <div
                     className="flex gap-3 cursor-pointer"
-                    onClick={handleDropdown}
+onClick={handleDropdownToggle}
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
                     <span className="my-auto text-[14px] font-bold">
@@ -168,7 +166,7 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col relative">
                   <div
                     className="flex gap-3 cursor-pointer"
-                    onClick={handleDropdown}
+                    onClick={handleDropdownToggle}
                   >
                     {userData?.profilePicture ? (
                       <Image
@@ -192,7 +190,7 @@ const Navbar: React.FC = () => {
                     </span>
                     <FaAngleDown size={18} className="my-auto" />
                   </div>
-                  {dropdown && (
+                  {dropdownOpen && (
                   <div
                     ref={myBackdropRef}
                     className="my-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
