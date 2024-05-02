@@ -18,7 +18,7 @@ const Dropdown: React.FC<SideBarProps> = ({
   isMobileMenuOpen,
 }) => {
   return (
-    <>
+    <div>
       <section
         className={`md:hidden bg-[#F4F4F4] w-full px-[15px] pt-[15px] pb-[80px] overflow-y-auto h-screen nav-list relative ${
           isMobileMenuOpen ? "open" : ""
@@ -37,7 +37,7 @@ const Dropdown: React.FC<SideBarProps> = ({
           <Section title="browse" links={links2} />
         </div>
       </section>
-    </>
+    <div/>
   );
 };
 
