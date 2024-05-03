@@ -93,7 +93,6 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             label={`Comments as ${user.lastName} ${user.firstName}` }
             multiline
             rows={1}
-            rowsMax={4}
             variant="outlined"
             value={commentContent}
             onChange={handleCommentContentChange}
