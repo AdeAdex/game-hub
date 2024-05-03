@@ -35,9 +35,6 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button>
       <Dialog
         fullScreen
         open={openCommentDialog}
