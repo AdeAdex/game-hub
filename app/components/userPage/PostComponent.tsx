@@ -248,6 +248,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       <CommentFullScreenDialog 
         openCommentDialog={openCommentDialog} 
         setOpenCommentDialog={setOpenCommentDialog} 
+        user={user} 
         />
       )}
     </div>
