@@ -18,6 +18,7 @@ import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
+//import { Textarea } from '@mantine/core';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -116,6 +117,12 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             onBlur={handleBlur}
             className="text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
+         {/*   <Textarea
+      size="xs"
+      radius="xl"
+      placeholder="Input placeholder"
+              autosize
+    /> */} 
           {/* Conditionally render icons */}
       {(isFocused || commentContent) && (
         <div className="flex justify-between w-[90%] py-2">
