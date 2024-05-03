@@ -87,8 +87,8 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           <ListItemButton>
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItemButton>
-          <div className="fixed bottom-0 left-0 py-1 flex flex-col w-full">
-            <Divider />
+          <div className="fixed bottom-0 left-0 py-1 flex items-center justify-center flex-col w-full">
+            <Divider className="mb-1" />
             <TextField
             label={`Comments as ${user.lastName} ${user.firstName}` }
             multiline
@@ -96,7 +96,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             variant="outlined"
             value={commentContent}
             onChange={handleCommentContentChange}
-            className="mx-auto mt-1 text-[12px] hover:bg-gray-200 bg-gray-500 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
+            className="text-[12px] hover:bg-gray-200 bg-gray-500 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
               <IoIosCamera size={30} />
