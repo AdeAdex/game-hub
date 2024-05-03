@@ -83,11 +83,11 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           <input
           type="text"
           placeholder={`Comments as ${user.lastName} ${user.firstName}`}
-          className="mx-auto text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
+          className="mx-auto mt-1 text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
         /> 
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
-              <IoIosCamera />
-              <BsSendFill />
+              <IoIosCamera size={15} />
+              <BsSendFill size={15} />
             </div>
           </div>
         </List>
