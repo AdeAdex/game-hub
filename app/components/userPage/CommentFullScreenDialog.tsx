@@ -92,12 +92,10 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             <TextField
             label={`Comments as ${user.lastName} ${user.firstName}` }
             multiline
-            rows={1}
+            rows={4}
             variant="outlined"
             value={commentContent}
             onChange={handleCommentContentChange}
-            fullWidth
-            margin="normal"
             className="mx-auto mt-1 text-[12px] hover:bg-gray-200 bg-red-500 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
           />
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
