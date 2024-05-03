@@ -22,12 +22,24 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+  currentFriends?: string[];
+}
+
 interface CommentFullScreenDialogProps {
   setOpenCommentDialog: React.Dispatch<boolean>;
   openCommentDialog: boolean;
+  user: User;
 } 
 
-export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog }:CommentFullScreenDialogProps ) {
+export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog, user}:CommentFullScreenDialogProps ) {
 
   const handleClose = () => {
     setOpenCommentDialog(false);
@@ -64,12 +76,11 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItemButton>
           <Divider />
-          <ListItemButton>
-            <ListItemText
-              primary="Default notification ringtone"
-              secondary="Tethys"
-            />
-          </ListItemButton>
+          <input
+          type="text"
+          placeholder={`Comments as ${user.lastName} ${user.firstName}`}
+          className="fixed bottom-0 left-0 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
+        />
         </List>
       </Dialog>
     </React.Fragment>
