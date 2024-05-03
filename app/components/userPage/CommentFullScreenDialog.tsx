@@ -66,11 +66,11 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
   };
 
   const handleSubmit = () => {
-    // Implement your submit logic here
-    alert('Submit comment:', commentContent);
-    // Clear comment content after submission (optional)
-    setCommentContent('');
-  };
+  // Implement your submit logic here
+  alert(`Submit comment: ${commentContent}`); // Concatenate message with commentContent
+  // Clear comment content after submission (optional)
+  setCommentContent('');
+};
 
   return (
     <React.Fragment>
