@@ -67,7 +67,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
 <IoClose /> 
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
+              Comments 
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
@@ -86,8 +86,8 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           className="mx-auto mt-1 text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
         /> 
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
-              <IoIosCamera size={15} />
-              <BsSendFill size={15} />
+              <IoIosCamera size={25} />
+              <BsSendFill size={25} />
             </div>
           </div>
         </List>
