@@ -14,6 +14,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
+import { BsSendFill } from "react-icons/bs";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -77,7 +78,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           <ListItemButton>
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItemButton>
-          <div className="fixed bottom-0 left-0 py-1 flex flex-col w-full relative ">
+          <div className="fixed bottom-0 left-0 py-1 flex flex-col w-full">
             <Divider />
           <input
           type="text"
@@ -86,7 +87,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
         /> 
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
               <IoIosCamera />
-              <LuSend />
+              <BsSendFill />
             </div>
           </div>
         </List>
