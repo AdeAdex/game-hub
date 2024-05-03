@@ -43,9 +43,14 @@ interface CommentFullScreenDialogProps {
 } 
 
 export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog, user}:CommentFullScreenDialogProps ) {
+  const [ commentContent, setCommentContent] = useState<string>(false); 
 
   const handleClose = () => {
     setOpenCommentDialog(false);
+  };
+
+  const handleCommentContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCommentContent(e.target.value);
   };
 
   return (
@@ -81,14 +86,20 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           </ListItemButton>
           <div className="fixed bottom-0 left-0 py-1 flex flex-col w-full">
             <Divider />
-          <input
-          type="text"
-          placeholder={`Comments as ${user.lastName} ${user.firstName}`}
-          className="mx-auto mt-1 text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
-        /> 
+            <TextField
+            label={`Comments as ${user.lastName} ${user.firstName}` }
+            multiline
+            rows={1}
+            variant="outlined"
+            value={commentContent}
+            onChange={handleCommentContentChange}
+            fullWidth
+            margin="normal"
+            className="mx-auto mt-1 text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
+          />
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
-              <IoIosCamera size={25} />
-              <BsSendFill size={25} />
+              <IoIosCamera size={30} />
+              <BsSendFill size={25} className={`${ commentContent ? 'bg-blue-500' : '' }`} />
             </div>
           </div>
         </List>
