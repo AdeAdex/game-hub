@@ -70,7 +70,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
-  const [openCommentDialog, setOpenCommentDialog] = useState<string>(false)
+  const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false)
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const handleClose = () => {
