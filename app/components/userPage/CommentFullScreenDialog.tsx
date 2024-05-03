@@ -47,6 +47,7 @@ interface CommentFullScreenDialogProps {
 
 export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog, user}:CommentFullScreenDialogProps ) {
   const [ commentContent, setCommentContent] = useState<string>(""); 
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleClose = () => {
     setOpenCommentDialog(false);
@@ -54,6 +55,14 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
 
   const handleCommentContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentContent(e.target.value);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
   };
 
   return (
@@ -96,6 +105,8 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             variant="outlined"
             value={commentContent}
             onChange={handleCommentContentChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             className="text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
