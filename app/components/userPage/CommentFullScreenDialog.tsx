@@ -65,6 +65,10 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
     setIsFocused(false);
   };
 
+  const handleSubmit = () => {
+    alert('hi') 
+  } 
+
   return (
     <React.Fragment>
       <Dialog
@@ -112,7 +116,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           {isFocused && (
             <div className="flex justify-between w-[90%] py-2 ">
               <IoIosCamera size={30} />
-              <BsSendFill size={25} className={`${commentContent ? 'text-blue-500' : ''}`} />
+              <BsSendFill onClick={() => handleSubmit()} size={25} className={`${commentContent ? 'text-blue-500' : ''}`} />
              </div>
           )}
           </div>
