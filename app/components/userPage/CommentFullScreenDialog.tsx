@@ -22,15 +22,15 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CommentFullScreenDialog() {
-  const [open, setOpen] = React.useState(false);
+interface CommentFullScreenDialogProps {
+  setOpenCommentDialog: React.Dispatch<boolean>;
+  openCommentDialog: boolean;
+} 
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog }:CommentFullScreenDialogProps ) {
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenCommentDialog(false);
   };
 
   return (
@@ -40,7 +40,7 @@ export default function CommentFullScreenDialog() {
       </Button>
       <Dialog
         fullScreen
-        open={open}
+        open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
