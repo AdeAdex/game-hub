@@ -55,6 +55,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
+        className="overflow-y-scroll " 
       >
         <AppBar sx={{ position: 'fixed'}} className="top-0 left-0 " >
           <Toolbar>
