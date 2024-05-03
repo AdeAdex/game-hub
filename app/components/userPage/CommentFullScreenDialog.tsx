@@ -110,7 +110,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             className="text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
           {isFocused && (
-            <div className="flex justify-between w-[90%]">
+            <div className="flex justify-between w-[90%] py-2 ">
               <IoIosCamera size={30} />
               <BsSendFill size={25} className={`${commentContent ? 'text-blue-500' : ''}`} />
              </div>
