@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { IoClose } from "react-icons/io5";
+import { IoIosCamera } from "react-icons/io";
+import { LuSend } from "react-icons/lu";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -80,10 +82,11 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           <input
           type="text"
           placeholder={`Comments as ${user.lastName} ${user.firstName}`}
-          className="mx-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
+          className="mx-auto text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-[90%] focus:outline-none focus:border-none"
         /> 
-            <div className="mx-2 flex justify-between py-2 " >
-              
+            <div className="mx-auto flex justify-between py-2 w-[90%] " >
+              <IoIosCamera />
+              <LuSend />
             </div>
           </div>
         </List>
