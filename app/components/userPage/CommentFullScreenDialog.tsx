@@ -75,12 +75,17 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           <ListItemButton>
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItemButton>
-          <Divider />
+          <div className="fixed bottom-0 left-0 py-1 flex flex-col w-full relative ">
+            <Divider />
           <input
           type="text"
           placeholder={`Comments as ${user.lastName} ${user.firstName}`}
-          className="fixed bottom-0 left-0 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
-        />
+          className="mx-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
+        /> 
+            <div className="mx-2 flex justify-between py-2 " >
+              
+            </div>
+          </div>
         </List>
       </Dialog>
     </React.Fragment>
