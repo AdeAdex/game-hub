@@ -96,7 +96,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             variant="outlined"
             value={commentContent}
             onChange={handleCommentContentChange}
-            className="text-[12px] hover:bg-gray-200 bg-gray-500 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
+            className="text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
             <div className="mx-auto flex justify-between py-2 w-[90%] " >
               <IoIosCamera size={30} />
