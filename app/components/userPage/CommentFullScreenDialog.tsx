@@ -1,6 +1,6 @@
 'use client' 
 
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
@@ -20,6 +20,7 @@ import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
 //import Box from '@mui/joy/Box';
 //import Textarea from '@mui/joy/Textarea';
+//import Webcam from 'react-webcam';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -50,6 +51,7 @@ interface CommentFullScreenDialogProps {
 export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog, user}:CommentFullScreenDialogProps ) {
   const [ commentContent, setCommentContent] = useState<string>(""); 
   const [isFocused, setIsFocused] = useState(false);
+  const webcamRef = useRef(null);
 
   const handleClose = () => {
     setOpenCommentDialog(false);
@@ -73,6 +75,28 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
   // Clear comment content after submission (optional)
   setCommentContent('');
 };
+
+
+  const handleCameraClick = () => {
+    // Access user's camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        if (webcamRef.current) {
+          webcamRef.current.video.srcObject = stream;
+        }
+      })
+      .catch((error) => {
+        console.error('Error accessing camera:', error);
+        // Handle error (e.g., display error message to user)
+      });
+  };
+
+  const handleCapture = () => {
+    // Capture image from webcam
+    const imageSrc = webcamRef.current.getScreenshot();
+    // Handle the captured image data (e.g., display, store, or process)
+    console.log('Captured image:', imageSrc);
+  };
 
   return (
     <React.Fragment>
@@ -107,6 +131,12 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           </ListItemButton>
           <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
             <Divider className="mb-1" />
+            {/* <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            style={{ width: '100%', height: 'auto' }}
+          /> */} 
             <TextField
             label={`Comments as ${user.lastName} ${user.firstName}` }
             multiline
@@ -145,7 +175,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           {/* Conditionally render icons */}
       {(commentContent) && (
         <div className="flex justify-between w-[90%] py-2">
-          <IoIosCamera size={30} />
+          <IoIosCamera size={30} onClick={handleCameraClick} />
           <BsSendFill
             onClick={handleSubmit}
             size={25}
