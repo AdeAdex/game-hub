@@ -9,6 +9,7 @@ import avatar from "../../../public/images/robot.png";
 import LikedUserModal from "./LikedUserModal";
 import { CiMenuKebab } from "react-icons/ci";
 import PostActionModal from "./PostActionModal";
+import CommentFullScreenDialog from "./CommentFullScreenDialog";
 
 interface User {
   _id: string;
@@ -69,6 +70,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
+  const [openCommentDialog, setOpenCommentDialog] = useState<string>(false)
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const handleClose = () => {
@@ -94,6 +96,14 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       //setOpenCreatePostModal(true)
     }
   };
+
+  const handleOpenCommentDialog = (postId: string) => {
+    const post = posts.find((post) => post._id === postId);
+    if (post) {
+     // setSelectedPost(post);
+      setOpenCommentDialog(true); 
+    }
+  } 
 
   console.log("post mi re", posts)
 
@@ -200,7 +210,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
               </button>
 
               <button
-                onClick={() => handleComment(post._id)}
+                onClick={() => handleOpenCommentDialog(post._id)}
                 className="text-[8px]"
               >
                 <FaComment className="mx-auto" size={12} /> Comment
@@ -231,6 +241,13 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           user={user}
           editSelectedPost={editSelectedPost}
           setEditSelectedPost={setEditSelectedPost}
+        />
+      )}
+
+      {openCommentDialog && (
+      <CommentFullScreenDialog 
+        openCommentDialog={openCommentDialog} 
+        setOpenCommentDialog={setOpenCommentDialog} 
         />
       )}
     </div>
