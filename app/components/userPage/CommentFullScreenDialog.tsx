@@ -18,7 +18,8 @@ import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
-//import { Textarea } from '@mantine/core';
+//import Box from '@mui/joy/Box';
+//import Textarea from '@mui/joy/Textarea';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -115,16 +116,34 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             onChange={handleCommentContentChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
+              
             className="text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
-         {/*   <Textarea
-      size="xs"
-      radius="xl"
-      placeholder="Input placeholder"
-              autosize
-    /> */} 
+         {/*
+         <Box sx={{ p: 2 }}>
+      <Textarea
+        placeholder={`Comments as ${user.lastName} ${user.firstName}` }
+        defaultValu={commentContent}
+        onChange={handleCommentContentChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur} 
+        minRows={1}
+        maxRows={4}
+        size="md"
+        sx={{
+        '&::before': {
+          display: 'none',
+        },
+        '&:focus-within': {
+          outline: '2px solid var(--Textarea-focusedHighlight)',
+          outlineOffset: '2px',
+        },
+      }}
+      />
+    </Box>
+         */} 
           {/* Conditionally render icons */}
-      {(isFocused || commentContent) && (
+      {(commentContent) && (
         <div className="flex justify-between w-[90%] py-2">
           <IoIosCamera size={30} />
           <BsSendFill
