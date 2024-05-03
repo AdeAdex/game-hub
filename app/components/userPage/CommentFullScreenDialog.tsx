@@ -43,7 +43,7 @@ interface CommentFullScreenDialogProps {
 } 
 
 export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog, user}:CommentFullScreenDialogProps ) {
-  const [ commentContent, setCommentContent] = useState<string>(false); 
+  const [ commentContent, setCommentContent] = useState<string>(""); 
 
   const handleClose = () => {
     setOpenCommentDialog(false);
