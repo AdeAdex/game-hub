@@ -56,7 +56,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative' }}>
+        <AppBar sx={{ position: 'fixed'}} className="top-0 left-0 " >
           <Toolbar>
             <IconButton
               edge="start"
