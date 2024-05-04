@@ -100,7 +100,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const handleOpenCommentDialog = (postId: string) => {
     const post = posts.find((post) => post._id === postId);
     if (post) {
-     // setSelectedPost(post);
+      setSelectedPost(post);
+      setSelectedPostId(postId);
       setOpenCommentDialog(true); 
     }
   } 
@@ -249,6 +250,8 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
         openCommentDialog={openCommentDialog} 
         setOpenCommentDialog={setOpenCommentDialog} 
         user={user} 
+        selectedPostId={selectedPostId} 
+        post={selectedPost} 
         />
       )}
     </div>
