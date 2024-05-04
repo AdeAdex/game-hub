@@ -119,8 +119,8 @@ async function handleAuthentication(credentials, profile) {
 
       if (!userExists) {
         const nameParts = profile.name.split(" ");
-        const firstName = nameParts.slice(1).join(" ");
-        const lastName = nameParts[0];
+        const lastName = nameParts.slice(1).join(" ");
+        const firstName = nameParts[0];
         const profilePicture = profile.avatar_url || profile.picture;
         const userName = profile.login ? profile.login : lastName;
         const socialId = profile.id;
