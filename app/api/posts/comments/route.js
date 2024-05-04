@@ -1,9 +1,10 @@
 // app/api/posts/comments/route.js
 
-
-import { NextResponse } from 'next';
-import { connectToDb } from '../../../utils/database';
-import Post from '../../../models/post';
+import { NextResponse } from "next/server";
+import { connectToDb } from "../../../utils/database";
+import Post from "../../../models/post";
+const cloudinary = require("cloudinary").v2;
+ 
 
 export const POST = async (req, res ) => {
   if (req.method !== 'POST') {
