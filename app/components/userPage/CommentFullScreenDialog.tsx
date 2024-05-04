@@ -175,7 +175,7 @@ export default function CommentFullScreenDialog(
 <IoClose /> 
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Comments for "{post.title}" 
+              Comments
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
