@@ -43,9 +43,15 @@ export const POST = async (req, res ) => {
     // Populate the userId field with user data (profilePicture, firstName, lastName)
      await post.populate('comments.userId', 'profilePicture firstName lastName').execPopulate();
 
+   const newAddedComment = post.comments[post.comments.length - 1];
+
+    // Return only the newly added comment with 201 Created status
+    return NextResponse.json(newAddedComment, { status: 201 });
+ 
+
     // Return the populated post data with 201 Created status using NextResponse.json
-     const populatedPost = { post: post.comments };
-    return NextResponse.json(populatedPost, { status: 201 });
+    // const populatedPost = { post: post.comments };
+   // return NextResponse.json(populatedPost, { status: 201 });
   } catch (error) {
     console.error('Error creating comment:', error.message);
     return NextResponse.json({ message: 'Failed to create comment' }, { status: 500 });
