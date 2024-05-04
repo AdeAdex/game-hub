@@ -102,6 +102,7 @@ export default function CommentFullScreenDialog(
       const response = await axios.post('/api/post/comments', {
         content: commentContent,
         postId: selectedPostId,
+        userId: user._id
       });
 
       if (response.status === 201) {
