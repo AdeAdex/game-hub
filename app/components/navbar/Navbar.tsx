@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Backdrop from "@mui/material/Backdrop";
 import { IoMdNotifications } from "react-icons/io";
 import PingLoader from '../PingLoader';
+import Link from "next/link";
 
 
 // import { useSelector } from "react-redux";
@@ -171,7 +172,7 @@ const Navbar: React.FC = () => {
                   <div
                     className="flex gap-3"
                   >
-		 <Link href={`/${userData?.userName}`} className="flex justify-between cursor-pointer " >
+		 <Link href={`/${userData?.userName}`} className="flex gap-3 cursor-pointer " >
 		 {userData?.profilePicture ? (
                       <Image
                         src={userData?.profilePicture}
@@ -189,7 +190,7 @@ const Navbar: React.FC = () => {
                         className="rounded-full border border-gray-500"
                       />
                     )}
-                    <span className="my-auto text-[14px] font-bold">
+                    <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
                       {userData?.userName || ""}
                     </span>
 		 </Link>
