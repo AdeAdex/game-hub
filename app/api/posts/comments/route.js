@@ -55,7 +55,7 @@ export const POST = async (req, res ) => {
 
 
 
-export const GET = async (res, {params} ) => {
+export const GET = async (req, res, {params} ) => {
   if (req.method !== 'GET') {
     return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
   }
