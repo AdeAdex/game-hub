@@ -130,7 +130,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItemButton>
           <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
-            <Divider className="mb-1 w-full bg-red-500 " />
+            <Divider className="w-full bg-red-500 " />
             {/* <Webcam
             audio={false}
             ref={webcamRef}
@@ -147,7 +147,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             onFocus={handleFocus}
             onBlur={handleBlur}
               
-            className="text-[12px] hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
+            className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
           />
          {/*
          <Box sx={{ p: 2 }}>
