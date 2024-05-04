@@ -69,12 +69,24 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
     setIsFocused(false);
   };
 
-  const handleSubmit = () => {
-  // Implement your submit logic here
-  alert(`Submit comment: ${commentContent}`); // Concatenate message with commentContent
-  // Clear comment content after submission (optional)
-  setCommentContent('');
-};
+  const handleSubmitComment = async () => {
+    try {
+      const response = await axios.post('/api/post/comments/route', {
+        content: commentContent,
+        userId: user._id,
+        // Optionally include image data if needed
+        // image: imageData,
+      });
+
+      if (response.status === 201) {
+        console.log('Comment created successfully:', response.data);
+        // Optionally update UI or state to display the new comment
+      }
+    } catch (error) {
+      console.error('Failed to create comment:', error);
+      // Handle error feedback to the user
+    }
+  };
 
 
   const handleCameraClick = () => {
@@ -177,7 +189,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
         <div className="flex justify-between w-[90%] py-2">
           <IoIosCamera size={30} onClick={handleCameraClick} />
           <BsSendFill
-            onClick={handleSubmit}
+            onClick={handleSubmitComment}
             size={25}
             className={`${commentContent ? 'text-blue-500' : ''}`}
           />
