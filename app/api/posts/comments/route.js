@@ -61,7 +61,7 @@ export const GET = async (res, {params} ) => {
 
   try {
     // Extract postId from query parameters
-    const postId = params.postId; 
+    const postId = params.selectedPostId; 
 
     // Ensure postId is provided
     if (!postId) {
