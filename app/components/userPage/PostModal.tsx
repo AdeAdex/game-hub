@@ -37,8 +37,17 @@ interface Post {
   likes: number;
   dislikes: number;
   likedBy: string[]; // Add the likedBy property here
+  comments: Comment[];
   image: string;
 }
+
+
+interface Comment {
+  _id: string;
+  content: string;
+  postId: string;
+}
+
 
 interface PostModalProps {
   user: User;

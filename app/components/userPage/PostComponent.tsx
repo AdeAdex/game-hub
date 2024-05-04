@@ -30,7 +30,14 @@ interface Post {
   likes: number;
   dislikes: number;
   likedBy: string[];
+  comments: Comment[]; 
   image: string;
+}
+
+interface Comment {
+  _id: string;
+  content: string;
+  postId: string;
 }
 
 interface PostProps {
