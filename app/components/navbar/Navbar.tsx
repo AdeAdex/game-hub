@@ -191,13 +191,10 @@ const Navbar: React.FC = () => {
                       />
                     )}
 			 <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[70px]">
-                        {userData?.userName && userData.userName.length > 7
-                          ? `${userData.userName.slice(0, 6)}...`
+                        {userData?.userName && userData.userName.length > 8
+                          ? `${userData.userName.slice(0, 8)}...`
                           : userData.userName}
                       </span> 
-		  {/* <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[50px]">
-                      {userData?.userName || ""}
-                    </span>*/} 
 		 </Link>
                     
 			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
