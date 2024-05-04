@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 
   const [userInfo, setUserInfo] = useState<AuthState | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [token, setToken] = useState<boolean>(false);
   const [userData, setUserData] = useState<AuthState | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
