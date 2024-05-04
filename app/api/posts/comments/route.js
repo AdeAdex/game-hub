@@ -13,6 +13,7 @@ export const POST = async (req, res ) => {
 
   try {
     const { content, userId, postId} =  await req.json();
+    console.log(content, userId, postId)
 
     // Validate required fields
     if (!content || !userId) {
