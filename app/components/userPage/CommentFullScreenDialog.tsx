@@ -138,9 +138,9 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           </Toolbar>
         </AppBar>
         <List>
-          <ListItemButton>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItemButton>
+          <div className="comments" >
+            
+          <div/>
           <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
             <Divider className="w-full bg-red-500 " />
             {/* <Webcam
