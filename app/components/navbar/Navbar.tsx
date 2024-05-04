@@ -93,23 +93,6 @@ const Navbar: React.FC = () => {
     fetchData();
   }, [session]);
 
-
-/*useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);*/
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       // Check if click occurs outside the dropdown or mobile menu backdrop
@@ -140,13 +123,7 @@ const Navbar: React.FC = () => {
           <Logo />
         </div>
         <Links />
-        {/*<Backdrop
-          open={isMobileMenuOpen}
-          onClick={() => setMobileMenuOpen(false)}
-          className="bg-black bg-opacity-50"
-        >
-          
-        </Backdrop>*/} 
+        
         { isMobileMenuOpen && (
         <div
             className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
