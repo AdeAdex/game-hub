@@ -171,7 +171,7 @@ const Navbar: React.FC = () => {
                   <div
                     className="flex gap-3"
                   >
-		 <div className="flex justify-between cursor-pointer " >
+		 <Link href={`/${userData?.userName}`} className="flex justify-between cursor-pointer " >
 		 {userData?.profilePicture ? (
                       <Image
                         src={userData?.profilePicture}
@@ -192,7 +192,7 @@ const Navbar: React.FC = () => {
                     <span className="my-auto text-[14px] font-bold">
                       {userData?.userName || ""}
                     </span>
-		 </div>
+		 </Link>
                     
 			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
 			  {dropdownOpen ? (
