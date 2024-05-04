@@ -191,8 +191,8 @@ const Navbar: React.FC = () => {
                       />
                     )}
 			 <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[70px]">
-                        {userData?.userName && userData.userName.length > 8
-                          ? `${userData.userName.slice(0, 8)}...`
+                        {userData?.userName && userData.userName.length > 10
+                          ? `${userData.userName.slice(0, 10)}...`
                           : userData.userName}
                       </span> 
 		 </Link>
