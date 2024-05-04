@@ -108,8 +108,14 @@ export default function CommentFullScreenDialog({
 
       if (response.status === 201) {
         console.log("Comment created successfully:", response.data);
-        setCommentContent("");
-        fetchComments(); // Refresh comments after new comment is posted
+
+      const newComment = response.data;
+      console.log("New Comment:", newComment);
+
+      // Update local comments state with the newly created comment
+      setComments([...comments, newComment]);
+
+      setCommentContent("");
       }
     } catch (error) {
       console.error("Failed to create comment:", error);
@@ -120,7 +126,7 @@ export default function CommentFullScreenDialog({
     if (openCommentDialog && selectedPostId) {
       fetchComments();
     }
-  }, [openCommentDialog, selectedPostId]);
+  }, [openCommentDialog, selectedPostId, comments]);
 
   const fetchComments = async () => {
     try {
