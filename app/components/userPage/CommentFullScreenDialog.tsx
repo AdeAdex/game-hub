@@ -1,20 +1,20 @@
-'use client' 
+"use client";
 
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Slide from '@mui/material/Slide';
-import TextField from '@mui/material/TextField';
-import { TransitionProps } from '@mui/material/transitions';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Slide from "@mui/material/Slide";
+import TextField from "@mui/material/TextField";
+import { TransitionProps } from "@mui/material/transitions";
 import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
@@ -27,7 +27,7 @@ const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },
-  ref: React.Ref<unknown>,
+  ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -66,17 +66,16 @@ interface CommentFullScreenDialogProps {
   user: User;
   post: Post | null;
   selectedPostId: string;
-} 
+}
 
-export default function CommentFullScreenDialog(
-  {
-  openCommentDialog, 
-  setOpenCommentDialog, 
-  user, 
-  post, 
-  selectedPostId, 
-}:CommentFullScreenDialogProps ) {
-  const [ commentContent, setCommentContent] = useState<string>(""); 
+export default function CommentFullScreenDialog({
+  openCommentDialog,
+  setOpenCommentDialog,
+  user,
+  post,
+  selectedPostId,
+}: CommentFullScreenDialogProps) {
+  const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const webcamRef = useRef(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -85,7 +84,9 @@ export default function CommentFullScreenDialog(
     setOpenCommentDialog(false);
   };
 
-  const handleCommentContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCommentContentChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setCommentContent(e.target.value);
   };
 
@@ -99,22 +100,21 @@ export default function CommentFullScreenDialog(
 
   const handleSubmitComment = async () => {
     try {
-      const response = await axios.post('/api/posts/comments', {
+      const response = await axios.post("/api/posts/comments", {
         content: commentContent,
         postId: selectedPostId,
-        userId: user._id
+        userId: user._id,
       });
 
       if (response.status === 201) {
-        console.log('Comment created successfully:', response.data);
-        setCommentContent('');
+        console.log("Comment created successfully:", response.data);
+        setCommentContent("");
         fetchComments(); // Refresh comments after new comment is posted
       }
     } catch (error) {
-      console.error('Failed to create comment:', error);
+      console.error("Failed to create comment:", error);
     }
   };
-
 
   useEffect(() => {
     if (openCommentDialog && selectedPostId) {
@@ -124,20 +124,23 @@ export default function CommentFullScreenDialog(
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`/api/posts/comments/${selectedPostId}` );
+      const response = await axios.post(`/api/posts/get-comments`, {
+        postId: selectedPostId
+      });
+
+      // console.log("response de",response)
 
       if (response.status === 200) {
         setComments(response.data.comments);
       }
     } catch (error) {
-      console.error('Failed to fetch comments:', error);
+      console.error("Failed to fetch comments:", error);
     }
   };
 
-
   const handleCameraClick = () => {
     // Access user's camera
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: true });
     /*  .then((stream) => {
         if (webcamRef.current) {
           webcamRef.current.video.srcObject = stream;
@@ -149,7 +152,7 @@ export default function CommentFullScreenDialog(
       });*/
   };
 
- /* const handleCapture = () => {
+  /* const handleCapture = () => {
     // Capture image from webcam
     const imageSrc = webcamRef.current.getScreenshot();
     // Handle the captured image data (e.g., display, store, or process)
@@ -163,9 +166,9 @@ export default function CommentFullScreenDialog(
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
-        className="overflow-y-scroll " 
+        className="overflow-y-scroll "
       >
-        <AppBar sx={{ position: 'fixed'}} className="top-0 left-0 " >
+        <AppBar sx={{ position: "fixed" }} className="top-0 left-0 ">
           <Toolbar>
             <IconButton
               edge="start"
@@ -173,7 +176,7 @@ export default function CommentFullScreenDialog(
               onClick={handleClose}
               aria-label="close"
             >
-<IoClose /> 
+              <IoClose />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Comments
@@ -185,14 +188,14 @@ export default function CommentFullScreenDialog(
         </AppBar>
         <List>
           <div className="comments mt-[60px]">
-          {comments.length === 0 ? (
-            <Typography variant="body1">No comments</Typography>
-          ) : (
-            comments.map((comment) => (
-              <ListItemText key={comment._id} primary={comment.content} />
-            ))
-          )}
-        </div>
+            {comments.length === 0 ? (
+              <Typography variant="body1">No comments</Typography>
+            ) : (
+              comments.map((comment) => (
+                <ListItemText key={comment._id} primary={comment.content} />
+              ))
+            )}
+          </div>
           <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
             <Divider className="w-full bg-red-500 " />
             {/* <Webcam
@@ -200,20 +203,19 @@ export default function CommentFullScreenDialog(
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             style={{ width: '100%', height: 'auto' }}
-          /> */} 
+          /> */}
             <TextField
-            label={`Comments as ${user.lastName} ${user.firstName}` }
-            multiline
-            rows={1}
-            variant="outlined"
-            value={commentContent}
-            onChange={handleCommentContentChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-              
-            className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
-          />
-         {/*
+              label={`Comments as ${user.lastName} ${user.firstName}`}
+              multiline
+              rows={1}
+              variant="outlined"
+              value={commentContent}
+              onChange={handleCommentContentChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
+            />
+            {/*
          <Box sx={{ p: 2 }}>
       <Textarea
         placeholder={`Comments as ${user.lastName} ${user.firstName}` }
@@ -235,22 +237,21 @@ export default function CommentFullScreenDialog(
       }}
       />
     </Box>
-         */} 
-          {/* Conditionally render icons */}
-      {(commentContent) && (
-        <div className="flex justify-between w-[90%] py-2">
-          <IoIosCamera size={30} onClick={handleCameraClick} />
-          <BsSendFill
-            onClick={handleSubmitComment}
-            size={25}
-            className={`${commentContent ? 'text-blue-500' : ''}`}
-          />
-        </div>
-      )}
+         */}
+            {/* Conditionally render icons */}
+            {commentContent && (
+              <div className="flex justify-between w-[90%] py-2">
+                <IoIosCamera size={30} onClick={handleCameraClick} />
+                <BsSendFill
+                  onClick={handleSubmitComment}
+                  size={25}
+                  className={`${commentContent ? "text-blue-500" : ""}`}
+                />
+              </div>
+            )}
           </div>
         </List>
       </Dialog>
     </React.Fragment>
   );
 }
-
