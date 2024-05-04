@@ -178,7 +178,6 @@ const Navbar: React.FC = () => {
                   <div
                     className="flex gap-3 cursor-pointer"
                   >
-		   {/*<div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
 			  <PingLoader />
 			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
 			  {dropdownOpen ? (
@@ -188,7 +187,7 @@ const Navbar: React.FC = () => {
 			  ) } 
 			  </div>
 			  
-                  </div>*/} 
+                  </div> 
                 </div>
               ) : (
                 <div className="flex flex-col relative">
