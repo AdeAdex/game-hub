@@ -180,7 +180,7 @@ const Navbar: React.FC = () => {
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
 			  <PingLoader />
-			  <div className="bg-gray-100 p-2" onClick={handleDropdownToggle}>
+			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
 			  {dropdownOpen ? (
 			  <FaAngleUp size={18} className="my-auto " />
 			  ) : (
@@ -215,18 +215,14 @@ const Navbar: React.FC = () => {
                     <span className="my-auto text-[14px] font-bold">
                       {userData?.userName || ""}
                     </span>
-			  <div className="bg-gray-100 p-2" onClick={handleDropdownToggle}>
+			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
 			  {dropdownOpen ? (
 			  <FaAngleUp size={18} className="my-auto " />
 			  ) : (
 				<FaAngleDown size={18} className="my-auto" />  
 			  ) } 
 			  </div>
-			  {/* {dropdownOpen ? (
-			  <FaAngleUp size={18} className="my-auto bg-gray-100 p-2 rounded-md " onClick={handleDropdownToggle}/>
-			  ) : (
-				<FaAngleDown size={18} className="my-auto" />  
-			  ) }  */} 
+			  
                   </div>
                   {dropdownOpen && (
                   <div
