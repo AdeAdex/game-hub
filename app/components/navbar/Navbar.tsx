@@ -190,7 +190,7 @@ const Navbar: React.FC = () => {
                         className="rounded-full border border-gray-500"
                       />
                     )}
-			 <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[70px]">
+			 <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
                         {userData?.userName && userData.userName.length > 10
                           ? `${userData.userName.slice(0, 10)}...`
                           : userData.userName}
