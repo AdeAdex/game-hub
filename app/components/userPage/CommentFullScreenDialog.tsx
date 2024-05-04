@@ -80,7 +80,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
   const handleCameraClick = () => {
     // Access user's camera
     navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream) => {
+    /*  .then((stream) => {
         if (webcamRef.current) {
           webcamRef.current.video.srcObject = stream;
         }
@@ -88,15 +88,15 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
       .catch((error) => {
         console.error('Error accessing camera:', error);
         // Handle error (e.g., display error message to user)
-      });
+      });*/
   };
 
-  const handleCapture = () => {
+ /* const handleCapture = () => {
     // Capture image from webcam
     const imageSrc = webcamRef.current.getScreenshot();
     // Handle the captured image data (e.g., display, store, or process)
     console.log('Captured image:', imageSrc);
-  };
+  };*/
 
   return (
     <React.Fragment>
