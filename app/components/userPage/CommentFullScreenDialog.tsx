@@ -130,7 +130,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItemButton>
           <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
-            <Divider className="mb-1" />
+            <Divider className="mb-1 w-full bg-red-500 " />
             {/* <Webcam
             audio={false}
             ref={webcamRef}
