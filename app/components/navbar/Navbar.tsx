@@ -177,13 +177,11 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col relative">
                   <div
                     className="flex gap-3 cursor-pointer"
-										onClick={handleDropdownToggle}
                   >
                     <div className="rounded-full bg-gray-300 h-8 w-8 mx-auto mb-2"></div>
 			  <PingLoader />
-                    {/* Placeholder for loading state */}
 			  {dropdownOpen ? (
-			  <FaAngleUp size={18} className="my-auto" />
+			  <FaAngleUp size={18} className="my-auto bg-gray-100 p-2 rounded-md" onClick={handleDropdownToggle} />
 			  ) : (
 				<FaAngleDown size={18} className="my-auto" />  
 			  ) } 
@@ -193,7 +191,6 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col relative">
                   <div
                     className="flex gap-3 cursor-pointer"
-                    onClick={handleDropdownToggle}
                   >
                     {userData?.profilePicture ? (
                       <Image
@@ -216,7 +213,7 @@ const Navbar: React.FC = () => {
                       {userData?.userName || ""}
                     </span>
                     {dropdownOpen ? (
-			  <FaAngleUp size={18} className="my-auto" />
+			  <FaAngleUp size={18} className="my-auto bg-gray-100 p-2 rounded-md " onClick={handleDropdownToggle}/>
 			  ) : (
 				<FaAngleDown size={18} className="my-auto" />  
 			  ) }  
