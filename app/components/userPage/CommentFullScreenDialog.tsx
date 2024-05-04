@@ -123,7 +123,7 @@ export default function CommentFullScreenDialog(
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`/api/post/comments/${post._id}`);
+      const response = await axios.get(`/api/post/comments` );
 
       if (response.status === 200) {
         setComments(response.data.comments);
