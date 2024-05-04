@@ -54,14 +54,14 @@ export const POST = async (req, res ) => {
 
 
 
-export const GET = async (req, res) => {
+export const GET = async (res, {params} ) => {
   if (req.method !== 'GET') {
     return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
   }
 
   try {
     // Extract postId from query parameters
-    const postId = await req.json(); 
+    const postId = params.postId; 
 
     // Ensure postId is provided
     if (!postId) {
