@@ -42,16 +42,41 @@ interface User {
   currentFriends?: string[];
 }
 
+interface Post {
+  _id: string;
+  content: string;
+  timestamp: string;
+  userId: User;
+  likes: number;
+  dislikes: number;
+  likedBy: string[];
+  image: string;
+}
+
+interface Comment {
+  _id: string;
+  content: string;
+  postId: string;
+}
+
 interface CommentFullScreenDialogProps {
   setOpenCommentDialog: React.Dispatch<boolean>;
   openCommentDialog: boolean;
   user: User;
+  post: Post;
 } 
 
-export default function CommentFullScreenDialog({ openCommentDialog, setOpenCommentDialog, user}:CommentFullScreenDialogProps ) {
+export default function CommentFullScreenDialog(
+  {
+  openCommentDialog, 
+  setOpenCommentDialog, 
+  user, 
+  post 
+}:CommentFullScreenDialogProps ) {
   const [ commentContent, setCommentContent] = useState<string>(""); 
   const [isFocused, setIsFocused] = useState(false);
   const webcamRef = useRef(null);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const handleClose = () => {
     setOpenCommentDialog(false);
@@ -71,20 +96,37 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
 
   const handleSubmitComment = async () => {
     try {
-      const response = await axios.post('/api/post/comments/route', {
+      const response = await axios.post('/api/post/comments', {
         content: commentContent,
-        userId: user._id,
-        // Optionally include image data if needed
-        // image: imageData,
+        postId: post._id,
       });
 
       if (response.status === 201) {
         console.log('Comment created successfully:', response.data);
-        // Optionally update UI or state to display the new comment
+        setCommentContent('');
+        fetchComments(); // Refresh comments after new comment is posted
       }
     } catch (error) {
       console.error('Failed to create comment:', error);
-      // Handle error feedback to the user
+    }
+  };
+
+
+  useEffect(() => {
+    if (openCommentDialog && post._id) {
+      fetchComments();
+    }
+  }, [openCommentDialog, post._id]);
+
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`/api/post/comments/${post._id}`);
+
+      if (response.status === 200) {
+        setComments(response.data.comments);
+      }
+    } catch (error) {
+      console.error('Failed to fetch comments:', error);
     }
   };
 
@@ -130,7 +172,7 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
 <IoClose /> 
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Comments 
+              Comments for "{post.title}" 
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
@@ -138,9 +180,15 @@ export default function CommentFullScreenDialog({ openCommentDialog, setOpenComm
           </Toolbar>
         </AppBar>
         <List>
-          <div className="comments" >
-            
-          <div/>
+          <div className="comments">
+          {comments.length === 0 ? (
+            <Typography variant="body1">No comments</Typography>
+          ) : (
+            comments.map((comment) => (
+              <ListItemText key={comment._id} primary={comment.content} />
+            ))
+          )}
+        </div>
           <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
             <Divider className="w-full bg-red-500 " />
             {/* <Webcam
