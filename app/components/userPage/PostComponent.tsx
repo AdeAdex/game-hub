@@ -191,15 +191,16 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
               )}
 
               <small
-                className="cursor-pointer"
-                onClick={() => handleOpenCommentDialog(post._id)}
-              >
-                {post.comments.length > 1 && (
-                  <>
-                    {post.commente.length} {post.comments.length > 1 ? 'comments' : 'comment' } 
-                  </>
-                )}
-              </small>
+  className="cursor-pointer"
+  onClick={() => handleOpenCommentDialog(post._id)}
+>
+  {post.comments.length > 0 && (
+    <>
+      {post.comments.length} {post.comments.length === 1 ? 'comment' : 'comments'}
+    </>
+  )}
+</small>
+
             </div>
 
             <hr className="my-2 border-gray-300" />
