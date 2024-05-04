@@ -169,9 +169,10 @@ const Navbar: React.FC = () => {
               ) : (
                 <div className="flex flex-col relative">
                   <div
-                    className="flex gap-3 cursor-pointer"
+                    className="flex gap-3"
                   >
-                    {userData?.profilePicture ? (
+		 <div className="flex justify-between cursor-pointer " >
+		 {userData?.profilePicture ? (
                       <Image
                         src={userData?.profilePicture}
                         alt="profile"
@@ -191,6 +192,8 @@ const Navbar: React.FC = () => {
                     <span className="my-auto text-[14px] font-bold">
                       {userData?.userName || ""}
                     </span>
+		 </div>
+                    
 			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
 			  {dropdownOpen ? (
 			  <FaAngleUp size={18} className="my-auto " />
