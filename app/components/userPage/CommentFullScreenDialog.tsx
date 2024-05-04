@@ -99,7 +99,7 @@ export default function CommentFullScreenDialog(
 
   const handleSubmitComment = async () => {
     try {
-      const response = await axios.post('/api/post/comments', {
+      const response = await axios.post('/api/posts/comments', {
         content: commentContent,
         postId: selectedPostId,
         userId: user._id
@@ -124,7 +124,7 @@ export default function CommentFullScreenDialog(
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`/api/post/comments/${selectedPostId}` );
+      const response = await axios.get(`/api/posts/comments/${selectedPostId}` );
 
       if (response.status === 200) {
         setComments(response.data.comments);
