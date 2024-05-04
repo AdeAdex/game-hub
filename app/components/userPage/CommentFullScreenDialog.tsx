@@ -64,7 +64,7 @@ interface CommentFullScreenDialogProps {
   setOpenCommentDialog: React.Dispatch<boolean>;
   openCommentDialog: boolean;
   user: User;
-  post: Post;
+  post: Post | null;
   selectedPostId: string;
 } 
 
