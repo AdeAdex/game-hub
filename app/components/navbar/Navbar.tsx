@@ -190,9 +190,14 @@ const Navbar: React.FC = () => {
                         className="rounded-full border border-gray-500"
                       />
                     )}
-                    <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
+			 <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[50px]">
+                        {userData?.userName && userData.userName.length > 6
+                          ? `${userData.userName.slice(0, 6)}...`
+                          : userData.userName}
+                      </span> 
+		  {/* <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[50px]">
                       {userData?.userName || ""}
-                    </span>
+                    </span>*/} 
 		 </Link>
                     
 			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
