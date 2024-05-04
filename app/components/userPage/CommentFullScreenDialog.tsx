@@ -64,6 +64,7 @@ interface CommentFullScreenDialogProps {
   openCommentDialog: boolean;
   user: User;
   post: Post;
+  selectedPostId: string;
 } 
 
 export default function CommentFullScreenDialog(
@@ -71,7 +72,8 @@ export default function CommentFullScreenDialog(
   openCommentDialog, 
   setOpenCommentDialog, 
   user, 
-  post 
+  post, 
+  selectedPostId, 
 }:CommentFullScreenDialogProps ) {
   const [ commentContent, setCommentContent] = useState<string>(""); 
   const [isFocused, setIsFocused] = useState(false);
@@ -98,7 +100,7 @@ export default function CommentFullScreenDialog(
     try {
       const response = await axios.post('/api/post/comments', {
         content: commentContent,
-        postId: post._id,
+        postId: selectedPostId,
       });
 
       if (response.status === 201) {
@@ -113,10 +115,10 @@ export default function CommentFullScreenDialog(
 
 
   useEffect(() => {
-    if (openCommentDialog && post._id) {
+    if (openCommentDialog && selectedPostId) {
       fetchComments();
     }
-  }, [openCommentDialog, post._id]);
+  }, [openCommentDialog, selectedPostId]);
 
   const fetchComments = async () => {
     try {
