@@ -125,7 +125,7 @@ export default function CommentFullScreenDialog({
     if (openCommentDialog && selectedPostId) {
       fetchComments();
     }
-  }, [openCommentDialog, selectedPostId, comments]);
+  }, [openCommentDialog, selectedPostId, comments, commentContent ]);
 
   const fetchComments = async () => {
     try {
