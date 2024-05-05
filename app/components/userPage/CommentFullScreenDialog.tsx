@@ -215,7 +215,7 @@ export default function CommentFullScreenDialog({
             style={{ width: '100%', height: 'auto' }}
           /> */}
             
-         <Box sx={{ p: 2, width: '90%' }} className="flex gap-2 " >
+         <Box sx={{ p: 2, width: '100%' }} className="flex gap-2 " >
            <div className="relative w-8 h-8 mr-2">
           {user.profilePicture ? (
             <div className="relative w-10 h-10 mr-2">
