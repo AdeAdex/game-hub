@@ -22,6 +22,7 @@ import Textarea from "@mui/joy/Textarea";
 //import Webcam from 'react-webcam';
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
+import AILoader from "../AILoader";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -222,7 +223,9 @@ export default function CommentFullScreenDialog({
         <List>
           <div className="comments mt-[60px] pb-[100px] px-2">
             {comments.length === 0 ? (
-              <Typography variant="body1">No comments</Typography>
+              <Typography variant="body1">
+                <AILoader />
+              </Typography>
             ) : (
               comments
                 .slice()
