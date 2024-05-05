@@ -214,51 +214,55 @@ export default function CommentFullScreenDialog({
             screenshotFormat="image/jpeg"
             style={{ width: '100%', height: 'auto' }}
           /> */}
+            <Box sx={{ p: 2, width: '100%', display: 'flex', alignItems: 'center', gap: 2 }} className="">
+  <div className="relative w-8 h-8 mr-2">
+    {user.profilePicture ? (
+      <div className="relative w-10 h-10 mr-2">
+        <Image
+          src={user.profilePicture}
+          alt="Profile Picture"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-full"
+        />
+      </div>
+    ) : (
+      <div className="relative w-10 h-10 mr-2">
+        <Image
+          src={avatar}
+          alt="Profile Picture"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-full"
+        />
+      </div>
+    )}
+  </div>
+  <Textarea
+    placeholder={`Comments as ${user.lastName} ${user.firstName}`}
+    defaultValue={commentContent}
+    onChange={handleCommentContentChange}
+    onFocus={handleFocus}
+    onBlur={handleBlur} 
+    minRows={1}
+    maxRows={4}
+    size="md"
+    sx={{
+      '&::before': {
+        display: 'none',
+      },
+      '&:focus-within': {
+        outline: '2px solid var(--Textarea-focusedHighlight)',
+        outlineOffset: '2px',
+      },
+      flex: 1, // This will make the Textarea take up remaining space
+      minWidth: 0, // Ensure Textarea can shrink to fit content
+    }}
+  />
+</Box>
+ 
             
-         <Box sx={{ p: 2, width: '100%' }} className="flex gap-2 bg-black " >
-           <div className="relative w-8 h-8 mr-2">
-          {user.profilePicture ? (
-            <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={user.profilePicture}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-          ) : (
-            <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={avatar}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-          )}
-        </div>
-      <Textarea
-        placeholder={`Comments as ${user.lastName} ${user.firstName}` }
-        defaultValue={commentContent}
-        onChange={handleCommentContentChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur} 
-        minRows={1}
-        maxRows={4}
-        size="md"
-        sx={{
-        '&::before': {
-          display: 'none',
-        },
-        '&:focus-within': {
-          outline: '2px solid var(--Textarea-focusedHighlight)',
-          outlineOffset: '2px',
-        },
-      }}
-      />
-    </Box>
+       
          
             {/* Conditionally render icons */}
             {commentContent && (
