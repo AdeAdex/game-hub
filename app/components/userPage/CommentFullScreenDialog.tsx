@@ -111,15 +111,10 @@ export default function CommentFullScreenDialog({
       });
 
       if (response.status === 201) {
-        console.log("Comment created successfully:", response.data);
-
       const newComment = response.data;
-      console.log("New Comment:", newComment);
-
+        setCommentContent("");
       // Update local comments state with the newly created comment
       setComments([...comments, newComment]);
-
-      setCommentContent("");
       }
     } catch (error) {
       console.error("Failed to create comment:", error);
