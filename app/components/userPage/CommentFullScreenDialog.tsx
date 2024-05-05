@@ -211,19 +211,31 @@ export default function CommentFullScreenDialog({
             screenshotFormat="image/jpeg"
             style={{ width: '100%', height: 'auto' }}
           /> */}
-            {/* <TextField
-              label={`Comments as ${user.lastName} ${user.firstName}`}
-              multiline
-              rows={1}
-              variant="outlined"
-              value={commentContent}
-              onChange={handleCommentContentChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
-            />
-            */} 
-         <Box sx={{ p: 2, width: '90%' }}>
+            
+         <Box sx={{ p: 2, width: '90%' }} className="flex gap-2 " >
+           <div className="relative w-8 h-8 mr-2">
+          {user.profilePicture ? (
+            <div className="relative w-10 h-10 mr-2">
+              <Image
+                src={user.profilePicture}
+                alt="Profile Picture"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+          ) : (
+            <div className="relative w-10 h-10 mr-2">
+              <Image
+                src={avatar}
+                alt="Profile Picture"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+          )}
+        </div>
       <Textarea
         placeholder={`Comments as ${user.lastName} ${user.firstName}` }
         defaultValue={commentContent}
