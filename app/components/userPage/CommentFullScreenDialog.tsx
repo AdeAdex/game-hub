@@ -85,7 +85,8 @@ export default function CommentFullScreenDialog({
   };
 
   const handleCommentContentChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+   // e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setCommentContent(e.target.value);
   };
@@ -210,7 +211,7 @@ export default function CommentFullScreenDialog({
             screenshotFormat="image/jpeg"
             style={{ width: '100%', height: 'auto' }}
           /> */}
-            <TextField
+            {/* <TextField
               label={`Comments as ${user.lastName} ${user.firstName}`}
               multiline
               rows={1}
@@ -221,7 +222,7 @@ export default function CommentFullScreenDialog({
               onBlur={handleBlur}
               className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
             />
-            
+            */} 
          <Box sx={{ p: 2 }}>
       <Textarea
         placeholder={`Comments as ${user.lastName} ${user.firstName}` }
