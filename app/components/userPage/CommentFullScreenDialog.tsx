@@ -261,7 +261,7 @@ export default function CommentFullScreenDialog({
          
             {/* Conditionally render icons */}
             {commentContent && (
-              <div className="flex justify-between w-[90%] py-2">
+              <div className="flex justify-between w-[90%] py-2 bg-white ">
                 <IoIosCamera size={30} onClick={handleCameraClick} />
                 <BsSendFill
                   onClick={handleSubmitComment}
