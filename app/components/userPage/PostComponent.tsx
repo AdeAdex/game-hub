@@ -113,6 +113,15 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     }
   };
 
+
+  const calculateElapsedTime = (timestamp: string) => {
+    const commentTimestamp = new Date(timestamp);
+    const elapsedMinutes = Math.floor(
+      (new Date().getTime() - commentTimestamp.getTime()) / (1000 * 60)
+    );
+    return `${elapsedMinutes} min ago`;
+  };
+
   console.log("post mi re", posts);
 
   return (
@@ -146,11 +155,17 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                     />
                   )}
                 </div>
-                <p className="text-[12px] text-gray-700 font-semibold">
+                <div className="text-[12px] text-gray-700 font-semibold">
+                  <div>
                   {post.userId
                     ? `${post.userId.firstName} ${post.userId.lastName}`
                     : "Unknown User"}
-                </p>
+                  </div>
+                  <small className="flex justify-between text-[10px] px-2">{calculateElapsedTime(post.timestamp)}</small>
+                  <small>
+
+                  </small>
+                </div>
               </div>
               <CiMenuKebab
                 className="flex cursor-pointer "

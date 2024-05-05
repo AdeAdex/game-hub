@@ -12,7 +12,7 @@ export const POST = async (req, res) => {
   try {
     // Extract postId from query parameters
     const { postId } = await req.json();
-    console.log(postId);
+    // console.log(postId);
 
     // Ensure postId is provided
     if (!postId) {
@@ -24,8 +24,11 @@ export const POST = async (req, res) => {
 
     await connectToDb();
 
-    // Find the post by postId
-    const post = await Post.findById(postId);
+    // Find the post by postId and populate comments with user details
+    const post = await Post.findById(postId).populate({
+      path: "comments.userId", // Populate userId field in comments
+      select: "profilePicture firstName lastName userName", // Select fields to populate
+    });
 
     // Check if the post exists
     if (!post) {

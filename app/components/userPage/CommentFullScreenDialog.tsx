@@ -5,7 +5,6 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
@@ -13,7 +12,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
-import TextField from "@mui/material/TextField";
 import { TransitionProps } from "@mui/material/transitions";
 import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
@@ -60,6 +58,8 @@ interface Comment {
   _id: string;
   content: string;
   postId: string;
+  userId: User;
+  timestamp: string; 
 }
 
 interface CommentFullScreenDialogProps {
@@ -122,6 +122,7 @@ export default function CommentFullScreenDialog({
 
   useEffect(() => {
     if (openCommentDialog && selectedPostId) {
+      // console.log(post)
       fetchComments();
     }
   }, [openCommentDialog, selectedPostId, comments, commentContent]);
@@ -132,7 +133,7 @@ export default function CommentFullScreenDialog({
         postId: selectedPostId,
       });
 
-      // console.log("response de",response)
+      // console.log("response de", response);
 
       if (response.status === 200) {
         setComments(response.data.comments);
@@ -163,6 +164,15 @@ export default function CommentFullScreenDialog({
     console.log('Captured image:', imageSrc);
   };*/
 
+
+  const calculateElapsedTime = (timestamp: string) => {
+    const commentTimestamp = new Date(timestamp);
+    const elapsedMinutes = Math.floor(
+      (new Date().getTime() - commentTimestamp.getTime()) / (1000 * 60)
+    );
+    return `${elapsedMinutes} min ago`;
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -183,11 +193,15 @@ export default function CommentFullScreenDialog({
               <IoClose />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Comments
+              {post?.userId && (
+                <>
+                {post?.userId?.firstName} {""}Post
+                </>
+              )}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            {/* <Button autoFocus color="inherit" onClick={handleClose}>
               save
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
         <List>
@@ -199,7 +213,41 @@ export default function CommentFullScreenDialog({
                 .slice()
                 .reverse()
                 .map((comment) => (
-                  <ListItemText key={comment._id} primary={comment.content} />
+                  <div className="flex gap-2 mb-2" key={comment._id}>
+                    <div className="relative w-8 h-8 my-auto mr-2">
+                      {comment.userId.profilePicture ? (
+                        <div className="relative w-9 h-9">
+                          <Image
+                            src={comment.userId.profilePicture}
+                            alt="Profile Picture"
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-full"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative w-9 h-9 ">
+                          <Image
+                            src={avatar}
+                            alt="Profile Picture"
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-full"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div className="">
+                    <div className="flex flex-col rounded-lg bg-gray-100 p-2">
+                      <small className="font-bold">
+                        {comment.userId.lastName} {comment.userId.firstName}
+                      </small>
+                      <small>{comment.content}</small>
+                    </div>
+                    <small className="flex justify-between text-[10px] px-2">{calculateElapsedTime(comment.timestamp)}</small>
+                    </div>
+                   
+                  </div>
                 ))
             )}
           </div>
@@ -270,11 +318,11 @@ export default function CommentFullScreenDialog({
             {/* Conditionally render icons */}
             {commentContent && (
               <div className="flex justify-between w-[90%] py-2">
-                <IoIosCamera size={30} onClick={handleCameraClick} />
+                <IoIosCamera size={30} onClick={handleCameraClick} className="cursor-pointer"/>
                 <BsSendFill
                   onClick={handleSubmitComment}
                   size={25}
-                  className={`${commentContent ? "text-blue-500" : ""}`}
+                  className={`cursor-pointer ${commentContent ? "text-blue-500" : ""}`}
                 />
               </div>
             )}

@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
       try {
         const response = await axios.post(`/api/prompt/dashboard`);
 
-        console.log(response);
+        // console.log(response);
 
         if (response.data.success === true) {
           setToken(true);
