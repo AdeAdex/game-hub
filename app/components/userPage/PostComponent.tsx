@@ -113,7 +113,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     }
   };
 
-
   const calculateElapsedTime = (timestamp: string) => {
     const commentTimestamp = new Date(timestamp);
     const elapsedMinutes = Math.floor(
@@ -157,14 +156,14 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                 </div>
                 <div className="text-[12px] text-gray-700 font-semibold">
                   <div>
-                  {post.userId
-                    ? `${post.userId.firstName} ${post.userId.lastName}`
-                    : "Unknown User"}
+                    {post.userId
+                      ? `${post.userId.firstName} ${post.userId.lastName}`
+                      : "Unknown User"}
                   </div>
-                  <small className="flex justify-between text-[10px] px-2">{calculateElapsedTime(post.timestamp)}</small>
-                  <small>
-
+                  <small className="flex justify-between text-[10px] px-2">
+                    {calculateElapsedTime(post.timestamp)}
                   </small>
+                  <small></small>
                 </div>
               </div>
               <CiMenuKebab
