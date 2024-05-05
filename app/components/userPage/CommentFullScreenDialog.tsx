@@ -165,13 +165,28 @@ export default function CommentFullScreenDialog({
   };*/
 
 
-  const calculateElapsedTime = (timestamp: string) => {
+  const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);
-    const elapsedMinutes = Math.floor(
-      (new Date().getTime() - commentTimestamp.getTime()) / (1000 * 60)
-    );
-    return `${elapsedMinutes} min ago`;
+    const currentTime = new Date();
+    const timeDifference = currentTime.getTime() - commentTimestamp.getTime();
+  
+    // Calculate elapsed minutes
+    const elapsedMinutes = Math.floor(timeDifference / (1000 * 60));
+    if (elapsedMinutes < 60) {
+      return `${elapsedMinutes} min ago`;
+    }
+  
+    // Calculate elapsed hours
+    const elapsedHours = Math.floor(elapsedMinutes / 60);
+    if (elapsedHours < 24) {
+      return `${elapsedHours} hour${elapsedHours > 1 ? 's' : ''} ago`;
+    }
+  
+    // Calculate elapsed days
+    const elapsedDays = Math.floor(elapsedHours / 24);
+    return `${elapsedDays} day${elapsedDays > 1 ? 's' : ''} ago`;
   };
+  
 
   return (
     <React.Fragment>

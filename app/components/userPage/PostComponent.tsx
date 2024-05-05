@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaHeart, FaComment, FaShare } from "react-icons/fa";
+import { FaHeart, FaComment, FaShare, FaGlobeAfrica } from "react-icons/fa";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import MediaCarousel from "./MediaCarousel";
 import avatar from "../../../public/images/robot.png";
@@ -113,12 +113,26 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     }
   };
 
-  const calculateElapsedTime = (timestamp: string) => {
+  const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);
-    const elapsedMinutes = Math.floor(
-      (new Date().getTime() - commentTimestamp.getTime()) / (1000 * 60)
-    );
-    return `${elapsedMinutes} min ago`;
+    const currentTime = new Date();
+    const timeDifference = currentTime.getTime() - commentTimestamp.getTime();
+
+    // Calculate elapsed minutes
+    const elapsedMinutes = Math.floor(timeDifference / (1000 * 60));
+    if (elapsedMinutes < 60) {
+      return `${elapsedMinutes} min ago`;
+    }
+
+    // Calculate elapsed hours
+    const elapsedHours = Math.floor(elapsedMinutes / 60);
+    if (elapsedHours < 24) {
+      return `${elapsedHours} hour${elapsedHours > 1 ? "s" : ""} ago`;
+    }
+
+    // Calculate elapsed days
+    const elapsedDays = Math.floor(elapsedHours / 24);
+    return `${elapsedDays} day${elapsedDays > 1 ? "s" : ""} ago`;
   };
 
   console.log("post mi re", posts);
@@ -160,10 +174,12 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                       ? `${post.userId.firstName} ${post.userId.lastName}`
                       : "Unknown User"}
                   </div>
-                  <small className="flex justify-between text-[10px] px-2">
-                    {calculateElapsedTime(post.timestamp)}
-                  </small>
-                  <small></small>
+                  <div className="flex gap-1">
+                    <small className="flex justify-between text-[10px] ">
+                      {calculateElapsedTime(post.timestamp)}
+                    </small>
+                    <FaGlobeAfrica size={13} className="my-auto" />
+                  </div>
                 </div>
               </div>
               <CiMenuKebab
