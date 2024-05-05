@@ -223,9 +223,9 @@ export default function CommentFullScreenDialog({
         <List>
           <div className="comments mt-[60px] pb-[100px] px-2">
             {comments.length === 0 ? (
-              <Typography variant="body1">
+              <div className="flex items-center justify-center h-full ">
                 <AILoader />
-              </Typography>
+              </div>
             ) : (
               comments
                 .slice()
