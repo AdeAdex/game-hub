@@ -225,7 +225,7 @@ export default function CommentFullScreenDialog({
          <Box sx={{ p: 2 }}>
       <Textarea
         placeholder={`Comments as ${user.lastName} ${user.firstName}` }
-        defaultValu={commentContent}
+        defaultValue={commentContent}
         onChange={handleCommentContentChange}
         onFocus={handleFocus}
         onBlur={handleBlur} 
