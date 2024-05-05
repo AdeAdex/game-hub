@@ -224,7 +224,9 @@ export default function CommentFullScreenDialog({
           <div className="comments mt-[60px] pb-[100px] px-2">
             {comments.length === 0 ? (
               <div className="flex items-center justify-center h-full ">
-                <AILoader className="my-auto" />
+                <div className="my-auto">
+                  <AILoader />
+                </div> 
               </div>
             ) : (
               comments
