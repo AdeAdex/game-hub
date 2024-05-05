@@ -192,7 +192,7 @@ export default function CommentFullScreenDialog({
           </Toolbar>
         </AppBar>
         <List>
-          <div className="comments mt-[60px] p-[100px]">
+          <div className="comments mt-[60px] pb-[100px]">
             {comments.length === 0 ? (
               <Typography variant="body1">No comments</Typography>
             ) : (
@@ -201,7 +201,7 @@ export default function CommentFullScreenDialog({
               ))
             )}
           </div>
-          <div className="fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full">
+          <div className="fixed bottom-0 left-0 py-2 bg-white flex items-center justify-center flex-col w-full">
             <Divider className="w-full bg-red-500 " />
             {/* <Webcam
             audio={false}
@@ -261,7 +261,7 @@ export default function CommentFullScreenDialog({
          
             {/* Conditionally render icons */}
             {commentContent && (
-              <div className="flex justify-between w-[90%] py-2 bg-white ">
+              <div className="flex justify-between w-[90%] py-2">
                 <IoIosCamera size={30} onClick={handleCameraClick} />
                 <BsSendFill
                   onClick={handleSubmitComment}
