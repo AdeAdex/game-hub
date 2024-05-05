@@ -338,7 +338,7 @@ export default function CommentFullScreenDialog({
             <Divider className="w-full bg-gray-500 " />
 
             {/* Conditionally render icons */}
-            {commentContent && (
+            {(commentContent || isFocused) && (
               <div className="flex justify-between w-[90%] py-2">
                 <IoIosCamera size={30} onClick={handleCameraClick} className="cursor-pointer"/>
                 <BsSendFill
