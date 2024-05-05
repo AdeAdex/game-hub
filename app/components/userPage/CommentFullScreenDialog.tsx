@@ -22,6 +22,9 @@ import { BsSendFill } from "react-icons/bs";
 import Box from '@mui/joy/Box';
 import Textarea from '@mui/joy/Textarea';
 //import Webcam from 'react-webcam';
+import Image from "next/image";
+import avatar from "../../../public/images/robot.png";
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
