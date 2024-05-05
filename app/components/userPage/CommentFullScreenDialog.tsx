@@ -196,7 +196,7 @@ export default function CommentFullScreenDialog({
             {comments.length === 0 ? (
               <Typography variant="body1">No comments</Typography>
             ) : (
-              comments.map((comment) => (
+              comments.slice().reverse().map((comment) => (
                 <ListItemText key={comment._id} primary={comment.content} />
               ))
             )}
