@@ -223,7 +223,7 @@ export default function CommentFullScreenDialog({
               className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
             />
             */} 
-         <Box sx={{ p: 2 }}>
+         <Box sx={{ p: 2, width: '90%' }}>
       <Textarea
         placeholder={`Comments as ${user.lastName} ${user.firstName}` }
         defaultValue={commentContent}
