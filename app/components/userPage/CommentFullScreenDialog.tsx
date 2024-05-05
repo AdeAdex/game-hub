@@ -192,7 +192,7 @@ export default function CommentFullScreenDialog({
           </Toolbar>
         </AppBar>
         <List>
-          <div className="comments mt-[60px] pb-[100px]">
+          <div className="comments mt-[60px] pb-[100px] px-2">
             {comments.length === 0 ? (
               <Typography variant="body1">No comments</Typography>
             ) : (
