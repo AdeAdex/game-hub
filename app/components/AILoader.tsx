@@ -1,4 +1,8 @@
-<div className="ai-loader">
+import React from "react";
+
+const AILoader = () => {
+  return (
+    <div className="ai-loader">
   <div className="modelViewPort">
     <div className="eva">
       <div className="ai-head">
@@ -16,3 +20,9 @@
     </div>
   </div>
 </div>
+
+  );
+};
+
+export default AILoader;
+
