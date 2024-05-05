@@ -217,7 +217,7 @@ export default function CommentFullScreenDialog({
             <Box sx={{ p: 2, width: '100%', display: 'flex', alignItems: 'center', gap: 2 }} className="">
   <div className="relative w-8 h-8 mr-2 my-auto">
     {user.profilePicture ? (
-      <div className="relative w-10 h-10 my-auto ">
+      <div className="relative w-8 h-8 my-auto ">
         <Image
           src={user.profilePicture}
           alt="Profile Picture"
@@ -227,7 +227,7 @@ export default function CommentFullScreenDialog({
         />
       </div>
     ) : (
-      <div className="relative w-10 h-10">
+      <div className="relative w-8 h-8 ">
         <Image
           src={avatar}
           alt="Profile Picture"
