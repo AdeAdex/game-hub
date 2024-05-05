@@ -214,10 +214,10 @@ export default function CommentFullScreenDialog({
             screenshotFormat="image/jpeg"
             style={{ width: '100%', height: 'auto' }}
           /> */}
-            <Box sx={{ p: 2, width: '100%', display: 'flex', alignItems: 'center', gap: 2 }} className="">
-  <div className="relative w-8 h-8 mr-2 my-auto">
+            <Box sx={{ p: 2, width: '100%', display: 'flex', alignItems: 'center', gap: 1 }} className="">
+  <div className="relative w-8 h-8 my-auto">
     {user.profilePicture ? (
-      <div className="relative w-8 h-8 my-auto ">
+      <div className="relative w-9 h-9 my-auto ">
         <Image
           src={user.profilePicture}
           alt="Profile Picture"
@@ -227,7 +227,7 @@ export default function CommentFullScreenDialog({
         />
       </div>
     ) : (
-      <div className="relative w-8 h-8 ">
+      <div className="relative w-9 h-9 ">
         <Image
           src={avatar}
           alt="Profile Picture"
