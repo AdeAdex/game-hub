@@ -50,8 +50,8 @@ export const PUT = async (req, res) => {
       .populate("userId", "profilePicture firstName lastName")
       .exec();
 
-
-    return NextResponse.json( populatedPost, 
+    return NextResponse.json(
+      populatedPost,
       { success: true, message: "Post updated successfully." },
       { status: 200 }
     );

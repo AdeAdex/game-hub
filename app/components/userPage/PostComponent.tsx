@@ -30,7 +30,7 @@ interface Post {
   likes: number;
   dislikes: number;
   likedBy: string[];
-  comments: Comment[]; 
+  comments: Comment[];
   image: string;
 }
 
@@ -70,14 +70,14 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   editSelectedPost,
   setEditSelectedPost,
   selectedPost,
-  setSelectedPost
+  setSelectedPost,
 }) => {
   const [showCarousel, setShowCarousel] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedPostLikedBy, setSelectedPostLikedBy] = useState<string[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
-  const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false)
+  const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false);
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const handleClose = () => {
@@ -109,11 +109,11 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     if (post) {
       setSelectedPost(post);
       setSelectedPostId(postId);
-      setOpenCommentDialog(true); 
+      setOpenCommentDialog(true);
     }
-  } 
+  };
 
-  console.log("post mi re", posts)
+  console.log("post mi re", posts);
 
   return (
     <div className="">
@@ -198,16 +198,16 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
               )}
 
               <small
-  className="cursor-pointer"
-  onClick={() => handleOpenCommentDialog(post._id)}
->
-  {post.comments.length > 0 && (
-    <>
-      {post.comments.length} {post.comments.length === 1 ? 'comment' : 'comments'}
-    </>
-  )}
-</small>
-
+                className="cursor-pointer"
+                onClick={() => handleOpenCommentDialog(post._id)}
+              >
+                {post.comments.length > 0 && (
+                  <>
+                    {post.comments.length}{" "}
+                    {post.comments.length === 1 ? "comment" : "comments"}
+                  </>
+                )}
+              </small>
             </div>
 
             <hr className="my-2 border-gray-300" />
@@ -265,12 +265,12 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       )}
 
       {openCommentDialog && (
-      <CommentFullScreenDialog 
-        openCommentDialog={openCommentDialog} 
-        setOpenCommentDialog={setOpenCommentDialog} 
-        user={user} 
-        selectedPostId={selectedPostId} 
-        post={selectedPost} 
+        <CommentFullScreenDialog
+          openCommentDialog={openCommentDialog}
+          setOpenCommentDialog={setOpenCommentDialog}
+          user={user}
+          selectedPostId={selectedPostId}
+          post={selectedPost}
         />
       )}
     </div>

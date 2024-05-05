@@ -21,7 +21,7 @@ const MobileUserProfileSection: React.FC<MobileUserProfileSectionProps> = ({
   const [openFriendsDialog, setOpenFriendsDialog] = useState(false);
   const handleFriends = () => {
     console.log(user);
-    setOpenFriendsDialog(true)
+    setOpenFriendsDialog(true);
   };
   return (
     <div className="flex justify-between">
@@ -37,7 +37,7 @@ const MobileUserProfileSection: React.FC<MobileUserProfileSectionProps> = ({
       <FriendsModal
         openFriendsDialog={openFriendsDialog}
         setOpenFriendsDialog={setOpenFriendsDialog}
-        user={user} 
+        user={user}
       />
     </div>
   );

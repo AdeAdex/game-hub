@@ -5,13 +5,12 @@ interface SearchBoxProps {
   ClassName?: string;
   Placeholder?: string;
   inputClassName?: string;
-} 
+}
 
-const SearchBox: React.FC<SearchBoxProps> = (
-  {
-  ClassName, 
-  Placeholder, 
-  inputClassName 
+const SearchBox: React.FC<SearchBoxProps> = ({
+  ClassName,
+  Placeholder,
+  inputClassName,
 }: SearchBoxProps) => {
   return (
     <div className={`${ClassName}`}>

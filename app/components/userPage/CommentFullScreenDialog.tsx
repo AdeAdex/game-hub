@@ -19,12 +19,11 @@ import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
-import Box from '@mui/joy/Box';
-import Textarea from '@mui/joy/Textarea';
+import Box from "@mui/joy/Box";
+import Textarea from "@mui/joy/Textarea";
 //import Webcam from 'react-webcam';
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
-
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -88,7 +87,7 @@ export default function CommentFullScreenDialog({
   };
 
   const handleCommentContentChange = (
-   // e: React.ChangeEvent<HTMLInputElement>
+    // e: React.ChangeEvent<HTMLInputElement>
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setCommentContent(e.target.value);
@@ -111,10 +110,10 @@ export default function CommentFullScreenDialog({
       });
 
       if (response.status === 201) {
-      const newComment = response.data;
+        const newComment = response.data;
         setCommentContent("");
-      // Update local comments state with the newly created comment
-      setComments([...comments, newComment]);
+        // Update local comments state with the newly created comment
+        setComments([...comments, newComment]);
       }
     } catch (error) {
       console.error("Failed to create comment:", error);
@@ -125,12 +124,12 @@ export default function CommentFullScreenDialog({
     if (openCommentDialog && selectedPostId) {
       fetchComments();
     }
-  }, [openCommentDialog, selectedPostId, comments, commentContent ]);
+  }, [openCommentDialog, selectedPostId, comments, commentContent]);
 
   const fetchComments = async () => {
     try {
       const response = await axios.post(`/api/posts/get-comments`, {
-        postId: selectedPostId
+        postId: selectedPostId,
       });
 
       // console.log("response de",response)
@@ -196,9 +195,12 @@ export default function CommentFullScreenDialog({
             {comments.length === 0 ? (
               <Typography variant="body1">No comments</Typography>
             ) : (
-              comments.slice().reverse().map((comment) => (
-                <ListItemText key={comment._id} primary={comment.content} />
-              ))
+              comments
+                .slice()
+                .reverse()
+                .map((comment) => (
+                  <ListItemText key={comment._id} primary={comment.content} />
+                ))
             )}
           </div>
           <div className="fixed bottom-0 left-0 py-2 bg-white flex items-center justify-center flex-col w-full">
@@ -209,56 +211,62 @@ export default function CommentFullScreenDialog({
             screenshotFormat="image/jpeg"
             style={{ width: '100%', height: 'auto' }}
           /> */}
-            <Box sx={{ p: 2, width: '100%', display: 'flex', alignItems: 'center', gap: 1 }} className="">
-  <div className="relative w-8 h-8 my-auto mr-2">
-    {user.profilePicture ? (
-      <div className="relative w-9 h-9">
-        <Image
-          src={user.profilePicture}
-          alt="Profile Picture"
-          layout="fill"
-          objectFit="cover"
-          className="rounded-full"
-        />
-      </div>
-    ) : (
-      <div className="relative w-9 h-9 ">
-        <Image
-          src={avatar}
-          alt="Profile Picture"
-          layout="fill"
-          objectFit="cover"
-          className="rounded-full"
-        />
-      </div>
-    )}
-  </div>
-  <Textarea
-    placeholder={`Comments as ${user.lastName} ${user.firstName}`}
-    value={commentContent}
-    onChange={handleCommentContentChange}
-    onFocus={handleFocus}
-    onBlur={handleBlur} 
-    minRows={1}
-    maxRows={4}
-    size="md"
-    sx={{
-      '&::before': {
-        display: 'none',
-      },
-      '&:focus-within': {
-        outline: '2px solid var(--Textarea-focusedHighlight)',
-        outlineOffset: '2px',
-      },
-      flex: 1, // This will make the Textarea take up remaining space
-      minWidth: 0, // Ensure Textarea can shrink to fit content
-    }}
-  />
-</Box>
- 
-            
-       
-         
+            <Box
+              sx={{
+                p: 2,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+              className=""
+            >
+              <div className="relative w-8 h-8 my-auto mr-2">
+                {user.profilePicture ? (
+                  <div className="relative w-9 h-9">
+                    <Image
+                      src={user.profilePicture}
+                      alt="Profile Picture"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-full"
+                    />
+                  </div>
+                ) : (
+                  <div className="relative w-9 h-9 ">
+                    <Image
+                      src={avatar}
+                      alt="Profile Picture"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-full"
+                    />
+                  </div>
+                )}
+              </div>
+              <Textarea
+                placeholder={`Comments as ${user.lastName} ${user.firstName}`}
+                value={commentContent}
+                onChange={handleCommentContentChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                minRows={1}
+                maxRows={4}
+                size="md"
+                sx={{
+                  "&::before": {
+                    display: "none",
+                  },
+                  "&:focus-within": {
+                    outline: "2px solid var(--Textarea-focusedHighlight)",
+                    outlineOffset: "2px",
+                  },
+                  flex: 1, // This will make the Textarea take up remaining space
+                  minWidth: 0, // Ensure Textarea can shrink to fit content
+                }}
+              />
+            </Box>
+
             {/* Conditionally render icons */}
             {commentContent && (
               <div className="flex justify-between w-[90%] py-2">

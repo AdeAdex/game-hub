@@ -4,30 +4,35 @@ import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
 import Post from "../../../models/post";
 const cloudinary = require("cloudinary").v2;
- 
 
-export const POST = async (req, res ) => {
-  if (req.method !== 'POST') {
-    return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
+export const POST = async (req, res) => {
+  if (req.method !== "POST") {
+    return NextResponse.json(
+      { message: "Method Not Allowed" },
+      { status: 405 }
+    );
   }
 
   try {
-    const { content, userId, postId} =  await req.json();
-    console.log(content, userId, postId)
+    const { content, userId, postId } = await req.json();
+    console.log(content, userId, postId);
 
     // Validate required fields
     if (!content || !userId) {
-      return NextResponse.json({ message: 'Content and userId are required' }, { status: 400 });
+      return NextResponse.json(
+        { message: "Content and userId are required" },
+        { status: 400 }
+      );
     }
 
     await connectToDb();
 
     // Find the post by postId (assuming postId is provided in the request body or query params)
-    
+
     const post = await Post.findById(postId);
 
     if (!post) {
-      return NextResponse.json({ message: 'Post not found' }, { status: 404 });
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
     // Create a new comment object
@@ -41,33 +46,40 @@ export const POST = async (req, res ) => {
     await post.save();
 
     // Populate the userId field with user data (profilePicture, firstName, lastName)
-     await post.populate('comments.userId', 'profilePicture firstName lastName').execPopulate();
+    await post
+      .populate("comments.userId", "profilePicture firstName lastName")
+      .execPopulate();
 
     // Return the populated post data with 201 Created status using NextResponse.json
     const populatedPost = { post: post.comments };
     return NextResponse.json(populatedPost, { status: 201 });
   } catch (error) {
-    console.error('Error creating comment:', error.message);
-    return NextResponse.json({ message: 'Failed to create comment' }, { status: 500 });
+    console.error("Error creating comment:", error.message);
+    return NextResponse.json(
+      { message: "Failed to create comment" },
+      { status: 500 }
+    );
   }
 };
 
-
-
-
-
-export const GET = async (req, res, {params} ) => {
-  if (req.method !== 'GET') {
-    return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
+export const GET = async (req, res, { params }) => {
+  if (req.method !== "GET") {
+    return NextResponse.json(
+      { message: "Method Not Allowed" },
+      { status: 405 }
+    );
   }
 
   try {
     // Extract postId from query parameters
-    const postId = params.selectedPostId; 
+    const postId = params.selectedPostId;
 
     // Ensure postId is provided
     if (!postId) {
-      return NextResponse.json({ message: 'PostId is required' }, { status: 400 });
+      return NextResponse.json(
+        { message: "PostId is required" },
+        { status: 400 }
+      );
     }
 
     await connectToDb();
@@ -77,16 +89,17 @@ export const GET = async (req, res, {params} ) => {
 
     // Check if the post exists
     if (!post) {
-      return NextResponse.json({ message: 'Post not found' }, { status: 404 });
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
     // Return the comments of the post
     const comments = post.comments;
     return NextResponse.json({ comments }, { status: 200 });
   } catch (error) {
-    console.error('Error fetching comments:', error.message);
-    return NextResponse.json({ message: 'Failed to fetch comments' }, { status: 500 });
+    console.error("Error fetching comments:", error.message);
+    return NextResponse.json(
+      { message: "Failed to fetch comments" },
+      { status: 500 }
+    );
   }
 };
-
-

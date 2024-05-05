@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
@@ -41,13 +41,11 @@ interface Post {
   image: string;
 }
 
-
 interface Comment {
   _id: string;
   content: string;
   postId: string;
 }
-
 
 interface PostModalProps {
   user: User;
@@ -72,21 +70,23 @@ const PostModal: React.FC<PostModalProps> = ({
 }) => {
   //const [open, setOpen] = useState(false);
   // const [postContent, setPostContent] = useState("");
-  const [postContent, setPostContent] = useState(selectedPost ? selectedPost.content : "");
+  const [postContent, setPostContent] = useState(
+    selectedPost ? selectedPost.content : ""
+  );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   //const [postImage, setPostImage] = useState<string | null>(null);
   const [postImage, setPostImage] = useState<string | null>(
     selectedPost ? selectedPost.image : null
-  ); 
+  );
   const [loading, setLoading] = useState(false);
   const [myPost, setMyPost] = useState<Post | null>(null);
 
- // useEffect(() => {
+  // useEffect(() => {
   //  if (selectedPost) {
-    //  setPostContent(selectedPost.content);
+  //  setPostContent(selectedPost.content);
   //    setPostImage(selectedPost.image);
- //   }
-//  }, [selectedPost]);
+  //   }
+  //  }, [selectedPost]);
 
   useEffect(() => {
     if (selectedPost) {
@@ -97,9 +97,6 @@ const PostModal: React.FC<PostModalProps> = ({
       setPostImage(null);
     }
   }, [selectedPost]);
-
-  
-  
 
   const handleClose = () => {
     setPostContent("");
@@ -148,7 +145,7 @@ const PostModal: React.FC<PostModalProps> = ({
 
       console.log(postData);
 
-     // const response = await axios.post("/api/posts", postData);
+      // const response = await axios.post("/api/posts", postData);
 
       let response;
       if (editSelectedPost) {
@@ -157,7 +154,6 @@ const PostModal: React.FC<PostModalProps> = ({
           postId: editSelectedPost,
           ...postData,
         });
-        
       } else {
         // Create new post
         response = await axios.post("/api/posts", postData);
@@ -165,22 +161,22 @@ const PostModal: React.FC<PostModalProps> = ({
 
       const updatedPost = response.data;
 
-    // Update posts state based on the operation (edit or create)
-    if (editSelectedPost) {
-      // Update existing post in the posts array
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === updatedPost._id ? updatedPost : post
-        )
-      );
-    } else {
-      // Prepend the new post to the existing posts array
-      setPosts((prevPosts) => [updatedPost, ...prevPosts]);
-    }
+      // Update posts state based on the operation (edit or create)
+      if (editSelectedPost) {
+        // Update existing post in the posts array
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === updatedPost._id ? updatedPost : post
+          )
+        );
+      } else {
+        // Prepend the new post to the existing posts array
+        setPosts((prevPosts) => [updatedPost, ...prevPosts]);
+      }
 
-    // Clear form fields after successful submission
-    setPostContent("");
-    setPostImage(null);
+      // Clear form fields after successful submission
+      setPostContent("");
+      setPostImage(null);
     } catch (error: any) {
       console.error("Error creating post:", error);
       // Handle error
@@ -190,10 +186,8 @@ const PostModal: React.FC<PostModalProps> = ({
     }
   };
 
-
   return (
     <div>
-
       <Modal
         open={openCreatePostModal}
         onClose={handleClose}
@@ -244,30 +238,28 @@ const PostModal: React.FC<PostModalProps> = ({
             margin="normal"
           />
           <div>
-          {editSelectedPost ? (
-  postImage ? (
-    <Image
-  src={postImage}
-  alt="PostImage"
-  width={100}
-  height={100}
-  layout="fixed"
-  className="w-full h-full object-cover cursor-pointer"
-  priority // Optional: indicates that this image is considered high priority
-/>
-
-  ) : (
-    <div>No image selected</div>
-  )
-) : (
-  <input
-    type="file"
-    onChange={handleFileChange}
-    accept="image/*"
-    style={{ margin: "16px 0" }}
-  />
-)}
-
+            {editSelectedPost ? (
+              postImage ? (
+                <Image
+                  src={postImage}
+                  alt="PostImage"
+                  width={100}
+                  height={100}
+                  layout="fixed"
+                  className="w-full h-full object-cover cursor-pointer"
+                  priority // Optional: indicates that this image is considered high priority
+                />
+              ) : (
+                <div>No image selected</div>
+              )
+            ) : (
+              <input
+                type="file"
+                onChange={handleFileChange}
+                accept="image/*"
+                style={{ margin: "16px 0" }}
+              />
+            )}
           </div>
 
           <button

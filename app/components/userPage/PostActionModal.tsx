@@ -1,19 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Modal, Box, Typography, Button, TextField, Stack, Alert, AlertTitle  } from "@mui/material";
+import {
+  Modal,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  Stack,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import {
   MdDelete,
   MdEdit,
   MdVisibility,
   MdBookmark,
   MdReport,
-  MdContentCopy, 
+  MdContentCopy,
 } from "react-icons/md";
 import axios from "axios";
 import AlertDialogSlide from "./AlertDialogSlide";
 import PostModal from "./PostModal";
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 const style = {
   position: "absolute" as "absolute",
@@ -43,10 +52,9 @@ interface Post {
   likes: number;
   dislikes: number;
   likedBy: string[];
-  comments: Comment[]; 
+  comments: Comment[];
   image: string;
 }
-
 
 interface Comment {
   _id: string;
@@ -78,10 +86,7 @@ interface PostActionModalProps {
   setEditSelectedPost: React.Dispatch<string>;
   selectedPost: Post | null;
   setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
-
 }
-
-
 
 const PostActionModal: React.FC<PostActionModalProps> = ({
   open,
@@ -95,8 +100,7 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
   editSelectedPost,
   setEditSelectedPost,
   selectedPost,
-  setSelectedPost
-
+  setSelectedPost,
 }) => {
   return (
     <SnackbarProvider
@@ -105,17 +109,17 @@ const PostActionModal: React.FC<PostActionModalProps> = ({
     >
       <MyApp
         open={open}
-  handleClose={handleClose}
-  post={post}
-  setPosts={setPosts}
-  loggedInUserId={loggedInUserId}
-  openCreatePostModal={openCreatePostModal}
-  setOpenCreatePostModal={setOpenCreatePostModal}
-  user={user}
-  editSelectedPost={editSelectedPost}
-  setEditSelectedPost={setEditSelectedPost}
-  selectedPost={selectedPost}
-  setSelectedPost={setSelectedPost }
+        handleClose={handleClose}
+        post={post}
+        setPosts={setPosts}
+        loggedInUserId={loggedInUserId}
+        openCreatePostModal={openCreatePostModal}
+        setOpenCreatePostModal={setOpenCreatePostModal}
+        user={user}
+        editSelectedPost={editSelectedPost}
+        setEditSelectedPost={setEditSelectedPost}
+        selectedPost={selectedPost}
+        setSelectedPost={setSelectedPost}
       />
     </SnackbarProvider>
   );
@@ -133,16 +137,15 @@ function MyApp({
   editSelectedPost,
   setEditSelectedPost,
   selectedPost,
-  setSelectedPost
-}: PostActionModalProps ) {
-    const [actionResponse, setActionResponse] = useState<string>("");
+  setSelectedPost,
+}: PostActionModalProps) {
+  const [actionResponse, setActionResponse] = useState<string>("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
   const [copiedContent, setCopiedContent] = useState<string>("");
-  const { enqueueSnackbar } = useSnackbar(); 
-
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClickOpen = (postId: string) => {
     setSelectedPostId(postId);
@@ -154,7 +157,7 @@ function MyApp({
     setEditSelectedPost(postId);
     setOpenEditModal(true);
     setOpenCreatePostModal(true);
-    setSelectedPost(post); 
+    setSelectedPost(post);
     // console.log(selectedPost?.content)
     handleClose();
   };
@@ -166,10 +169,9 @@ function MyApp({
   const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content);
     setCopiedContent(content);
-    handleClose(); 
-    enqueueSnackbar('Post has been copied.', { variant: 'success' }); 
+    handleClose();
+    enqueueSnackbar("Post has been copied.", { variant: "success" });
   };
-
 
   const handleAction = async (action: string, postId: string) => {
     try {
@@ -216,7 +218,7 @@ function MyApp({
         });
         if (response.data.success) {
           setActionResponse(response.data.message);
-          enqueueSnackbar(response.data.message, { variant: 'success' });
+          enqueueSnackbar(response.data.message, { variant: "success" });
           console.log(response.data.message);
           // Update local state after action
           if (action === "delete" || action === "hide") {
@@ -331,6 +333,6 @@ function MyApp({
       />
     </div>
   );
-} 
+}
 
 export default PostActionModal;

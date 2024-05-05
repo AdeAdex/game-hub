@@ -51,7 +51,7 @@ const PostButton: React.FC<PostButtonProps> = ({
   editSelectedPost,
   setEditSelectedPost,
   selectedPost,
-  setSelectedPost
+  setSelectedPost,
 }) => {
   const handleOpen = () => {
     setOpenCreatePostModal(true);

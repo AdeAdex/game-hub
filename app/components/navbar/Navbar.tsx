@@ -17,9 +17,8 @@ import avatar from "../../../public/images/robot.png";
 import { useRouter } from "next/navigation";
 import Backdrop from "@mui/material/Backdrop";
 import { IoMdNotifications } from "react-icons/io";
-import PingLoader from '../PingLoader';
+import PingLoader from "../PingLoader";
 import Link from "next/link";
-
 
 // import { useSelector } from "react-redux";
 
@@ -98,8 +97,10 @@ const Navbar: React.FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       // Check if click occurs outside the dropdown or mobile menu backdrop
       if (
-        (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) ||
-        (mobileMenuBackdropRef.current && !mobileMenuBackdropRef.current.contains(event.target as Node))
+        (dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)) ||
+        (mobileMenuBackdropRef.current &&
+          !mobileMenuBackdropRef.current.contains(event.target as Node))
       ) {
         setDropdownOpen(false);
         setMobileMenuOpen(false);
@@ -112,7 +113,6 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-
   return (
     <main>
       <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white fixed z-50 top-0">
@@ -124,22 +124,24 @@ const Navbar: React.FC = () => {
           <Logo />
         </div>
         <Links />
-        
-        { isMobileMenuOpen && (
-        <div
-            className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div ref={mobileMenuBackdropRef} >
-            <Dropdown
-            links={links}
-            links2={links2}
-            isMobileMenuOpen={isMobileMenuOpen}
-          />
-          </div>
-        
-        </div>
-        )} 
 
-        <SearchBox ClassName={`hidden md:flex`} Placeholder={`Search for games or creator`} inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto`} />
+        {isMobileMenuOpen && (
+          <div className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div ref={mobileMenuBackdropRef}>
+              <Dropdown
+                links={links}
+                links2={links2}
+                isMobileMenuOpen={isMobileMenuOpen}
+              />
+            </div>
+          </div>
+        )}
+
+        <SearchBox
+          ClassName={`hidden md:flex`}
+          Placeholder={`Search for games or creator`}
+          inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto`}
+        />
         <div className="flex gap-8">
           <div className="flex relative">
             <IoMdNotifications size={25} className="my-auto cursor-pointer" />
@@ -153,71 +155,76 @@ const Navbar: React.FC = () => {
             {userData && token ? (
               loading ? (
                 <div className="flex flex-col relative">
-                  <div
-                    className="flex gap-3 cursor-pointer"
-                  >
-			  <PingLoader />
-			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
-			  {dropdownOpen ? (
-			  <FaAngleUp size={18} className="my-auto " />
-			  ) : (
-				<FaAngleDown size={18} className="my-auto" />  
-			  ) } 
-			  </div>
-			  
-                  </div> 
+                  <div className="flex gap-3 cursor-pointer">
+                    <PingLoader />
+                    <div
+                      className={` bg-gray-100 p-2 rounded-lg border ${
+                        dropdownOpen ? "border-blue-500" : ""
+                      } `}
+                      onClick={handleDropdownToggle}
+                    >
+                      {dropdownOpen ? (
+                        <FaAngleUp size={18} className="my-auto " />
+                      ) : (
+                        <FaAngleDown size={18} className="my-auto" />
+                      )}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col relative">
-                  <div
-                    className="flex gap-3"
-                  >
-		 <Link href={`/${userData?.userName}`} className="flex gap-3 cursor-pointer " >
-		 {userData?.profilePicture ? (
-                      <Image
-                        src={userData?.profilePicture}
-                        alt="profile"
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <Image
-                        src={avatar}
-                        alt="profile"
-                        width={32}
-                        height={32}
-                        className="rounded-full border border-gray-500"
-                      />
-                    )}
-			 <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
+                  <div className="flex gap-3">
+                    <Link
+                      href={`/${userData?.userName}`}
+                      className="flex gap-3 cursor-pointer "
+                    >
+                      {userData?.profilePicture ? (
+                        <Image
+                          src={userData?.profilePicture}
+                          alt="profile"
+                          width={32}
+                          height={32}
+                          className="rounded-full"
+                        />
+                      ) : (
+                        <Image
+                          src={avatar}
+                          alt="profile"
+                          width={32}
+                          height={32}
+                          className="rounded-full border border-gray-500"
+                        />
+                      )}
+                      <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
                         {userData?.userName && userData.userName.length > 8
                           ? `${userData.userName.slice(0, 8)}...`
                           : userData.userName}
-                      </span> 
-		 </Link>
-                    
-			  <div className={` bg-gray-100 p-2 rounded-lg border ${dropdownOpen ? 'border-blue-500' : '' } `} onClick={handleDropdownToggle}>
-			  {dropdownOpen ? (
-			  <FaAngleUp size={18} className="my-auto " />
-			  ) : (
-				<FaAngleDown size={18} className="my-auto" />  
-			  ) } 
-			  </div>
-			  
-                  </div>
-                  {dropdownOpen && (
-                  <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-                  >
-                    <div ref={dropdownRef} className="profile-dropdown">
-                      <ProfileDropdown
-                        handleClick={handleLogout}
-                        username={userData?.userName || ""}
-                      />
+                      </span>
+                    </Link>
+
+                    <div
+                      className={` bg-gray-100 p-2 rounded-lg border ${
+                        dropdownOpen ? "border-blue-500" : ""
+                      } `}
+                      onClick={handleDropdownToggle}
+                    >
+                      {dropdownOpen ? (
+                        <FaAngleUp size={18} className="my-auto " />
+                      ) : (
+                        <FaAngleDown size={18} className="my-auto" />
+                      )}
                     </div>
                   </div>
-                )}
+                  {dropdownOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                      <div ref={dropdownRef} className="profile-dropdown">
+                        <ProfileDropdown
+                          handleClick={handleLogout}
+                          username={userData?.userName || ""}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               )
             ) : (
