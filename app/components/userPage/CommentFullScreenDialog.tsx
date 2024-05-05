@@ -19,8 +19,8 @@ import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
-//import Box from '@mui/joy/Box';
-//import Textarea from '@mui/joy/Textarea';
+import Box from '@mui/joy/Box';
+import Textarea from '@mui/joy/Textarea';
 //import Webcam from 'react-webcam';
 
 const Transition = React.forwardRef(function Transition(
@@ -221,7 +221,7 @@ export default function CommentFullScreenDialog({
               onBlur={handleBlur}
               className="text-[12px] mt-2 hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg px-3 w-[90%] focus:outline-none focus:border-none"
             />
-            {/*
+            
          <Box sx={{ p: 2 }}>
       <Textarea
         placeholder={`Comments as ${user.lastName} ${user.firstName}` }
@@ -243,7 +243,7 @@ export default function CommentFullScreenDialog({
       }}
       />
     </Box>
-         */}
+         
             {/* Conditionally render icons */}
             {commentContent && (
               <div className="flex justify-between w-[90%] py-2">
