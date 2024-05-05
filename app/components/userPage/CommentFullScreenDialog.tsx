@@ -272,7 +272,8 @@ export default function CommentFullScreenDialog({
             )}
           </div>
           <div className="fixed bottom-0 left-0 py-2 bg-white flex items-center justify-center flex-col w-full">
-            <Divider className="w-full bg-red-500 " />
+            <Divider className="w-full bg-gray-500 " />
+            <Divider className="w-full bg-gray-500 " />
             {/* <Webcam
             audio={false}
             ref={webcamRef}
@@ -334,6 +335,7 @@ export default function CommentFullScreenDialog({
                 }}
               />
             </Box>
+            <Divider className="w-full bg-gray-500 " />
 
             {/* Conditionally render icons */}
             {commentContent && (
