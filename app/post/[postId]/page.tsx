@@ -16,6 +16,35 @@ interface PostPageProps {
   };
 } 
 
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+  currentFriends?: string[];
+}
+
+interface Post {
+  _id: string;
+  content: string;
+  timestamp: string;
+  userId: User;
+  likes: number;
+  dislikes: number;
+  likedBy: string[]; // Add the likedBy property here
+  comments: Comment[];
+  image: string;
+}
+
+interface Comment {
+  _id: string;
+  content: string;
+  postId: string;
+}
+
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
   const router = useRouter();
   //const { postId } = router.query;
@@ -50,19 +79,21 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
         {/* Render PostComponent with the specific post */}
         <PostComponent
-          posts={[post]} // Pass the post as an array to match the expected prop in PostComponent
-          likedPosts={[]} // Assuming likedPosts is handled separately
-          handleReaction={(postId: string) => {}} // Implement handleReaction function
-          handleShare={(postId: string, userId: string) => {}} // Implement handleShare function
-          setPosts={(updatedPosts: any) => {}} // Implement setPosts function if needed
-          openCreatePostModal={false}
-          setOpenCreatePostModal={(open: boolean) => {}} // Implement setOpenCreatePostModal function if needed
-          user={null} // Assuming user data is handled separately
-          editSelectedPost=""
-          setEditSelectedPost={(postId: string) => {}} // Implement setEditSelectedPost function if needed
-          selectedPost={post}
-          setSelectedPost={(post: any) => {}} // Implement setSelectedPost function if needed
-          loggedInUserId="" // Assuming logged-in user ID is handled separately
+         // posts={[post]} 
+          user={user}
+                posts={posts}
+                setPosts={setPosts}
+                likedPosts={likedPosts}
+                handleReaction={handleReaction}
+               // handleComment={handleComment}
+                handleShare={handleShare}
+                loggedInUserId={user._id}
+                openCreatePostModal={openCreatePostModal}
+                setOpenCreatePostModal={setOpenCreatePostModal}
+                editSelectedPost={editSelectedPost}
+                setEditSelectedPost={setEditSelectedPost}
+                selectedPost={selectedPost}
+                setSelectedPost={setSelectedPost} 
         />
       </div>
     </div>
