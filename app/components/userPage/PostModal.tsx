@@ -266,7 +266,7 @@ const PostModal: React.FC<PostModalProps> = ({
             onClick={handleSubmit}
             className={`w-full rounded-lg py-2 ${
               postContent || postImage
-                ? "bg-blue-500 text-white"
+                ? "bg-blue-500 text-white mt-2 "
                 : "bg-gray-400"
             }`}
             disabled={!postContent && !postImage}
