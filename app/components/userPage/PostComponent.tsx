@@ -148,7 +148,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             className="bg-white mb-4 p-4 rounded-lg shadow-md "
           >
             <div className="flex justify-between">
-              <div className="flex items-center mb-2">
+              <div className="flex items-center mb-2 bg-black ">
                 <div className="relative w-8 h-8 mr-2">
                   {post.userId.profilePicture ? (
                     <div className="relative w-8 h-8 mr-2">
