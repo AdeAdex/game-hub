@@ -23,6 +23,7 @@ import axios from "axios";
 import AlertDialogSlide from "./AlertDialogSlide";
 import PostModal from "./PostModal";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { FaLink } from "react-icons/fa6";
 
 const style = {
   position: "absolute" as "absolute",
@@ -166,12 +167,34 @@ function MyApp({
     setOpenDialog(false);
   };
 
-  const handleCopy = (content: string) => {
+ /* const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content);
     setCopiedContent(content);
     handleClose();
     enqueueSnackbar("Post has been copied.", { variant: "success" });
-  };
+  };*/
+
+  const handleCopy = (contentType: string, content: string) => {
+  let copyContent = "";
+  switch (contentType) {
+    case "post":
+      copyContent = content;
+      break;
+    case "link":
+      copyContent = `https://adex-game-hub.vercel.app/posts/${postId}`;
+      break;
+    default:
+      break;
+  }
+
+  navigator.clipboard.writeText(copyContent);
+  setCopiedContent(copyContent);
+  handleClose();
+  enqueueSnackbar(`${contentType === "link" ? "Link" : "Post"} copied.`, {
+    variant: "success",
+  });
+};
+ 
 
   const handleAction = async (action: string, postId: string) => {
     try {
@@ -275,7 +298,7 @@ function MyApp({
           <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
-                onClick={() => handleCopy(post.content)}
+                onClick={() => handleCopy("post", post.content)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
                 <MdContentCopy className="mr-2 my-auto size={12}" />
@@ -301,6 +324,13 @@ function MyApp({
               >
                 <MdReport className="mr-2 my-auto size={12}" />
                 Report Post
+              </button>
+              <button
+                onClick={() => handleCopy("link", post._id)}
+                className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
+              >
+                <FaLink  className="mr-2 my-auto size={12}" />
+                Copy Link
               </button>
             </div>
           </div>
