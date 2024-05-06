@@ -80,11 +80,13 @@ export default function CommentFullScreenDialog({
 }: CommentFullScreenDialogProps) {
   const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
-  // const webcamRef = useRef(null);
   const webcamRef = useRef<Webcam | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
   const handleClose = () => {
+    if (webcamRef.current) {
+      webcamRef.current.video?.pause();
+    }
     setOpenCommentDialog(false);
   };
 
