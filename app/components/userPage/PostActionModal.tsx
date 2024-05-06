@@ -167,18 +167,11 @@ function MyApp({
     setOpenDialog(false);
   };
 
- /* const handleCopy = (content: string) => {
-    navigator.clipboard.writeText(content);
-    setCopiedContent(content);
-    handleClose();
-    enqueueSnackbar("Post has been copied.", { variant: "success" });
-  };*/
-
-  const handleCopy = (contentType: string, content: string) => {
+const handleCopy = (contentType: string, postId: string) => {
   let copyContent = "";
   switch (contentType) {
     case "post":
-      copyContent = content;
+      copyContent = post.content; // Access post content
       break;
     case "link":
       copyContent = `https://adex-game-hub.vercel.app/posts/${postId}`;
@@ -194,6 +187,7 @@ function MyApp({
     variant: "success",
   });
 };
+ 
  
 
   const handleAction = async (action: string, postId: string) => {
@@ -298,7 +292,7 @@ function MyApp({
           <div className="mb-4 bg-white rounded-lg shadow-lg p-2">
             <div className="flex flex-col space-y-2">
               <button
-                onClick={() => handleCopy("post", post.content)}
+                onClick={() => handleCopy("post", post._id)}
                 className="w-full hover:bg-gray-300 flex my-auto p-2 rounded-md"
               >
                 <MdContentCopy className="mr-2 my-auto size={12}" />
