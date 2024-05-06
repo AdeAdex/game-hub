@@ -266,7 +266,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                 <FaComment className="mx-auto" size={12} /> Comment
               </button>
               <button
-                onClick={() => handleShare(post._id)}
+                onClick={() => handleShare(post._id, post.userId.firstName)}
                 className="text-[8px]"
               >
                 <FaShare className="mx-auto" size={12} /> Share
