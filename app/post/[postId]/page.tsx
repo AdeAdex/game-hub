@@ -4,9 +4,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Navbar from '../../../../components/navbar/Navbar';
-import PostComponent from '../../../../components/userPage/PostComponent';
-import LoadingSkeleton from '../../../../components/userPage/LoadingSkeleton';
+import Navbar from '../../components/navbar/Navbar';
+import PostComponent from '../../components/userPage/PostComponent';
+import LoadingSkeleton from '../../components/userPage/LoadingSkeleton';
 import axios from 'axios';
 
 const PostPage: React.FC = ({ params }) => {
