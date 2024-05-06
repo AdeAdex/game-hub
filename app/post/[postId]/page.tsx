@@ -19,7 +19,7 @@ const PostPage: React.FC = ({ params }) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.post(`/api/posts/${postId}`, {postId} );
+        const response = await axios.post(`/api/posts/single-post`, { postId } );
         setPost(response.data); // Assuming your API returns the post data
       } catch (error) {
         console.error('Error fetching post:', error);
