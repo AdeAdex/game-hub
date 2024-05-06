@@ -3,9 +3,9 @@
 'use client' 
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 import Navbar from '../../components/navbar/Navbar';
-import PostComponent from '../../components/userPage/PostComponent';
+import Post from '../../components/userPage/PostComponent';
 import LoadingSkeleton from '../../components/userPage/LoadingSkeleton';
 import axios from 'axios';
 
@@ -71,7 +71,7 @@ const PostPage: React.FC<PostPageProps> = ({ params, user }) => {
     }
   }, [postId]);
 
-  if (router.isFallback || loading) {
+  if (loading) {
     return <LoadingSkeleton />;
   }
 
@@ -79,24 +79,26 @@ const PostPage: React.FC<PostPageProps> = ({ params, user }) => {
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
+        <div>Post Page</div>
         {/* Render PostComponent with the specific post */}
-        {post && (
-          <PostComponent
+        {/* {post && (
+          <Post
             user={user}
-            posts={[post]} // Pass the post as an array to match the expected prop in PostComponent
+            // posts={[post]} // Pass the post as an array to match the expected prop in PostComponent
+            posts={post} 
             likedPosts={[]} // Assuming likedPosts is handled separately
             handleReaction={(postId: string) => {}} // Implement handleReaction function
             handleShare={(postId: string, userId: string) => {}} // Implement handleShare function
-            setPosts={(updatedPosts: Post[]) => {}} // Implement setPosts function if needed
+            // setPosts={(updatedPosts: Post[]) => {}} // Implement setPosts function if needed
             openCreatePostModal={false}
             setOpenCreatePostModal={(open: boolean) => {}} // Implement setOpenCreatePostModal function if needed
             editSelectedPost=""
             setEditSelectedPost={(postId: string) => {}} // Implement setEditSelectedPost function if needed
-            selectedPost={post}
-            setSelectedPost={(post: Post | null) => {}} // Implement setSelectedPost function if needed
+            // selectedPost={post}
+            // setSelectedPost={(post: Post | null) => {}} // Implement setSelectedPost function if needed
             loggedInUserId={user._id} // Assuming logged-in user ID is handled separately
           />
-        )}
+        )} */}
       </div>
     </div>
   );

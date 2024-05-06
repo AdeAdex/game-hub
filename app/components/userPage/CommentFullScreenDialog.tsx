@@ -19,7 +19,7 @@ import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
 import Box from "@mui/joy/Box";
 import Textarea from "@mui/joy/Textarea";
-//import Webcam from 'react-webcam';
+import Webcam from 'react-webcam';
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import AILoader from "../AILoader";
@@ -80,7 +80,8 @@ export default function CommentFullScreenDialog({
 }: CommentFullScreenDialogProps) {
   const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
-  const webcamRef = useRef(null);
+  // const webcamRef = useRef(null);
+  const webcamRef = useRef<Webcam | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
   const handleClose = () => {
@@ -146,24 +147,38 @@ export default function CommentFullScreenDialog({
 
   const handleCameraClick = () => {
     // Access user's camera
-    navigator.mediaDevices.getUserMedia({ video: true });
-    /*  .then((stream) => {
-        if (webcamRef.current) {
-          webcamRef.current.video.srcObject = stream;
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        const currentWebcam = webcamRef.current;
+        if (currentWebcam) {
+          // Check if video property exists before assigning srcObject
+          if (currentWebcam.video) {
+            currentWebcam.video.srcObject = stream;
+          } else {
+            console.error('Webcam video property is missing');
+          }
         }
       })
       .catch((error) => {
         console.error('Error accessing camera:', error);
         // Handle error (e.g., display error message to user)
-      });*/
+      });
   };
+  
+  
+  
 
-  /* const handleCapture = () => {
+  const handleCapture = () => {
     // Capture image from webcam
-    const imageSrc = webcamRef.current.getScreenshot();
-    // Handle the captured image data (e.g., display, store, or process)
-    console.log('Captured image:', imageSrc);
-  };*/
+    const imageSrc = webcamRef.current?.getScreenshot();
+    if (imageSrc) {
+      // Handle the captured image data (e.g., display, store, or process)
+      console.log('Captured image:', imageSrc);
+    } else {
+      console.error('Unable to capture image: webcamRef.current is null');
+    }
+  };
+  
 
 
   const calculateElapsedTime = (timestamp: string): string => {
@@ -274,12 +289,13 @@ export default function CommentFullScreenDialog({
           <div className="fixed bottom-0 left-0 py-2 bg-white flex items-center justify-center flex-col w-full">
             <Divider className="w-full bg-gray-500 " />
             <Divider className="w-full bg-gray-500 " />
-            {/* <Webcam
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            style={{ width: '100%', height: 'auto' }}
-          /> */}
+            <Webcam
+  audio={false}
+  ref={webcamRef as React.RefObject<Webcam>}
+  screenshotFormat="image/jpeg"
+  style={{ width: '100%', height: 'auto' }}
+/>
+
             <Box
               sx={{
                 p: 2,
