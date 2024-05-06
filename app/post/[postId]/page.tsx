@@ -50,7 +50,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
   //const { postId } = router.query;
   const { postId } =  params 
   //const [post, setPost] = useState<any>(null);
-  const [posts, setPosts] = useState<Post[]>([]); 
+  const [post, setPost] = useState<Post[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -82,8 +82,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         <PostComponent
          // posts={[post]} 
           user={user}
-                posts={posts}
-                setPosts={setPosts}
+                posts={post}
+                setPosts={setPost}
                 likedPosts={likedPosts}
                 handleReaction={handleReaction}
                // handleComment={handleComment}
