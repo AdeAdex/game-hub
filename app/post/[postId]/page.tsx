@@ -80,23 +80,23 @@ const PostPage: React.FC<PostPageProps> = ({ params, user }) => {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
         {/* Render PostComponent with the specific post */}
-        <PostComponent
-         // posts={[post]} 
-          user={user}
-                posts={post}
-                setPosts={setPost}
-                likedPosts={likedPosts}
-                handleReaction={handleReaction}
-               // handleComment={handleComment}
-                handleShare={handleShare}
-                loggedInUserId={user._id}
-                openCreatePostModal={openCreatePostModal}
-                setOpenCreatePostModal={setOpenCreatePostModal}
-                editSelectedPost={editSelectedPost}
-                setEditSelectedPost={setEditSelectedPost}
-                selectedPost={selectedPost}
-                setSelectedPost={setSelectedPost} 
-        />
+        {post && (
+          <PostComponent
+            user={user}
+            posts={[post]} // Pass the post as an array to match the expected prop in PostComponent
+            likedPosts={[]} // Assuming likedPosts is handled separately
+            handleReaction={(postId: string) => {}} // Implement handleReaction function
+            handleShare={(postId: string, userId: string) => {}} // Implement handleShare function
+            setPosts={(updatedPosts: Post[]) => {}} // Implement setPosts function if needed
+            openCreatePostModal={false}
+            setOpenCreatePostModal={(open: boolean) => {}} // Implement setOpenCreatePostModal function if needed
+            editSelectedPost=""
+            setEditSelectedPost={(postId: string) => {}} // Implement setEditSelectedPost function if needed
+            selectedPost={post}
+            setSelectedPost={(post: Post | null) => {}} // Implement setSelectedPost function if needed
+            loggedInUserId={user._id} // Assuming logged-in user ID is handled separately
+          />
+        )}
       </div>
     </div>
   );
