@@ -49,7 +49,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
   const router = useRouter();
   //const { postId } = router.query;
   const { postId } =  params 
-  const [post, setPost] = useState<any>(null);
+  //const [post, setPost] = useState<any>(null);
+  const [posts, setPosts] = useState<Post[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
