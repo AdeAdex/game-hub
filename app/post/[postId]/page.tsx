@@ -9,10 +9,17 @@ import PostComponent from '../../components/userPage/PostComponent';
 import LoadingSkeleton from '../../components/userPage/LoadingSkeleton';
 import axios from 'axios';
 
-const PostPage: React.FC = (/*{ params }*/) => {
+
+interface PostPageProps {
+  params: {
+    postId: string;
+  };
+} 
+
+const PostPage: React.FC<PostPageProps> = ({ params }) => {
   const router = useRouter();
-  const { postId } = router.query;
- // const { postId } =  params 
+  //const { postId } = router.query;
+  const { postId } =  params 
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
