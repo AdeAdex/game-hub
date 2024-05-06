@@ -192,11 +192,8 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
 
   const handleShare = async (postId: string) => {
   try {
-    // Logic to share post
-    console.log(`Sharing post with ID ${postId}`);
-
     // Here you can implement share functionality using browser APIs or third-party libraries
-    const shareUrl = `https://example.com/posts/${postId}`;
+    const shareUrl = `https://adex-game-hub.vercel.app/posts/${postId}`;
     const shareText = `Check out this post by ${user?.userName}: "${posts.find(p => p._id === postId)?.content}"`;
 
     if (navigator.share) {
