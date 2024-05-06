@@ -45,7 +45,7 @@ interface PostProps {
   likedPosts: string[];
   handleReaction: (postId: string) => void;
   // handleComment: (postId: string) => void;
-  handleShare: (postId: string) => void;
+  handleShare: (postId: string, userId: string) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
