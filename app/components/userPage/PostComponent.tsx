@@ -1,3 +1,5 @@
+// app/components/userPage/PostComponent.tsx
+
 "use client";
 
 import React, { useState } from "react";
