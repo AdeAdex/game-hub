@@ -258,7 +258,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 setPosts={setPosts}
                 likedPosts={likedPosts}
                 handleReaction={handleReaction}
-                handleComment={handleComment}
+               // handleComment={handleComment}
                 handleShare={handleShare}
                 loggedInUserId={user._id}
                 openCreatePostModal={openCreatePostModal}
