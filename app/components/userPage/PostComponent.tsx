@@ -44,7 +44,7 @@ interface PostProps {
   posts: Post[];
   likedPosts: string[];
   handleReaction: (postId: string) => void;
-  handleComment: (postId: string) => void;
+  // handleComment: (postId: string) => void;
   handleShare: (postId: string) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   openCreatePostModal: boolean;
@@ -61,7 +61,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   setPosts,
   likedPosts,
   handleReaction,
-  handleComment,
+ // handleComment,
   handleShare,
   loggedInUserId,
   openCreatePostModal,
