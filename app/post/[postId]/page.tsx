@@ -75,6 +75,8 @@ const PostPage: React.FC<PostPageProps> = ({ params, user }) => {
     return <LoadingSkeleton />;
   }
 
+  console.log("post id", postId)
+  console.log("user", user)
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />

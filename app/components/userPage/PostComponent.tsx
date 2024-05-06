@@ -143,7 +143,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     router.push(`/post/${postId}`);
   }; 
 
-  console.log("post mi re", posts);
+  // console.log("post mi re", posts);
 
   return (
     <div className="">
@@ -154,7 +154,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             className="bg-white mb-4 p-4 rounded-lg shadow-md "
           >
             <div className="flex justify-between">
-              <div className="flex items-center mb-2" onClick={() => handlePostPage(post._id)} >
+              <div className="flex items-center mb-2 cursor-pointer" onClick={() => handlePostPage(post._id)} >
                 <div className="relative w-8 h-8 mr-2">
                   {post.userId.profilePicture ? (
                     <div className="relative w-8 h-8 mr-2">
