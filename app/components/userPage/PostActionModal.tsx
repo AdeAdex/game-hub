@@ -183,7 +183,7 @@ const handleCopy = (contentType: string, postId: string) => {
   navigator.clipboard.writeText(copyContent);
   setCopiedContent(copyContent);
   handleClose();
-  enqueueSnackbar(`${contentType === "link" ? "Link" : "Post"} copied.`, {
+  enqueueSnackbar(`${contentType === "link" ? "Link" : "Post"} copied successfully.`, {
     variant: "success",
   });
 };
