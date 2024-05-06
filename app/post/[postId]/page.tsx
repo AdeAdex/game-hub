@@ -14,6 +14,7 @@ interface PostPageProps {
   params: {
     postId: string;
   };
+  user: User;
 } 
 
 interface User {
@@ -45,7 +46,7 @@ interface Comment {
   postId: string;
 }
 
-const PostPage: React.FC<PostPageProps> = ({ params }) => {
+const PostPage: React.FC<PostPageProps> = ({ params, user }) => {
   const router = useRouter();
   //const { postId } = router.query;
   const { postId } =  params 
