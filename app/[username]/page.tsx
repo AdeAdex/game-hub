@@ -190,11 +190,11 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   //   }
   //  };
 
-  const handleShare = async (postId: string) => {
+  const handleShare = async (postId: string, userId: string ) => {
   try {
     // Here you can implement share functionality using browser APIs or third-party libraries
     const shareUrl = `https://adex-game-hub.vercel.app/posts/${postId}`;
-    const shareText = `Check out this post by ${user?.userName}: "${posts.find(p => p._id === postId)?.content}"`;
+    const shareText = `Check out this post by ${userId}: "${posts.find(p => p._id === postId)?.content}"`;
 
     if (navigator.share) {
       await navigator.share({
