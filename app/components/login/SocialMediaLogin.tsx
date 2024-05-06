@@ -55,7 +55,7 @@ const SocialMediaLogin = () => {
       // console.log("socialMedia session: ", session?.user);
       router.push("/dashboard");
     }
-  }, [session]);
+  }, [session, router]);
 
   const handleSignIn = async (providerId: string) => {
     
