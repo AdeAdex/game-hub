@@ -12,6 +12,7 @@ import LikedUserModal from "./LikedUserModal";
 import { CiMenuKebab } from "react-icons/ci";
 import PostActionModal from "./PostActionModal";
 import CommentFullScreenDialog from "./CommentFullScreenDialog";
+import { useRouter } from "next/navigation";
 
 interface User {
   _id: string;
@@ -81,6 +82,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [openModal, setOpenModal] = useState(false);
   const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false);
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const router = useRouter();
 
   const handleClose = () => {
     setOpen(false);
@@ -136,6 +138,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     const elapsedDays = Math.floor(elapsedHours / 24);
     return `${elapsedDays} day${elapsedDays > 1 ? "s" : ""} ago`;
   };
+
+  const handlePostPage = (postId: string) => {
+    router.push(`/post/${postId}`);
+  }; 
 
   console.log("post mi re", posts);
 
