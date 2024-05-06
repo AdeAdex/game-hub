@@ -190,15 +190,33 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   //   }
   //  };
 
-  const handleComment = async (postId: string) => {
-    // Logic to handle commenting
-    console.log(`Commenting on post with ID ${postId}`);
-  };
-
   const handleShare = async (postId: string) => {
-    // Logic to handle sharing
+  try {
+    // Logic to share post
     console.log(`Sharing post with ID ${postId}`);
-  };
+
+    // Here you can implement share functionality using browser APIs or third-party libraries
+    const shareUrl = `https://example.com/posts/${postId}`;
+    const shareText = `Check out this post by ${user?.userName}: "${posts.find(p => p._id === postId)?.content}"`;
+
+    if (navigator.share) {
+      await navigator.share({
+        title: 'Check out this post',
+        text: shareText,
+        url: shareUrl,
+      });
+      console.log('Shared successfully');
+    } else {
+      console.log('Web Share API not supported');
+      // Fallback share options for browsers that do not support Web Share API
+    }
+  } catch (error) {
+    console.error('Error sharing post:', error);
+  }
+};
+
+
+  
 
   if (loading) {
     return <LoadingSkeleton />;
