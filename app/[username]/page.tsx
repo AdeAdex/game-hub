@@ -82,7 +82,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
         const likedResponse = await axios.post(`/api/posts/my-likes`, {
           userId: userResponse.data._id,
         });
-        console.log("likedResponse", likedResponse.data);
+        // console.log("likedResponse", likedResponse.data);
         setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
         // setLikedPosts(postsResponse.data);
       } catch (error) {

@@ -6,7 +6,7 @@ export const POST = async (req, res) => {
   try {
     // Extract postId from the request URL parameters
     const { postId } = await req.json();
-    console.log(postId)
+    console.log("single post ID",postId)
 
     await connectToDb();
 
