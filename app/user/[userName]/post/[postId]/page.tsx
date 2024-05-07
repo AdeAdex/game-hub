@@ -55,7 +55,7 @@ import PostSkeleton from '@/app/components/userPage/PostSkeleton';
         // console.log("likedResponse", likedResponse.data);
         setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
 
-          setLoading(false);
+          // setLoading(false);
         } catch (error) {
           console.error('Error fetching data:', error);
          
