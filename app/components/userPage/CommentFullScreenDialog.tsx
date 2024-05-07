@@ -23,6 +23,9 @@ import Webcam from 'react-webcam';
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import AILoader from "../AILoader";
+import { UserDataType } from "@/app/types/user";
+import { PostDataType } from "@/app/types/post";
+import { CommentDataType } from "@/app/types/comments";
 // import PostComponent from "./PostComponent";
 
 const Transition = React.forwardRef(function Transition(
@@ -34,41 +37,13 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
 
-interface Post {
-  _id: string;
-  content: string;
-  timestamp: string;
-  userId: User;
-  likes: number;
-  dislikes: number;
-  likedBy: string[];
-  image: string;
-}
-
-interface Comment {
-  _id: string;
-  content: string;
-  postId: string;
-  userId: User;
-  timestamp: string; 
-}
 
 interface CommentFullScreenDialogProps {
   setOpenCommentDialog: React.Dispatch<boolean>;
   openCommentDialog: boolean;
-  user: User;
-  post: Post | null;
+  user: UserDataType;
+  post: PostDataType | null;
   selectedPostId: string;
 }
 
@@ -82,7 +57,7 @@ export default function CommentFullScreenDialog({
   const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const webcamRef = useRef<Webcam | null>(null);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<CommentDataType[]>([]);
 
   const handleClose = () => {
     if (webcamRef.current) {

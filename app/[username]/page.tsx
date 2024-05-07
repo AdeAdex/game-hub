@@ -11,17 +11,9 @@ import Post from "../components/userPage/PostComponent";
 import UserAvatarSection from "../components/userPage/UserAvatarSection";
 import PostModal from "../components/userPage/PostModal";
 import PostButton from "../components/userPage/PostButton";
+import { UserDataType } from "../types/user";
+import { PostDataType } from "../types/post";
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
 
 interface UserPageProps {
   params: {
@@ -29,30 +21,13 @@ interface UserPageProps {
   };
 }
 
-interface Post {
-  _id: string;
-  content: string;
-  timestamp: string;
-  userId: User;
-  likes: number;
-  dislikes: number;
-  likedBy: string[]; // Add the likedBy property here
-  comments: Comment[];
-  image: string;
-}
-
-interface Comment {
-  _id: string;
-  content: string;
-  postId: string;
-}
 
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostDataType[]>([]);
   const [newImage, setNewImage] = useState("");
   const [cloudImage, setCloudImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +35,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [openCreatePostModal, setOpenCreatePostModal] =
     useState<boolean>(false);
   const [editSelectedPost, setEditSelectedPost] = useState<string>("");
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [selectedPost, setSelectedPost] = useState<PostDataType | null>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -108,7 +83,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
           userId: userResponse.data._id,
         });
         console.log("likedResponse", likedResponse.data);
-        setLikedPosts(likedResponse.data.map((post: Post) => post._id));
+        setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
         // setLikedPosts(postsResponse.data);
       } catch (error) {
         console.error("Error fetching user or posts:", error);
@@ -137,7 +112,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       });
 
       if (response.status === 200) {
-        const updatedPost: Post = response.data; // Ensure response data is of type Post
+        const updatedPost: PostDataType = response.data; // Ensure response data is of type Post
         setPosts((prevPosts) =>
           prevPosts.map((post) =>
             post._id === updatedPost._id ? updatedPost : post
@@ -195,7 +170,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const handleShare = async (postId: string, userId: string ) => {
   try {
     // Here you can implement share functionality using browser APIs or third-party libraries
-    const shareUrl = `https://adex-game-hub.vercel.app/posts/${postId}`;
+    const shareUrl = `https://adex-game-hub.vercel.app/user/${username}/post/${postId}`;
     const shareText = `Check out this post by ${userId}: "${posts.find(p => p._id === postId)?.content}"`;
 
     if (navigator.share) {
@@ -258,7 +233,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 setPosts={setPosts}
                 likedPosts={likedPosts}
                 handleReaction={handleReaction}
-               // handleComment={handleComment}
                 handleShare={handleShare}
                 loggedInUserId={user._id}
                 openCreatePostModal={openCreatePostModal}

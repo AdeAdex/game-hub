@@ -1,8 +1,12 @@
 // /app/types/user/index.tsx
 
 export interface UserDataType {
-  id: string | null;
-  name: string | null;
-  username: string | null;
-  email: string | null;
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+  currentFriends?: string[];
 }

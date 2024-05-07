@@ -4,21 +4,12 @@ import { FaCamera } from "react-icons/fa";
 import ImageSkeleton from "./ImageSkeleton";
 import avatar from "../../../public/images/robot.png";
 import MobileUserProfileSection from "./MobileUserProfileSection";
+import { UserDataType } from "@/app/types/user";
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
 
 interface UserAvatarSectionProps {
   isLoading: boolean;
-  user: User;
+  user: UserDataType;
   handleFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 import FriendsModal from "./FriendsModal";
+import { UserDataType } from "@/app/types/user";
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
+
 interface MobileUserProfileSectionProps {
-  user: User;
+  user: UserDataType;
 }
 
 const MobileUserProfileSection: React.FC<MobileUserProfileSectionProps> = ({

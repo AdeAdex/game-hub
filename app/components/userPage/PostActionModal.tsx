@@ -24,6 +24,8 @@ import AlertDialogSlide from "./AlertDialogSlide";
 import PostModal from "./PostModal";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { FaLink } from "react-icons/fa6";
+import { UserDataType } from "@/app/types/user";
+import { CommentDataType } from "@/app/types/comments";
 
 const style = {
   position: "absolute" as "absolute",
@@ -53,26 +55,11 @@ interface Post {
   likes: number;
   dislikes: number;
   likedBy: string[];
-  comments: Comment[];
+  comments: CommentDataType[];
   image: string;
 }
 
-interface Comment {
-  _id: string;
-  content: string;
-  postId: string;
-}
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
 
 interface PostActionModalProps {
   open: boolean;
@@ -82,7 +69,7 @@ interface PostActionModalProps {
   loggedInUserId: string;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
-  user: User;
+  user: UserDataType;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
   selectedPost: Post | null;

@@ -5,6 +5,8 @@ import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
+import { UserDataType } from "@/app/types/user";
+import { PostDataType } from "@/app/types/post";
 
 const style = {
   position: "absolute" as "absolute",
@@ -18,44 +20,16 @@ const style = {
   p: 4,
 };
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
-
-interface Post {
-  _id: string;
-  content: string;
-  timestamp: string;
-  userId: User;
-  likes: number;
-  dislikes: number;
-  likedBy: string[]; // Add the likedBy property here
-  comments: Comment[];
-  image: string;
-}
-
-interface Comment {
-  _id: string;
-  content: string;
-  postId: string;
-}
 
 interface PostModalProps {
-  user: User;
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  user: UserDataType;
+  setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
-  selectedPost: Post | null;
-  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
+  selectedPost: PostDataType | null;
+  setSelectedPost: React.Dispatch<React.SetStateAction<PostDataType | null>>;
 }
 
 const PostModal: React.FC<PostModalProps> = ({
@@ -79,7 +53,7 @@ const PostModal: React.FC<PostModalProps> = ({
     selectedPost ? selectedPost.image : null
   );
   const [loading, setLoading] = useState(false);
-  const [myPost, setMyPost] = useState<Post | null>(null);
+  const [myPost, setMyPost] = useState<PostDataType | null>(null);
 
   // useEffect(() => {
   //  if (selectedPost) {

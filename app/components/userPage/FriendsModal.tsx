@@ -6,6 +6,7 @@ import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import axios from "axios";
 import { FiMessageCircle } from "react-icons/fi";
+import { UserDataType } from "@/app/types/user";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,21 +20,11 @@ const style = {
   p: 4,
 };
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
 
 interface FriendsModalProps {
   openFriendsDialog: boolean;
   setOpenFriendsDialog: React.Dispatch<boolean>;
-  user: User;
+  user: UserDataType;
 }
 
 const FriendsModal: React.FC<FriendsModalProps> = ({
@@ -41,7 +32,7 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
   setOpenFriendsDialog,
   user,
 }) => {
-  const [friends, setFriends] = useState<User[]>([]);
+  const [friends, setFriends] = useState<UserDataType[]>([]);
 
   useEffect(() => {
     const fetchFriends = async () => {

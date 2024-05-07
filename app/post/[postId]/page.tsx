@@ -7,48 +7,20 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import LoadingSkeleton from "@/app/components/userPage/LoadingSkeleton";
 import Navbar from "@/app/components/navbar/Navbar";
+import { PostDataType } from "@/app/types/post";
 // import PostComponent from "@/app/components/userPage/PostComponent";
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
-
-interface Post {
-  _id: string;
-  content: string;
-  timestamp: string;
-  userId: User;
-  likes: number;
-  dislikes: number;
-  likedBy: string[]; // Add the likedBy property here
-  comments: Comment[];
-  image: string;
-}
-
-interface Comment {
-  _id: string;
-  content: string;
-  postId: string;
-}
 
 interface PostsPageProps {
   params: {
     postId: string;
-    username: string;
   };
 }
 
 const PostsPage: React.FC<PostsPageProps> = ({ params }) => {
   const router = useRouter();
-  const { postId, username } = params;
-  const [post, setPost] = useState<Post | null>(null);
+  const { postId } = params;
+  const [post, setPost] = useState<PostDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

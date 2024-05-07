@@ -2,45 +2,19 @@ import React from "react";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import PostModal from "./PostModal";
+import { UserDataType } from "@/app/types/user";
+import { PostDataType } from "@/app/types/post";
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  profilePicture: string;
-  bio: string;
-  currentFriends?: string[];
-}
-
-interface Post {
-  _id: string;
-  content: string;
-  timestamp: string;
-  userId: User;
-  likes: number;
-  dislikes: number;
-  likedBy: string[]; // Add the likedBy property here
-  comments: Comment[];
-  image: string;
-}
-
-interface Comment {
-  _id: string;
-  content: string;
-  postId: string;
-}
 
 interface PostButtonProps {
-  user: User;
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  user: UserDataType;
+  setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>;
   openCreatePostModal: boolean;
   setOpenCreatePostModal: React.Dispatch<boolean>;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
-  selectedPost: Post | null;
-  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
+  selectedPost: PostDataType | null;
+  setSelectedPost: React.Dispatch<React.SetStateAction<PostDataType | null>>;
 }
 
 const PostButton: React.FC<PostButtonProps> = ({

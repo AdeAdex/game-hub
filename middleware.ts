@@ -53,6 +53,25 @@ export function middleware(request: NextRequest) {
   }
 
 
+// Check if the route is a dynamic username post page (/user/:username/post/:postId)
+const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
+const match = pathname.match(usernamePostRegex);
+
+if (match) {
+  // Extract username and postId from the pathname
+  const [, username, postId] = match;
+
+  // Implement your authorization logic here (e.g., check if the user is authorized to access this specific post)
+  const userAuthorized = true; // Replace with your authorization logic
+
+  if (userAuthorized) {
+    return NextResponse.next(); // Allow access to the user's post page
+  } else {
+    // User is not authorized to access this post, handle accordingly (e.g., return an error or redirect)
+    // return NextResponse.error(new Error("Unauthorized access to post"));
+  }
+}
+
   // Check if the route is a dynamic post page (/post/:postId)
   const postMatch = pathname.match(/^\/post\/([a-zA-Z0-9_-]+)$/);
   if (postMatch) {
