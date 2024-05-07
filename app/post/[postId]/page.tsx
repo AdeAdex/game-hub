@@ -41,7 +41,6 @@ interface PostsPageProps {
     postId: string;
     username: string;
   };
-//   user?: User; 
 }
 
 const PostsPage: React.FC<PostsPageProps> = ({ params }) => {
