@@ -66,8 +66,7 @@ import PostSkeleton from '@/app/components/userPage/PostSkeleton';
         fetchData();
       }
     }, [postId, username]);
-
-    alert(loading) 
+ 
 
     // Render loading skeleton while data is being fetched
     if (loading) {
