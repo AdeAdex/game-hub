@@ -139,9 +139,14 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     return `${elapsedDays} day${elapsedDays > 1 ? "s" : ""} ago`;
   };
 
+  // const handlePostPage = (postId: string) => {
+  //   router.push(`/post/${postId}`);
+  // }; 
+
   const handlePostPage = (postId: string) => {
-    router.push(`/post/${postId}`);
-  }; 
+    router.push(`/user/${user.userName}/post/${postId}`);
+  };
+  
 
   // console.log("post mi re", posts);
 
