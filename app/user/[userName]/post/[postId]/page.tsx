@@ -54,8 +54,6 @@ import PostSkeleton from '@/app/components/userPage/PostSkeleton';
         });
         // console.log("likedResponse", likedResponse.data);
         setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
-
-          // setLoading(false);
         } catch (error) {
           console.error('Error fetching data:', error);
          
@@ -67,8 +65,9 @@ import PostSkeleton from '@/app/components/userPage/PostSkeleton';
       if (postId && username) {
         fetchData();
       }
-    }, [postId, username, loading]);
+    }, [postId, username]);
 
+    alert(loading) 
 
     // Render loading skeleton while data is being fetched
     if (loading) {
