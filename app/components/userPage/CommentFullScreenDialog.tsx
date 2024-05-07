@@ -232,9 +232,7 @@ export default function CommentFullScreenDialog({
                 </>
               )}
             </Typography>
-            {/* <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button> */}
+            
           </Toolbar>
         </AppBar>
         <List>
