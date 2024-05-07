@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "../../components/navbar/Navbar";
-// import PostComponent from '../../components/userPage/PostComponent';
-import LoadingSkeleton from "../../components/userPage/LoadingSkeleton";
 import axios from "axios";
+import LoadingSkeleton from "@/app/components/userPage/LoadingSkeleton";
+import Navbar from "@/app/components/navbar/Navbar";
+// import PostComponent from "@/app/components/userPage/PostComponent";
 
 interface User {
   _id: string;
@@ -67,12 +67,12 @@ const PostsPage: React.FC<PostPageProps> = ({ params, user }) => {
   }, [postId]);
 
   if (loading) {
-    return <LoadingSkeleton />;
+    return <LoadingSkeleton/>;
   }
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Navbar />
+      <Navbar/>
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
         <div>Post Page</div>
         {/* {post && (
