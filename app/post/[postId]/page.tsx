@@ -40,7 +40,7 @@ interface PostsPageProps {
   params: {
     postId: string;
   };
-  user: User;
+  user?: User; 
 }
 
 const PostsPage: React.FC<PostsPageProps> = ({ params, user }) => {
