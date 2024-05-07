@@ -1,6 +1,6 @@
 // // /app/post/[postId]/page.tsx
 
-// 'use client' 
+'use client' 
 
 // import React, { useEffect, useState } from 'react';
 // import { useRouter } from "next/navigation";
@@ -121,7 +121,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '../../components/navbar/Navbar';
-import PostComponent from '../../components/userPage/PostComponent';
+// import PostComponent from '../../components/userPage/PostComponent';
 import LoadingSkeleton from '../../components/userPage/LoadingSkeleton';
 import axios from 'axios';
 
