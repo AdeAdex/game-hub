@@ -46,7 +46,7 @@ interface PostsPageProps {
 
 const PostsPage: React.FC<PostsPageProps> = ({ params }) => {
   const router = useRouter();
-  const { postId } = params;
+  const { postId, username } = params;
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
