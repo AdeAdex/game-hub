@@ -23,6 +23,7 @@ import Webcam from 'react-webcam';
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import AILoader from "../AILoader";
+// import PostComponent from "./PostComponent";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -237,6 +238,7 @@ export default function CommentFullScreenDialog({
         </AppBar>
         <List>
           <div className="comments mt-[60px] pb-[100px] px-2">
+            {/* <PostComponent/> */}
             {comments.length === 0 ? (
               <div className="flex items-center justify-center h-full ">
                 <div className="flex items-center justify-center w-full ">
