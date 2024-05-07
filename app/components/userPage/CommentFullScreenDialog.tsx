@@ -238,7 +238,9 @@ export default function CommentFullScreenDialog({
         </AppBar>
         <List>
           <div className="comments mt-[60px] pb-[100px] px-2">
-            {/* <PostComponent/> */}
+            {/* <PostComponent
+
+            /> */}
             {comments.length === 0 ? (
               <div className="flex items-center justify-center h-full ">
                 <div className="flex items-center justify-center w-full ">

@@ -39,11 +39,12 @@ interface Comment {
 interface PostsPageProps {
   params: {
     postId: string;
+    username: string;
   };
 //   user?: User; 
 }
 
-const PostsPage: React.FC<PostsPageProps> = ({ params, /* user  */}) => {
+const PostsPage: React.FC<PostsPageProps> = ({ params }) => {
   const router = useRouter();
   const { postId } = params;
   const [post, setPost] = useState<Post | null>(null);
