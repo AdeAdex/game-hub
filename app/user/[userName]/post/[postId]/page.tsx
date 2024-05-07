@@ -36,14 +36,14 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
           `/api/username/profile?username=${username}`,
           { username }
         );
-        console.log("userResponse", userResponse);
+        // console.log("userResponse", userResponse);
         setUser(userResponse.data);
 
         // Fetch single post data
         const postResponse = await axios.post(`/api/posts/single-post`, {
           postId,
         });
-        console.log("postResponse", postResponse);
+        // console.log("postResponse", postResponse);
         setPost(postResponse.data);
 
         // Fetch all posts and liked posts with user ID
