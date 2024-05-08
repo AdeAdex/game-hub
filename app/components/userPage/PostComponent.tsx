@@ -203,7 +203,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       <>You and {post.likedBy.length - 1} others</>
     ) : (
       // User did not like the post
-      <>{post.likedBy.length} liked</>
+      <>You liked</>
     )
   ) : (
     // Only one person liked the post
