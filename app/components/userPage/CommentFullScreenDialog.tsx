@@ -102,7 +102,7 @@ export default function CommentFullScreenDialog({
       setComments([...comments, newComment]);
 
       // Update the post.comments array in the parent component state
-      if (post) {
+      if (post && Array.isArray(post)) { // Check if post is an array
         const updatedPosts = post.map((p) =>
           p._id === selectedPostId
             ? { ...p, comments: [...p.comments, newComment] }
@@ -116,6 +116,7 @@ export default function CommentFullScreenDialog({
     // You can add additional error handling here (e.g., show an error message)
   }
 };
+
 
 
   useEffect(() => {
