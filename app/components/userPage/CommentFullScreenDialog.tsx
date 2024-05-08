@@ -244,7 +244,7 @@ export default function CommentFullScreenDialog({
                 .map((comment) => (
                   <div className="flex gap-2 mb-2" key={comment._id}>
                     <div className="relative w-8 h-8 my-auto mr-2">
-                      {comment.userId.profilePicture ? (
+                      {comment.userId && comment.userId.profilePicture ? (
                         <div className="relative w-9 h-9">
                           <Image
                             src={comment.userId.profilePicture}
@@ -269,7 +269,7 @@ export default function CommentFullScreenDialog({
                     <div className="">
                       <div className="flex flex-col rounded-lg bg-gray-100 p-2">
                         <small className="font-bold">
-                          {comment.userId.lastName} {comment.userId.firstName}
+                        {comment.userId ? `${comment.userId.lastName} ${comment.userId.firstName}` : 'Unknown User'}
                         </small>
                         <small>{comment.content}</small>
                       </div>
