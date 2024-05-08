@@ -56,7 +56,7 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
       }
     };
 
-    if (username) {
+    if (postId && username) {
       fetchData();
     }
   }, [ postId, username ]);
