@@ -36,21 +36,18 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
           `/api/username/profile?username=${username}`,
           { username }
         );
-        // console.log("userResponse", userResponse);
         setUser(userResponse.data);
 
         // Fetch single post data
         const postResponse = await axios.post(`/api/posts/single-post`, {
           postId,
         });
-        // console.log("postResponse", postResponse);
         setPost(postResponse.data);
 
-        // Fetch all posts and liked posts with user ID
+        // Fetch liked posts for the user
         const likedResponse = await axios.post(`/api/posts/my-likes`, {
           userId: userResponse.data._id,
         });
-        // console.log("likedResponse", likedResponse.data);
         setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -64,10 +61,10 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
     }
   }, [postId, username]);
 
-  // Render loading skeleton while data is being fetched
+  // Render loading PostSkeleton while data is being fetched
   if (loading) {
     return <PostSkeleton />;
-  }
+  } 
 
   // Render post content once data is fetched
   return (
