@@ -203,7 +203,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     // Only one person liked the post
     likedPosts.includes(post._id) ? (
       // User liked the post and is the logged-in user
-      <>You liked</>
+      <div className="flex gap-2">
+        <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
+        <span>You liked</span>
+      <div/>
     ) : (
       // Other user liked the post
       <div className="flex gap-2">
@@ -221,7 +224,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       <div/>
     ) : (
       // Others liked the post
-      <>{post.likedBy.length} liked</>
+      <div className="flex gap-2"> 
+        <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} /> 
+        <span>{post.likedBy.length} liked</span>
+      <div/>
     )
   )}
 </small>
