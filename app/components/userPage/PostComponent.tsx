@@ -15,7 +15,7 @@ import CommentFullScreenDialog from "./CommentFullScreenDialog";
 import { useRouter } from "next/navigation";
 import { PostDataType } from "@/app/types/post";
 import { UserDataType } from "@/app/types/user";
-
+import { CommentDataType } from "@/app/types/comments";
 
 interface PostProps {
   posts: PostDataType[];
@@ -28,7 +28,7 @@ interface PostProps {
   setOpenCreatePostModal: React.Dispatch<boolean>;
   editSelectedPost: string;
   setEditSelectedPost: React.Dispatch<string>;
-  selectedPost:PostDataType | null;
+  selectedPost: PostDataType | null;
   setSelectedPost: React.Dispatch<React.SetStateAction<PostDataType | null>>;
 }
 
@@ -53,8 +53,11 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [selectedPostId, setSelectedPostId] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
   const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false);
+  const [comments, setComments] = useState<CommentDataType[]>([]);
+
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const router = useRouter();
+
 
   const handleClose = () => {
     setOpen(false);
@@ -80,14 +83,29 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     }
   };
 
+
+  const updatePostComments = (postId: string, newComments: CommentDataType[]) => {
+    const updatedPosts = posts.map((post) => {
+      if (post._id === postId) {
+        return { ...post, comments: newComments };
+      }
+      return post;
+    });
+    setPosts(updatedPosts);
+  };
+  
+
+ 
   const handleOpenCommentDialog = (postId: string) => {
     const post = posts.find((post) => post._id === postId);
     if (post) {
       setSelectedPost(post);
       setSelectedPostId(postId);
       setOpenCommentDialog(true);
+  
     }
   };
+  
 
   const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);
@@ -113,12 +131,11 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
 
   // const handlePostPage = (postId: string) => {
   //   router.push(`/post/${postId}`);
-  // }; 
+  // };
 
   const handlePostPage = (postId: string) => {
     router.push(`/user/${user.userName}/post/${postId}`);
   };
-  
 
   // console.log("post mi re", posts);
 
@@ -131,7 +148,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             className="bg-white mb-4 p-4 rounded-lg shadow-md "
           >
             <div className="flex justify-between">
-              <div className="flex items-center mb-2 cursor-pointer w-[80%]" onClick={() => handlePostPage(post._id)} >
+              <div
+                className="flex items-center mb-2 cursor-pointer w-[80%]"
+                onClick={() => handlePostPage(post._id)}
+              >
                 <div className="relative w-8 h-8 mr-2">
                   {post.userId.profilePicture ? (
                     <div className="relative w-8 h-8 mr-2">
@@ -193,49 +213,56 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             </>
             <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
               <small
-  className="cursor-pointer"
-  onClick={() => handleLikeUser(post.likedBy)}
->
-  {post.likedBy.length === 0 ? (
-  // No one has liked the post
-  <div className="flex gap-2">
-    <span>0 likes</span>
-  </div>
-) : post.likedBy.length === 1 ? (
-  // Only one person liked the post
-  likedPosts.includes(post._id) ? (
-    // User liked the post and is the logged-in user
-    <div className="flex gap-2">
-      <AiFillLike className="my-auto text-white bg-blue-500 p-[2px] rounded-full " size={15} />
-      <span>You liked</span>
-    </div>
-  ) : (
-    // Other user liked the post
-    <div className="flex gap-2">
-      <AiFillLike className="my-auto text-white bg-blue-500 p-[2px] rounded-full " size={15} />
-      <span>1 liked</span>
-    </div>
-  )
-) : (
-  // More than one person liked the post
-  likedPosts.includes(post._id) ? (
-    // User liked the post
-    <div className="flex gap-2">
-      <AiFillLike className="my-auto text-white bg-blue-500 p-[2px] rounded-full " size={15} />
-      <span>You and {post.likedBy.length - 1} others</span>
-    </div>
-  ) : (
-    // Others liked the post
-    <div className="flex gap-2">
-      <AiFillLike className="my-auto text-white bg-blue-500 p-[2px] rounded-full " size={15} />
-      <span>{post.likedBy.length} liked</span>
-    </div>
-  )
-)}
-
-</small>
-
-
+                className="cursor-pointer"
+                onClick={() => handleLikeUser(post.likedBy)}
+              >
+                {post.likedBy.length === 0 ? (
+                  // No one has liked the post
+                  <div className="flex gap-2">
+                    <span>0 likes</span>
+                  </div>
+                ) : post.likedBy.length === 1 ? (
+                  // Only one person liked the post
+                  likedPosts.includes(post._id) ? (
+                    // User liked the post and is the logged-in user
+                    <div className="flex gap-2">
+                      <AiFillLike
+                        className="my-auto text-white bg-blue-500 p-[2px] rounded-full "
+                        size={15}
+                      />
+                      <span>You liked</span>
+                    </div>
+                  ) : (
+                    // Other user liked the post
+                    <div className="flex gap-2">
+                      <AiFillLike
+                        className="my-auto text-white bg-blue-500 p-[2px] rounded-full "
+                        size={15}
+                      />
+                      <span>1 liked</span>
+                    </div>
+                  )
+                ) : // More than one person liked the post
+                likedPosts.includes(post._id) ? (
+                  // User liked the post
+                  <div className="flex gap-2">
+                    <AiFillLike
+                      className="my-auto text-white bg-blue-500 p-[2px] rounded-full "
+                      size={15}
+                    />
+                    <span>You and {post.likedBy.length - 1} others</span>
+                  </div>
+                ) : (
+                  // Others liked the post
+                  <div className="flex gap-2">
+                    <AiFillLike
+                      className="my-auto text-white bg-blue-500 p-[2px] rounded-full "
+                      size={15}
+                    />
+                    <span>{post.likedBy.length} liked</span>
+                  </div>
+                )}
+              </small>
 
               {open && (
                 <LikedUserModal
@@ -321,6 +348,9 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           selectedPostId={selectedPostId}
           post={selectedPost}
           setPosts={setPosts}
+          comments={comments}
+          setComments={setComments}
+          updatePostComments={updatePostComments}
         />
       )}
     </div>

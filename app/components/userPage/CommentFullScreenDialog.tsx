@@ -19,7 +19,7 @@ import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
 import Box from "@mui/joy/Box";
 import Textarea from "@mui/joy/Textarea";
-import Webcam from 'react-webcam';
+import Webcam from "react-webcam";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import AILoader from "../AILoader";
@@ -37,15 +37,16 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
-
 interface CommentFullScreenDialogProps {
   setOpenCommentDialog: React.Dispatch<boolean>;
   openCommentDialog: boolean;
   user: UserDataType;
   post: PostDataType | null;
   selectedPostId: string;
-  setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>; 
+  setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>;
+  comments: CommentDataType[];
+  setComments: React.Dispatch<React.SetStateAction<CommentDataType[]>>;
+  updatePostComments: (postId: string, newComments: CommentDataType[]) => void;
 }
 
 export default function CommentFullScreenDialog({
@@ -54,12 +55,14 @@ export default function CommentFullScreenDialog({
   user,
   post,
   selectedPostId,
-  setPosts, 
+  setPosts,
+  comments,
+  setComments,
+  updatePostComments,
 }: CommentFullScreenDialogProps) {
   const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const webcamRef = useRef<Webcam | null>(null);
-  const [comments, setComments] = useState<CommentDataType[]>([]);
   const [showCamera, setShowCamera] = useState(false);
 
   const handleClose = () => {
@@ -70,7 +73,6 @@ export default function CommentFullScreenDialog({
   };
 
   const handleCommentContentChange = (
-    // e: React.ChangeEvent<HTMLInputElement>
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setCommentContent(e.target.value);
@@ -85,39 +87,37 @@ export default function CommentFullScreenDialog({
   };
 
   const handleSubmitComment = async () => {
-  try {
-    const response = await axios.post("/api/posts/comments", {
-      content: commentContent,
-      postId: selectedPostId,
-      userId: user._id,
-    });
-
-    if (response.status === 201) {
-      const newComment = response.data;
-
-      // Clear the comment content input after successful submission
-      setCommentContent("");
-
-      // Update local comments state with the newly created comment
-      setComments([...comments, newComment]);
-
-      // Update the post.comments array in the parent component state
-      if (post && Array.isArray(post)) { // Check if post is an array
-        const updatedPosts = post.map((p) =>
-          p._id === selectedPostId
-            ? { ...p, comments: [...p.comments, newComment] }
-            : p
-        );
-        setPosts(updatedPosts);
+    try {
+      const response = await axios.post("/api/posts/comments", {
+        content: commentContent,
+        postId: selectedPostId,
+        userId: user._id,
+      });
+  
+      if (response.status === 201) {
+        const newComment = response.data;
+  
+        // Clear the comment content input after successful submission
+        setCommentContent("");
+  
+        // Update local comments state with the newly created comment
+        setComments([...comments, newComment]);
+  
+        // Inform PostComponent about the updated comments
+        const updatedComments = [...comments, newComment];
+        updatePostComments(selectedPostId, updatedComments);
+      } else {
+        console.error("Failed to create comment - Unexpected status:", response.status);
+      }
+    } catch (error: any) {
+      console.error("Failed to create comment:", error.message);
+      // Handle specific errors or show user-friendly error messages
+      if (error.response) {
+        console.error("Server responded with:", error.response.data);
       }
     }
-  } catch (error) {
-    console.error("Failed to create comment:", error);
-    // You can add additional error handling here (e.g., show an error message)
-  }
-};
-
-
+  };
+  
 
   useEffect(() => {
     if (openCommentDialog && selectedPostId) {
@@ -145,7 +145,8 @@ export default function CommentFullScreenDialog({
   const handleCameraClick = () => {
     setShowCamera(true);
     // Access user's camera
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((stream) => {
         const currentWebcam = webcamRef.current;
         if (currentWebcam) {
@@ -153,54 +154,48 @@ export default function CommentFullScreenDialog({
           if (currentWebcam.video) {
             currentWebcam.video.srcObject = stream;
           } else {
-            console.error('Webcam video property is missing');
+            console.error("Webcam video property is missing");
           }
         }
       })
       .catch((error) => {
-        console.error('Error accessing camera:', error);
+        console.error("Error accessing camera:", error);
         // Handle error (e.g., display error message to user)
       });
   };
-  
-  
-  
 
   const handleCapture = () => {
     // Capture image from webcam
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
       // Handle the captured image data (e.g., display, store, or process)
-      console.log('Captured image:', imageSrc);
+      console.log("Captured image:", imageSrc);
     } else {
-      console.error('Unable to capture image: webcamRef.current is null');
+      console.error("Unable to capture image: webcamRef.current is null");
     }
   };
-  
-
 
   const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);
     const currentTime = new Date();
     const timeDifference = currentTime.getTime() - commentTimestamp.getTime();
-  
+
     // Calculate elapsed minutes
     const elapsedMinutes = Math.floor(timeDifference / (1000 * 60));
     if (elapsedMinutes < 60) {
       return `${elapsedMinutes} min ago`;
     }
-  
+
     // Calculate elapsed hours
     const elapsedHours = Math.floor(elapsedMinutes / 60);
     if (elapsedHours < 24) {
-      return `${elapsedHours} hour${elapsedHours > 1 ? 's' : ''} ago`;
+      return `${elapsedHours} hour${elapsedHours > 1 ? "s" : ""} ago`;
     }
-  
+
     // Calculate elapsed days
     const elapsedDays = Math.floor(elapsedHours / 24);
-    return `${elapsedDays} day${elapsedDays > 1 ? 's' : ''} ago`;
+    return `${elapsedDays} day${elapsedDays > 1 ? "s" : ""} ago`;
   };
-  
 
   return (
     <React.Fragment>
@@ -224,23 +219,22 @@ export default function CommentFullScreenDialog({
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {post?.userId && (
                 <>
-                {post?.userId?.firstName} {""}Post
+                  {post?.userId?.firstName} {""}Post
                 </>
               )}
             </Typography>
-            
           </Toolbar>
         </AppBar>
         <List>
           <div className="comments mt-[60px] pb-[100px] px-2">
             {/* <PostComponent
 
-            /> */}
+              /> */}
             {comments.length === 0 ? (
               <div className="flex items-center justify-center h-full ">
                 <div className="flex items-center justify-center w-full ">
                   <AILoader />
-                </div> 
+                </div>
               </div>
             ) : (
               comments
@@ -272,15 +266,16 @@ export default function CommentFullScreenDialog({
                       )}
                     </div>
                     <div className="">
-                    <div className="flex flex-col rounded-lg bg-gray-100 p-2">
-                      <small className="font-bold">
-                        {comment.userId.lastName} {comment.userId.firstName}
+                      <div className="flex flex-col rounded-lg bg-gray-100 p-2">
+                        <small className="font-bold">
+                          {comment.userId.lastName} {comment.userId.firstName}
+                        </small>
+                        <small>{comment.content}</small>
+                      </div>
+                      <small className="flex justify-between text-[10px] px-2">
+                        {calculateElapsedTime(comment.timestamp)}
                       </small>
-                      <small>{comment.content}</small>
                     </div>
-                    <small className="flex justify-between text-[10px] px-2">{calculateElapsedTime(comment.timestamp)}</small>
-                    </div>
-                   
                   </div>
                 ))
             )}
@@ -289,14 +284,14 @@ export default function CommentFullScreenDialog({
             <Divider className="w-full bg-gray-500 " />
             <Divider className="w-full bg-gray-500 " />
             {/* Conditionally render webcam */}
-        {showCamera && (
-          <Webcam
-            audio={false}
-            ref={webcamRef as React.RefObject<Webcam>}
-            screenshotFormat="image/jpeg"
-            style={{ width: '100%', height: 'auto' }}
-          />
-        )}
+            {showCamera && (
+              <Webcam
+                audio={false}
+                ref={webcamRef as React.RefObject<Webcam>}
+                screenshotFormat="image/jpeg"
+                style={{ width: "100%", height: "auto" }}
+              />
+            )}
 
             <Box
               sx={{
@@ -358,11 +353,17 @@ export default function CommentFullScreenDialog({
             {/* Conditionally render icons */}
             {(commentContent || isFocused) && (
               <div className="flex justify-between w-[90%] py-2">
-                <IoIosCamera size={30} onClick={handleCameraClick} className="cursor-pointer"/>
+                <IoIosCamera
+                  size={30}
+                  onClick={handleCameraClick}
+                  className="cursor-pointer"
+                />
                 <BsSendFill
                   onClick={handleSubmitComment}
                   size={25}
-                  className={`cursor-pointer ${commentContent ? "text-blue-500" : ""}`}
+                  className={`cursor-pointer ${
+                    commentContent ? "text-blue-500" : ""
+                  }`}
                 />
               </div>
             )}
