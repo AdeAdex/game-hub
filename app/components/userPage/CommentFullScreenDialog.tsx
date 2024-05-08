@@ -85,31 +85,38 @@ export default function CommentFullScreenDialog({
   };
 
   const handleSubmitComment = async () => {
-    try {
-      const response = await axios.post("/api/posts/comments", {
-        content: commentContent,
-        postId: selectedPostId,
-        userId: user._id,
-      });
+  try {
+    const response = await axios.post("/api/posts/comments", {
+      content: commentContent,
+      postId: selectedPostId,
+      userId: user._id,
+    });
 
-      if (response.status === 201) {
-        const newComment = response.data;
-        setCommentContent("");
-        // Update local comments state with the newly created comment
-        setComments([...comments, newComment]);
+    if (response.status === 201) {
+      const newComment = response.data;
 
-        // Optionally, update the post.comments.length in the parent component
-      // Find the post in the parent component state and update the comments count
+      // Clear the comment content input after successful submission
+      setCommentContent("");
+
+      // Update local comments state with the newly created comment
+      setComments([...comments, newComment]);
+
+      // Update the post.comments array in the parent component state
       if (post) {
-  const updatedPosts = post.map((p) =>
-    p._id === selectedPostId
-      ? { ...p, comments: [...p.comments, newComment] }
-      : p
-  );
-  setPosts(updatedPosts);
-}
+        const updatedPosts = post.map((p) =>
+          p._id === selectedPostId
+            ? { ...p, comments: [...p.comments, newComment] }
+            : p
+        );
+        setPosts(updatedPosts);
+      }
+    }
+  } catch (error) {
+    console.error("Failed to create comment:", error);
+    // You can add additional error handling here (e.g., show an error message)
+  }
+};
 
-  };
 
   useEffect(() => {
     if (openCommentDialog && selectedPostId) {
