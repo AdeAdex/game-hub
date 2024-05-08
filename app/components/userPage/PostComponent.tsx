@@ -149,7 +149,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           >
             <div className="flex justify-between">
               <div
-                className="flex items-center hover:bg-gray-400" mb-2 cursor-pointer w-[80%]"
+                className="flex items-center hover:bg-gray-400 mb-2 cursor-pointer w-[80%]"
                 onClick={() => handlePostPage(post._id)}
               >
                 <div className="relative w-8 h-8 mr-2">
