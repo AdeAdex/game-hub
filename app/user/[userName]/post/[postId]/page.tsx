@@ -62,9 +62,9 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
   }, [postId, username]);
 
   // Render loading PostSkeleton while data is being fetched
-  if (loading) {
+ /* if (loading) {
     return <PostSkeleton />;
-  } 
+  } */
 
   // Render post content once data is fetched
   return (
