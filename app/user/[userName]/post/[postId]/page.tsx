@@ -75,7 +75,7 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
         {/* Display post content */}
-        {post ? (
+        {user ? (
           <PostComponent
             posts={[post]} // Pass the single post as an array to PostComponent
             // likedPosts={[]} // Assuming likedPosts is handled separately
