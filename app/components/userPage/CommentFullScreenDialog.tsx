@@ -100,7 +100,7 @@ export default function CommentFullScreenDialog({
 
         // Optionally, update the post.comments.length in the parent component
       // Find the post in the parent component state and update the comments count
-      const updatedPosts = posts.map((p) =>
+      const updatedPosts = post.map((p) =>
         p._id === selectedPostId
           ? { ...p, comments: [...p.comments, newComment] }
           : p
