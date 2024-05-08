@@ -270,12 +270,15 @@ export default function CommentFullScreenDialog({
           <div className="fixed bottom-0 left-0 py-2 bg-white flex items-center justify-center flex-col w-full">
             <Divider className="w-full bg-gray-500 " />
             <Divider className="w-full bg-gray-500 " />
-            <Webcam
-  audio={false}
-  ref={webcamRef as React.RefObject<Webcam>}
-  screenshotFormat="image/jpeg"
-  style={{ width: '100%', height: 'auto' }}
-/>
+            {/* Conditionally render webcam */}
+        {showCamera && (
+          <Webcam
+            audio={false}
+            ref={webcamRef as React.RefObject<Webcam>}
+            screenshotFormat="image/jpeg"
+            style={{ width: '100%', height: 'auto' }}
+          />
+        )}
 
             <Box
               sx={{
