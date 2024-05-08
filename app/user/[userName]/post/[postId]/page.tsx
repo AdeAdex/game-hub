@@ -49,6 +49,7 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
           userId: userResponse.data._id,
         });
         setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -59,7 +60,7 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
     if (postId && username) {
       fetchData();
     }
-  }, [postId, username]);
+  }, [  ]);
 
   // Render loading PostSkeleton while data is being fetched
   if (loading) {
@@ -67,7 +68,6 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
   } 
 
   // Render post content once data is fetched
-    if (!loading) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -100,7 +100,6 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
       </div>
     </div>
   );
-     } ;
 };
 
 export default UserPostPage;
