@@ -18,7 +18,7 @@ export const POST = async (req, res) => {
     // console.log(content, userId, postId);
 
     // Validate required fields
-    if (!content || !userId) {
+    if (!content || !userId || !postId) {
       return NextResponse.json(
         { message: "Content and userId are required" },
         { status: 400 }
@@ -45,22 +45,22 @@ export const POST = async (req, res) => {
     post.comments.push(newComment);
     await post.save();
 
-    // Populate the userId field with user data (profilePicture, firstName, lastName)
-    await post
-      .populate("comments.userId", "profilePicture firstName lastName")
-      .execPopulate();
+    // Retrieve the populated post with user data in comments
+    const populatedPost = await Post.findById(postId).populate("comments.userId", "profilePicture firstName lastName");
 
-    // Return the populated post data with 201 Created status using NextResponse.json
-    const populatedPost = { post: post.comments };
-    return NextResponse.json(populatedPost, { status: 201 });
+    // Return the populated post data with 201 Created status
+    return NextResponse.json({ post: populatedPost.comments }, { status: 201 });
   } catch (error) {
     console.error("Error creating comment:", error.message);
     return NextResponse.json(
-      { message: "Failed to create comment" },
+      { message: error.message },
       { status: 500 }
     );
   }
 };
+
+
+
 
 export const GET = async (req, res, { params }) => {
   if (req.method !== "GET") {

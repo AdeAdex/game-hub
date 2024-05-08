@@ -96,6 +96,7 @@ export default function CommentFullScreenDialog({
   
       if (response.status === 201) {
         const newComment = response.data;
+        console.log("returend",response.data)
   
         // Clear the comment content input after successful submission
         setCommentContent("");
@@ -113,7 +114,7 @@ export default function CommentFullScreenDialog({
       console.error("Failed to create comment:", error.message);
       // Handle specific errors or show user-friendly error messages
       if (error.response) {
-        console.error("Server responded with:", error.response.data);
+        console.error("Server responded with:", error.response.data.message);
       }
     }
   };
