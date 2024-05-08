@@ -320,6 +320,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           user={user}
           selectedPostId={selectedPostId}
           post={selectedPost}
+          setPosts={setPosts}
         />
       )}
     </div>
