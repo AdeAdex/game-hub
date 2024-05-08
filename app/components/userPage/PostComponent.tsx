@@ -196,31 +196,26 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   className="cursor-pointer"
   onClick={() => handleLikeUser(post.likedBy)}
 >
-  {post.likedBy.length > 1 ? (
+  {post.likedBy.length === 0 ? (
+    // No one has liked the post
+    <>0 likes</>
+  ) : post.likedBy.length === 1 ? (
+    // Only one person liked the post
+    likedPosts.includes(post._id) ? (
+      // User liked the post and is the logged-in user
+      <>You liked</>
+    ) : (
+      // Other user liked the post
+      <>1 liked</>
+    )
+  ) : (
     // More than one person liked the post
     likedPosts.includes(post._id) ? (
       // User liked the post
       <>You and {post.likedBy.length - 1} others</>
     ) : (
-      // User did not like the post
-      <>You liked</>
-    )
-  ) : (
-    // Only one person liked the post
-    likedPosts.includes(post._id) ? (
-      // User liked the post and is the only one
-      <>
-        {post.likedBy[0] === loggedInUserId ? (
-          // User who liked the post is the logged-in user
-          <>You liked</>
-        ) : (
-          // Other user liked the post
-          <>{post.likedBy.length} liked</>
-        )}
-      </>
-    ) : (
-      // No one liked the post
-      <>0 likes</>
+      // Others liked the post
+      <>{post.likedBy.length} liked</>
     )
   )}
 </small>
