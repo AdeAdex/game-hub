@@ -212,7 +212,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     // More than one person liked the post
     likedPosts.includes(post._id) ? (
       // User liked the post
-      <><AiFillLike className="mr-2 bg-blue-500 p-1 rounded-full " size={15} "/> You and {post.likedBy.length - 1} others</>
+      <><AiFillLike className="mr-2 bg-blue-500 p-1 rounded-full " size={15} /> You and {post.likedBy.length - 1} others</>
     ) : (
       // Others liked the post
       <>{post.likedBy.length} liked</>
