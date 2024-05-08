@@ -197,39 +197,43 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   onClick={() => handleLikeUser(post.likedBy)}
 >
   {post.likedBy.length === 0 ? (
-    // No one has liked the post
-    <>0 likes</>
-  ) : post.likedBy.length === 1 ? (
-    // Only one person liked the post
-    likedPosts.includes(post._id) ? (
-      // User liked the post and is the logged-in user
-      <div className="flex gap-2">
-        <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
-        <span>You liked</span>
-      <div/>
-    ) : (
-      // Other user liked the post
-      <div className="flex gap-2">
-        <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />  
-        <span>1 liked </span>
-        <div/>
-    )
+  // No one has liked the post
+  <div className="flex gap-2">
+    <AiOutlineLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
+    <span>0 likes</span>
+  </div>
+) : post.likedBy.length === 1 ? (
+  // Only one person liked the post
+  likedPosts.includes(post._id) ? (
+    // User liked the post and is the logged-in user
+    <div className="flex gap-2">
+      <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
+      <span>You liked</span>
+    </div>
   ) : (
-    // More than one person liked the post
-    likedPosts.includes(post._id) ? (
-      // User liked the post
-      <div className="flex gap-2">
-        <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} /> 
-        <span>You and {post.likedBy.length - 1} others </span>
-      <div/>
-    ) : (
-      // Others liked the post
-      <div className="flex gap-2"> 
-        <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} /> 
-        <span>{post.likedBy.length} liked</span>
-      <div/>
-    )
-  )}
+    // Other user liked the post
+    <div className="flex gap-2">
+      <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
+      <span>1 liked</span>
+    </div>
+  )
+) : (
+  // More than one person liked the post
+  likedPosts.includes(post._id) ? (
+    // User liked the post
+    <div className="flex gap-2">
+      <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
+      <span>You and {post.likedBy.length - 1} others</span>
+    </div>
+  ) : (
+    // Others liked the post
+    <div className="flex gap-2">
+      <AiFillLike className="my-auto text-blue-500 bg-blue-500 p-1 rounded-full " size={15} />
+      <span>{post.likedBy.length} liked</span>
+    </div>
+  )
+)}
+
 </small>
 
 
