@@ -58,6 +58,7 @@ export default function CommentFullScreenDialog({
   const [isFocused, setIsFocused] = useState(false);
   const webcamRef = useRef<Webcam | null>(null);
   const [comments, setComments] = useState<CommentDataType[]>([]);
+  const [showCamera, setShowCamera] = useState(false);
 
   const handleClose = () => {
     if (webcamRef.current) {
@@ -124,6 +125,7 @@ export default function CommentFullScreenDialog({
   };
 
   const handleCameraClick = () => {
+    setShowCamera(true);
     // Access user's camera
     navigator.mediaDevices.getUserMedia({ video: true })
       .then((stream) => {
