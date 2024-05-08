@@ -95,6 +95,15 @@ export default function CommentFullScreenDialog({
         setCommentContent("");
         // Update local comments state with the newly created comment
         setComments([...comments, newComment]);
+
+        // Optionally, update the post.comments.length in the parent component
+      // Find the post in the parent component state and update the comments count
+      const updatedPosts = posts.map((p) =>
+        p._id === selectedPostId
+          ? { ...p, comments: [...p.comments, newComment] }
+          : p
+      );
+      setPosts(updatedPosts); 
       }
     } catch (error) {
       console.error("Failed to create comment:", error);
