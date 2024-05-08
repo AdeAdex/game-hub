@@ -62,11 +62,12 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
   }, [postId, username]);
 
   // Render loading PostSkeleton while data is being fetched
-  if (loading == true) {
+  if (loading) {
     return <PostSkeleton />;
   } 
 
   // Render post content once data is fetched
+    if (!loading) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -99,6 +100,7 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
       </div>
     </div>
   );
+     } ;
 };
 
 export default UserPostPage;
