@@ -193,15 +193,39 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             </>
             <div className="flex justify-between items-center mt-2 px-4 text-gray-500 text-[12px]">
               <small
-                className="cursor-pointer"
-                onClick={() => handleLikeUser(post.likedBy)}
-              >
-                {post.likedBy.length > 1 ? (
-                  <>You and {post.likedBy.length - 1} others</>
-                ) : (
-                  <>{post.likedBy.length} like</>
-                )}
-              </small>
+  className="cursor-pointer"
+  onClick={() => handleLikeUser(post.likedBy)}
+>
+  {post.likedBy.length > 1 ? (
+    // More than one person liked the post
+    likedPosts.includes(post._id) ? (
+      // User liked the post
+      <>You and {post.likedBy.length - 1} others</>
+    ) : (
+      // User did not like the post
+      <>{post.likedBy.length} liked</>
+    )
+  ) : (
+    // Only one person liked the post
+    likedPosts.includes(post._id) ? (
+      // User liked the post and is the only one
+      <>
+        {post.likedBy[0]._id === loggedInUserId ? (
+          // User who liked the post is the logged-in user
+          <>{post.likedBy[0].firstName} liked</>
+        ) : (
+          // Other user liked the post
+          <>{post.likedBy.length} liked</>
+        )}
+      </>
+    ) : (
+      // No one liked the post
+      <>0 likes</>
+    )
+  )}
+</small>
+
+
 
               {open && (
                 <LikedUserModal
