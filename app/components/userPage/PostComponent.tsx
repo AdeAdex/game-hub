@@ -212,7 +212,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       <>
         {post.likedBy[0] === loggedInUserId ? (
           // User who liked the post is the logged-in user
-          <>{post.likedBy[0].firstName} liked</>
+          <>You liked</>
         ) : (
           // Other user liked the post
           <>{post.likedBy.length} liked</>
