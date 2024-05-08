@@ -45,6 +45,7 @@ interface CommentFullScreenDialogProps {
   user: UserDataType;
   post: PostDataType | null;
   selectedPostId: string;
+  setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>; 
 }
 
 export default function CommentFullScreenDialog({
@@ -53,6 +54,7 @@ export default function CommentFullScreenDialog({
   user,
   post,
   selectedPostId,
+  setPosts, 
 }: CommentFullScreenDialogProps) {
   const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
