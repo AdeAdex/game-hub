@@ -210,7 +210,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     likedPosts.includes(post._id) ? (
       // User liked the post and is the only one
       <>
-        {post.likedBy[0]._id === loggedInUserId ? (
+        {post.likedBy[0] === loggedInUserId ? (
           // User who liked the post is the logged-in user
           <>{post.likedBy[0].firstName} liked</>
         ) : (
