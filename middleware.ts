@@ -149,7 +149,7 @@ export function middleware(request: NextRequest) {
   // If the requested route is public, allow access
   if (publicRoutes.includes(pathname)) {
     // If the user is authenticated and tries to access a public route, redirect to dashboard
-    if (token && pathname !== "/login" && pathname !== "/") {
+    if (token && !pathname.startsWith("/login")) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
     return NextResponse.next();
