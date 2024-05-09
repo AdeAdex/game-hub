@@ -28,6 +28,15 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  // If the requested route is public, allow access
+  if (publicRoutes.includes(pathname)) {
+    // If the user is authenticated and trying to access the register page, redirect to dashboard
+    if (token && pathname === "/register") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+    return NextResponse.next();
+  }
+
   // Decode token and check for expiration
   const decodedToken = jwt.decode(token) as { exp?: number };
   const currentTimestamp = Math.floor(Date.now() / 1000); // Current time in seconds
@@ -41,12 +50,7 @@ export function middleware(request: NextRequest) {
   if (pathname === "/login") {
     // Check if the user is already in the dashboard, if yes, remain in the dashboard
     return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
-                                           // If the user is authenticated and trying to access the register page, redirect to dashboard
-  if (pathname === "/register") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  }                                         // If the user is authenticated and trying to access the register page, redirect to dashboard
 
   // If the route is a dynamic username page and the user is authenticated, allow access
   if (pathname.startsWith("/")) {
