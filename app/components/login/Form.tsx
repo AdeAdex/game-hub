@@ -32,7 +32,7 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   // const dispatch = useDispatch();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
@@ -40,10 +40,11 @@ function MyApp() {
 
   
   useEffect(() => {
-    // if (session?.user) {
-       
-    // } 
-  }, [session, ]);
+    // Redirect to dashboard if user session is authenticated
+    if (status === "authenticated") {
+      router.replace("/dashboard"); // Replace the current URL with /dashboard
+    }
+  }, [status, router]);
 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -63,7 +64,7 @@ function MyApp() {
         enqueueSnackbar("Login Successfully", {
                 variant: "success",
               });
-        router.push("/dashboard");
+        // router.push("/dashboard");
            
       } else {
         const errorMessage = result?.error || "Error during login";
