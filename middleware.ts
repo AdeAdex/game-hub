@@ -118,6 +118,10 @@ export const config = {
 
 
 
+
+
+
+
 // middleware.ts
 
 import { NextResponse } from "next/server";
@@ -158,26 +162,25 @@ export async function middleware(request: NextRequest) {
   }
 
   // If the user is authenticated and trying to access the login page, redirect to dashboard
-  if (pathname === "/login") {
+  if (pathname === "/login" || pathname === "/register" ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // Check if the route is a dynamic username post page (/user/:username/post/:postId)
-  const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
-  const match = pathname.match(usernamePostRegex);
-
-  if (match) {
-    // Extract username and postId from the pathname
-    const [, username, postId] = match;
-
-    // Implement your authorization logic here (e.g., check if the user is authorized to access this specific post)
-    const userAuthorized = await isUserAuthorized(username, postId, token);
-
-    if (userAuthorized) {
-      return NextResponse.next(); // Allow access to the user's post page
-    } else {
-      return NextResponse.redirect(new URL("/dashboard", request.url)); // Redirect to dashboard for unauthorized access
+  // If the route is a dynamic username page (/username) and the user is authenticated, allow access
+  if (pathname.startsWith("/")) {
+    const segments = pathname.split("/");
+    if (segments.length === 2 && segments[1] !== "") {
+      // It's a dynamic username page
+      return NextResponse.next();
     }
+  }
+
+  // List of routes accessible to authenticated users
+  const privateRoutes = ["/", "/dashboard"];
+
+  // If the user is authenticated and the route is private, allow access
+  if (privateRoutes.includes(pathname)) {
+    return NextResponse.next();
   }
 
   // If the route is not public or private, redirect to dashboard
@@ -185,23 +188,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // If the user is authenticated, allow access to the dashboard
-  if (pathname === "/dashboard") {
-    return NextResponse.next();
-  }
-
   // Redirect to dashboard for any other unauthorized routes
   return NextResponse.redirect(new URL("/dashboard", request.url));
-}
-
-async function isUserAuthorized(username: string, postId: string, token: string) {
-  // Implement your authorization logic here based on username, postId, and token
-  // Example: Check if the user is authorized to access the specified post
-  // Replace this with your actual authorization logic using your application's database or other backend services
-  return true; // Placeholder for authorization logic
 }
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };
-
+ 
