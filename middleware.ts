@@ -43,6 +43,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
+                                           // If the user is authenticated and trying to access the register page, redirect to dashboard
+  if (pathname === "/register") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
   // If the route is a dynamic username page and the user is authenticated, allow access
   if (pathname.startsWith("/")) {
     const segments = pathname.split("/");
