@@ -1,6 +1,6 @@
 //middleware.ts
 
-import { NextResponse } from "next/server";
+/*import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
@@ -114,4 +114,74 @@ if (pathname === "/dashboard") {
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+};*/
+
+
+
+// middleware.ts
+
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import jwt from "jsonwebtoken";
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("authToken")?.value;
+  const { pathname } = request.nextUrl;
+
+  // List of routes accessible to users without authentication
+  const publicRoutes = [
+    "/",
+    "/register",
+    "/forgot-password",
+    "/reset-password",
+    "/forgot-password-email-sent",
+    "/login",
+  ];
+
+  // If the requested route is public, allow access
+  if (publicRoutes.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  // If the user is not authenticated, redirect to login
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Decode token and check for expiration
+  const decodedToken = jwt.decode(token) as { exp?: number };
+  const currentTimestamp = Math.floor(Date.now() / 1000); // Current time in seconds
+
+  if (decodedToken.exp !== undefined && decodedToken.exp < currentTimestamp) {
+    console.log("Token has expired");
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Allow access to specific post pages if the user is authenticated
+  const postPageRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
+  const postMatch = pathname.match(postPageRegex);
+
+  if (postMatch) {
+    const [, username, postId] = postMatch;
+
+    // Implement your authorization logic here to check if the user is authorized to access this specific post
+    const userAuthorized = true; // Replace with your authorization logic (e.g., check user permissions)
+
+    if (userAuthorized) {
+      return NextResponse.next();
+    } else {
+      // Handle unauthorized access to the post page
+      return NextResponse.error(new Error("Unauthorized access to post"));
+    }
+  }
+
+  // For all other routes, allow access
+  return NextResponse.next();
+}
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
+ 
