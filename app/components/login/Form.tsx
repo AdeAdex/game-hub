@@ -57,9 +57,9 @@ function MyApp() {
 
       if (result && !result.error) {
         // console.log(session?.user)
-        enqueueSnackbar("Login Successfully", {
+       /* enqueueSnackbar("Login Successfully", {
           variant: "success",
-        });
+        });*/
         // router.push("/dashboard");
       } else {
         const errorMessage = result?.error || "Error during login";
