@@ -75,14 +75,9 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
        {post ? (  
           <PostComponent
             posts={[post]} // Pass the single post as an array to PostComponent
-            // likedPosts={[]} // Assuming likedPosts is handled separately
             likedPosts={likedPosts}
-            handleReaction={(postId: string) => {
-              // Implement handleReaction function
-            }}
-            handleShare={(postId: string, userId: string) => {
-              // Implement handleShare function
-            }}
+            setLikedPosts={setLikedPosts}
+            username={username}
             user={user!} // Use optional chaining (!) to assert that user is not null
             setPosts={() => {}} // Dummy function for setPosts
             openCreatePostModal={false}

@@ -91,7 +91,7 @@ async function handleAuthentication(credentials, profile) {
         const token = generateToken({ email: user.email });
         cookies().set("authToken", token, {
           httpOnly: true,
-          maxAge: 60 * 60 * 24,
+          maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
           path: "/",
           sameSite: "strict",
         });
@@ -107,7 +107,7 @@ async function handleAuthentication(credentials, profile) {
         const token = generateToken({ email: user.email });
         cookies().set("authToken", token, {
           httpOnly: true,
-          maxAge: 60 * 60 * 24,
+          maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
           path: "/",
           sameSite: "strict",
         });
@@ -140,7 +140,7 @@ async function handleAuthentication(credentials, profile) {
       const token = generateToken({ email: profile.email });
       cookies().set("authToken", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 24,
+        maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
         path: "/",
         sameSite: "strict",
       });

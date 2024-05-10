@@ -47,6 +47,10 @@ interface CommentFullScreenDialogProps {
   comments: CommentDataType[];
   setComments: React.Dispatch<React.SetStateAction<CommentDataType[]>>;
   updatePostComments: (postId: string, newComments: CommentDataType[]) => void;
+  username: string;
+  likedPosts: string[];
+  setLikedPosts:React.Dispatch<React.SetStateAction<string[]>>;
+
 }
 
 export default function CommentFullScreenDialog({
@@ -59,13 +63,15 @@ export default function CommentFullScreenDialog({
   comments,
   setComments,
   updatePostComments,
+  username,
+  likedPosts,
+  setLikedPosts,
 }: CommentFullScreenDialogProps) {
   const [commentContent, setCommentContent] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const webcamRef = useRef<Webcam | null>(null);
   const [showCamera, setShowCamera] = useState(false);
 
-  console.log("open commen dialog", openCommentDialog)
 
 
   const handleClose = () => {
@@ -237,9 +243,10 @@ export default function CommentFullScreenDialog({
            {post && (
               <PostComponent
                 posts={[post]} // Pass post as part of an array of posts
-                likedPosts={[]} // Provide an empty array for liked posts
-                handleReaction={() => {}} // Dummy handler for reactions
-                handleShare={() => {}} // Dummy handler for sharing
+                likedPosts={likedPosts} // Provide an empty array for liked posts
+                setLikedPosts={setLikedPosts}
+                // handleReaction={() => {}} // Dummy handler for reactions
+                username={username}
                 user={user}
                 setPosts={setPosts}
                 openCreatePostModal={false}

@@ -16,12 +16,16 @@ import { useRouter } from "next/navigation";
 import { PostDataType } from "@/app/types/post";
 import { UserDataType } from "@/app/types/user";
 import { CommentDataType } from "@/app/types/comments";
+import axios from "axios";
+
 
 interface PostProps {
   posts: PostDataType[];
   likedPosts: string[];
-  handleReaction: (postId: string) => void;
-  handleShare: (postId: string, userId: string) => void;
+  setLikedPosts:React.Dispatch<React.SetStateAction<string[]>>;
+  // handleReaction: (postId: string) => void;
+  // handleShare: (postId: string, userId: string) => void;
+  username: string;
   user: UserDataType;
   setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>;
   openCreatePostModal: boolean;
@@ -36,8 +40,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   posts,
   setPosts,
   likedPosts,
-  handleReaction,
-  handleShare,
+  setLikedPosts,
+  // handleReaction,
+  // handleShare,
+  username,
   loggedInUserId,
   openCreatePostModal,
   setOpenCreatePostModal,
@@ -54,9 +60,68 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [openModal, setOpenModal] = useState(false);
   const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false);
   const [comments, setComments] = useState<CommentDataType[]>([]);
+  
 
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const router = useRouter();
+
+  const handleShare = async (postId: string, userId: string ) => {
+    try {
+      // Here you can implement share functionality using browser APIs or third-party libraries
+      const shareUrl = `https://adex-game-hub.vercel.app/user/${username}/post/${postId}`;
+      const shareText = `Check out this post by ${userId}: "${posts.find(p => p._id === postId)?.content}"`;
+  
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Check out this post',
+          text: shareText,
+          url: shareUrl,
+        });
+        console.log('Shared successfully');
+      } else {
+        console.log('Web Share API not supported');
+        // Fallback share options for browsers that do not support Web Share API
+      }
+    } catch (error) {
+      console.error('Error sharing post:', error);
+    }
+  };
+
+
+  const handleReaction = async (postId: string) => {
+    try {
+      const userId = user?._id;
+      if (!userId) {
+        console.error("User ID is undefined");
+        return;
+      }
+
+      const action = likedPosts.includes(postId) ? "unlike" : "like";
+      const response = await axios.post(`/api/posts/react`, {
+        postId,
+        action,
+        userId,
+      });
+
+      if (response.status === 200) {
+        const updatedPost: PostDataType = response.data; // Ensure response data is of type Post
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === updatedPost._id ? updatedPost : post
+          )
+        );
+        setLikedPosts((prevLikedPosts) =>
+          action === "like"
+            ? [...prevLikedPosts, postId]
+            : prevLikedPosts.filter((id) => id !== postId)
+        );
+      } else {
+        console.error("Failed to react to post:", response.data.message);
+      }
+    } catch (error: any) {
+      console.error("Error reacting to post:", error.message);
+    }
+  };
 
 
   const handleClose = () => {
@@ -342,6 +407,9 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
           openCommentDialog={openCommentDialog}
           setOpenCommentDialog={setOpenCommentDialog}
           user={user}
+          username={username}
+          setLikedPosts={setLikedPosts}
+          likedPosts={likedPosts}
           selectedPostId={selectedPostId}
           post={selectedPost}
           setPosts={setPosts}

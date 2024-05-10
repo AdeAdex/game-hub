@@ -96,40 +96,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
-  const handleReaction = async (postId: string) => {
-    try {
-      const userId = user?._id;
-      if (!userId) {
-        console.error("User ID is undefined");
-        return;
-      }
-
-      const action = likedPosts.includes(postId) ? "unlike" : "like";
-      const response = await axios.post(`/api/posts/react`, {
-        postId,
-        action,
-        userId,
-      });
-
-      if (response.status === 200) {
-        const updatedPost: PostDataType = response.data; // Ensure response data is of type Post
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post._id === updatedPost._id ? updatedPost : post
-          )
-        );
-        setLikedPosts((prevLikedPosts) =>
-          action === "like"
-            ? [...prevLikedPosts, postId]
-            : prevLikedPosts.filter((id) => id !== postId)
-        );
-      } else {
-        console.error("Failed to react to post:", response.data.message);
-      }
-    } catch (error: any) {
-      console.error("Error reacting to post:", error.message);
-    }
-  };
 
   // const handleReaction = async (postId: string) => {
   //   try {
@@ -166,30 +132,6 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   //      console.error("Error reacting to post:", error.message);
   //   }
   //  };
-
-  const handleShare = async (postId: string, userId: string ) => {
-  try {
-    // Here you can implement share functionality using browser APIs or third-party libraries
-    const shareUrl = `https://adex-game-hub.vercel.app/user/${username}/post/${postId}`;
-    const shareText = `Check out this post by ${userId}: "${posts.find(p => p._id === postId)?.content}"`;
-
-    if (navigator.share) {
-      await navigator.share({
-        title: 'Check out this post',
-        text: shareText,
-        url: shareUrl,
-      });
-      console.log('Shared successfully');
-    } else {
-      console.log('Web Share API not supported');
-      // Fallback share options for browsers that do not support Web Share API
-    }
-  } catch (error) {
-    console.error('Error sharing post:', error);
-  }
-};
-
-
 
   
 
@@ -232,8 +174,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 posts={posts}
                 setPosts={setPosts}
                 likedPosts={likedPosts}
-                handleReaction={handleReaction}
-                handleShare={handleShare}
+                setLikedPosts={setLikedPosts}
                 loggedInUserId={user._id}
                 openCreatePostModal={openCreatePostModal}
                 setOpenCreatePostModal={setOpenCreatePostModal}
@@ -241,6 +182,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
                 setEditSelectedPost={setEditSelectedPost}
                 selectedPost={selectedPost}
                 setSelectedPost={setSelectedPost}
+                username={username}
               />
             </div>
           </div>
