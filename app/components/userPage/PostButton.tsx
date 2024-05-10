@@ -31,31 +31,20 @@ const PostButton: React.FC<PostButtonProps> = ({
     setOpenCreatePostModal(true);
   };
 
+
   return (
     <div>
       <div className="flex gap-2 bg-white mb-4 p-4 rounded-lg shadow-md mt-6 ">
-        <div className="relative w-8 h-8 mr-2">
-          {user.profilePicture ? (
-            <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={user.profilePicture}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-          ) : (
-            <div className="relative w-10 h-10 mr-2">
-              <Image
-                src={avatar}
-                alt="Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-          )}
+        
+        <div className="flex relative w-10 h-10 mr-2">
+          <Image
+            src={user.profilePicture || avatar}
+            alt="Profile Picture"
+            layout="fixed"
+            width={32}
+            height={32}
+            className="rounded-full my-auto"
+          />
         </div>
         <input
           onClick={handleOpen}

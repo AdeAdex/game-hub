@@ -26,7 +26,7 @@ import AILoader from "../AILoader";
 import { UserDataType } from "@/app/types/user";
 import { PostDataType } from "@/app/types/post";
 import { CommentDataType } from "@/app/types/comments";
-// import PostComponent from "./PostComponent";
+import PostComponent from "./PostComponent";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -93,22 +93,25 @@ export default function CommentFullScreenDialog({
         postId: selectedPostId,
         userId: user._id,
       });
-  
+
       if (response.status === 201) {
         const newComment = response.data;
-        console.log("returend",response.data)
-  
+        console.log("returend", response.data);
+
         // Clear the comment content input after successful submission
         setCommentContent("");
-  
+
         // Update local comments state with the newly created comment
         setComments([...comments, newComment]);
-  
+
         // Inform PostComponent about the updated comments
         const updatedComments = [...comments, newComment];
         updatePostComments(selectedPostId, updatedComments);
       } else {
-        console.error("Failed to create comment - Unexpected status:", response.status);
+        console.error(
+          "Failed to create comment - Unexpected status:",
+          response.status
+        );
       }
     } catch (error: any) {
       console.error("Failed to create comment:", error.message);
@@ -118,7 +121,6 @@ export default function CommentFullScreenDialog({
       }
     }
   };
-  
 
   useEffect(() => {
     if (openCommentDialog && selectedPostId) {
@@ -228,9 +230,25 @@ export default function CommentFullScreenDialog({
         </AppBar>
         <List>
           <div className="comments mt-[60px] pb-[100px] px-2">
-            {/* <PostComponent
-
-              /> */}
+           {/* Render PostComponent with the current post */}
+           {post && (
+              <PostComponent
+                posts={[post]} // Pass post as part of an array of posts
+                likedPosts={[]} // Provide an empty array for liked posts
+                handleReaction={() => {}} // Dummy handler for reactions
+                handleShare={() => {}} // Dummy handler for sharing
+                user={user}
+                setPosts={setPosts}
+                openCreatePostModal={false}
+                setOpenCreatePostModal={() => {}}
+                editSelectedPost=""
+                setEditSelectedPost={() => {}}
+                selectedPost={null}
+                setSelectedPost={() => {}}
+                loggedInUserId={user._id}
+              />
+            )}
+            <small className="py-2 my-2 ">Comments</small>
             {comments.length === 0 ? (
               <div className="flex items-center justify-center h-full ">
                 <div className="flex items-center justify-center w-full ">
@@ -242,34 +260,21 @@ export default function CommentFullScreenDialog({
                 .slice()
                 .reverse()
                 .map((comment) => (
-                  <div className="flex gap-2 mb-2" key={comment._id}>
-                    <div className="relative w-8 h-8 my-auto mr-2">
-                      {comment.userId && comment.userId.profilePicture ? (
-                        <div className="relative w-9 h-9">
-                          <Image
-                            src={comment.userId.profilePicture}
-                            alt="Profile Picture"
-                            layout="fill"
-                            objectFit="cover"
-                            className="rounded-full"
-                          />
-                        </div>
-                      ) : (
-                        <div className="relative w-9 h-9 ">
-                          <Image
-                            src={avatar}
-                            alt="Profile Picture"
-                            layout="fill"
-                            objectFit="cover"
-                            className="rounded-full"
-                          />
-                        </div>
-                      )}
-                    </div>
+                  <div className="flex gap-2 mb-2 mt-3 px-2" key={comment._id}>
+                    <div className="relative w-9 h-9">
+                    <Image
+                      src={comment.userId?.profilePicture || avatar}
+                      alt="Profile Picture"
+                      layout="fill"
+                      className="rounded-full object-cover"
+                    />
+                  </div>
                     <div className="">
                       <div className="flex flex-col rounded-lg bg-gray-100 p-2">
                         <small className="font-bold">
-                        {comment.userId ? `${comment.userId.lastName} ${comment.userId.firstName}` : 'Unknown User'}
+                          {comment.userId
+                            ? `${comment.userId.lastName} ${comment.userId.firstName}`
+                            : "Unknown User"}
                         </small>
                         <small>{comment.content}</small>
                       </div>

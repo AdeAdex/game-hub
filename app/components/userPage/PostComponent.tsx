@@ -58,7 +58,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const router = useRouter();
 
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -83,8 +82,10 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     }
   };
 
-
-  const updatePostComments = (postId: string, newComments: CommentDataType[]) => {
+  const updatePostComments = (
+    postId: string,
+    newComments: CommentDataType[]
+  ) => {
     const updatedPosts = posts.map((post) => {
       if (post._id === postId) {
         return { ...post, comments: newComments };
@@ -93,19 +94,15 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     });
     setPosts(updatedPosts);
   };
-  
 
- 
   const handleOpenCommentDialog = (postId: string) => {
     const post = posts.find((post) => post._id === postId);
     if (post) {
       setSelectedPost(post);
       setSelectedPostId(postId);
       setOpenCommentDialog(true);
-  
     }
   };
-  
 
   const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);
@@ -147,31 +144,20 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             key={post._id}
             className="bg-white mb-4 p-4 rounded-lg shadow-md "
           >
-            <div className="flex justify-between">
+            <div className="flex justify-between hover:bg-gray-200 mb-2 cursor-pointer py-1">
               <div
-                className="flex items-center hover:bg-gray-400 mb-2 cursor-pointer w-[80%]"
+                className="flex items-center  w-[80%]"
                 onClick={() => handlePostPage(post._id)}
               >
                 <div className="relative w-8 h-8 mr-2">
-                  {post.userId.profilePicture ? (
-                    <div className="relative w-8 h-8 mr-2">
-                      <Image
-                        src={post?.userId?.profilePicture}
-                        alt="Profile Picture"
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-full"
-                      />
-                    </div>
-                  ) : (
-                    <Image
-                      src={avatar}
-                      alt="Profile Picture"
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-full"
-                    />
-                  )}
+                  <Image
+                    src={post?.userId?.profilePicture || avatar}
+                    alt="Profile Picture"
+                    width={32}
+                    height={32}
+                    layout="fixed"
+                    className="rounded-full"
+                  />
                 </div>
                 <div className="text-[12px] text-gray-700 font-semibold">
                   <div>
@@ -187,10 +173,12 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   </div>
                 </div>
               </div>
-              <CiMenuKebab
-                className="flex cursor-pointer "
+              <div
+                className="hover:bg-gray-400 rounded-full p-3 cursor-pointer"
                 onClick={() => handleToggleModal(post._id)}
-              />
+              >
+                <CiMenuKebab className="flex my-auto" />
+              </div>
             </div>
             <p className="text-gray-700 mb-2">
               {post.content && (
@@ -205,6 +193,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                   alt="PostImage"
                   width={400}
                   height={400}
+                  layout="responsive"
                   className="w-full cursor-pointer"
                   priority
                   onClick={() => openImage(post.image)}

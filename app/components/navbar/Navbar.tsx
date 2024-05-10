@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
                   <div className="flex gap-3 cursor-pointer">
                     <PingLoader />
                     <div
-                      className={` bg-gray-100 p-2 rounded-lg border ${
+                      className={` bg-gray-100 p-2 rounded-lg border cursor-pointer ${
                         dropdownOpen ? "border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
@@ -176,7 +176,7 @@ const Navbar: React.FC = () => {
                   <div className="flex gap-3">
                     <Link
                       href={`/${userData?.userName}`}
-                      className="flex gap-3 cursor-pointer "
+                      className="flex gap-2 cursor-pointer my-auto"
                     >
                       {userData?.profilePicture ? (
                         <Image
@@ -203,7 +203,7 @@ const Navbar: React.FC = () => {
                     </Link>
 
                     <div
-                      className={` bg-gray-100 p-2 rounded-lg border ${
+                      className={` bg-gray-100 p-2 rounded-lg border cursor-pointer ${
                         dropdownOpen ? "border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
