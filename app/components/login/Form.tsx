@@ -37,8 +37,6 @@ function MyApp() {
   // const dispatch = useDispatch();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
 
-
-  
   useEffect(() => {
     // Redirect to dashboard if user session is authenticated
     if (status === "authenticated") {
@@ -46,11 +44,9 @@ function MyApp() {
     }
   }, [status, router]);
 
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
-
 
     try {
       const result = await signIn("credentials", {
@@ -62,10 +58,9 @@ function MyApp() {
       if (result && !result.error) {
         // console.log(session?.user)
         enqueueSnackbar("Login Successfully", {
-                variant: "success",
-              });
+          variant: "success",
+        });
         // router.push("/dashboard");
-           
       } else {
         const errorMessage = result?.error || "Error during login";
         enqueueSnackbar(errorMessage, { variant: "error" });
@@ -76,11 +71,7 @@ function MyApp() {
     } finally {
       setSubmitting(false);
     }
-
-
-
   };
-  
 
   return (
     <form action="" onSubmit={handleSubmit}>
@@ -148,5 +139,3 @@ function MyApp() {
 }
 
 export default Form;
-
-

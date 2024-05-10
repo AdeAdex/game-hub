@@ -50,7 +50,7 @@ export function middleware(request: NextRequest) {
   if (pathname === "/login") {
     // Check if the user is already in the dashboard, if yes, remain in the dashboard
     return NextResponse.redirect(new URL("/dashboard", request.url));
-  }                                         // If the user is authenticated and trying to access the register page, redirect to dashboard
+  } // If the user is authenticated and trying to access the register page, redirect to dashboard
 
   // If the route is a dynamic username page and the user is authenticated, allow access
   if (pathname.startsWith("/")) {
@@ -61,25 +61,24 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Check if the route is a dynamic username post page (/user/:username/post/:postId)
+  const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
+  const match = pathname.match(usernamePostRegex);
 
-// Check if the route is a dynamic username post page (/user/:username/post/:postId)
-const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
-const match = pathname.match(usernamePostRegex);
+  if (match) {
+    // Extract username and postId from the pathname
+    const [, username, postId] = match;
 
-if (match) {
-  // Extract username and postId from the pathname
-  const [, username, postId] = match;
+    // Implement your authorization logic here (e.g., check if the user is authorized to access this specific post)
+    const userAuthorized = true; // Replace with your authorization logic
 
-  // Implement your authorization logic here (e.g., check if the user is authorized to access this specific post)
-  const userAuthorized = true; // Replace with your authorization logic
-
-  if (userAuthorized) {
-    return NextResponse.next(); // Allow access to the user's post page
-  } else {
-    // User is not authorized to access this post, handle accordingly (e.g., return an error or redirect)
-    // return NextResponse.error(new Error("Unauthorized access to post"));
+    if (userAuthorized) {
+      return NextResponse.next(); // Allow access to the user's post page
+    } else {
+      // User is not authorized to access this post, handle accordingly (e.g., return an error or redirect)
+      // return NextResponse.error(new Error("Unauthorized access to post"));
+    }
   }
-}
 
   // Check if the route is a dynamic post page (/post/:postId)
   const postMatch = pathname.match(/^\/post\/([a-zA-Z0-9_-]+)$/);
@@ -99,10 +98,9 @@ if (match) {
   }
 
   // If the user is authenticated, allow access to the dashboard
-if (pathname === "/dashboard") {
-  return NextResponse.next();
-}
-
+  if (pathname === "/dashboard") {
+    return NextResponse.next();
+  }
 
   // List of routes accessible to authenticated users
   const privateRoutes = ["/", "/dashboard"];
@@ -124,5 +122,3 @@ if (pathname === "/dashboard") {
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };
-
-
