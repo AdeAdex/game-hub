@@ -245,7 +245,6 @@ export default function CommentFullScreenDialog({
                 posts={[post]} // Pass post as part of an array of posts
                 likedPosts={likedPosts} // Provide an empty array for liked posts
                 setLikedPosts={setLikedPosts}
-                // handleReaction={() => {}} // Dummy handler for reactions
                 username={username}
                 user={user}
                 setPosts={setPosts}
@@ -259,6 +258,7 @@ export default function CommentFullScreenDialog({
               />
             )}
             <small className="py-2 my-2 ">Comments</small>
+            <Divider className="w-full bg-gray-500 " />
             {comments.length === 0 ? (
               <div className="flex items-center justify-center h-full ">
                 <div className="flex items-center justify-center w-full ">
