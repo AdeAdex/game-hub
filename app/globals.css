@@ -252,7 +252,7 @@
 .modelViewPort {
   /* The black circle background around the model*/
   perspective: 1000px;
-  width: 20rem;
+  width: 10rem;
   aspect-ratio: 1;
   border-radius: 50%;
   display: flex;
@@ -268,16 +268,16 @@
 }
 .ai-head {
   position: relative;
-  width: 6rem;
-  height: 4rem;
+  width: 2rem;
+  height: 1.5rem;
   border-radius: 48% 53% 45% 55% / 79% 79% 20% 22%;
   background: linear-gradient(to right, white 45%, gray);
 }
 .eyeChamber {
-  width: 4.5rem;
-  height: 2.75rem;
+  width: 4rem;
+  height: 2.5rem;
   position: relative;
-  left: 50%;
+  left: 60%;
   top: 55%;
   border-radius: 45% 53% 45% 48% / 62% 59% 35% 34%;
   background-color: #0c203c;
@@ -286,8 +286,8 @@
   animation: moveRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
 }
 .eye {
-  width: 1.2rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   position: absolute;
   border-radius: 50%;
 }
@@ -316,8 +316,8 @@
   transform: translate(0, -50%) rotate(65deg);
 }
 .ai-body {
-  width: 6rem;
-  height: 8rem;
+  width: 3rem;
+  height: 4rem;
   position: relative;
   margin-block-start: 0.25rem;
   border-radius: 47% 53% 45% 55% / 12% 9% 90% 88%;
@@ -325,10 +325,10 @@
 }
 .ai-hand {
   position: absolute;
-  left: -1.5rem;
+  left: -0.7rem;
   top: 0.75rem;
-  width: 2rem;
-  height: 5.5rem;
+  width: 1rem;
+  height: 2.5rem;
   border-radius: 40%;
   background: linear-gradient(to left, white 15%, gray);
   box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.25);

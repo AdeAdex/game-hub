@@ -58,6 +58,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const router = useRouter();
 
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -96,13 +97,20 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   };
 
   const handleOpenCommentDialog = (postId: string) => {
-    const post = posts.find((post) => post._id === postId);
-    if (post) {
-      setSelectedPost(post);
-      setSelectedPostId(postId);
-      setOpenCommentDialog(true);
-    }
-  };
+  // If the comment dialog is already open, do nothing
+  if (openCommentDialog) {
+    return;
+  }
+
+  const post = posts.find((post) => post._id === postId);
+  if (post) {
+    setSelectedPost(post);
+    setSelectedPostId(postId);
+    setOpenCommentDialog(true);
+  }
+};
+
+  
 
   const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);

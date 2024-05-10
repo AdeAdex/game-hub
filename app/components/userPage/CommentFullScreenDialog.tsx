@@ -65,6 +65,9 @@ export default function CommentFullScreenDialog({
   const webcamRef = useRef<Webcam | null>(null);
   const [showCamera, setShowCamera] = useState(false);
 
+  console.log("open commen dialog", openCommentDialog)
+
+
   const handleClose = () => {
     if (webcamRef.current) {
       webcamRef.current.video?.pause();
