@@ -2,14 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter /*, useSearchParams */} from 'next/navigation'
-import { useSearchParams } from "next/dist/client/use-search-params";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
   const [active, setActive] = useState("all");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = new URLSearchParams(router.asPath.split("?")[1]); // Parse current search params
 
   useEffect(() => {
     const statusFromUrl = searchParams.get("status");
@@ -18,7 +17,9 @@ const NotificationsPage: React.FC = () => {
 
   const handleNotification = (status: string) => {
     setActive(status);
-    setSearchParams({ status });
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.set("status", status);
+    router.push(`?${updatedParams.toString()}`, undefined, { shallow: true });
   };
 
   const renderActiveIndicator = (status: string) => {
