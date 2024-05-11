@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -14,20 +13,22 @@ const NotificationsPage: React.FC = () => {
     setActive("all");
   }, []);
 
-//   useEffect(() => {
-//         const status = router.query.status as string | undefined;
-//         if (status) {
-//           setActive(status);
-//         }
-//       }, [router]);
+//    useEffect(() => {
+//     const status = getQueryParam(navigation, "status") || "all";
+//     setActive(status);
+//   }, [navigation]);
 
   const handleNotification = (status: string) => {
     setActive(status);
-//     router.push(`/notifications?status=${status}`);
+    //     router.push(`/notifications?status=${status}`);
   };
 
   const renderActiveIndicator = (status: string) => {
-    return active === status ? <span className="absolute bottom-0 left-0 w-full text-center"><span className="h-1 w-auto bg-red-500 block"></span></span> : null;
+    return active === status ? (
+      <span className="absolute bottom-0 left-0 w-full text-center">
+        <span className="h-1 w-auto bg-red-500 block"></span>
+      </span>
+    ) : null;
   };
 
   return (
@@ -75,9 +76,7 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("p")}
           </button>
         </div>
-        <div className="py-8">
-        You haven't received any notification.
-        </div>
+        <div className="py-8">You haven't received any notification.</div>
       </div>
       <Footer />
     </div>
