@@ -38,7 +38,7 @@ const NotificationsPage: React.FC = () => {
         <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] pb-[30px]">
           Notifications Page
         </h3>
-        <div className="flex gap-4 border-b border-gray-300">
+        <div className="flex gap-4 border-b border-gray-300 overflow-x-auto w-full">
           <button
             className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
               active === "all" ? "font-bold" : ""
