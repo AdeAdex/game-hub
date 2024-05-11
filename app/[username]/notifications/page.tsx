@@ -31,6 +31,22 @@ const NotificationsPage: React.FC = () => {
     ) : null;
   };
 
+  const renderNotificationContent = () => {
+    // Render content based on active status
+    switch (active) {
+      case "all":
+        return <div className="py-8">You haven't received any notification yet.</div>;
+      case "fr":
+        return <div className="py-8">You have friend requests waiting for you.</div>;
+      case "m":
+        return <div className="py-8">You have new messages to read.</div>;
+      case "p":
+        return <div className="py-8">You have pending payments.</div>;
+      default:
+        return <div className="py-8">Invalid status.</div>;
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen py-[100px]">
       <Navbar />
@@ -76,7 +92,7 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("p")}
           </button>
         </div>
-        <div className="py-8">You haven't received any notification.</div>
+        {renderNotificationContent()}
       </div>
       <Footer />
     </div>
