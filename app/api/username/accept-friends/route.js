@@ -9,7 +9,7 @@ export const POST = async (req) => {
     const body = await req.json();
     const { userId, loggedInUserId } = body; // Added loggedInUserId
 
-    console.log(userId, loggedInUserId);
+    // console.log(userId, loggedInUserId);
 
     await connectToDb();
 
@@ -44,7 +44,7 @@ export const POST = async (req) => {
       );
     await loggedInUser.save();
 
-    console.log("log out", loggedInUser.incomingFriendRequests);
+    // console.log("log out", loggedInUser.incomingFriendRequests);
 
     // Add loggedInUserId to user's currentFriends
     user.currentFriends.push(loggedInUserId);
@@ -56,7 +56,7 @@ export const POST = async (req) => {
     );
     await user.save();
 
-    console.log("user in", user.outgoingFriendRequests);
+    // console.log("user in", user.outgoingFriendRequests);
 
     return NextResponse.json({
       updatedUser: user,

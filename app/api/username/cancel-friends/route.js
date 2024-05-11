@@ -9,7 +9,7 @@ export const POST = async (req) => {
     const body = await req.json();
     const { userId, loggedInUserId } = body; // Added loggedInUserId
 
-    console.log(userId, loggedInUserId);
+    // console.log(userId, loggedInUserId);
 
     await connectToDb();
 
@@ -40,14 +40,14 @@ export const POST = async (req) => {
       );
     await loggedInUser.save(); // Save the updated loggedInUser
 
-    console.log("log out", loggedInUser.outgoingFriendRequests);
+    // console.log("log out", loggedInUser.outgoingFriendRequests);
 
     // Remove loggedInUserId from user's incomingFriendRequests
     user.incomingFriendRequests = user.incomingFriendRequests.filter(
       (id) => id.toString() !== loggedInUserId
     );
     await user.save(); // Save the updated user
-    console.log("user in", user.incomingFriendRequests);
+    // console.log("user in", user.incomingFriendRequests);
 
     return NextResponse.json({
       updatedUser: user,

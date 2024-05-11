@@ -19,6 +19,7 @@ import Backdrop from "@mui/material/Backdrop";
 import { IoMdNotifications } from "react-icons/io";
 import PingLoader from "../PingLoader";
 import Link from "next/link";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 // import { useSelector } from "react-redux";
 
@@ -34,6 +35,19 @@ interface AuthState {
 }
 
 const Navbar: React.FC = () => {
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp />
+    </SnackbarProvider>
+  );
+};
+
+function MyApp() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
   // const userInfo = useSelector((state: any) => state.auth.userInformation);
@@ -60,6 +74,7 @@ const Navbar: React.FC = () => {
         if (response.status === 200) {
           console.log(response.data.message);
           await signOut();
+          enqueueSnackbar(response.data.message, { variant: "success" });
         }
       }
     } catch (error) {
@@ -242,6 +257,6 @@ const Navbar: React.FC = () => {
       </nav>
     </main>
   );
-};
+}
 
 export default Navbar;

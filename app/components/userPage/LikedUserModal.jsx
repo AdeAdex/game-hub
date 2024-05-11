@@ -71,7 +71,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
         loggedInUserId,
       });
 
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data.success) {
         enqueueSnackbar(response.data.message, { variant: "success" });
@@ -83,12 +83,12 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
         setFilteredLikedBy(updatedLikedBy);
       }
     } catch (error) {
-      console.log(error);
-      // enqueueSnackbar(error.response.data.message, { variant: "error" });
+      // console.log(error.response.data.message);
+      enqueueSnackbar(error.response.data.message, { variant: "error" });
     }
   };
 
-  console.log("filteredLikedBy", filteredLikedBy)
+  // console.log("filteredLikedBy", filteredLikedBy)
 
 
   return (
