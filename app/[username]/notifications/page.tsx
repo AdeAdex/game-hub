@@ -7,24 +7,17 @@ import Footer from "@/app/components/footer/Footer";
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
-  const searchParams = useSearchParams()
- 
-  const status = searchParams.get('status')
   const [active, setActive] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    alert(status)
-    setActive("all");
-  }, []);
-
-//    useEffect(() => {
-//     const status = getQueryParam(navigation, "status") || "all";
-//     setActive(status);
-//   }, [navigation]);
+    const statusFromUrl = searchParams.get("status");
+    setActive(statusFromUrl || "all");
+  }, [searchParams]);
 
   const handleNotification = (status: string) => {
     setActive(status);
-    //     router.push(`/notifications?status=${status}`);
+    setSearchParams({ status });
   };
 
   const renderActiveIndicator = (status: string) => {
