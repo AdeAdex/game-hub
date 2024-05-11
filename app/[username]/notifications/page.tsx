@@ -1,15 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from 'next/navigation'
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams()
+ 
+  const status = searchParams.get('status')
   const [active, setActive] = useState("all");
 
   useEffect(() => {
+    alert(status)
     setActive("all");
   }, []);
 
