@@ -13,6 +13,7 @@ import PostModal from "../components/userPage/PostModal";
 import PostButton from "../components/userPage/PostButton";
 import { UserDataType } from "../types/user";
 import { PostDataType } from "../types/post";
+import Footer from "../components/footer/Footer";
 
 
 interface UserPageProps {
@@ -152,6 +153,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       ) : (
         <p className="text-lg text-red-600">User not found</p>
       )}
+      <Footer/>
     </div>
   );
 };
