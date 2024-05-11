@@ -88,6 +88,9 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
     }
   };
 
+  console.log("filteredLikedBy", filteredLikedBy)
+
+
   return (
     <Modal
       open={open}

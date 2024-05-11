@@ -27,6 +27,7 @@ import { UserDataType } from "@/app/types/user";
 import { PostDataType } from "@/app/types/post";
 import { CommentDataType } from "@/app/types/comments";
 import PostComponent from "./PostComponent";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -72,7 +73,7 @@ export default function CommentFullScreenDialog({
   const webcamRef = useRef<Webcam | null>(null);
   const [showCamera, setShowCamera] = useState(false);
 
-
+  const isFullScreen = useMediaQuery("(max-width:600px)");
 
   const handleClose = () => {
     if (webcamRef.current) {
@@ -212,7 +213,8 @@ export default function CommentFullScreenDialog({
   return (
     <React.Fragment>
       <Dialog
-        fullScreen
+        // fullScreen
+        fullScreen={isFullScreen}
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}

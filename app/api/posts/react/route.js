@@ -7,7 +7,7 @@ import Post from "../../../models/post";
 export const POST = async (req) => {
   try {
     const { postId, action, userId } = await req.json();
-    console.log(postId, action, userId);
+    // console.log(postId, action, userId);
 
     await connectToDb();
     let updatedPost;
@@ -19,7 +19,7 @@ export const POST = async (req) => {
           { _id: postId },
           { $inc: { likes: 1 }, $addToSet: { likedBy: userId } },
           { new: true }
-        ).populate("userId");
+        ).populate("userId").populate("likedBy");
         break;
       case "unlike":
         // Use findOneAndUpdate to return the updated document with populated userId field
@@ -27,7 +27,7 @@ export const POST = async (req) => {
           { _id: postId, likedBy: userId },
           { $inc: { likes: -1 }, $pull: { likedBy: userId } },
           { new: true }
-        ).populate("userId");
+        ).populate("userId").populate("likedBy");
         if (!updatedPost) {
           throw new Error("User has not previously liked the post");
         }
@@ -38,7 +38,7 @@ export const POST = async (req) => {
           { _id: postId },
           { $inc: { dislikes: 1 } },
           { new: true }
-        ).populate("userId");
+        ).populate("userId").populate("likedBy");
         break;
       default:
         throw new Error("Invalid action");

@@ -115,6 +115,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             ? [...prevLikedPosts, postId]
             : prevLikedPosts.filter((id) => id !== postId)
         );
+       
       } else {
         console.error("Failed to react to post:", response.data.message);
       }
