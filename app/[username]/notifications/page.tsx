@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter /*, useSearchParams */} from 'next/navigation'
+import { useSearchParams } from "next/dist/client/use-search-params";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 
