@@ -61,6 +61,16 @@ export function middleware(request: NextRequest) {
     }
   }
 
+
+  if (pathname.startsWith("/")) {
+    const segments = pathname.split("/");
+    if (segments.length === 3 && segments[1] !== "" && segments[2] === "notifications") {
+      // It's a dynamic username notifications page (/username/notifications)
+      return NextResponse.next();
+    }
+  }
+  
+
   // Check if the route is a dynamic username post page (/user/:username/post/:postId)
  /* const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
   const match = pathname.match(usernamePostRegex);
