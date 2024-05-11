@@ -72,7 +72,7 @@ export function middleware(request: NextRequest) {
   
 
   // Check if the route is a dynamic username post page (/user/:username/post/:postId)
- /* const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
+  const usernamePostRegex = /^\/user\/([^/]+)\/post\/([^/]+)$/;
   const match = pathname.match(usernamePostRegex);
 
   if (match) {
@@ -88,10 +88,10 @@ export function middleware(request: NextRequest) {
       // User is not authorized to access this post, handle accordingly (e.g., return an error or redirect)
       // return NextResponse.error(new Error("Unauthorized access to post"));
     }
-  }*/
+  }
 
   // Check if the route is a dynamic post page (/post/:postId)
-  const postMatch = pathname.match(/^\/post\/([a-zA-Z0-9_-]+)$/);
+ /* const postMatch = pathname.match(/^\/post\/([a-zA-Z0-9_-]+)$/);
   if (postMatch) {
     // Extract postId from the pathname
     const postId = postMatch[1];
@@ -105,7 +105,7 @@ export function middleware(request: NextRequest) {
       // User is not authorized to access this post, handle accordingly (e.g., return an error or redirect)
       // return NextResponse.error(new Error("Unauthorized access to post"));
     }
-  }
+  }*/
 
   // If the user is authenticated, allow access to the dashboard
   if (pathname === "/dashboard") {

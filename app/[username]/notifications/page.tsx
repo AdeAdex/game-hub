@@ -1,26 +1,25 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter /*, useSearchParams */} from 'next/navigation'
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
   const [active, setActive] = useState("all");
+  const searchParams = new URLSearchParams(router.asPath.split("?")[1]); // Parse current search params
 
   useEffect(() => {
-    setActive("all");
-  }, []);
-
-//    useEffect(() => {
-//     const status = getQueryParam(navigation, "status") || "all";
-//     setActive(status);
-//   }, [navigation]);
+    const statusFromUrl = searchParams.get("status");
+    setActive(statusFromUrl || "all");
+  }, [searchParams]);
 
   const handleNotification = (status: string) => {
     setActive(status);
-    //     router.push(`/notifications?status=${status}`);
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.set("status", status);
+    router.push(`?${updatedParams.toString()}`, undefined, { shallow: true });
   };
 
   const renderActiveIndicator = (status: string) => {
@@ -29,6 +28,22 @@ const NotificationsPage: React.FC = () => {
         <span className="h-1 w-auto bg-red-500 block"></span>
       </span>
     ) : null;
+  };
+
+  const renderNotificationContent = () => {
+    // Render content based on active status
+    switch (active) {
+      case "all":
+        return <div className="py-8">You haven't received any notification yet.</div>;
+      case "fr":
+        return <div className="py-8">You have friend requests waiting for you.</div>;
+      case "m":
+        return <div className="py-8">You have new messages to read.</div>;
+      case "p":
+        return <div className="py-8">You have pending payments.</div>;
+      default:
+        return <div className="py-8">Invalid status.</div>;
+    }
   };
 
   return (
@@ -76,7 +91,7 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("p")}
           </button>
         </div>
-        <div className="py-8">You haven't received any notification.</div>
+        {renderNotificationContent()}
       </div>
       <Footer />
     </div>
