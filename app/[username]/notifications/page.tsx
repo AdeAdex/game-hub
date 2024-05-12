@@ -26,7 +26,7 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const searchParams = useSearchParams();
   const [friendRequests, setFriendRequests] = useState<UserDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-const isFullScreen = useMediaQuery("(max-width:600px)");
+const isFullScreen = useMediaQuery("(min-width:600px)");
 
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const isFullScreen = useMediaQuery("(max-width:600px)");
                 <div className="py-8 flex flex-wrap">
                   {friendRequests.length > 0 ? (
                     // Conditionally render based on screen size
-                    !isFullScreen ? (
+                    isFullScreen ? (
                       // Render full-screen version if true
                       friendRequests.map((friend) => (
                         <FriendRequestCard
