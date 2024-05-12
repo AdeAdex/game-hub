@@ -12,7 +12,6 @@ const NotificationsPage: React.FC = () => {
 
   useEffect(() => {
     const statusFromUrl = searchParams?.get("status"); // Use optional chaining (?.) here
-//     console.log(statusFromUrl)
     setActive(statusFromUrl || "all");
   }, [searchParams]);
 
@@ -62,9 +61,9 @@ const NotificationsPage: React.FC = () => {
         <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] pb-[30px]">
           Notifications Page
         </h3>
-        <div className="flex gap-4 border-b border-gray-300 overflow-x-auto w-full">
+        <div className="flex gap-4 border-b border-gray-300 overflow-x-auto w-full notification-status-container">
           <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
+            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap ${
               active === "all" ? "font-bold" : ""
             }`}
             onClick={() => handleNotification("all")}
@@ -73,7 +72,7 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("all")}
           </button>
           <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
+            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap  ${
               active === "friend-requests" ? "font-bold" : ""
             }`}
             onClick={() => handleNotification("friend-requests")}
@@ -82,7 +81,7 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("friend-requests")}
           </button>
           <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
+            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap ${
               active === "messages" ? "font-bold" : ""
             }`}
             onClick={() => handleNotification("messages")}
@@ -91,7 +90,7 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("messages")}
           </button>
           <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
+            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap ${
               active === "payments" ? "font-bold" : ""
             }`}
             onClick={() => handleNotification("payments")}

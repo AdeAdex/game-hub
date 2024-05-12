@@ -246,7 +246,7 @@
 
 
 
-
+/* CSS styling code for the AI Loader */
 
 
 .modelViewPort {
@@ -417,4 +417,29 @@
   100% {
     opacity: 0;
   }
+}
+
+
+
+
+/* Styles for the scrollbar */
+
+.notification-status-container {
+   scrollbar-width: thin; /* Thin scrollbar for WebKit browsers */
+}
+
+/* Customize the scrollbar track */
+.notification-status-container::-webkit-scrollbar {
+  width: 2px; /* Width of the scrollbar */
+}
+
+/* Customize the scrollbar thumb */
+.notification-status-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+}
+
+/* Hide scrollbar track when not interacting */
+.notification-status-container::-webkit-scrollbar-track {
+  background: transparent; /* Hide scrollbar track when not interacting */
 }
