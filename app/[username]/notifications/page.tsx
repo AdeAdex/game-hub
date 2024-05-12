@@ -8,6 +8,10 @@ import axios from "axios";
 import { UserDataType } from "@/app/types/user";
 import FriendRequestCard from "@/app/components/userPage/notification/FriendRequestCard";
 import Loader from "@/app/components/Loader";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import FriendRequestCardMobile from "@/app/components/userPage/notification/FriendRequestCardMobile";
+
+
 
 interface NotificationsPageProps {
   params: {
@@ -22,6 +26,8 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const searchParams = useSearchParams();
   const [friendRequests, setFriendRequests] = useState<UserDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+const isFullScreen = useMediaQuery("(max-width:600px)");
+
 
   useEffect(() => {
     const statusFromUrl = searchParams?.get("status"); // Use optional chaining (?.) here
@@ -77,26 +83,56 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
           <div className="py-8">You haven't received any notification yet.</div>
         );
       case "friend-requests":
+        // return (
+        //   <div className="py-8 flex flex-wrap">
+        //     {friendRequests.length > 0 ? (
+        //       // Render FriendRequestCard components if there are friend requests
+        //       friendRequests.map((friend) => (
+        //         <FriendRequestCard
+        //           key={friend._id}
+        //           friend={friend}
+        //           onConfirm={handleConfirm}
+        //           onDelete={handleDelete}
+        //         />
+        //       ))
+        //     ) : (
+        //       // Render message if there are no friend requests
+        //       <div className="py-8 text-center text-gray-600">
+        //         You don't have any friend requests.
+        //       </div>
+        //     )}
+        //   </div>
+        // );
         return (
-          <div className="py-8 flex flex-wrap">
-            {friendRequests.length > 0 ? (
-              // Render FriendRequestCard components if there are friend requests
-              friendRequests.map((friend) => (
-                <FriendRequestCard
-                  key={friend._id}
-                  friend={friend}
-                  onConfirm={handleConfirm}
-                  onDelete={handleDelete}
-                />
-              ))
-            ) : (
-              // Render message if there are no friend requests
-              <div className="py-8 text-center text-gray-600">
-                You don't have any friend requests.
-              </div>
-            )}
-          </div>
-        );
+                <div className="py-8 flex flex-wrap">
+                  {friendRequests.length > 0 ? (
+                    // Conditionally render based on screen size
+                    !isFullScreen ? (
+                      // Render full-screen version if true
+                      friendRequests.map((friend) => (
+                        <FriendRequestCard
+                          key={friend._id}
+                          friend={friend}
+                          onConfirm={handleConfirm}
+                          onDelete={handleDelete}
+                        />
+                      ))
+                    ) : (
+                      // Render mobile version if false
+                      friendRequests.map((friend) => (
+                        <FriendRequestCardMobile
+                          key={friend._id}
+                          friend={friend}
+                          onConfirm={handleConfirm}
+                          onDelete={handleDelete}
+                        />
+                      ))
+                    )
+                  ) : (
+                    <div className="py-8 text-center text-gray-600">You don't have any friend requests.</div>
+                  )}
+                </div>
+              );
 
       case "messages":
         return <div className="py-8">You have new messages to read.</div>;
