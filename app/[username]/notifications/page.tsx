@@ -4,26 +4,61 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
+import axios from "axios";
+import { UserDataType } from "@/app/types/user";
+import FriendRequestCard from "@/app/components/userPage/notification/FriendRequestCard";
+import Loader from "@/app/components/Loader";
 
-const NotificationsPage: React.FC = () => {
+interface NotificationsPageProps {
+  params: {
+    username: string;
+  };
+}
+
+const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
+  const { username } = params;
   const router = useRouter();
   const [active, setActive] = useState("all");
   const searchParams = useSearchParams();
+  const [friendRequests, setFriendRequests] = useState<UserDataType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const statusFromUrl = searchParams?.get("status"); // Use optional chaining (?.) here
     setActive(statusFromUrl || "all");
   }, [searchParams]);
 
-  const handleNotification = (status: string) => {
+  const handleNotification = async (status: string) => {
     setActive(status);
 
     // Update the "status" query parameter
-  const updatedParams = new URLSearchParams(searchParams?.toString() || "");
-  updatedParams.set("status", status);
+    const updatedParams = new URLSearchParams(searchParams?.toString() || "");
+    updatedParams.set("status", status);
 
-  // Push the updated URL with the new query parameter and shallow navigation
-  router.push(`?${updatedParams.toString()}`);
+    // Push the updated URL with the new query parameter and shallow navigation
+    router.push(`?${updatedParams.toString()}`);
+
+    // Make a POST request to fetch users with friend requests
+    if (status === "friend-requests") {
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          `/api/username/notifications/friend-requests`,
+          {
+            username,
+          }
+        );
+
+        if (response.data.message) {
+          console.log("Friend Requests:", response.data.myFriendRequest);
+          setFriendRequests(response.data.myFriendRequest || []);
+        }
+      } catch (error) {
+        console.error("Error fetching users with friend requests:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const renderActiveIndicator = (status: string) => {
@@ -43,7 +78,16 @@ const NotificationsPage: React.FC = () => {
         );
       case "friend-requests":
         return (
-          <div className="py-8">You have friend requests waiting for you.</div>
+          <div className="py-8 flex flex-wrap">
+            {friendRequests.map((friend) => (
+              <FriendRequestCard
+                key={friend._id}
+                friend={friend}
+                onConfirm={handleConfirm}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
         );
       case "messages":
         return <div className="py-8">You have new messages to read.</div>;
@@ -52,6 +96,20 @@ const NotificationsPage: React.FC = () => {
       default:
         return <div className="py-8">Invalid status.</div>;
     }
+  };
+
+  const handleConfirm = (friend: UserDataType) => {
+    // Handle confirm action
+    console.log(
+      `Confirm friend request from ${friend.firstName} ${friend.lastName}`
+    );
+  };
+
+  const handleDelete = (friend: UserDataType) => {
+    // Handle delete action
+    console.log(
+      `Delete friend request from ${friend.firstName} ${friend.lastName}`
+    );
   };
 
   return (
@@ -99,7 +157,13 @@ const NotificationsPage: React.FC = () => {
             {renderActiveIndicator("payments")}
           </button>
         </div>
-        {renderNotificationContent()}
+        {loading ? (
+          <div className="flex relative h-[300px]">
+            <Loader />
+          </div>
+        ) : (
+          renderNotificationContent() // Render notification content once loaded
+        )}
       </div>
       <Footer />
     </div>
