@@ -83,28 +83,9 @@ const isFullScreen = useMediaQuery("(min-width:600px)");
           <div className="py-8">You haven't received any notification yet.</div>
         );
       case "friend-requests":
-        // return (
-        //   <div className="py-8 flex flex-wrap">
-        //     {friendRequests.length > 0 ? (
-        //       // Render FriendRequestCard components if there are friend requests
-        //       friendRequests.map((friend) => (
-        //         <FriendRequestCard
-        //           key={friend._id}
-        //           friend={friend}
-        //           onConfirm={handleConfirm}
-        //           onDelete={handleDelete}
-        //         />
-        //       ))
-        //     ) : (
-        //       // Render message if there are no friend requests
-        //       <div className="py-8 text-center text-gray-600">
-        //         You don't have any friend requests.
-        //       </div>
-        //     )}
-        //   </div>
-        // );
+        
         return (
-                <div className="py-8 flex flex-wrap">
+                <div className="py-8 flex flex-wrap gap-4">
                   {friendRequests.length > 0 ? (
                     // Conditionally render based on screen size
                     isFullScreen ? (
