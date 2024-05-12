@@ -1,25 +1,30 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter /*, useSearchParams */} from 'next/navigation'
+import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
   const [active, setActive] = useState("all");
-  const searchParams = new URLSearchParams(router.asPath.split("?")[1]); // Parse current search params
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const statusFromUrl = searchParams.get("status");
+    const statusFromUrl = searchParams?.get("status"); // Use optional chaining (?.) here
+//     console.log(statusFromUrl)
     setActive(statusFromUrl || "all");
   }, [searchParams]);
 
   const handleNotification = (status: string) => {
     setActive(status);
-    const updatedParams = new URLSearchParams(searchParams);
-    updatedParams.set("status", status);
-    router.push(`?${updatedParams.toString()}`, undefined, { shallow: true });
+
+    // Update the "status" query parameter
+  const updatedParams = new URLSearchParams(searchParams?.toString() || "");
+  updatedParams.set("status", status);
+
+  // Push the updated URL with the new query parameter and shallow navigation
+  router.push(`?${updatedParams.toString()}`);
   };
 
   const renderActiveIndicator = (status: string) => {
@@ -34,12 +39,16 @@ const NotificationsPage: React.FC = () => {
     // Render content based on active status
     switch (active) {
       case "all":
-        return <div className="py-8">You haven't received any notification yet.</div>;
-      case "fr":
-        return <div className="py-8">You have friend requests waiting for you.</div>;
-      case "m":
+        return (
+          <div className="py-8">You haven't received any notification yet.</div>
+        );
+      case "friend-requests":
+        return (
+          <div className="py-8">You have friend requests waiting for you.</div>
+        );
+      case "messages":
         return <div className="py-8">You have new messages to read.</div>;
-      case "p":
+      case "payments":
         return <div className="py-8">You have pending payments.</div>;
       default:
         return <div className="py-8">Invalid status.</div>;
@@ -65,30 +74,30 @@ const NotificationsPage: React.FC = () => {
           </button>
           <button
             className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
-              active === "fr" ? "font-bold" : ""
+              active === "friend-requests" ? "font-bold" : ""
             }`}
-            onClick={() => handleNotification("fr")}
+            onClick={() => handleNotification("friend-requests")}
           >
             Friend Request
-            {renderActiveIndicator("fr")}
+            {renderActiveIndicator("friend-requests")}
           </button>
           <button
             className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
-              active === "m" ? "font-bold" : ""
+              active === "messages" ? "font-bold" : ""
             }`}
-            onClick={() => handleNotification("m")}
+            onClick={() => handleNotification("messages")}
           >
             Messages
-            {renderActiveIndicator("m")}
+            {renderActiveIndicator("messages")}
           </button>
           <button
             className={`text-[#434343] hover:bg-gray-300 p-2 relative ${
-              active === "p" ? "font-bold" : ""
+              active === "payments" ? "font-bold" : ""
             }`}
-            onClick={() => handleNotification("p")}
+            onClick={() => handleNotification("payments")}
           >
             Payments
-            {renderActiveIndicator("p")}
+            {renderActiveIndicator("payments")}
           </button>
         </div>
         {renderNotificationContent()}
