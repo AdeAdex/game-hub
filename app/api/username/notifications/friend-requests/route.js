@@ -28,7 +28,7 @@ export const POST = async (req) => {
     }
 
     return NextResponse.json({
-      myFriendRequest: user.incomingFriendRequests,
+      results: user.incomingFriendRequests,
       success: true,
       message: "Users with pending friend requests retrieved successfully",
     });

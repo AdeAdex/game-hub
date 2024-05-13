@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/app/components/navbar/Navbar";
@@ -26,44 +27,58 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const isFullScreen = useMediaQuery("(min-width:600px)");
 
-  useEffect(() => {
-    const statusFromUrl = searchParams?.get("status"); // Use optional chaining (?.) here
-    setActive(statusFromUrl || "all");
-  }, [searchParams]);
+  // Function to fetch friend requests based on active status
+  const fetchFriendRequests = async (status: string) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(`/api/username/notifications/${status}`, {
+        username,
+      });
 
-  const handleNotification = async (status: string) => {
-    setActive(status);
-
-    // Update the "status" query parameter
-    const updatedParams = new URLSearchParams(searchParams?.toString() || "");
-    updatedParams.set("status", status);
-
-    // Push the updated URL with the new query parameter and shallow navigation
-    router.push(`?${updatedParams.toString()}`);
-
-    // Make a POST request to fetch users with friend requests
-    if (status === "friend-requests") {
-      try {
-        setLoading(true);
-        const response = await axios.post(
-          `/api/username/notifications/friend-requests`,
-          {
-            username,
-          }
-        );
-
-        if (response.data.message) {
-          console.log("Friend Requests:", response.data.myFriendRequest);
-          setFriendRequests(response.data.myFriendRequest || []);
-        }
-      } catch (error) {
-        console.error("Error fetching users with friend requests:", error);
-      } finally {
-        setLoading(false);
+      if (response.data.message) {
+        // console.log(`${status} Data:`, response.data.results);
+        setFriendRequests(response.data.results || []);
       }
+    } catch (error) {
+      console.error(`Error fetching ${status} data:`, error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Handle initial data fetch and updates based on active status
+  useEffect(() => {
+    const statusFromUrl = searchParams?.get("status") || "all";
+    setActive(statusFromUrl);
+    fetchFriendRequests(statusFromUrl);
+  }, [searchParams]);
+
+  // Handle notification status change
+  const handleNotification = async (status: string) => {
+    setActive(status);
+
+    const updatedParams = new URLSearchParams(searchParams?.toString() || "");
+    updatedParams.set("status", status);
+    router.push(`?${updatedParams.toString()}`);
+
+    if (status === "friend-requests") {
+      await fetchFriendRequests("friend-requests");
+    }
+  };
+
+  // Handle confirmation of friend request
+  const handleConfirm = (friend: UserDataType) => {
+    console.log(`Confirm friend request from ${friend.firstName} ${friend.lastName}`);
+    // Add confirmation logic here
+  };
+
+  // Handle deletion of friend request
+  const handleDelete = (friend: UserDataType) => {
+    console.log(`Delete friend request from ${friend.firstName} ${friend.lastName}`);
+    // Add deletion logic here
+  };
+
+  // Render active indicator based on current status
   const renderActiveIndicator = (status: string) => {
     return active === status ? (
       <span className="absolute bottom-0 left-0 w-full text-center">
@@ -72,20 +87,16 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
     ) : null;
   };
 
+  // Render notification content based on active status
   const renderNotificationContent = () => {
-    // Render content based on active status
     switch (active) {
       case "all":
-        return (
-          <div className="py-8">You haven't received any notification yet.</div>
-        );
+        return <div className="py-8">You haven't received any notification yet.</div>;
       case "friend-requests":
         return (
           <div className="py-8 flex flex-wrap gap-4">
             {friendRequests.length > 0 ? (
-              // Conditionally render based on screen size
               isFullScreen ? (
-                // Render full-screen version if true
                 friendRequests.map((friend) => (
                   <FriendRequestCard
                     key={friend._id}
@@ -95,7 +106,6 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
                   />
                 ))
               ) : (
-                // Render mobile version if false
                 friendRequests.map((friend) => (
                   <FriendRequestCardMobile
                     key={friend._id}
@@ -106,13 +116,10 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
                 ))
               )
             ) : (
-              <div className="py-8 text-center text-gray-600">
-                You don't have any friend requests.
-              </div>
+              <div className="py-8 text-center text-gray-600">You don't have any friend requests.</div>
             )}
           </div>
         );
-
       case "messages":
         return <div className="py-8">You have new messages to read.</div>;
       case "payments":
@@ -120,20 +127,6 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
       default:
         return <div className="py-8">Invalid status.</div>;
     }
-  };
-
-  const handleConfirm = (friend: UserDataType) => {
-    // Handle confirm action
-    console.log(
-      `Confirm friend request from ${friend.firstName} ${friend.lastName}`
-    );
-  };
-
-  const handleDelete = (friend: UserDataType) => {
-    // Handle delete action
-    console.log(
-      `Delete friend request from ${friend.firstName} ${friend.lastName}`
-    );
   };
 
   return (
@@ -144,49 +137,25 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
           Notifications Page
         </h3>
         <div className="flex gap-4 border-b border-gray-300 overflow-x-auto w-full notification-status-container">
-          <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap ${
-              active === "all" ? "font-bold" : ""
-            }`}
-            onClick={() => handleNotification("all")}
-          >
-            All
-            {renderActiveIndicator("all")}
-          </button>
-          <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap  ${
-              active === "friend-requests" ? "font-bold" : ""
-            }`}
-            onClick={() => handleNotification("friend-requests")}
-          >
-            Friend Request
-            {renderActiveIndicator("friend-requests")}
-          </button>
-          <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap ${
-              active === "messages" ? "font-bold" : ""
-            }`}
-            onClick={() => handleNotification("messages")}
-          >
-            Messages
-            {renderActiveIndicator("messages")}
-          </button>
-          <button
-            className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap ${
-              active === "payments" ? "font-bold" : ""
-            }`}
-            onClick={() => handleNotification("payments")}
-          >
-            Payments
-            {renderActiveIndicator("payments")}
-          </button>
+          {["all", "friend-requests", "messages", "payments"].map((status) => (
+            <button
+              key={status}
+              className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap border-0 focus:outline-none ${
+                active === status ? "font-bold" : ""
+              }`}
+              onClick={() => handleNotification(status)}
+            >
+              {status.charAt(0).toUpperCase() + status.slice(1).replace("-", " ")}
+              {renderActiveIndicator(status)}
+            </button>
+          ))}
         </div>
         {loading ? (
           <div className="flex relative h-[300px]">
             <Loader />
           </div>
         ) : (
-          renderNotificationContent() // Render notification content once loaded
+          renderNotificationContent()
         )}
       </div>
       <Footer />
