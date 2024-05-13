@@ -1,38 +1,53 @@
 // app/dashboard/page.tsx
 
 "use client";
-// export const dynamic = 'force-dynamic'
+
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
+import { Bar } from "react-chartjs-2"; 
+import { UserDataType } from "../types/user";
 // import Cookies from "universal-cookie";
 // import localforage from "localforage";
 // import CryptoJS from "crypto-js";
-import Navbar from "../components/navbar/Navbar";
-import Footer from "../components/footer/Footer";
 
-
-interface UserData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  userName: string;
-}
-
-// const cookies = new Cookies();
-const SECRET_KEY = "YOUR_SECRET_KEY";
 
 const DashboardPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<UserDataType | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  
 
-  // useEffect(() => {
+  // useEffect to fetch user data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`/api/prompt/dashboard`);
+        if (response.data.success) {
+          setUserResponse(response.data);
+          setUserData(response.data.user);
+        }
+      } catch (error: any) {
+        console.error("Error fetching user data:", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (session) {
+      fetchData();
+    }
+  }, [session]);
+
+
+
+
+    // useEffect(() => {
   //   const fetchUserData = async () => {
   //     try {
   //       const encryptedData = await localforage.getItem<string>("userData");
@@ -54,32 +69,9 @@ const DashboardPage = () => {
 
   //   fetchUserData();
   // }, []);
+  
 
-  useEffect(() => {
-    // const token = cookies.get("authToken");
-
-    const fetchData = async () => {
-      try {
-        
-        const response = await axios.post(`/api/prompt/dashboard`);
-        
-        // console.log(response)
-
-        if (response.data.success === true) {
-          setUserResponse(response.data)
-          setUserData(response.data.user)
-          
-        }
-      } catch (error:any) {
-        console.error("Error fetching user data:", error.message);
-      }finally {
-        setLoading(false); // Set loading to false regardless of success or error
-      }
-    };
-
-    fetchData();
-  }, [session]);
-
+  // Render loading state
   if (loading) {
     return (
       <div>
@@ -99,9 +91,10 @@ const DashboardPage = () => {
     );
   }
 
+  // Render dashboard when data is loaded
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="flex flex-col items-center justify-center pt-16 md:pt-20 h-screen">
         <h2 className="py-8 text-3xl font-semibold">User Data</h2>
         <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
@@ -126,10 +119,37 @@ const DashboardPage = () => {
             </div>
           )}
         </div>
-        {/* Flow Diagram */}
-          </div>
-      <Footer/>
-     
+
+        {/* Bar Chart Section */}
+        <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
+          <h2 className="text-xl font-semibold mb-4">Flow Chart</h2>
+          <Bar
+            data={{
+              labels: ["January", "February", "March", "April", "May", "June"],
+              datasets: [
+                {
+                  label: "Flow Data",
+                  backgroundColor: "rgba(75,192,192,0.2)",
+                  borderColor: "rgba(75,192,192,1)",
+                  borderWidth: 1,
+                  hoverBackgroundColor: "rgba(75,192,192,0.4)",
+                  hoverBorderColor: "rgba(75,192,192,1)",
+                  data: [65, 59, 80, 81, 56, 55],
+                },
+              ],
+            }}
+            options={{
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            }}
+          />
+        </div>
+
+      </div>
+      <Footer />
     </div>
   );
 };
