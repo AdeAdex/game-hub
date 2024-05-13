@@ -160,7 +160,7 @@ function MyApp() {
         <div className="flex gap-8">
           {userData && userData.incomingFriendRequests && (
             <Link
-              className="flex relative cursor-pointer my-auto"
+              className="flex relative cursor-pointer my-auto hover:bg-gray-200 "
               href={`/${userData?.userName}/notifications?status=all`}
             >
               <IoMdNotifications size={25} className="my-auto " />
@@ -194,7 +194,7 @@ function MyApp() {
                   <div className="flex gap-3">
                     <Link
                       href={`/${userData?.userName}`}
-                      className="flex gap-2 cursor-pointer my-auto"
+                      className="flex gap-2 cursor-pointer my-auto hover:bg-gray-200 "
                     >
                       {userData?.profilePicture ? (
                         <Image
