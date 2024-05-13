@@ -37,7 +37,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
-import { Bar, ChartConfiguration, registerables } from "chart.js"; // Import Chart.js types
+//import { Bar, ChartConfiguration, registerables } from "chart.js"; // Import Chart.js types
 
 import { UserDataType } from "../types/user";
 
@@ -46,7 +46,7 @@ const DashboardPage = () => {
   const [userData, setUserData] = useState<UserDataType | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const chartRef = useRef<HTMLCanvasElement | null>(null);
+  //const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +68,7 @@ const DashboardPage = () => {
     }
   }, [session]);
 
-  useEffect(() => {
+/*  useEffect(() => {
     if (userData && userResponse && userResponse.success === true) {
       renderChart();
     }
@@ -126,7 +126,7 @@ const DashboardPage = () => {
         }
       }
     }
-  };
+  }; */
 
   if (loading) {
     return (
