@@ -117,7 +117,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Bar Chart Section */}
-        <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
+  {/* <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
           <h2 className="text-xl font-semibold mb-4">Flow Chart</h2>
           <Bar
             data={{
@@ -143,7 +143,7 @@ const DashboardPage = () => {
               },
             }}
           />
-        </div>
+        </div> */} 
       </div>
       <Footer />
     </div>
