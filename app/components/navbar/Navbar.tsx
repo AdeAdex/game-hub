@@ -158,14 +158,17 @@ function MyApp() {
           inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto`}
         />
         <div className="flex gap-8">
-          <Link className="flex relative cursor-pointer my-auto" href={`/${userData?.userName}/notifications?status=all`}>
-            <IoMdNotifications size={25} className="my-auto " />
-            {userData && userData.incomingFriendRequests && (
+          {userData && userData.incomingFriendRequests && (
+            <Link
+              className="flex relative cursor-pointer my-auto"
+              href={`/${userData?.userName}/notifications?status=all`}
+            >
+              <IoMdNotifications size={25} className="my-auto " />
               <small className="absolute flex items-center justify-center rounded-full p-1 bg-red-500 text-white text-[10px] w-4 h-4 top-2 right-1 transform translate-x-1/2 -translate-y-1/2">
                 {userData.incomingFriendRequests.length}
               </small>
-            )}
-          </Link>
+            </Link>
+          )}
           <div className="my-auto flex">
             {userData && token ? (
               loading ? (

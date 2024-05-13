@@ -22,14 +22,16 @@ const FriendRequestCard: React.FC<FriendRequestCardProps> = ({
         src={profilePicture || avatar}
         alt={`${firstName}`}
         layout="fixed"
-        className="w-28 h-28  mt-8 rounded-full border-4 border-slate-50 z-10 group-hover:scale-150 group-hover:-translate-x-24  group-hover:-translate-y-20 transition-all duration-500"
+        width={112} 
+        height={112}
+        className="w-28 h-28  mt-8 rounded-full border-4 border-slate-50 z-10 group-hover:scale-150 group-hover:-translate-x-20  group-hover:-translate-y-20 transition-all duration-500"
       />
-      <div className="z-10  group-hover:-translate-y-10 transition-all duration-500 pb-3">
+      <div className="z-10  group-hover:-translate-y-10 transition-all duration-500 pb-3 w-full">
         <span className="text-[20px] font-semibold">
           {lastName} {firstName}
         </span>
         <p className="text-[13px]">Support Specialist</p>
-        <div className="flex flex-col mt-2 w-full gap-y-2">
+        <div className="flex flex-col mt-2 w-[100%] gap-y-2 px-2">
           <button
             className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded w-full"
             onClick={() => onConfirm(friend)}
