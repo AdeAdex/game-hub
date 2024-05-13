@@ -1,21 +1,46 @@
 // app/dashboard/page.tsx
 
-"use client";
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const encryptedData = await localforage.getItem<string>("userData");
+  //       if (!encryptedData) {
+  //         throw new Error("User data not found in local storage");
+  //       }
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import Navbar from "../components/navbar/Navbar";
-import Footer from "../components/footer/Footer";
-import { Bar } from "react-chartjs-2";
-import { UserDataType } from "../types/user";
-// import Cookies from "universal-cookie";
+  //       const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
+  //       const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
+
+  //       const storedUserData: UserData = JSON.parse(decryptedString);
+  //       setUserData(storedUserData);
+  //     } catch (error:any) {
+  //       console.error("Error fetching user data:", error.message);
+  //     }finally {
+  //       setLoading(false); // Set loading to false regardless of success or error
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+
+
+  // import Cookies from "universal-cookie";
 // import localforage from "localforage";
 // import CryptoJS from "crypto-js";
 
+"use client";
+// Import React and necessary libraries
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
+import { Bar } from "react-chartjs-2"; // Import Bar from react-chartjs-2
+import { UserDataType } from "../types/user";
+
+
+// Define DashboardPage functional component
 const DashboardPage = () => {
-  const router = useRouter();
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserDataType | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
@@ -42,29 +67,6 @@ const DashboardPage = () => {
     }
   }, [session]);
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const encryptedData = await localforage.getItem<string>("userData");
-  //       if (!encryptedData) {
-  //         throw new Error("User data not found in local storage");
-  //       }
-
-  //       const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
-  //       const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
-
-  //       const storedUserData: UserData = JSON.parse(decryptedString);
-  //       setUserData(storedUserData);
-  //     } catch (error:any) {
-  //       console.error("Error fetching user data:", error.message);
-  //     }finally {
-  //       setLoading(false); // Set loading to false regardless of success or error
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
   // Render loading state
   if (loading) {
     return (
@@ -89,8 +91,8 @@ const DashboardPage = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col items-center justify-center pt-16 md:pt-20 h-screen">
-        <h2 className="py-8 text-3xl font-semibold">User Data</h2>
+      <div className="container mx-auto px-4 pt-16 md:pt-20 pb-8">
+        <h2 className="text-3xl font-semibold mb-8">User Data</h2>
         <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
           {userData && userResponse && userResponse.success === true && (
             <div className="space-y-4">
@@ -135,6 +137,7 @@ const DashboardPage = () => {
             options={{
               scales: {
                 y: {
+                  type: 'linear',
                   beginAtZero: true,
                 },
               },
@@ -147,4 +150,5 @@ const DashboardPage = () => {
   );
 };
 
+// Export DashboardPage component as default
 export default DashboardPage;
