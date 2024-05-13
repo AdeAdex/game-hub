@@ -3,7 +3,6 @@ import Image from "next/image";
 import { UserDataType } from "@/app/types/user";
 import avatar from "@/public/images/robot.png";
 
-
 interface FriendRequestCardProps {
   friend: UserDataType;
   onConfirm: (friend: UserDataType) => void;
@@ -16,7 +15,6 @@ const FriendRequestCard: React.FC<FriendRequestCardProps> = ({
   onDelete,
 }) => {
   const { firstName, lastName, profilePicture } = friend;
-
 
   return (
     <div className="group before:hover:scale-95 before:hover:h-72 before:hover:w-80 before:hover:h-44 before:hover:rounded-b-2xl before:transition-all before:duration-500 before:content-[''] before:w-80 before:h-24 before:rounded-t-2xl before:bg-gradient-to-bl from-sky-200 via-orange-200 to-orange-700 before:absolute before:top-0 w-[50%] md:w-[33.3%] lg:w-[25%] h-75 relative bg-slate-50 flex flex-col items-center justify-center gap-2 text-center rounded-2xl overflow-hidden">

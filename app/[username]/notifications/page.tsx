@@ -11,8 +11,6 @@ import Loader from "@/app/components/Loader";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import FriendRequestCardMobile from "@/app/components/userPage/notification/FriendRequestCardMobile";
 
-
-
 interface NotificationsPageProps {
   params: {
     username: string;
@@ -26,8 +24,7 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const searchParams = useSearchParams();
   const [friendRequests, setFriendRequests] = useState<UserDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-const isFullScreen = useMediaQuery("(min-width:600px)");
-
+  const isFullScreen = useMediaQuery("(min-width:600px)");
 
   useEffect(() => {
     const statusFromUrl = searchParams?.get("status"); // Use optional chaining (?.) here
@@ -83,37 +80,38 @@ const isFullScreen = useMediaQuery("(min-width:600px)");
           <div className="py-8">You haven't received any notification yet.</div>
         );
       case "friend-requests":
-        
         return (
-                <div className="py-8 flex flex-wrap gap-4">
-                  {friendRequests.length > 0 ? (
-                    // Conditionally render based on screen size
-                    isFullScreen ? (
-                      // Render full-screen version if true
-                      friendRequests.map((friend) => (
-                        <FriendRequestCard
-                          key={friend._id}
-                          friend={friend}
-                          onConfirm={handleConfirm}
-                          onDelete={handleDelete}
-                        />
-                      ))
-                    ) : (
-                      // Render mobile version if false
-                      friendRequests.map((friend) => (
-                        <FriendRequestCardMobile
-                          key={friend._id}
-                          friend={friend}
-                          onConfirm={handleConfirm}
-                          onDelete={handleDelete}
-                        />
-                      ))
-                    )
-                  ) : (
-                    <div className="py-8 text-center text-gray-600">You don't have any friend requests.</div>
-                  )}
-                </div>
-              );
+          <div className="py-8 flex flex-wrap gap-4">
+            {friendRequests.length > 0 ? (
+              // Conditionally render based on screen size
+              isFullScreen ? (
+                // Render full-screen version if true
+                friendRequests.map((friend) => (
+                  <FriendRequestCard
+                    key={friend._id}
+                    friend={friend}
+                    onConfirm={handleConfirm}
+                    onDelete={handleDelete}
+                  />
+                ))
+              ) : (
+                // Render mobile version if false
+                friendRequests.map((friend) => (
+                  <FriendRequestCardMobile
+                    key={friend._id}
+                    friend={friend}
+                    onConfirm={handleConfirm}
+                    onDelete={handleDelete}
+                  />
+                ))
+              )
+            ) : (
+              <div className="py-8 text-center text-gray-600">
+                You don't have any friend requests.
+              </div>
+            )}
+          </div>
+        );
 
       case "messages":
         return <div className="py-8">You have new messages to read.</div>;

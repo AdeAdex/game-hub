@@ -34,19 +34,19 @@ const FriendRequestCardMobile: React.FC<FriendRequestCardProps> = ({
             {lastName} {firstName}
           </div>
           <div className="flex flex mt-2 w-full gap-x-2">
-          <button
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-4 rounded w-full"
-            onClick={() => onConfirm(friend)}
-          >
-            Confirm
-          </button>
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded w-full"
-            onClick={() => onDelete(friend)}
-          >
-            Delete
-          </button>
-        </div>
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-4 rounded w-full"
+              onClick={() => onConfirm(friend)}
+            >
+              Confirm
+            </button>
+            <button
+              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded w-full"
+              onClick={() => onDelete(friend)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>
