@@ -141,7 +141,7 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
           {["all", "friend-requests", "messages", "payments"].map((status) => (
             <button
               key={status}
-              className={`text-[#434343] hover:bg-gray-300 p-2 relative whitespace-nowrap border-0 focus:outline-none ${
+              className={`text-[#434343] hover:bg-gray-100 p-2 relative whitespace-nowrap border-0 focus:outline-none ${
                 active === status ? "font-bold" : ""
               }`}
               onClick={() => handleNotification(status)}
