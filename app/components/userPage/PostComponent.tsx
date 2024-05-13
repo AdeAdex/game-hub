@@ -23,8 +23,6 @@ interface PostProps {
   posts: PostDataType[];
   likedPosts: string[];
   setLikedPosts:React.Dispatch<React.SetStateAction<string[]>>;
-  // handleReaction: (postId: string) => void;
-  // handleShare: (postId: string, userId: string) => void;
   username: string;
   user: UserDataType;
   setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>;
@@ -41,8 +39,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   setPosts,
   likedPosts,
   setLikedPosts,
-  // handleReaction,
-  // handleShare,
   username,
   loggedInUserId,
   openCreatePostModal,
@@ -62,7 +58,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [comments, setComments] = useState<CommentDataType[]>([]);
   
 
-  // const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const router = useRouter();
 
   const handleShare = async (postId: string, userId: string ) => {
@@ -199,16 +194,12 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     const elapsedDays = Math.floor(elapsedHours / 24);
     return `${elapsedDays} day${elapsedDays > 1 ? "s" : ""} ago`;
   };
-
-  // const handlePostPage = (postId: string) => {
-  //   router.push(`/post/${postId}`);
-  // };
+ 
 
   const handlePostPage = (postId: string) => {
     router.push(`/user/${user.userName}/post/${postId}`);
   };
 
-  // console.log("post mi re", posts);
 
   return (
     <div className="">
