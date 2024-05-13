@@ -2,19 +2,17 @@
 
 "use client";
 
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
-import { Bar } from "react-chartjs-2"; 
+import { Bar } from "react-chartjs-2";
 import { UserDataType } from "../types/user";
 // import Cookies from "universal-cookie";
 // import localforage from "localforage";
 // import CryptoJS from "crypto-js";
-
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -44,10 +42,7 @@ const DashboardPage = () => {
     }
   }, [session]);
 
-
-
-
-    // useEffect(() => {
+  // useEffect(() => {
   //   const fetchUserData = async () => {
   //     try {
   //       const encryptedData = await localforage.getItem<string>("userData");
@@ -69,7 +64,6 @@ const DashboardPage = () => {
 
   //   fetchUserData();
   // }, []);
-  
 
   // Render loading state
   if (loading) {
@@ -147,7 +141,6 @@ const DashboardPage = () => {
             }}
           />
         </div>
-
       </div>
       <Footer />
     </div>
