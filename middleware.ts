@@ -64,7 +64,7 @@ export function middleware(request: NextRequest) {
 
   if (pathname.startsWith("/")) {
     const segments = pathname.split("/");
-    if (segments.length === 3 && segments[1] !== "" && segments[2] === "notifications") {
+    if (segments.length === 3 && segments[1] !== "" && segments[2] === "notifications" || segments[2] === "library" ) {
       // It's a dynamic username notifications page (/username/notifications)
       return NextResponse.next();
     }
