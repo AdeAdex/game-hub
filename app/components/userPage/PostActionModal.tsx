@@ -230,22 +230,16 @@ const handleAction = async (action: string, postId: string) => {
             prevPosts.filter((post) => post._id !== postId)
           );
         }
-      } else {
-        // Handle unsuccessful action
-         
-        setActionResponse(response.data.message);
-        enqueueSnackbar(response.data.message, { variant: "error" });
-      }
+      } 
 
-      handleClose();
     }
-  } catch (error: any) {
-    //alert() 
+  } catch (error: any) { 
     setActionResponse(error.response.data.message );
-        enqueueSnackbar(error.response.data.message, { variant: "error" });
+    enqueueSnackbar(error.response.data.message, { variant: "error" });
     // Handle other types of errors if necessary
   } finally {
     setLoading(false); // Set loading to false when action completes
+    handleClose(); 
   }
 };
 
