@@ -29,7 +29,7 @@ const LibraryPage: React.FC<LibraryPageProps> = ({ params }) => {
       <Navbar />
       <div className="relative w-full lg:w-[60%] mx-auto bg-white rounded-sm border-2 border-gray-300 py-[30px] px-[10px] md:px-[30px]">
         <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] pb-[30px]">
-          Notifications Page
+          Library Page
         </h3>
       </div>
       <Footer />
