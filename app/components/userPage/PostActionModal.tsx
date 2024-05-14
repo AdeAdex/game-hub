@@ -232,13 +232,15 @@ const handleAction = async (action: string, postId: string) => {
         }
       } else {
         // Handle unsuccessful action
+        alert(response.data.message); 
         setActionResponse(response.data.message);
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
 
       handleClose();
     }
-  } catch (error) {
+  } catch (error: any) {
+    alert(error) 
     console.error("Error:", error);
     // Handle other types of errors if necessary
   } finally {
