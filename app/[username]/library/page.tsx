@@ -20,11 +20,10 @@ interface LibraryPageProps {
 const LibraryPage: React.FC<LibraryPageProps> = ({ params }) => {
   const { username } = params;
   const router = useRouter();
-  const [active, setActive] = useState("all");
   const searchParams = useSearchParams();
-  const [friendRequests, setFriendRequests] = useState<UserDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const isFullScreen = useMediaQuery("(min-width:600px)");
+  
   return (
     <div className="bg-gray-100 min-h-screen py-[100px]">
       <Navbar />
