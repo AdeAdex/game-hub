@@ -17,7 +17,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">
           Explore
         </small>
-        <div className="px-4 nav-dropdown">My library</div>
+        <Link href={`/${username}/library`} className="px-4 nav-dropdown">
+          My library 
+        </Link>
         <div className="px-4 nav-dropdown">Recommendation</div>
         <div className="px-4 nav-dropdown">Game Jams</div>
         <small className="bg-[#F4F4F4] uppercase px-4 nav-dropdown py-1">
