@@ -223,15 +223,18 @@ const handleCopy = (contentType: string, postId: string) => {
         if (response.data.success) {
           setActionResponse(response.data.message);
           enqueueSnackbar(response.data.message, { variant: "success" });
-          console.log(response.data.message);
           // Update local state after action
           if (action === "delete" || action === "hide") {
             setPosts((prevPosts) =>
               prevPosts.filter((post) => post._id !== postId)
             );
           }
-          handleClose();
-        }
+          
+        } else {
+          setActionResponse(response.data.message);
+          enqueueSnackbar(response.data.message, { variant: "success" });
+        } 
+        handleClose();
       }
     } catch (error) {
       console.error("Error:", error);
