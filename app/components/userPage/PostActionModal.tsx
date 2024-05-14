@@ -232,7 +232,7 @@ const handleAction = async (action: string, postId: string) => {
         }
       } else {
         // Handle unsuccessful action
-        alert(response.data.message); 
+         
         setActionResponse(response.data.message);
         enqueueSnackbar(response.data.message, { variant: "error" });
       }
@@ -240,8 +240,9 @@ const handleAction = async (action: string, postId: string) => {
       handleClose();
     }
   } catch (error: any) {
-    alert(error) 
-    console.error("Error:", error);
+    //alert() 
+    setActionResponse(error.response.data.message );
+        enqueueSnackbar(error.response.data.message, { variant: "error" });
     // Handle other types of errors if necessary
   } finally {
     setLoading(false); // Set loading to false when action completes
