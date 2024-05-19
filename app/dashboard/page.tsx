@@ -29,24 +29,21 @@
 // import CryptoJS from "crypto-js";
 
 "use client";
-// Import React and necessary libraries
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
-import { Bar } from "react-chartjs-2"; // Import Bar from react-chartjs-2
+import { Bar } from "react-chartjs-2";
 import { UserDataType } from "../types/user";
 
-
-// Define DashboardPage functional component
 const DashboardPage = () => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserDataType | null>(null);
   const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const chartRef = useRef<any>(null);
 
-  // useEffect to fetch user data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -67,7 +64,57 @@ const DashboardPage = () => {
     }
   }, [session]);
 
-  // Render loading state
+  useEffect(() => {
+    if (userData && userResponse && userResponse.success === true) {
+      renderChart();
+    }
+    return () => {
+      destroyChart();
+    };
+  }, [userData, userResponse]);
+
+  const renderChart = () => {
+    if (chartRef.current) {
+      const ctx = chartRef.current.getContext("2d");
+      if (ctx) {
+        const newChartInstance = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June"],
+            datasets: [
+              {
+                label: "Flow Data",
+                backgroundColor: "rgba(75,192,192,0.2)",
+                borderColor: "rgba(75,192,192,1)",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(75,192,192,0.4)",
+                hoverBorderColor: "rgba(75,192,192,1)",
+                data: [65, 59, 80, 81, 56, 55],
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                type: "linear",
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+        // Save chart instance to state or ref
+        // Example: setChartInstance(newChartInstance);
+      }
+    }
+  };
+
+  const destroyChart = () => {
+    if (chartRef.current) {
+      // Destroy the existing chart instance
+      chartRef.current.destroy();
+    }
+  };
+
   if (loading) {
     return (
       <div>
@@ -87,7 +134,6 @@ const DashboardPage = () => {
     );
   }
 
-  // Render dashboard when data is loaded
   return (
     <div>
       <Navbar />
@@ -119,30 +165,7 @@ const DashboardPage = () => {
         {/* Bar Chart Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
           <h2 className="text-xl font-semibold mb-4">Flow Chart</h2>
-          <Bar
-            data={{
-              labels: ["January", "February", "March", "April", "May", "June"],
-              datasets: [
-                {
-                  label: "Flow Data",
-                  backgroundColor: "rgba(75,192,192,0.2)",
-                  borderColor: "rgba(75,192,192,1)",
-                  borderWidth: 1,
-                  hoverBackgroundColor: "rgba(75,192,192,0.4)",
-                  hoverBorderColor: "rgba(75,192,192,1)",
-                  data: [65, 59, 80, 81, 56, 55],
-                },
-              ],
-            }}
-            options={{
-              scales: {
-                y: {
-                  type: 'linear',
-                  beginAtZero: true,
-                },
-              },
-            }}
-          />
+          <canvas ref={chartRef} />
         </div>
       </div>
       <Footer />
@@ -150,5 +173,4 @@ const DashboardPage = () => {
   );
 };
 
-// Export DashboardPage component as default
 export default DashboardPage;
