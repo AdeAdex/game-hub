@@ -98,12 +98,11 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow flex flex-col md:flex-row items-center justify-between container mx-auto px-4 pt-16 md:pt-20 pb-8 bg-gray-100">
-        {/* <h2 className="text-4xl font-bold mb-8 text-gray-800">User Dashboard</h2> */}
-        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-xl w-full">
+      <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full text-center">
           {userData && (
-            <div className="space-y-6 text-center">
-              <div className="mx-auto rounded-full w-32 h-32 relative mb-4 overflow-hidden">
+            <div className="space-y-6">
+              <div className="mx-auto rounded-full w-32 h-32 relative overflow-hidden border-4 border-gray-300">
                 <Image
                   src={userData.profilePicture || "/default-profile.png"}
                   alt="Profile"
@@ -111,30 +110,13 @@ const DashboardPage = () => {
                   objectFit="cover"
                 />
               </div>
-              <div className="text-lg font-medium text-gray-700">
-                <div className="mb-2">
-                  <strong className="mr-2">UserName:</strong>
-                  <span>{userData.userName}</span>
-                </div>
-                <div className="mb-2">
-                  <strong className="mr-2">First Name:</strong>
-                  <span>{userData.firstName}</span>
-                </div>
-                <div className="mb-2">
-                  <strong className="mr-2">Last Name:</strong>
-                  <span>{userData.lastName}</span>
-                </div>
-                <div className="mb-2">
-                  <strong className="mr-2">Email:</strong>
-                  <span>{userData.email}</span>
-                </div>
-              </div>
+              <div className="text-2xl font-bold text-gray-800">{userData.userName}</div>
+              <div className="text-lg text-gray-600">{userData.firstName} {userData.lastName}</div>
             </div>
           )}
         </div>
 
-        {/* Bar Chart Section */}
-        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-xl w-full md:mt-[100px]">
+        <div className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto w-full">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">Login Flow Chart</h2>
           <Bar data={chartData} options={chartOptions} />
         </div>
