@@ -51,7 +51,7 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
   
       // Find the user associated with the session token
       const user = await User.findOne({ email: decodedToken.email }).select(
-        "-password"
+        "-password -resetPasswordToken -socialId"
       );
   
       if (!user) {
@@ -59,8 +59,30 @@ import { verifyToken } from "../../../utils/jwtUtils.js";
         return NextResponse.json({ success: false, error: "User not found" });
       }
   
-      // Return success response with user data
-      return NextResponse.json({ success: true, user });
+     // Get the login data for the current month
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const loginDataForMonth = user.loginData.filter((login) => {
+      const loginDate = new Date(login.date);
+      return (
+        loginDate.getMonth() === currentMonth &&
+        loginDate.getFullYear() === currentYear
+      );
+    });
+
+    // Calculate login counts per day for the current month
+    const loginCounts = Array.from({ length: 31 }, () => 0); // Assuming a maximum of 31 days in a month
+    loginDataForMonth.forEach((login) => {
+      const loginDate = new Date(login.date).getDate();
+      loginCounts[loginDate - 1] += login.count;
+    });
+
+    // Return success response with user data and login counts
+    return NextResponse.json({
+      success: true,
+      user,
+      loginCounts,
+    });
     } catch (error) {
       console.error("Error handling POST request:", error);
       return NextResponse.json({

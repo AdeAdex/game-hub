@@ -1,6 +1,11 @@
 // /app/models/user.js
 import mongoose from "mongoose";
 
+const loginDataSchema = new mongoose.Schema({
+  date: { type: Date, required: true },
+  count: { type: Number, required: true, default: 1 },
+});
+
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
@@ -18,13 +23,14 @@ const userSchema = new mongoose.Schema(
     outgoingFriendRequests: [
       { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     ],
-    savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], // Array to store saved post IDs
+    savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
     reportedPosts: [
       {
         postId: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
         reason: String,
       },
-    ], // Array to store reported post IDs and reasons
+    ],
+    loginData: [loginDataSchema], // Add loginData field
   },
   { timestamps: true }
 );

@@ -68,6 +68,91 @@ const handler = NextAuth({
   },
 });
 
+// async function handleAuthentication(credentials, profile) {
+//   try {
+//     await connectToDb();
+
+//     if (credentials) {
+//       const { email, password } = credentials;
+//       const user = await User.findOne({
+//         $or: [{ email: email }, { userName: email }],
+//       });
+
+//       if (!user) {
+//         throw new Error("User not found");
+//       }
+
+//       if (user.socialId && !user.password) {
+//         // Check if the user with the provided socialId exists
+//         const socialUser = await User.findOne({
+//           socialId: user.socialId,
+//         });
+
+//         const token = generateToken({ email: user.email });
+//         cookies().set("authToken", token, {
+//           httpOnly: true,
+//           maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
+//           path: "/",
+//           sameSite: "strict",
+//         });
+
+//         return { email: user.email, token, ...user.toObject() };
+//       } else {
+//         const passwordMatch = await comparePassword(password, user.password);
+
+//         if (!passwordMatch) {
+//           throw new Error("Invalid email or password");
+//         }
+
+//         const token = generateToken({ email: user.email });
+//         cookies().set("authToken", token, {
+//           httpOnly: true,
+//           maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
+//           path: "/",
+//           sameSite: "strict",
+//         });
+
+//         return { email: user.email, token, ...user.toObject() };
+//       }
+//     } else if (profile) {
+//       const userExists = await User.findOne({ email: profile.email });
+
+//       if (!userExists) {
+//         const nameParts = profile.name.split(" ");
+//         const lastName = nameParts.slice(1).join(" ");
+//         const firstName = nameParts[0];
+//         const profilePicture = profile.avatar_url || profile.picture;
+//         const userName = profile.login ? profile.login : lastName;
+//         const socialId = profile.id;
+
+//         const newUser = new User({
+//           email: profile.email,
+//           firstName,
+//           lastName,
+//           userName: userName,
+//           profilePicture: profilePicture,
+//           socialId,
+//         });
+
+//         await newUser.save();
+//       }
+
+//       const token = generateToken({ email: profile.email });
+//       cookies().set("authToken", token, {
+//         httpOnly: true,
+//         maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
+//         path: "/",
+//         sameSite: "strict",
+//       });
+
+//       return true;
+//     }
+//   } catch (error) {
+//     throw new Error(error.message);
+//   }
+// }
+
+
 async function handleAuthentication(credentials, profile) {
   try {
     await connectToDb();
@@ -83,7 +168,6 @@ async function handleAuthentication(credentials, profile) {
       }
 
       if (user.socialId && !user.password) {
-        // Check if the user with the provided socialId exists
         const socialUser = await User.findOne({
           socialId: user.socialId,
         });
@@ -95,6 +179,8 @@ async function handleAuthentication(credentials, profile) {
           path: "/",
           sameSite: "strict",
         });
+
+        trackLogin(user); // Track login
 
         return { email: user.email, token, ...user.toObject() };
       } else {
@@ -111,6 +197,8 @@ async function handleAuthentication(credentials, profile) {
           path: "/",
           sameSite: "strict",
         });
+
+        trackLogin(user); // Track login
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -145,11 +233,31 @@ async function handleAuthentication(credentials, profile) {
         sameSite: "strict",
       });
 
+      const user = await User.findOne({ email: profile.email });
+      trackLogin(user); // Track login
+
       return true;
     }
   } catch (error) {
     throw new Error(error.message);
   }
 }
+
+// Function to track login
+async function trackLogin(user) {
+  const currentDate = new Date();
+  const loginEntry = user.loginData.find(entry =>
+    entry.date.toDateString() === currentDate.toDateString()
+  );
+
+  if (loginEntry) {
+    loginEntry.count += 1;
+  } else {
+    user.loginData.push({ date: currentDate, count: 1 });
+  }
+
+  await user.save();
+}
+
 
 export { handler as GET, handler as POST };
