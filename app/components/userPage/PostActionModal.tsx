@@ -176,70 +176,74 @@ const handleCopy = (contentType: string, postId: string) => {
 };
  
  
+const handleAction = async (action: string, postId: string) => {
+  try {
+    setLoading(true);
+    let endpoint = "";
+    let successMessage = "";
+    let method = "";
 
-  const handleAction = async (action: string, postId: string) => {
-    try {
-      setLoading(true);
-      let endpoint = "";
-      let successMessage = "";
-      let method = "";
-
-      switch (action) {
-        case "delete":
-          endpoint = `/api/posts/delete`;
-          method = "DELETE";
-          successMessage = "Post deleted successfully.";
-          break;
-        case "edit":
-          endpoint = `/api/posts/edit`;
-          method = "PUT";
-          successMessage = "Post deleted successfully.";
-          break;
-        case "hide":
-          endpoint = `/api/posts/hide`;
-          method = "PUT";
-          successMessage = "Post hidden successfully.";
-          break;
-        case "save":
-          endpoint = `/api/posts/save`;
-          method = "POST";
-          successMessage = "Post saved successfully.";
-          break;
-        case "report":
-          endpoint = `/api/posts/report`;
-          method = "POST";
-          successMessage = "Post deleted successfully.";
-          break;
-        default:
-          break;
-      }
-
-      if (endpoint && method) {
-        const response = await axios({
-          method: method,
-          url: endpoint,
-          data: { userId: loggedInUserId, postId },
-        });
-        if (response.data.success) {
-          setActionResponse(response.data.message);
-          enqueueSnackbar(response.data.message, { variant: "success" });
-          console.log(response.data.message);
-          // Update local state after action
-          if (action === "delete" || action === "hide") {
-            setPosts((prevPosts) =>
-              prevPosts.filter((post) => post._id !== postId)
-            );
-          }
-          handleClose();
-        }
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error
-    } finally {
-      setLoading(false); // Set loading to false when action completes
+    switch (action) {
+      case "delete":
+        endpoint = `/api/posts/delete`;
+        method = "DELETE";
+        successMessage = "Post deleted successfully.";
+        break;
+      case "edit":
+        endpoint = `/api/posts/edit`;
+        method = "PUT";
+        successMessage = "Post edited successfully.";
+        break;
+      case "hide":
+        endpoint = `/api/posts/hide`;
+        method = "PUT";
+        successMessage = "Post hidden successfully.";
+        break;
+      case "save":
+        endpoint = `/api/posts/save`;
+        method = "POST";
+        successMessage = "Post saved successfully.";
+        break;
+      case "report":
+        endpoint = `/api/posts/report`;
+        method = "POST";
+        successMessage = "Post reported successfully.";
+        break;
+      default:
+        break;
     }
-  };
+
+    if (endpoint && method) {
+      const response = await axios({
+        method: method,
+        url: endpoint,
+        data: { userId: loggedInUserId, postId },
+      });
+
+      if (response.data.success) {
+        setActionResponse(response.data.message);
+        enqueueSnackbar(response.data.message, { variant: "success" });
+
+        // Update local state after successful action
+        if (action === "delete" || action === "hide") {
+          setPosts((prevPosts) =>
+            prevPosts.filter((post) => post._id !== postId)
+          );
+        }
+      } 
+
+    }
+  } catch (error: any) { 
+    setActionResponse(error.response.data.message );
+    enqueueSnackbar(error.response.data.message, { variant: "error" });
+    // Handle other types of errors if necessary
+  } finally {
+    setLoading(false); // Set loading to false when action completes
+    handleClose(); 
+  }
+};
+
+
   return (
     <div>
       <Modal

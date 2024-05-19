@@ -64,7 +64,7 @@ export function middleware(request: NextRequest) {
 
   if (pathname.startsWith("/")) {
     const segments = pathname.split("/");
-    if (segments.length === 3 && segments[1] !== "" && segments[2] === "notifications") {
+    if (segments.length === 3 && segments[1] !== "" && segments[2] === "notifications" || segments[2] === "library" ) {
       // It's a dynamic username notifications page (/username/notifications)
       return NextResponse.next();
     }
@@ -90,22 +90,6 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Check if the route is a dynamic post page (/post/:postId)
- /* const postMatch = pathname.match(/^\/post\/([a-zA-Z0-9_-]+)$/);
-  if (postMatch) {
-    // Extract postId from the pathname
-    const postId = postMatch[1];
-
-    // Implement your authorization logic here (e.g., check if the user is authorized to access this specific post)
-    const userAuthorized = true; // Replace with your authorization logic
-
-    if (userAuthorized) {
-      return NextResponse.next(); // Allow access to the post route
-    } else {
-      // User is not authorized to access this post, handle accordingly (e.g., return an error or redirect)
-      // return NextResponse.error(new Error("Unauthorized access to post"));
-    }
-  }*/
 
   // If the user is authenticated, allow access to the dashboard
   if (pathname === "/dashboard") {
