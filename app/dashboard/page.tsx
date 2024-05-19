@@ -96,7 +96,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full text-center">
@@ -116,9 +116,36 @@ const DashboardPage = () => {
           )}
         </div>
 
-        <div className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto w-full">
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">Login Flow Chart</h2>
           <Bar data={chartData} options={chartOptions} />
+        </div>
+
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">Recent Activities</h2>
+          <ul className="space-y-4">
+            <li className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
+              </div>
+              <div className="text-lg text-gray-700">Logged in from New York</div>
+              <div className="text-sm text-gray-500">2023-05-01</div>
+            </li>
+            <li className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
+              </div>
+              <div className="text-lg text-gray-700">Changed password</div>
+              <div className="text-sm text-gray-500">2023-04-30</div>
+            </li>
+            <li className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
+              </div>
+              <div className="text-lg text-gray-700">Updated profile information</div>
+              <div className="text-sm text-gray-500">2023-04-28</div>
+            </li>
+          </ul>
         </div>
       </div>
       <Footer />
