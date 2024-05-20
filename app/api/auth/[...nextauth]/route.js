@@ -70,14 +70,17 @@ const handler = NextAuth({
 });
 
 // Function to log activity
-const logActivity = async (userId) => {
+const logActivity = async (userId, device, location) => {
   const activity = new Activity({
     userId,
     type: 'login',
     description: 'You logged in',
+    device, // Add device
+    location, // Add location
   });
   await activity.save();
 };
+
 
 async function handleAuthentication(credentials, profile) {
   try {
@@ -103,7 +106,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id); // Log activity
+        await logActivity(user._id, device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       } else {
@@ -122,7 +125,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id); // Log activity
+        await logActivity(user._id, device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -159,7 +162,7 @@ async function handleAuthentication(credentials, profile) {
 
       const user = await User.findOne({ email: profile.email });
       await trackLogin(user); // Track login
-      await logActivity(user._id); // Log activity
+      await logActivity(user._id, device, location); // Log activity
 
       return true;
     }
