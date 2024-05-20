@@ -74,7 +74,7 @@ const logActivity = async (userId) => {
   const activity = new Activity({
     userId,
     type: 'login',
-    description: 'User logged in',
+    description: 'You logged in',
   });
   await activity.save();
 };
