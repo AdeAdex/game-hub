@@ -149,8 +149,8 @@ const DashboardPage = () => {
                   </div>
                   <div className="text-lg text-gray-700">{activity.description}</div>
                   <div className="text-sm text-gray-500">{formatDateTime(activity.date)}</div>
-                  <div className="text-sm text-gray-500">Device: {activity.device}</div>
-                  <div className="text-sm text-gray-500">Location: {`Lat: ${activity.location.latitude}, Lon: ${activity.location.longitude}`}</div>
+                  <div className="text-sm text-gray-500">Device: {activity?.device}</div>
+                  <div className="text-sm text-gray-500">Location: {`Lat: ${activity?.location?.latitude}, Lon: ${activity.location.longitude}`}</div>
                 </li>
               ))
             ) : (
