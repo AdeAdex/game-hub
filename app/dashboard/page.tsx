@@ -9,13 +9,14 @@ import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
-import { UserDataType } from "../types/user";
+import { UserDataType, ActivityType } from "../types/user";
 
 Chart.register(...registerables);
 
 const DashboardPage = () => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState<UserDataType | null>(null);
+  const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [loginCounts, setLoginCounts] = useState<number[]>([]);
 
@@ -26,6 +27,7 @@ const DashboardPage = () => {
         if (response.data.success) {
           setUserData(response.data.user);
           setLoginCounts(response.data.loginCounts);
+          setRecentActivities(response.data.recentActivities);
         }
       } catch (error: any) {
         console.error("Error fetching user data:", error);
@@ -124,27 +126,15 @@ const DashboardPage = () => {
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">Recent Activities</h2>
           <ul className="space-y-4">
-            <li className="flex items-center space-x-4">
-              <div className="flex-shrink-0">
-                <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
-              </div>
-              <div className="text-lg text-gray-700">Logged in from New York</div>
-              <div className="text-sm text-gray-500">2023-05-01</div>
-            </li>
-            <li className="flex items-center space-x-4">
-              <div className="flex-shrink-0">
-                <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
-              </div>
-              <div className="text-lg text-gray-700">Changed password</div>
-              <div className="text-sm text-gray-500">2023-04-30</div>
-            </li>
-            <li className="flex items-center space-x-4">
-              <div className="flex-shrink-0">
-                <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
-              </div>
-              <div className="text-lg text-gray-700">Updated profile information</div>
-              <div className="text-sm text-gray-500">2023-04-28</div>
-            </li>
+            {recentActivities.map((activity, index) => (
+              <li key={index} className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
+                </div>
+                <div className="text-lg text-gray-700">{activity.description}</div>
+                <div className="text-sm text-gray-500">{new Date(activity.date).toLocaleDateString()}</div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -154,35 +144,3 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
-
-
-
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const encryptedData = await localforage.getItem<string>("userData");
-  //       if (!encryptedData) {
-  //         throw new Error("User data not found in local storage");
-  //       }
-
-  //       const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
-  //       const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
-
-  //       const storedUserData: UserData = JSON.parse(decryptedString);
-  //       setUserData(storedUserData);
-  //     } catch (error:any) {
-  //       console.error("Error fetching user data:", error.message);
-  //     }finally {
-  //       setLoading(false); // Set loading to false regardless of success or error
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-
-  // import Cookies from "universal-cookie";
-// import localforage from "localforage";
-// import CryptoJS from "crypto-js";
-
