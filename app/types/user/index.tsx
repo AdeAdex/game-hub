@@ -11,15 +11,13 @@ export interface UserDataType {
   currentFriends?: string[];
 }
 
+// /app/types/activity.ts
+
 export interface ActivityType {
   userId: string;
-  type: string;
+  type: 'login' | 'password_change' | 'profile_update';
   description: string;
-  device: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
+  device: string; // Add device field
+  location: string; // Change location to string
   date: string;
 }
-
