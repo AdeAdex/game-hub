@@ -48,7 +48,7 @@ function MyApp() {
     e.preventDefault();
     setSubmitting(true);
 
-    try {
+    {/* try {
       const result = await signIn("credentials", {
         email,
         password,
@@ -56,11 +56,7 @@ function MyApp() {
       });
 
       if (result && !result.error) {
-        // console.log(session?.user)
-       /* enqueueSnackbar("Login Successfully", {
-          variant: "success",
-        });*/
-        // router.push("/dashboard");
+        
       } else {
         const errorMessage = result?.error || "Error during login";
         enqueueSnackbar(errorMessage, { variant: "error" });
@@ -70,8 +66,58 @@ function MyApp() {
       enqueueSnackbar("Error during login", { variant: "error" });
     } finally {
       setSubmitting(false);
+    } */} 
+
+    try {
+      // Get device information
+      const device = navigator.userAgent;
+      
+      // Get location information
+      navigator.geolocation.getCurrentPosition((position) => {
+        const location = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+
+        // Sign in with credentials and include device and location in the request payload
+        signInWithCredentials(email, password, device, location);
+      }, (error) => {
+        console.error("Error getting location:", error.message);
+        // If location access is denied or not available, sign in without location
+        signInWithCredentials(email, password, device, null);
+      });
+    } catch (error: any) {
+      console.error("Error during login:", error.message);
+      enqueueSnackbar("Error during login", { variant: "error" });
+    } finally {
+      setSubmitting(false);
     }
   };
+
+  // Function to sign in with credentials and include device and location in request payload
+  const signInWithCredentials = async (email, password, device, location) => {
+    try {
+      // Sign in with credentials and include device and location in the request payload
+      const result = await signIn("credentials", {
+        email,
+        password,
+        device, // Include device information
+        location, // Include location information
+        redirect: false, // Prevent automatic redirection after sign-in
+      });
+
+      if (result && !result.error) {
+        // Handle successful sign-in
+      } else {
+        const errorMessage = result?.error || "Error during login";
+        enqueueSnackbar(errorMessage, { variant: "error" });
+      }
+    } catch (error: any) {
+      console.error("Error during login:", error.message);
+      enqueueSnackbar("Error during login", { variant: "error" });
+    }
+  };
+
 
   return (
     <form action="" onSubmit={handleSubmit}>
