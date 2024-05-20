@@ -43,6 +43,19 @@ const DashboardPage = () => {
     }
   }, [session]);
 
+  const formatDateTime = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+
   const currentMonth = new Date().getMonth();
   const daysInMonth = new Date(new Date().getFullYear(), currentMonth + 1, 0).getDate();
   const labels = Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
@@ -135,7 +148,7 @@ const DashboardPage = () => {
                     <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
                   </div>
                   <div className="text-lg text-gray-700">{activity.description}</div>
-                  <div className="text-sm text-gray-500">{new Date(activity.date).toLocaleDateString()}</div>
+                  <div className="text-sm text-gray-500">{formatDateTime(activity.date)}</div>
                 </li>
               ))
             ) : (
