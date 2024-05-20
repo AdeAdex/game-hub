@@ -24,7 +24,8 @@ const handler = NextAuth({
     CredentialsProvider({
       credentials: {},
       async authorize(credentials) {
-        return handleAuthentication(credentials);
+        const { device, location } = credentials;
+        return handleAuthentication(credentials, device, location);
       },
     }),
   ],
@@ -58,9 +59,10 @@ const handler = NextAuth({
       }
     },
     async signIn({ profile, credentials }) {
+      const { device, location } = credentials;
       try {
         await connectToDb();
-        return handleAuthentication(credentials, profile);
+        return handleAuthentication(credentials, profile, device, location);
       } catch (error) {
         console.error("Error occurred during signIn:", error);
         return false;
@@ -82,7 +84,7 @@ const logActivity = async (userId, device, location) => {
 };
 
 
-async function handleAuthentication(credentials, profile) {
+async function handleAuthentication(credentials, profile, device, location) {
   try {
     await connectToDb();
 
