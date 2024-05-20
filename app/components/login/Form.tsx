@@ -95,7 +95,12 @@ function MyApp() {
   };
 
   // Function to sign in with credentials and include device and location in request payload
-  const signInWithCredentials = async (email, password, device, location) => {
+  const signInWithCredentials = async (
+    email: string,
+  password: string,
+  device: string,
+  location: { latitude: number; longitude: number } | null
+  ) => {
     try {
       // Sign in with credentials and include device and location in the request payload
       const result = await signIn("credentials", {
