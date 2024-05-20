@@ -55,7 +55,7 @@ export const POST = async (req, res) => {
     await user.save();
 
     // Log the password change activity
-    await logActivity(user._id, 'password_change', 'User changed password');
+    await logActivity(user._id, 'password_change', 'You changed password');
 
     console.log("Password reset successfully");
     return NextResponse.json({ message: "Password reset successfully" }, { status: 200 });
