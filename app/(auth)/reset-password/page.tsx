@@ -34,6 +34,8 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const { enqueueSnackbar } = useSnackbar();
+  const [device, setDevice] = useState("");
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     const queryToken = new URLSearchParams(window.location.search).get("token");
