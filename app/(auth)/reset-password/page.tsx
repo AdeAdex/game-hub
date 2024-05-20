@@ -11,6 +11,7 @@ import Navbar from "@/app/components/navbar/Navbar";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import Loader from "@/app/components/Loader";
+import Bowser from "bowser";
 
 const ResetPassword = () => {
   return (
@@ -85,6 +86,40 @@ function MyApp() {
     verifyTokenValidity();
   }, [enqueueSnackbar]);
 
+  useEffect(() => {
+    const getDeviceAndLocation = async () => {
+      try {
+        // Get device info
+        const browser = Bowser.getParser(window.navigator.userAgent);
+        const deviceInfo = browser.getResult();
+        setDevice(`${deviceInfo.platform.type} - ${deviceInfo.browser.name}`);
+
+        // Get location info
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              const locationResponse = await axios.get(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+              );
+              setLocation(locationResponse.data.display_name);
+            },
+            (error) => {
+              console.error("Error fetching location: ", error);
+              setLocation("Location permission denied");
+            }
+          );
+        } else {
+          setLocation("Geolocation not supported");
+        }
+      } catch (err) {
+        console.error("Error fetching device and location info: ", err);
+      }
+    };
+
+    getDeviceAndLocation();
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -133,6 +168,8 @@ function MyApp() {
                     const response = await axios.post("/api/reset-password", {
                       token,
                       password: values.password,
+                      device, 
+                      location
                     });
                     console.log(response.data);
 
