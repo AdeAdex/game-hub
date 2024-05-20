@@ -7,10 +7,7 @@ const ActivitySchema = new mongoose.Schema({
   type: { type: String, enum: ['login', 'password_change', 'profile_update'], required: true },
   description: { type: String, required: true },
   device: { type: String, required: true }, // Add device field
-  location: { // Add location field
-    latitude: { type: Number },
-    longitude: { type: Number },
-  },
+  location: { type: String, required: true }, // Change location to string
   date: { type: Date, default: Date.now },
 });
 
