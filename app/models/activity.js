@@ -1,14 +1,12 @@
-// models/activity.js
 import mongoose from "mongoose";
 
-const activitySchema = new mongoose.Schema(
-  {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    activityType: { type: String, required: true },
-    timestamp: { type: Date, default: Date.now }
-  },
-  { timestamps: true }
-);
+const ActivitySchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  type: { type: String, enum: ['login', 'password_change', 'profile_update'], required: true },
+  description: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+});
 
-const Activity = mongoose.models?.Activity || mongoose.model("Activity", activitySchema);
+const Activity = mongoose.models.Activity || mongoose.model("Activity", ActivitySchema);
+
 export default Activity;
