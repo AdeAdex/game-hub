@@ -1,3 +1,5 @@
+// /app/dashboard/page.tsx
+
 "use client";
 
 // Import React and necessary libraries
