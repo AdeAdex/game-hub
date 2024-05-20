@@ -5,6 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../models/user";
+import Activity from "../../../models/activity";  // Import Activity model
 import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
@@ -68,90 +69,15 @@ const handler = NextAuth({
   },
 });
 
-// async function handleAuthentication(credentials, profile) {
-//   try {
-//     await connectToDb();
-
-//     if (credentials) {
-//       const { email, password } = credentials;
-//       const user = await User.findOne({
-//         $or: [{ email: email }, { userName: email }],
-//       });
-
-//       if (!user) {
-//         throw new Error("User not found");
-//       }
-
-//       if (user.socialId && !user.password) {
-//         // Check if the user with the provided socialId exists
-//         const socialUser = await User.findOne({
-//           socialId: user.socialId,
-//         });
-
-//         const token = generateToken({ email: user.email });
-//         cookies().set("authToken", token, {
-//           httpOnly: true,
-//           maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
-//           path: "/",
-//           sameSite: "strict",
-//         });
-
-//         return { email: user.email, token, ...user.toObject() };
-//       } else {
-//         const passwordMatch = await comparePassword(password, user.password);
-
-//         if (!passwordMatch) {
-//           throw new Error("Invalid email or password");
-//         }
-
-//         const token = generateToken({ email: user.email });
-//         cookies().set("authToken", token, {
-//           httpOnly: true,
-//           maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
-//           path: "/",
-//           sameSite: "strict",
-//         });
-
-//         return { email: user.email, token, ...user.toObject() };
-//       }
-//     } else if (profile) {
-//       const userExists = await User.findOne({ email: profile.email });
-
-//       if (!userExists) {
-//         const nameParts = profile.name.split(" ");
-//         const lastName = nameParts.slice(1).join(" ");
-//         const firstName = nameParts[0];
-//         const profilePicture = profile.avatar_url || profile.picture;
-//         const userName = profile.login ? profile.login : lastName;
-//         const socialId = profile.id;
-
-//         const newUser = new User({
-//           email: profile.email,
-//           firstName,
-//           lastName,
-//           userName: userName,
-//           profilePicture: profilePicture,
-//           socialId,
-//         });
-
-//         await newUser.save();
-//       }
-
-//       const token = generateToken({ email: profile.email });
-//       cookies().set("authToken", token, {
-//         httpOnly: true,
-//         maxAge: 86400, // 1 day in seconds (60 * 60 * 24)
-//         path: "/",
-//         sameSite: "strict",
-//       });
-
-//       return true;
-//     }
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// }
-
+// Function to log activity
+const logActivity = async (userId) => {
+  const activity = new Activity({
+    userId,
+    type: 'login',
+    description: 'User logged in',
+  });
+  await activity.save();
+};
 
 async function handleAuthentication(credentials, profile) {
   try {
@@ -168,10 +94,6 @@ async function handleAuthentication(credentials, profile) {
       }
 
       if (user.socialId && !user.password) {
-        const socialUser = await User.findOne({
-          socialId: user.socialId,
-        });
-
         const token = generateToken({ email: user.email });
         cookies().set("authToken", token, {
           httpOnly: true,
@@ -180,7 +102,8 @@ async function handleAuthentication(credentials, profile) {
           sameSite: "strict",
         });
 
-        trackLogin(user); // Track login
+        await trackLogin(user); // Track login
+        await logActivity(user._id); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       } else {
@@ -198,7 +121,8 @@ async function handleAuthentication(credentials, profile) {
           sameSite: "strict",
         });
 
-        trackLogin(user); // Track login
+        await trackLogin(user); // Track login
+        await logActivity(user._id); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -234,7 +158,8 @@ async function handleAuthentication(credentials, profile) {
       });
 
       const user = await User.findOne({ email: profile.email });
-      trackLogin(user); // Track login
+      await trackLogin(user); // Track login
+      await logActivity(user._id); // Log activity
 
       return true;
     }
@@ -258,6 +183,5 @@ async function trackLogin(user) {
 
   await user.save();
 }
-
 
 export { handler as GET, handler as POST };
