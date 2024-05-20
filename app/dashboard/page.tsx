@@ -126,15 +126,19 @@ const DashboardPage = () => {
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">Recent Activities</h2>
           <ul className="space-y-4">
-            {recentActivities.map((activity, index) => (
-              <li key={index} className="flex items-center space-x-4">
-                <div className="flex-shrink-0">
-                  <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
-                </div>
-                <div className="text-lg text-gray-700">{activity.description}</div>
-                <div className="text-sm text-gray-500">{new Date(activity.date).toLocaleDateString()}</div>
-              </li>
-            ))}
+            {recentActivities && recentActivities.length > 0 ? (
+              recentActivities.map((activity, index) => (
+                <li key={index} className="flex items-center space-x-4">
+                  <div className="flex-shrink-0">
+                    <Image src="/activity-icon.png" alt="Activity" width={24} height={24} />
+                  </div>
+                  <div className="text-lg text-gray-700">{activity.description}</div>
+                  <div className="text-sm text-gray-500">{new Date(activity.date).toLocaleDateString()}</div>
+                </li>
+              ))
+            ) : (
+              <div className="text-gray-500">No recent activities found</div>
+            )}
           </ul>
         </div>
       </div>
