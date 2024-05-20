@@ -145,7 +145,7 @@ const DashboardPage = () => {
               recentActivities.map((activity, index) => (
                 <li key={index} className="flex items-center space-x-4">
                   <div className="flex-shrink-0">
-                    <Image src={userData?.profilePicture || "/default-profile.png"} alt="Activity" width={24} height={24} />
+                    <Image src={userData?.profilePicture || "/default-profile.png"} alt="Activity" width={24} height={24} className="rounded-full" />
                   </div>
                   <div className="text-lg text-gray-700">{activity.description}</div>
                   <div className="text-sm text-gray-500">{formatDateTime(activity.date)}</div>
