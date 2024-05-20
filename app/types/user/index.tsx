@@ -10,3 +10,11 @@ export interface UserDataType {
   bio: string;
   currentFriends?: string[];
 }
+
+
+export interface ActivityType {
+  userId: string;
+  type: string;
+  description: string;
+  date: string;
+}
