@@ -95,10 +95,15 @@ function MyApp() {
   };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await fetchLocation();
-    detectDevice();
-    await signInWithCredentials(email, password, device, location);
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await fetchLocation();
+      detectDevice();
+      await signInWithCredentials(email, password, device, location);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
 
