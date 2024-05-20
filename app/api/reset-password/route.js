@@ -7,14 +7,17 @@ import { connectToDb } from "../../utils/database";
 import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
 
 // Function to log activity
-const logActivity = async (userId, type, description) => {
+const logActivity = async (userId, type, description, device, location) => {
   const activity = new Activity({
     userId,
     type,
     description,
+    device, // Add device information
+    location, // Add location information
   });
   await activity.save();
 };
+
 
 export const POST = async (req, res) => {
   if (req.method !== "POST") {
@@ -22,8 +25,8 @@ export const POST = async (req, res) => {
   }
 
   try {
-    const { token, password } = await req.json();
-    console.log("new password", password)
+    const { token, password, device, location } = await req.json();
+   // console.log("new password", password)
 
     if (!token || !password) {
       return NextResponse.json({ error: "Token or password is missing" }, { status: 400 });
@@ -54,9 +57,9 @@ export const POST = async (req, res) => {
     user.resetPasswordToken = null;
     await user.save();
 
-    // Log the password change activity
-    await logActivity(user._id, 'password_change', 'You changed password');
-
+        // Log the password change activity
+    await logActivity(user._id, 'password_change', 'You changed your password', device, location);
+    
     console.log("Password reset successfully");
     return NextResponse.json({ message: "Password reset successfully" }, { status: 200 });
   } catch (error) {
