@@ -6,7 +6,7 @@ import User from "../../../models/user";
 import Activity from "../../../models/activity";
 import { verifyToken } from "../../../utils/jwtUtils.js";
 
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req, res) => {
   try {
     // Get the session token from cookies
     const sessionToken = req.cookies.get("authToken");
