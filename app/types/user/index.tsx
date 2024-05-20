@@ -12,9 +12,3 @@ export interface UserDataType {
 }
 
 
-export interface ActivityType {
-  userId: string;
-  type: string;
-  description: string;
-  date: string;
-}
