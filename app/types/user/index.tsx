@@ -15,7 +15,7 @@ export interface UserDataType {
 
 export interface ActivityType {
   userId: string;
-  type: 'login' | 'password_change' | 'profile_update';
+  type: "login" | "password_change" | "profile_update";
   description: string;
   device: string; // Add device field
   location: string; // Change location to string

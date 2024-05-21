@@ -6,7 +6,8 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import UAParser from 'ua-parser-js';
+import UAParser from "ua-parser-js";
+
 // import { useDispatch } from "react-redux";
 // import Cookies from "universal-cookie";
 // import axios from "axios";
@@ -35,8 +36,8 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [device, setDevice] = useState('');
-  const [location, setLocation] = useState('');
+  const [device, setDevice] = useState("");
+  const [location, setLocation] = useState("");
 
   // const dispatch = useDispatch();
   // const SECRET_KEY = 'YOUR_SECRET_KEY';
@@ -46,31 +47,33 @@ function MyApp() {
     if (status === "authenticated") {
       router.replace("/dashboard"); // Replace the current URL with /dashboard
     }
-  }, [status, router]);  
+  }, [status, router]);
 
   const fetchLocation = async () => {
     try {
-      const response = await fetch('https://ipapi.co/json/');
+      const response = await fetch("https://ipapi.co/json/");
       const data = await response.json();
       setLocation(`${data.city}, ${data.region}, ${data.country_name}`);
     } catch (error) {
-      console.error('Error fetching location:', error);
+      console.error("Error fetching location:", error);
     }
   };
 
   const detectDevice = () => {
     const parser = new UAParser();
     const result = parser.getResult();
-    const deviceInfo = result.device.vendor ? `${result.device.vendor} ${result.device.model}` : result.os.name;
+    const deviceInfo = result.device.vendor
+      ? `${result.device.vendor} ${result.device.model}`
+      : result.os.name;
     setDevice(deviceInfo);
   };
 
   // Function to sign in with credentials and include device and location in request payload
   const signInWithCredentials = async (
     email: string,
-  password: string,
-  device: string,
-  location: string, 
+    password: string,
+    device: string,
+    location: string
   ) => {
     try {
       // Sign in with credentials and include device and location in the request payload
@@ -94,7 +97,7 @@ function MyApp() {
     }
   };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
     try {
@@ -105,7 +108,6 @@ function MyApp() {
       setSubmitting(false);
     }
   };
-
 
   return (
     <form action="" onSubmit={handleSubmit}>

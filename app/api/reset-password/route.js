@@ -2,7 +2,7 @@
 
 import { NextResponse } from "next/server";
 import User from "../../models/user";
-import Activity from "../../models/activity";  // Import Activity model
+import Activity from "../../models/activity"; // Import Activity model
 import { connectToDb } from "../../utils/database";
 import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
 
@@ -18,7 +18,6 @@ const logActivity = async (userId, type, description, device, location) => {
   await activity.save();
 };
 
-
 export const POST = async (req, res) => {
   if (req.method !== "POST") {
     return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
@@ -26,10 +25,13 @@ export const POST = async (req, res) => {
 
   try {
     const { token, password, device, location } = await req.json();
-   // console.log("new password", password)
+    // console.log("new password", password)
 
     if (!token || !password) {
-      return NextResponse.json({ error: "Token or password is missing" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Token or password is missing" },
+        { status: 400 }
+      );
     }
 
     // Connect to the database
@@ -40,14 +42,20 @@ export const POST = async (req, res) => {
 
     if (!user) {
       console.log("Invalid token or user not found");
-      return NextResponse.json({ error: "Invalid token or user not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Invalid token or user not found" },
+        { status: 404 }
+      );
     }
-    
+
     // Check if the new password is the same as the existing password
     const isSamePassword = await comparePassword(password, user.password);
     if (isSamePassword) {
       console.log("New password matches existing password");
-      return NextResponse.json({ error: "New password cannot be the same as the existing password" }, { status: 400 });
+      return NextResponse.json(
+        { error: "New password cannot be the same as the existing password" },
+        { status: 400 }
+      );
     }
 
     const hashedPassword = await hashPassword(password);
@@ -57,13 +65,25 @@ export const POST = async (req, res) => {
     user.resetPasswordToken = null;
     await user.save();
 
-        // Log the password change activity
-    await logActivity(user._id, 'password_change', 'You changed your password', device, location);
-    
+    // Log the password change activity
+    await logActivity(
+      user._id,
+      "password_change",
+      "You changed your password",
+      device,
+      location
+    );
+
     console.log("Password reset successfully");
-    return NextResponse.json({ message: "Password reset successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Password reset successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error resetting password:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 };

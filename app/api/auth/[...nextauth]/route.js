@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../models/user";
-import Activity from "../../../models/activity";  // Import Activity model
+import Activity from "../../../models/activity"; // Import Activity model
 import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
@@ -75,14 +75,13 @@ const handler = NextAuth({
 const logActivity = async (userId, device, location) => {
   const activity = new Activity({
     userId,
-    type: 'login',
-    description: 'You logged in',
+    type: "login",
+    description: "You logged in",
     device, // Add device
     location, // Add location
   });
   await activity.save();
 };
-
 
 async function handleAuthentication(credentials, profile, device, location) {
   try {
@@ -176,8 +175,8 @@ async function handleAuthentication(credentials, profile, device, location) {
 // Function to track login
 async function trackLogin(user) {
   const currentDate = new Date();
-  const loginEntry = user.loginData.find(entry =>
-    entry.date.toDateString() === currentDate.toDateString()
+  const loginEntry = user.loginData.find(
+    (entry) => entry.date.toDateString() === currentDate.toDateString()
   );
 
   if (loginEntry) {

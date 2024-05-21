@@ -45,20 +45,25 @@ const DashboardPage = () => {
 
   const formatDateTime = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
     };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-
   const currentMonth = new Date().getMonth();
-  const daysInMonth = new Date(new Date().getFullYear(), currentMonth + 1, 0).getDate();
-  const labels = Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
+  const daysInMonth = new Date(
+    new Date().getFullYear(),
+    currentMonth + 1,
+    0
+  ).getDate();
+  const labels = Array.from({ length: daysInMonth }, (_, i) =>
+    (i + 1).toString()
+  );
   const data = labels.map((_, i) => loginCounts[i] || 0);
 
   const chartData = {
@@ -127,35 +132,56 @@ const DashboardPage = () => {
                   objectFit="cover"
                 />
               </div>
-              <div className="text-2xl font-bold text-gray-800">{userData.userName}</div>
-              <div className="text-lg text-gray-600">{userData.firstName} {userData.lastName}</div>
+              <div className="text-2xl font-bold text-gray-800">
+                {userData.userName}
+              </div>
+              <div className="text-lg text-gray-600">
+                {userData.firstName} {userData.lastName}
+              </div>
             </div>
           )}
         </div>
 
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">Login Flow Chart</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+            Login Flow Chart
+          </h2>
           <Bar data={chartData} options={chartOptions} />
         </div>
 
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">Recent Activities</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+            Recent Activities
+          </h2>
           <ul className="space-y-4">
             {recentActivities && recentActivities.length > 0 ? (
               recentActivities.map((activity, index) => (
                 <li key={index} className="flex items-center space-x-4">
                   <div className="flex-shrink-0">
-                    <Image src={userData?.profilePicture || "/default-profile.png"} alt="Activity" width={24} height={24} />
+                    <Image
+                      src={userData?.profilePicture || "/default-profile.png"}
+                      alt="Activity"
+                      width={24}
+                      height={24}
+                    />
                   </div>
-                  <div className="text-lg text-gray-700">{activity.description}</div>
-                  <div className="text-sm text-gray-500">{formatDateTime(activity.date)}</div>
-                  <div className="text-sm text-gray-500">Device: {activity.device}</div>
-                  <div className="text-sm text-gray-500">Location: {activity.location}</div>
+                  <div className="text-lg text-gray-700">
+                    {activity.description}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {formatDateTime(activity.date)}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    Device: {activity.device}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    Location: {activity.location}
+                  </div>
                 </li>
               ))
             ) : (
               <div className="text-gray-500">No recent activities found</div>
-            )} 
+            )}
           </ul>
         </div>
       </div>
@@ -165,3 +191,37 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
+
+
+
+
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const encryptedData = await localforage.getItem<string>("userData");
+  //       if (!encryptedData) {
+  //         throw new Error("User data not found in local storage");
+  //       }
+
+  //       const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
+  //       const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
+
+  //       const storedUserData: UserData = JSON.parse(decryptedString);
+  //       setUserData(storedUserData);
+  //     } catch (error:any) {
+  //       console.error("Error fetching user data:", error.message);
+  //     }finally {
+  //       setLoading(false); // Set loading to false regardless of success or error
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+
+
+  // import Cookies from "universal-cookie";
+// import localforage from "localforage";
+// import CryptoJS from "crypto-js";
+
