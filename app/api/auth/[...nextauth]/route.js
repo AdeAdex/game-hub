@@ -159,11 +159,11 @@ async function handleAuthentication(credentials, profile) {
         sameSite: "strict",
       });
 
-      const user = await User.findOne({ email: profile.email });
+    /*  const user = await User.findOne({ email: profile.email });
       await trackLogin(user); // Track login
       await logActivity(user._id, device, location); // Log activity
 
-      return true;
+      return true;*/
     }
   } catch (error) {
     throw new Error(error.message);
