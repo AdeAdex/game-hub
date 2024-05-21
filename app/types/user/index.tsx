@@ -8,14 +8,15 @@ export interface UserDataType {
   email: string;
   profilePicture: string;
   bio: string;
-  phone: string;
-  linkedin: string;
-  twitter: string;
-  facebook: string;
-  role: string;
-  status: string;
+  phone?: string;
+  linkedin?: string;
+  twitter?: string;
+  facebook?: string;
+  role?: string;
+  status?: string;
   currentFriends?: string[];
 }
+
 
 // /app/types/activity.ts
 
