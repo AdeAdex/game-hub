@@ -24,9 +24,6 @@ const handler = NextAuth({
     CredentialsProvider({
       credentials: {},
       async authorize(credentials) {
-        const { device, location } = credentials;
-        console.log("device",device)
-      console.log("location",location)
         return handleAuthentication(credentials);
       },
     }),
