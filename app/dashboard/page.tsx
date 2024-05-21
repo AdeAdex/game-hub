@@ -12,6 +12,7 @@ import Footer from "../components/footer/Footer";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { UserDataType, ActivityType } from "../types/user";
+import LoadingSkeleton from "../components/dashboard/LoadingSkeleton";
 
 Chart.register(...registerables);
 
@@ -99,22 +100,7 @@ const DashboardPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="flex-grow flex items-center justify-center">
-          <div className="animate-pulse bg-white shadow-lg rounded-lg p-6 mb-8 max-w-lg w-full">
-            <div className="space-y-4">
-              <div className="h-6 bg-gray-200 rounded"></div>
-              <div className="h-6 bg-gray-200 rounded"></div>
-              <div className="h-6 bg-gray-200 rounded"></div>
-              <div className="h-6 bg-gray-200 rounded"></div>
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
+    return  <LoadingSkeleton/>
   }
 
   return (
