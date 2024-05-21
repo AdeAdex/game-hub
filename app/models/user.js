@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const loginDataSchema = new mongoose.Schema({
   date: { type: Date, required: true },
-  count: { type: Number, required: true, default: 1 },
+  count: { type: Number, required: true, default: 0 },
 });
 
 const userSchema = new mongoose.Schema(
