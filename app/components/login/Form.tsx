@@ -7,8 +7,6 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import UAParser from "ua-parser-js";
-import Bowser from "bowser";
-import axios from "axios";
 
 
 
@@ -42,8 +40,6 @@ function MyApp() {
   const router = useRouter();
   const [device, setDevice] = useState<string>(""); 
   const [location, setLocation] = useState<string>("");
-  const [deviceAndLocationFetched, setDeviceAndLocationFetched] = useState<boolean>(false);
-  const [results, setResults] = useState<any>({});
 
 
 
@@ -57,67 +53,30 @@ function MyApp() {
   }, [status, router]);
 
    useEffect(() => {
-    const getDeviceAndLocation = async () => {
+   
+    const fetchLocation = async () => {
       try {
-        const browser = Bowser.getParser(window.navigator.userAgent);
-        const deviceInfo = browser.getResult();
-        console.log(deviceInfo)
-        setDevice(`${deviceInfo.platform.type} - ${deviceInfo.browser.name}`);
-
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              const { latitude, longitude } = position.coords;
-              const locationResponse = await axios.get(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-              );
-              setLocation(locationResponse.data.display_name);
-              setDeviceAndLocationFetched(true);
-            },
-            (error) => {
-              console.error("Error fetching location: ", error);
-              setLocation("Location permission denied");
-              setDeviceAndLocationFetched(true);
-            }
-          );
-        } else {
-          setLocation("Geolocation not supported");
-          setDeviceAndLocationFetched(true);
-        }
-      } catch (err) {
-        console.error("Error fetching device and location info: ", err);
-        setDeviceAndLocationFetched(true); // In case of any error, set it to true to allow form submission
+        const response = await fetch("https://ipapi.co/json/");
+        const data = await response.json();
+        console.log("location", data);
+        const deviceLocation = data ? `${data.city} ${data.region} ${data.country_name}` : "Location permission denied";
+        setLocation(deviceLocation);
+      } catch (error) {
+        console.error("Error fetching location:", error);
       }
     };
-
-     const fetchLocation = async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      // setLocation(`${data.city}, ${data.region}, ${data.country_name}`);
-    } catch (error) {
-      console.error("Error fetching location:", error);
-    }
-  };
 
   const detectDevice = () => {
     const parser = new UAParser();
     const result = parser.getResult();
-    // console.log("result", result)
-
-    setResults(result)
-    // console.log("results", results)
+    console.log("device", result)
     const deviceInfo = result.device.vendor
       ? `${result.device.vendor} ${result.device.model}`
       : result.os.name || "Unknown Device";
-    // setDevice(deviceInfo);
+    setDevice(deviceInfo);
   };
 
-  console.log(device)
-      console.log(location)
-
-    getDeviceAndLocation();
-      fetchLocation();
+       fetchLocation();
       detectDevice();
   }, [location, device]);
 
@@ -151,27 +110,10 @@ function MyApp() {
     }
   };
 
-  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setSubmitting(true);
-  //   try {
-  //     console.log(device)
-  //     console.log(location)
-  //     // await fetchLocation();
-  //     // detectDevice();
-          
-  //       await signInWithCredentials(email, password, device, location);
-        
-  //   } finally {
-  //     setSubmitting(false);
-  //   }
-  // };
-
+ 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(device)
-    console.log(location)
     setSubmitting(true);
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
@@ -179,17 +121,6 @@ function MyApp() {
 
   return (
     <form action="" onSubmit={handleSubmit}>
-      <div className="flex flex-col">
-      <small>device vendor: {deviceAndLocationFetched ? results.device.vendor : "Fetching device vendor"}</small>
-      <small>device model: {deviceAndLocationFetched ? results.device.model : "Fetching device model"}</small>
-      <small>os result name: {deviceAndLocationFetched ? results.os.name : "Fetching os result name"}</small>
-      <small>os result version: {deviceAndLocationFetched ? results.os.version : "Fetching os result version"}</small>
-      <small>browser name: {deviceAndLocationFetched ? results.browser.name : "Fetching browser name"}</small>
-      <small>location: {deviceAndLocationFetched ? device : "Fetching device name"}</small>
-      <small>device: {deviceAndLocationFetched ? location : "Fetching browser location"}</small>
-      </div>
-     
-
       <div className="flex flex-col gap-[25px]">
         <div className="w-full flex flex-col gap-[5px]">
           <label className="w-full " htmlFor="email">
