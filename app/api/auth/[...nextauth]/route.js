@@ -123,8 +123,8 @@ async function handleAuthentication(credentials, profile) {
           sameSite: "strict",
         });
 
-        await trackLogin(user); // Track login
-        await logActivity(user._id, device, location); // Log activity
+        //await trackLogin(user); // Track login
+        //await logActivity(user._id, device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -159,16 +159,16 @@ async function handleAuthentication(credentials, profile) {
         sameSite: "strict",
       });
 
-    /*  const user = await User.findOne({ email: profile.email });
+      const user = await User.findOne({ email: profile.email });
       await trackLogin(user); // Track login
-      await logActivity(user._id, device, location); // Log activity
+      await logActivity(user._id, "Unknown Device" , "Unknown Location" ); // Log activity
 
-      return true;*/
+      return true;
     }
   } catch (error) {
     throw new Error(error.message);
   }
-}
+}else 
 
 // Function to track login
 async function trackLogin(user) {
