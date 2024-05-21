@@ -13,6 +13,8 @@ import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { UserDataType, ActivityType } from "../types/user";
 import LoadingSkeleton from "../components/dashboard/LoadingSkeleton";
+import { FaLinkedin, FaTwitter, FaFacebook } from 'react-icons/fa';
+
 
 Chart.register(...registerables);
 
@@ -136,18 +138,17 @@ const DashboardPage = () => {
                 <div className="text-sm text-gray-500">
                   {userData.bio}
                 </div>
-                
-<div className="flex justify-center space-x-4">
-  <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">
-    <Image src="/linkedin-icon.png" alt="LinkedIn" width={24} height={24} className="w-6 h-6" />
-  </a>
-  <a href={userData.twitter} target="_blank" rel="noopener noreferrer">
-    <Image src="/twitter-icon.png" alt="Twitter" width={24} height={24} className="w-6 h-6" />
-  </a>
-  <a href={userData.facebook} target="_blank" rel="noopener noreferrer">
-    <Image src="/facebook-icon.png" alt="Facebook" width={24} height={24} className="w-6 h-6" />
-  </a>
-</div>
+                <div className="flex justify-center space-x-4">
+      <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">
+        <FaLinkedin className="w-6 h-6" />
+      </a>
+      <a href={userData.twitter} target="_blank" rel="noopener noreferrer">
+        <FaTwitter className="w-6 h-6" />
+      </a>
+      <a href={userData.facebook} target="_blank" rel="noopener noreferrer">
+        <FaFacebook className="w-6 h-6" />
+      </a>
+    </div> 
 
                 <div className="text-sm text-gray-500">
                   Role: {userData.role}
