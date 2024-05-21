@@ -136,17 +136,19 @@ const DashboardPage = () => {
                 <div className="text-sm text-gray-500">
                   {userData.bio}
                 </div>
-                <div className="flex justify-center space-x-4">
-                  <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">
-                    <img src="/linkedin-icon.png" alt="LinkedIn" className="w-6 h-6" />
-                  </a>
-                  <a href={userData.twitter} target="_blank" rel="noopener noreferrer">
-                    <img src="/twitter-icon.png" alt="Twitter" className="w-6 h-6" />
-                  </a>
-                  <a href={userData.facebook} target="_blank" rel="noopener noreferrer">
-                    <img src="/facebook-icon.png" alt="Facebook" className="w-6 h-6" />
-                  </a>
-                </div>
+                
+<div className="flex justify-center space-x-4">
+  <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">
+    <Image src="/linkedin-icon.png" alt="LinkedIn" width={24} height={24} className="w-6 h-6" />
+  </a>
+  <a href={userData.twitter} target="_blank" rel="noopener noreferrer">
+    <Image src="/twitter-icon.png" alt="Twitter" width={24} height={24} className="w-6 h-6" />
+  </a>
+  <a href={userData.facebook} target="_blank" rel="noopener noreferrer">
+    <Image src="/facebook-icon.png" alt="Facebook" width={24} height={24} className="w-6 h-6" />
+  </a>
+</div>
+
                 <div className="text-sm text-gray-500">
                   Role: {userData.role}
                 </div>
