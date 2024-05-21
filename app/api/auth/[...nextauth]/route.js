@@ -168,7 +168,7 @@ async function handleAuthentication(credentials, profile) {
   } catch (error) {
     throw new Error(error.message);
   }
-}else 
+} 
 
 // Function to track login
 async function trackLogin(user) {
@@ -185,4 +185,5 @@ async function trackLogin(user) {
 
   await user.save();
 }
+
 export { handler as GET, handler as POST };
