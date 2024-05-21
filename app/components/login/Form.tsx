@@ -36,7 +36,7 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [device, setDevice] = useState("");
+  const [device, setDevice] = useState(""); 
   const [location, setLocation] = useState("");
 
   // const dispatch = useDispatch();
@@ -64,7 +64,7 @@ function MyApp() {
     const result = parser.getResult();
     const deviceInfo = result.device.vendor
       ? `${result.device.vendor} ${result.device.model}`
-      : result.os.name;
+      : result.os.name || "Unknown Device";
     setDevice(deviceInfo);
   };
 
