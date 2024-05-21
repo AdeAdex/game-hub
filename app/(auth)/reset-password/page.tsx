@@ -124,195 +124,198 @@ function MyApp() {
     <div>
       <Navbar />
       <main className="bg-[#F4F4F4] h-screen  pt-[80px] md:pt-[100px] ">
-      {loading ? (
-        <Loader/>
-      ) : (
-        <div className="">
-          <div className="relative  w-full lg:w-[60%] mx-auto bg-white rounded-sm border-2 border-gray-300 py-[30px] px-[10px] md:px-[30px]">
-            <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] ">
-              Reset Password
-            </h3>
-            <div className="pt-[20px] pb-[10px]">
-              <div className={`${success ? "text-green-500" : "text-red-500"}`}>
-                {success ? "" : <small>Error: {message}</small>}
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="">
+            <div className="relative  w-full lg:w-[60%] mx-auto bg-white rounded-sm border-2 border-gray-300 py-[30px] px-[10px] md:px-[30px]">
+              <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] ">
+                Reset Password
+              </h3>
+              <div className="pt-[20px] pb-[10px]">
+                <div
+                  className={`${success ? "text-green-500" : "text-red-500"}`}
+                >
+                  {success ? "" : <small>Error: {message}</small>}
+                </div>
+                <div>
+                  {success ? (
+                    <small>
+                      Please provide a new password for the account {username}.
+                    </small>
+                  ) : (
+                    <small>
+                      Please request for a new link if the token has expired.{" "}
+                    </small>
+                  )}
+                </div>
               </div>
-              <div>
-                {success ? (
-                  <small>
-                    Please provide a new password for the account {username}.
-                  </small>
-                ) : (
-                  <small>
-                    Please request for a new link if the token has expired.{" "}
-                  </small>
-                )}
-              </div>
-            </div>
-            {success && (
-              <Formik
-                initialValues={{ password: "", confirmPassword: "" }}
-                validationSchema={Yup.object().shape({
-                  password: Yup.string()
-                    .matches(
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
-                      "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
-                    )
-                    .required("Password is required"),
-                  confirmPassword: Yup.string()
-                    .required("Confirm Password is required")
-                    .oneOf([Yup.ref("password"), ""], "Passwords must match"),
-                })}
-                onSubmit={async (values, { setSubmitting }) => {
-                  setSubmitting(true);
-                  try {
-                    const response = await axios.post("/api/reset-password", {
-                      token,
-                      password: values.password,
-                      device, 
-                      location
-                    });
-                    console.log(response.data);
+              {success && (
+                <Formik
+                  initialValues={{ password: "", confirmPassword: "" }}
+                  validationSchema={Yup.object().shape({
+                    password: Yup.string()
+                      .matches(
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+                        "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
+                      )
+                      .required("Password is required"),
+                    confirmPassword: Yup.string()
+                      .required("Confirm Password is required")
+                      .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+                  })}
+                  onSubmit={async (values, { setSubmitting }) => {
+                    setSubmitting(true);
+                    try {
+                      console.log(device);
+                      console.log(location);
+                      const response = await axios.post("/api/reset-password", {
+                        token,
+                        password: values.password,
+                        device,
+                        location,
+                      });
+                      console.log(response.data);
 
-                    if (response.status === 200) {
-                      setSuccess(true);
-                      enqueueSnackbar(response.data.message, {
-                        variant: "success",
-                      });
-                      router.push("/login");
-                    } else {
-                      setError(
-                        response.data.error || "Failed to reset password"
-                      );
-                      enqueueSnackbar(response.data.error, {
-                        variant: "error",
-                      });
-                    }
-                  } catch (error: any) {
-                    console.error(error.response.data.error);
-                    setError(
-                      error.response.data.error || "Internal server error"
-                    );
-                    enqueueSnackbar(
-                      error.response.data.error || "Internal server error",
-                      {
-                        variant: "error",
+                      if (response.status === 200) {
+                        setSuccess(true);
+                        enqueueSnackbar(response.data.message, {
+                          variant: "success",
+                        });
+                        router.push("/login");
+                      } else {
+                        setError(
+                          response.data.error || "Failed to reset password"
+                        );
+                        enqueueSnackbar(response.data.error, {
+                          variant: "error",
+                        });
                       }
-                    );
-                  } finally {
-                    setSubmitting(false);
-                  }
-                }}
-              >
-                {({ isSubmitting, errors, touched }) => (
-                  <Form className="text-[13px] text-[#434343]">
-                    <div className="relative w-full flex flex-col gap-[5px]">
-                      <label
-                        className="w-full font-bold text-[#434343]"
-                        htmlFor="password"
-                      >
-                        Password:
-                      </label>
-                      <Field
-                        type={showPassword ? "text" : "password"}
-                        autoComplete="on"
-                        name="password"
-                        className={`w-full border border-2 px-3 py-[5px] border-gray-300 relative`}
-                        placeholder={
-                          touched.password && errors.password
-                            ? errors.password
-                            : "Enter your password"
+                    } catch (error: any) {
+                      console.error(error.response.data.error);
+                      setError(
+                        error.response.data.error || "Internal server error"
+                      );
+                      enqueueSnackbar(
+                        error.response.data.error || "Internal server error",
+                        {
+                          variant: "error",
                         }
-                        required
-                      />
-                      <button
-                        type="button"
-                        className={`absolute right-[20px] top-[50%] ${
-                          errors.password ? "transform -translate-y-1/2" : ""
-                        } bg-transparent border-none cursor-pointer`}
-                        onClick={() => setShowPassword((prev) => !prev)}
-                      >
-                        {showPassword ? (
-                          <AiFillEyeInvisible size={25} />
-                        ) : (
-                          <AiFillEye size={25} />
-                        )}
-                      </button>
-                      <ErrorMessage
-                        name="password"
-                        component="div"
-                        className="text-red-500 relative"
-                      />
-                    </div>
-                    <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
-                      <label
-                        className="w-full font-bold text-[#434343]"
-                        htmlFor="confirmPassword"
-                      >
-                        Repeat password:
-                      </label>
-                      <Field
-                        type={showPassword ? "text" : "password"}
-                        autoComplete="on"
-                        name="confirmPassword"
-                        className={`w-full border border-2 px-3 py-[5px] border-gray-300`}
-                        placeholder={
-                          touched.confirmPassword && errors.confirmPassword
-                            ? errors.confirmPassword
-                            : "Enter your confirmPassword"
-                        }
-                        required
-                      />
-                      <button
-                        type="button"
-                        className={`absolute right-[20px] top-[50%] ${
-                          errors.confirmPassword
-                            ? "transform -translate-y-1/2"
-                            : ""
-                        } bg-transparent border-none cursor-pointer`}
-                        onClick={() => setShowPassword((prev) => !prev)}
-                      >
-                        {showPassword ? (
-                          <AiFillEyeInvisible size={25} />
-                        ) : (
-                          <AiFillEye size={25} />
-                        )}
-                      </button>
-                      <ErrorMessage
-                        name="confirmPassword"
-                        component="div"
-                        className="text-red-500 relative"
-                      />
-                    </div>
-                    <div className="py-[25px] flex gap-4">
-                      <button
-                        type="submit"
-                        className="bg-[#FF2E51] px-3 py-[6px] text-white rounded-sm"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? (
-                          <div>Connecting...</div>
-                        ) : (
-                          <div>Submit</div>
-                        )}
-                      </button>
-                      <div className="flex my-auto text-[12px] md:text-[14px]">
-                        <span>or </span>
-                        <Link href="/login" className="ml-[5px] underline">
-                          Login
-                        </Link>
+                      );
+                    } finally {
+                      setSubmitting(false);
+                    }
+                  }}
+                >
+                  {({ isSubmitting, errors, touched }) => (
+                    <Form className="text-[13px] text-[#434343]">
+                      <div className="relative w-full flex flex-col gap-[5px]">
+                        <label
+                          className="w-full font-bold text-[#434343]"
+                          htmlFor="password"
+                        >
+                          Password:
+                        </label>
+                        <Field
+                          type={showPassword ? "text" : "password"}
+                          autoComplete="on"
+                          name="password"
+                          className={`w-full border border-2 px-3 py-[5px] border-gray-300 relative`}
+                          placeholder={
+                            touched.password && errors.password
+                              ? errors.password
+                              : "Enter your password"
+                          }
+                          required
+                        />
+                        <button
+                          type="button"
+                          className={`absolute right-[20px] top-[50%] ${
+                            errors.password ? "transform -translate-y-1/2" : ""
+                          } bg-transparent border-none cursor-pointer`}
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          {showPassword ? (
+                            <AiFillEyeInvisible size={25} />
+                          ) : (
+                            <AiFillEye size={25} />
+                          )}
+                        </button>
+                        <ErrorMessage
+                          name="password"
+                          component="div"
+                          className="text-red-500 relative"
+                        />
                       </div>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-            )}
+                      <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
+                        <label
+                          className="w-full font-bold text-[#434343]"
+                          htmlFor="confirmPassword"
+                        >
+                          Repeat password:
+                        </label>
+                        <Field
+                          type={showPassword ? "text" : "password"}
+                          autoComplete="on"
+                          name="confirmPassword"
+                          className={`w-full border border-2 px-3 py-[5px] border-gray-300`}
+                          placeholder={
+                            touched.confirmPassword && errors.confirmPassword
+                              ? errors.confirmPassword
+                              : "Enter your confirmPassword"
+                          }
+                          required
+                        />
+                        <button
+                          type="button"
+                          className={`absolute right-[20px] top-[50%] ${
+                            errors.confirmPassword
+                              ? "transform -translate-y-1/2"
+                              : ""
+                          } bg-transparent border-none cursor-pointer`}
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          {showPassword ? (
+                            <AiFillEyeInvisible size={25} />
+                          ) : (
+                            <AiFillEye size={25} />
+                          )}
+                        </button>
+                        <ErrorMessage
+                          name="confirmPassword"
+                          component="div"
+                          className="text-red-500 relative"
+                        />
+                      </div>
+                      <div className="py-[25px] flex gap-4">
+                        <button
+                          type="submit"
+                          className="bg-[#FF2E51] px-3 py-[6px] text-white rounded-sm"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <div>Connecting...</div>
+                          ) : (
+                            <div>Submit</div>
+                          )}
+                        </button>
+                        <div className="flex my-auto text-[12px] md:text-[14px]">
+                          <span>or </span>
+                          <Link href="/login" className="ml-[5px] underline">
+                            Login
+                          </Link>
+                        </div>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <Footer />
+        <Footer />
       </main>
-
     </div>
   );
 }

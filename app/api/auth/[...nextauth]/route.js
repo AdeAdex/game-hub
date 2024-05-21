@@ -25,7 +25,9 @@ const handler = NextAuth({
       credentials: {},
       async authorize(credentials) {
         const { device, location } = credentials;
-        return handleAuthentication(credentials, device, location);
+        console.log("device",device)
+      console.log("location",location)
+        return handleAuthentication(credentials);
       },
     }),
   ],
@@ -59,10 +61,10 @@ const handler = NextAuth({
       }
     },
     async signIn({ profile, credentials }) {
-      const { device, location } = credentials;
+      // const { device, location } = credentials;
       try {
         await connectToDb();
-        return handleAuthentication(credentials, profile, device, location);
+        return handleAuthentication(credentials, profile);
       } catch (error) {
         console.error("Error occurred during signIn:", error);
         return false;
@@ -83,12 +85,12 @@ const logActivity = async (userId, device, location) => {
   await activity.save();
 };
 
-async function handleAuthentication(credentials, profile, device, location) {
+async function handleAuthentication(credentials, profile) {
   try {
     await connectToDb();
 
     if (credentials) {
-      const { email, password } = credentials;
+      const { email, password, location, device } = credentials;
       const user = await User.findOne({
         $or: [{ email: email }, { userName: email }],
       });

@@ -7,6 +7,10 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import UAParser from "ua-parser-js";
+import Bowser from "bowser";
+import axios from "axios";
+
+
 
 // import { useDispatch } from "react-redux";
 // import Cookies from "universal-cookie";
@@ -49,23 +53,54 @@ function MyApp() {
     }
   }, [status, router]);
 
-  const fetchLocation = async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      setLocation(`${data.city}, ${data.region}, ${data.country_name}`);
-    } catch (error) {
-      console.error("Error fetching location:", error);
-    }
-  };
+  // const fetchLocation = async () => {
+  //   try {
+  //     const response = await fetch("https://ipapi.co/json/");
+  //     const data = await response.json();
+  //     setLocation(`${data.city}, ${data.region}, ${data.country_name}`);
+  //   } catch (error) {
+  //     console.error("Error fetching location:", error);
+  //   }
+  // };
 
-  const detectDevice = () => {
-    const parser = new UAParser();
-    const result = parser.getResult();
-    const deviceInfo = result.device.vendor
-      ? `${result.device.vendor} ${result.device.model}`
-      : result.os.name || "Unknown Device";
-    setDevice(deviceInfo);
+  // const detectDevice = () => {
+  //   const parser = new UAParser();
+  //   const result = parser.getResult();
+  //   const deviceInfo = result.device.vendor
+  //     ? `${result.device.vendor} ${result.device.model}`
+  //     : result.os.name || "Unknown Device";
+  //   setDevice(deviceInfo);
+  // };
+
+
+  const getDeviceAndLocation = async () => {
+    try {
+      // Get device info
+      const browser = Bowser.getParser(window.navigator.userAgent);
+      const deviceInfo = browser.getResult();
+      setDevice(`${deviceInfo.platform.type} - ${deviceInfo.browser.name}`);
+
+      // Get location info
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            const locationResponse = await axios.get(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+            );
+            setLocation(locationResponse.data.display_name);
+          },
+          (error) => {
+            console.error("Error fetching location: ", error);
+            setLocation("Location permission denied");
+          }
+        );
+      } else {
+        setLocation("Geolocation not supported");
+      }
+    } catch (err) {
+      console.error("Error fetching device and location info: ", err);
+    }
   };
 
   // Function to sign in with credentials and include device and location in request payload
@@ -101,8 +136,11 @@ function MyApp() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await fetchLocation();
-      detectDevice();
+      console.log(device)
+      console.log(location)
+      // await fetchLocation();
+      // detectDevice();
+      await getDeviceAndLocation();
       await signInWithCredentials(email, password, device, location);
     } finally {
       setSubmitting(false);
