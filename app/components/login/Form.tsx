@@ -141,7 +141,10 @@ function MyApp() {
       // await fetchLocation();
       // detectDevice();
       await getDeviceAndLocation();
-      await signInWithCredentials(email, password, device, location);
+      if (device && location) {
+        await signInWithCredentials(email, password, device, location);
+        
+      }
     } finally {
       setSubmitting(false);
     }
