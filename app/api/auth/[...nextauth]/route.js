@@ -123,8 +123,8 @@ async function handleAuthentication(credentials, profile) {
           sameSite: "strict",
         });
 
-        //await trackLogin(user); // Track login
-        //await logActivity(user._id, device, location); // Log activity
+        await trackLogin(user); // Track login
+        await logActivity(user._id, device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
