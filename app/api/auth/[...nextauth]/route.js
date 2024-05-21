@@ -58,7 +58,6 @@ const handler = NextAuth({
       }
     },
     async signIn({ profile, credentials }) {
-      // const { device, location } = credentials;
       try {
         await connectToDb();
         return handleAuthentication(credentials, profile);
@@ -173,18 +172,17 @@ async function handleAuthentication(credentials, profile) {
 
 // Function to track login
 async function trackLogin(user) {
-  const currentDate = new Date();
+  const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
   const loginEntry = user.loginData.find(
-    (entry) => entry.date.toDateString() === currentDate.toDateString()
+    (entry) => entry.date.toISOString().slice(0, 10) === currentDate
   );
 
   if (loginEntry) {
     loginEntry.count += 1;
   } else {
-    user.loginData.push({ date: currentDate, count: 1 });
+    user.loginData.push({ date: new Date(), count: 1 });
   }
 
   await user.save();
 }
-
 export { handler as GET, handler as POST };
