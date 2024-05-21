@@ -58,7 +58,7 @@ function MyApp() {
       try {
         const response = await fetch("https://ipapi.co/json/");
         const data = await response.json();
-        console.log("location", data);
+        // console.log("location", data);
         const deviceLocation = data ? `${data.city} ${data.region} ${data.country_name}` : "Location permission denied";
         setLocation(deviceLocation);
       } catch (error) {
@@ -69,7 +69,7 @@ function MyApp() {
   const detectDevice = () => {
     const parser = new UAParser();
     const result = parser.getResult();
-    console.log("device", result)
+    // console.log("device", result)
     const deviceInfo = result.device.vendor
       ? `${result.device.vendor} ${result.device.model}`
       : result.os.name || "Unknown Device";

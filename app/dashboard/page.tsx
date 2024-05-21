@@ -120,43 +120,54 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
-      <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
-        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full text-center">
-          {userData && (
-            <div className="space-y-6">
-              <div className="mx-auto rounded-full w-32 h-32 relative overflow-hidden border-4 border-gray-300">
-                <Image
-                  src={userData.profilePicture || "/default-profile.png"}
-                  alt="Profile"
-                  layout="fill"
-                  objectFit="cover"
-                />
+      <div className="flex-grow container mx-auto px-4 py-16 md:py-20 ">
+        {/* User Profile and Flow Diagram */}
+        <div className="flex flex-col md:flex-row md:space-x-8">
+          {/* User Profile */}
+          <div className="bg-white shadow-lg rounded-lg p-8 mb-8 md:mb-0 md:w-1/3 lg:w-1/4 text-center">
+            {userData && (
+              <div className="space-y-6">
+                <div className="mx-auto rounded-full w-32 h-32 relative overflow-hidden border-4 border-gray-300">
+                  <Image
+                    src={userData.profilePicture || "/default-profile.png"}
+                    alt="Profile"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <div className="text-2xl font-bold text-gray-800">
+                  {userData.userName}
+                </div>
+                <div className="text-lg text-gray-600">
+                  {userData.firstName} {userData.lastName}
+                </div>
               </div>
-              <div className="text-2xl font-bold text-gray-800">
-                {userData.userName}
-              </div>
-              <div className="text-lg text-gray-600">
-                {userData.firstName} {userData.lastName}
-              </div>
+            )}
+          </div>
+
+          {/* Flow Diagram */}
+          <div className="bg-white shadow-lg rounded-lg p-8 md:flex-1">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              Login Flow Chart
+            </h2>
+            <div className="overflow-x-auto">
+              <Bar data={chartData} options={chartOptions} />
             </div>
-          )}
+          </div>
         </div>
 
-        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-            Login Flow Chart
-          </h2>
-          <Bar data={chartData} options={chartOptions} />
-        </div>
-
-        <div className="bg-white shadow-lg rounded-lg p-8 mb-8 max-w-2xl mx-auto w-full">
+        {/* Activities */}
+        <div className="bg-white shadow-lg rounded-lg p-8 mt-8">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">
             Recent Activities
           </h2>
           <ul className="space-y-4">
             {recentActivities && recentActivities.length > 0 ? (
               recentActivities.map((activity, index) => (
-                <li key={index} className="flex items-center space-x-4">
+                <li
+                  key={index}
+                  className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4"
+                >
                   <div className="flex-shrink-0">
                     <Image
                       src={userData?.profilePicture || "/default-profile.png"}
@@ -165,16 +176,16 @@ const DashboardPage = () => {
                       height={24}
                     />
                   </div>
-                  <div className="text-lg text-gray-700">
+                  <div className="text-lg text-gray-700 flex-1">
                     {activity.description}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-500 flex-shrink-0">
                     {formatDateTime(activity.date)}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-500 flex-shrink-0">
                     Device: {activity.device}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-500 flex-shrink-0">
                     Location: {activity.location}
                   </div>
                 </li>
@@ -192,36 +203,29 @@ const DashboardPage = () => {
 
 export default DashboardPage;
 
+// useEffect(() => {
+//   const fetchUserData = async () => {
+//     try {
+//       const encryptedData = await localforage.getItem<string>("userData");
+//       if (!encryptedData) {
+//         throw new Error("User data not found in local storage");
+//       }
 
+//       const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
+//       const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
+//       const storedUserData: UserData = JSON.parse(decryptedString);
+//       setUserData(storedUserData);
+//     } catch (error:any) {
+//       console.error("Error fetching user data:", error.message);
+//     }finally {
+//       setLoading(false); // Set loading to false regardless of success or error
+//     }
+//   };
 
+//   fetchUserData();
+// }, []);
 
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const encryptedData = await localforage.getItem<string>("userData");
-  //       if (!encryptedData) {
-  //         throw new Error("User data not found in local storage");
-  //       }
-
-  //       const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
-  //       const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
-
-  //       const storedUserData: UserData = JSON.parse(decryptedString);
-  //       setUserData(storedUserData);
-  //     } catch (error:any) {
-  //       console.error("Error fetching user data:", error.message);
-  //     }finally {
-  //       setLoading(false); // Set loading to false regardless of success or error
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-
-  // import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
 // import localforage from "localforage";
 // import CryptoJS from "crypto-js";
-
