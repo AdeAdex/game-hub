@@ -42,6 +42,7 @@ const LikedUserModal = ({ open, handleClose, likedBy, loggedInUserId }) => {
 function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
   const { enqueueSnackbar } = useSnackbar();
   const [filteredLikedBy, setFilteredLikedBy] = useState([]);
+  const socket = useRef(null);
 
   useEffect(() => {
     setFilteredLikedBy(likedBy.filter((user) => user._id !== loggedInUserId));
