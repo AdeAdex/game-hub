@@ -35,7 +35,7 @@ const DashboardPage = () => {
           setRecentActivities(response.data.recentActivities);
         }
       } catch (error: any) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data:", error.message);
       } finally {
         setLoading(false);
       }

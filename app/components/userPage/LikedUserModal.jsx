@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
@@ -10,6 +10,7 @@ import { FaUserPlus, FaUserCheck } from "react-icons/fa";
 import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { FiMessageCircle } from "react-icons/fi";
+import { io } from 'socket.io-client';
 
 const style = {
   position: "absolute",
@@ -44,6 +45,17 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
 
   useEffect(() => {
     setFilteredLikedBy(likedBy.filter((user) => user._id !== loggedInUserId));
+
+    // WebSocket connection
+    socket.current = io();
+    
+    socket.current.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+
+    return () => {
+      socket.current.disconnect();
+    };
   }, [likedBy, loggedInUserId]);
 
   const handleAction = async (userId, actionType) => {
@@ -77,6 +89,9 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
 
       if (response.data.success) {
         enqueueSnackbar(response.data.message, { variant: "success" });
+
+        // Emit WebSocket event for friend request actions
+        socket.current.emit('sendFriendRequest');
 
         // Update the filteredLikedBy state with the updated user object
         const updatedLikedBy = filteredLikedBy.map((user) =>

@@ -20,6 +20,7 @@ import { IoMdNotifications } from "react-icons/io";
 import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { io, Socket } from 'socket.io-client';
 
 // import { useSelector } from "react-redux";
 
@@ -63,6 +64,7 @@ function MyApp() {
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
+  const socket = useRef<Socket | null>(null);
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -97,9 +99,10 @@ function MyApp() {
         // console.log(response);
 
         if (response.data.success === true) {
+
           setToken(true);
           setUserData(response.data.user);
-          setFriendRequestCount(response.data.User.friendRequestCount)
+          setFriendRequestCount(response.data.user.friendRequestCount)
         }
       } catch (error: any) {
         console.error("Error fetching user data:", error.message);
@@ -128,6 +131,27 @@ function MyApp() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    socket.current = io();
+
+    if (socket.current) {
+      socket.current.on('newFriendRequest', () => {
+        setFriendRequestCount((prevCount) => prevCount + 1);
+      });
+
+      socket.current.on('updateFriendRequestCount', (count: number) => {
+        setFriendRequestCount(count);
+      });
+    }
+
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
     };
   }, []);
 
