@@ -197,7 +197,7 @@ import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
 import { cookies } from "next/headers";
-import logActivity from "../../../utils/logActivity";
+import logActivity from "../../../utils/activityLogger";
 
 const handler = NextAuth({
   providers: [
