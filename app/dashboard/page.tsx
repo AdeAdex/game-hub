@@ -193,6 +193,7 @@ const DashboardPage = () => {
                       alt="Activity"
                       width={24}
                       height={24}
+                      className="rounded-full"
                     />
                   </div>
                   <div className="text-lg text-gray-700 flex-1">
