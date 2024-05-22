@@ -216,8 +216,10 @@ const handler = NextAuth({
           await connectToDb();
           return await handleAuthentication(credentials, null);
         } catch (error) {
-          console.error("Error occurred during authorization:", error);
-          return null;
+          // Log the error message for debugging purposes
+          console.error("Error during authorization:", error.message);
+          // Throw the error message to be handled by the signIn callback
+          throw new Error(error.message);
         }
       },
     }),
@@ -253,15 +255,20 @@ const handler = NextAuth({
     },
     async signIn({ profile, account }) {
       try {
-        if (account.provider !== 'credentials') {
+        if (account.provider !== "credentials") {
           await connectToDb();
-          return await handleAuthentication(null, profile, account.provider );
+          return await handleAuthentication(null, profile, account.provider);
+        }
+        // Handle credentials sign-in error
+        if (credentials) {
+          throw new Error("Invalid email or password");
         }
         return true;
       } catch (error) {
-        console.error("Error occurred during signIn:", error);
+        console.error("Error occurred during signIn:", error.message);
+        // Return false to indicate signIn failed
         return false;
-      }
+    }
     },
   },
 });
