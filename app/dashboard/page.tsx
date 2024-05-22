@@ -118,7 +118,7 @@ const DashboardPage = () => {
               <div className="space-y-6">
                 <div className="mx-auto rounded-full w-32 h-32 relative overflow-hidden border-4 border-gray-300">
                   <Image
-                    src={userData.profilePicture || "/default-profile.png"}
+                    src={userData.profilePicture || avatar }
                     alt="Profile"
                     layout="fill"
                     objectFit="cover"
@@ -189,7 +189,7 @@ const DashboardPage = () => {
                 >
                   <div className="flex-shrink-0">
                     <Image
-                      src={userData?.profilePicture || "/default-profile.png"}
+                      src={userData?.profilePicture || avatar }
                       alt="Activity"
                       width={24}
                       height={24}
