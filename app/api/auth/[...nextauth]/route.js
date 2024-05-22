@@ -256,7 +256,7 @@ const handler = NextAuth({
     async signIn({ profile, account, credentials }) {
       try {
         await connectToDb();
-        return handleAuthentication(credentials, profile);
+        return handleAuthentication(credentials, profile, account.provider);
       } catch (error) {
         console.error("Error occurred during signIn:", error);
         return false;
