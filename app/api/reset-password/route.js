@@ -6,18 +6,6 @@ import Activity from "../../models/activity"; // Import Activity model
 import { connectToDb } from "../../utils/database";
 import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
 
-// Function to log activity
-// const logActivity = async (userId, type, description, device, location) => {
-//   const activity = new Activity({
-//     userId,
-//     type,
-//     description,
-//     device, // Add device information
-//     location, // Add location information
-//   });
-//   await activity.save();
-// };
-
 export const POST = async (req, res) => {
   if (req.method !== "POST") {
     return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
@@ -67,15 +55,7 @@ export const POST = async (req, res) => {
     user.resetPasswordToken = null;
     await user.save();
 
-    // Log the password change activity
-    // await logActivity(
-    //   user._id,
-    //   "password_change",
-    //   "You changed your password",
-    //   device,
-    //   location
-    // );
-
+  
     console.log("Password reset successfully");
     return NextResponse.json(
       { message: "Password reset successfully" },

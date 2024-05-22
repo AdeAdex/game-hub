@@ -70,12 +70,12 @@ const handler = NextAuth({
         if (account.provider !== "credentials") {
           await connectToDb();
           return await handleAuthentication(null, profile, account.provider);
-            }
-        return true ;
+        }
+        return true;
       } catch (error) {
         console.error("Error occurred during signIn:", error);
         return false;
-  }
+      }
     },
   },
 });
@@ -104,7 +104,13 @@ async function handleAuthentication(credentials, profile, provider) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id, "login", "Logged in using social login", device, location); // Log activity
+        await logActivity(
+          user._id,
+          "login",
+          "Logged in using social login",
+          device,
+          location
+        ); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       } else {
@@ -123,7 +129,13 @@ async function handleAuthentication(credentials, profile, provider) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id, "login", "Logged in using email and password", device, location); // Log activity
+        await logActivity(
+          user._id,
+          "login",
+          "Logged in using email and password",
+          device,
+          location
+        ); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -160,7 +172,13 @@ async function handleAuthentication(credentials, profile, provider) {
 
       const user = await User.findOne({ email: profile.email });
       await trackLogin(user); // Track login
-      await logActivity(user._id, "login", `Logged in using ${provider} Auth`, "Unknown Device" , "Unknown Location" ); // Log activity
+      await logActivity(
+        user._id,
+        "login",
+        `Logged in using ${provider} Auth`,
+        "Unknown Device",
+        "Unknown Location"
+      ); // Log activity
 
       return true;
     }
@@ -186,4 +204,3 @@ async function trackLogin(user) {
 }
 
 export { handler as GET, handler as POST };
-
