@@ -107,7 +107,7 @@ function MyApp() {
     };
 
     fetchData();
-  }, [session]);
+  }, [session, friendRequestCount]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
