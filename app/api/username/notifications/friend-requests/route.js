@@ -27,6 +27,10 @@ export const POST = async (req) => {
       );
     }
 
+    // Reset the friend request count
+    user.friendRequestCount = 0;
+    await user.save();
+
     return NextResponse.json({
       results: user.incomingFriendRequests,
       success: true,
