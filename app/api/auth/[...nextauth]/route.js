@@ -291,7 +291,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id,  device, location); // Log activity
+        await logActivity(user._id, "login", "You logged in", device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       } else {
@@ -310,7 +310,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id, device, location); // Log activity
+        await logActivity(user._id, "login", "You logged in", device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -347,7 +347,7 @@ async function handleAuthentication(credentials, profile) {
 
       const user = await User.findOne({ email: profile.email });
       await trackLogin(user); // Track login
-      await logActivity(user._id, "Unknown Device" , "Unknown Location" ); // Log activity
+      await logActivity(user._id, "login", "You logged in", "Unknown Device" , "Unknown Location" ); // Log activity
 
       return true;
     }
