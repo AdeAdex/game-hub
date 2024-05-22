@@ -57,6 +57,7 @@ export const POST = async (req) => {
 
     // Update the friend's incomingFriendRequests
     user.incomingFriendRequests.push(loggedInUserId);
+    user.friendRequestCount += 1; 
     await user.save();
 
     return NextResponse.json({
