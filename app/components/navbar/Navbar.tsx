@@ -62,7 +62,7 @@ function MyApp() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const [friendRequestCount, setFriendRequestCount] = useState(0);
+  const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
