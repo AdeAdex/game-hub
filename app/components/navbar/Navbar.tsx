@@ -62,6 +62,7 @@ function MyApp() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [friendRequestCount, setFriendRequestCount] = useState(0);
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -98,6 +99,7 @@ function MyApp() {
         if (response.data.success === true) {
           setToken(true);
           setUserData(response.data.user);
+          setFriendRequestCount(response.data.User.friendRequestCount)
         }
       } catch (error: any) {
         console.error("Error fetching user data:", error.message);
