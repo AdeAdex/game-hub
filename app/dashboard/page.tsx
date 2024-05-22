@@ -14,7 +14,7 @@ import { Chart, registerables } from "chart.js";
 import { UserDataType, ActivityType } from "../types/user";
 import LoadingSkeleton from "../components/dashboard/LoadingSkeleton";
 import { FaLinkedin, FaTwitter, FaFacebook } from 'react-icons/fa';
-import avatar from "@/public/images/avatar.png" 
+import avatar from "@/public/images/robot.png" 
 
 
 Chart.register(...registerables);
