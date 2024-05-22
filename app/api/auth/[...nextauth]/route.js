@@ -255,7 +255,7 @@ const handler = NextAuth({
       try {
         if (account.provider !== 'credentials') {
           await connectToDb();
-          return await handleAuthentication(null, profile);
+          return await handleAuthentication(null, profile, account.provider );
         }
         return true;
       } catch (error) {
@@ -266,7 +266,7 @@ const handler = NextAuth({
   },
 });
 
-async function handleAuthentication(credentials, profile) {
+async function handleAuthentication(credentials, profile, provider) {
   try {
     await connectToDb();
 
@@ -290,7 +290,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id, "login", "You logged in", device, location); // Log activity
+        await logActivity(user._id, "login", "Logged in using social login", device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       } else {
@@ -309,7 +309,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id, "login", "You logged in", device, location); // Log activity
+        await logActivity(user._id, "login", "Logged in using email and password", device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       }
@@ -346,7 +346,7 @@ async function handleAuthentication(credentials, profile) {
 
       const user = await User.findOne({ email: profile.email });
       await trackLogin(user); // Track login
-      await logActivity(user._id, "login", "You logged in", "Unknown Device" , "Unknown Location" ); // Log activity
+      await logActivity(user._id, "login", `Logged in using ${provider} Auth`, "Unknown Device" , "Unknown Location" ); // Log activity
 
       return true;
     }
