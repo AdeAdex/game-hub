@@ -198,6 +198,7 @@ import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
 import { cookies } from "next/headers";
+import logActivity from "../../../utils/logActivity";
 
 const handler = NextAuth({
   providers: [
@@ -265,18 +266,6 @@ const handler = NextAuth({
     },
   },
 });
-
-// Function to log activity
-const logActivity = async (userId, device, location) => {
-  const activity = new Activity({
-    userId,
-    type: "login",
-    description: "You logged in",
-    device, // Add device
-    location, // Add location
-  });
-  await activity.save();
-};
 
 async function handleAuthentication(credentials, profile) {
   try {
