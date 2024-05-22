@@ -214,7 +214,7 @@ const handler = NextAuth({
       async authorize(credentials) {
         try {
           await connectToDb();
-          return await handleAuthentication(credentials, null);
+          return await handleAuthentication(credentials, null, "form");
         } catch (error) {
           // Log the error message for debugging purposes
           console.error("Error during authorization:", error.message);
@@ -253,7 +253,7 @@ const handler = NextAuth({
         return session;
       }
     },
-    async signIn({ profile, account }) {
+    async signIn({ profile, account, credentials }) {
       try {
         if (account.provider !== "credentials") {
           await connectToDb();
