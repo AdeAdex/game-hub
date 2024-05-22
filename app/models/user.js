@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
     outgoingFriendRequests: [
       { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     ],
+    friendRequestCount: { type: Number, default: 0 },
     savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
     reportedPosts: [
       {
