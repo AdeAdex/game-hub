@@ -264,21 +264,6 @@ const handler = NextAuth({
         console.error("Error occurred during signIn:", error);
         return false;
   }
-      /*try {
-        if (account.provider !== "credentials") {
-          await connectToDb();
-          return await handleAuthentication(null, profile, account.provider);
-        }
-        // Handle credentials sign-in error
-        if (credentials) {
-          throw new Error("Invalid email or password");
-        }
-        return true;
-      } catch (error) {
-        console.error("Error occurred during signIn:", error.message);
-        // Return false to indicate signIn failed
-        return false;
-    }*/
     },
   },
 });
@@ -287,7 +272,7 @@ async function handleAuthentication(credentials, profile, provider) {
   try {
     await connectToDb();
 
-    if (credentials) {
+    if (credentials.email && credentials.password) {
       const { email, password, location, device } = credentials;
       const user = await User.findOne({
         $or: [{ email: email }, { userName: email }],
