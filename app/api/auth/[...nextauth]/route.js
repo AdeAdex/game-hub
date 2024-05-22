@@ -291,7 +291,7 @@ async function handleAuthentication(credentials, profile) {
         });
 
         await trackLogin(user); // Track login
-        await logActivity(user._id, device, location); // Log activity
+        await logActivity(user._id,  device, location); // Log activity
 
         return { email: user.email, token, ...user.toObject() };
       } else {
