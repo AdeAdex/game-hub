@@ -255,6 +255,13 @@ const handler = NextAuth({
     },
     async signIn({ profile, account, credentials }) {
       try {
+        await connectToDb();
+        return handleAuthentication(credentials, profile);
+      } catch (error) {
+        console.error("Error occurred during signIn:", error);
+        return false;
+  }
+      /*try {
         if (account.provider !== "credentials") {
           await connectToDb();
           return await handleAuthentication(null, profile, account.provider);
@@ -268,7 +275,7 @@ const handler = NextAuth({
         console.error("Error occurred during signIn:", error.message);
         // Return false to indicate signIn failed
         return false;
-    }
+    }*/
     },
   },
 });
