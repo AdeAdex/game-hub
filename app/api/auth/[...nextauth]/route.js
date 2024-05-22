@@ -193,7 +193,6 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../models/user";
-import Activity from "../../../models/activity"; // Import Activity model
 import { connectToDb } from "../../../utils/database";
 import { comparePassword } from "../../../utils/bcrypt";
 import { generateToken } from "../../../utils/jwtUtils";
