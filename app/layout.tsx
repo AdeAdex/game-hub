@@ -46,6 +46,7 @@ import "./globals.css";
 import CustomProvider from "./components/Provider";
 import ReduxProviders from "./redux/Provider";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,11 +55,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: string) => {  // Define the type of `url` as `string`
-      const params = new URLSearchParams(window.location.search);
+    const handleRouteChange = (url: string) => {
+      const params = new URLSearchParams(searchParams.toString());
       const utmSource = params.get('utm_source');
       const utmMedium = params.get('utm_medium');
       const utmCampaign = params.get('utm_campaign');
@@ -81,13 +84,16 @@ export default function RootLayout({
       });
     };
 
-    router.events.on('routeChangeComplete', handleRouteChange);
-    handleRouteChange(window.location.href); // Track the initial load
+    handleRouteChange(`${pathname}?${searchParams.toString()}`); // Track the initial load
 
+    const handleComplete = (url: string) => handleRouteChange(url);
+    
+    router.events.on('routeChangeComplete', handleComplete);
+    
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('routeChangeComplete', handleComplete);
     };
-  }, [router]);
+  }, [router, pathname, searchParams]);
 
   return (
     <html lang="en">
