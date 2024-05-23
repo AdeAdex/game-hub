@@ -27,7 +27,7 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { location, locationError } = useFetchLocation();
+  const { location, locationError, fetchLocation} = useFetchLocation();
   const device = useDetectDevice();
 
 
@@ -39,6 +39,11 @@ function MyApp() {
       router.replace("/dashboard"); // Replace the current URL with /dashboard
     }
   }, [status, router]);
+
+  useEffect(() => {
+    // Ask for location permission when the component mounts
+    fetchLocation();
+  }, [fetchLocation]);
 
 
   // Function to sign in with credentials and include device and location in request payload
