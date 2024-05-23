@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Inter } from 'next/font/google';
 import Head from './head';
 import "./globals.css";
@@ -18,10 +18,9 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
+    const handleRouteChange = () => {
       if (searchParams) {
         const params = new URLSearchParams(searchParams.toString());
         const utmSource = params.get('utm_source');
@@ -40,28 +39,16 @@ export default function RootLayout({
             utmSource,
             utmMedium,
             utmCampaign,
-            url,
+            url: `${pathname}?${searchParams.toString()}`,
             userAgent: navigator.userAgent,
           }),
         });
       }
     };
 
-    handleRouteChange(`${pathname}?${searchParams?.toString()}`); // Track the initial load
+    handleRouteChange(); // Track the initial load
 
-    const handleComplete = () => handleRouteChange(`${pathname}?${searchParams?.toString()}`);
-    
-    // Adding event listener for URL change
-    router.beforePopState(() => {
-      handleComplete();
-      return true;
-    });
-
-    return () => {
-      // Cleanup event listener
-      router.beforePopState(() => true);
-    };
-  }, [router, pathname, searchParams]);
+  }, [pathname, searchParams]); // Trigger effect on pathname or searchParams change
 
   return (
     <html lang="en">
@@ -75,4 +62,3 @@ export default function RootLayout({
     </html>
   );
 }
- 
