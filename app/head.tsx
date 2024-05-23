@@ -1,6 +1,6 @@
 // app/head.tsx
 
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Game Hub",
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function Head() {
   return (
     <>
-      <title>{metadata.title}</title>
-      <meta name="description" content={metadata.description} />
+      <title>{metadata.title ?? 'Default Title'}</title>
+      <meta name="description" content={metadata.description ?? 'Default Description'} />
     </>
   );
 }
