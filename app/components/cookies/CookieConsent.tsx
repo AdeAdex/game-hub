@@ -1,5 +1,8 @@
-// components/CookieConsent.tsx
+// components/cookies/CookieConsent.tsx
+
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import CloseIcon from './CloseIcon'; // Import your CloseIcon component
 
 interface CookieConsentProps {
   onConsent: () => void;
@@ -21,22 +24,27 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onConsent }) => {
     onConsent();
   };
 
+  const closeBanner = () => {
+    setIsVisible(false);
+  };
+
   if (!isVisible) {
     return null;
   }
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <p className="text-sm">
+        <CloseIcon onClick={closeBanner} />
+      <div className="container mx-auto relative">
+        <p className="text-sm md:text-base">
           We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
-          <a href="/privacy-policy" className="underline ml-2">
+          <Link href="/PrivacyPolicy" className="underline ml-2">
             Learn more
-          </a>
+          </Link>
         </p>
         <button
           onClick={acceptCookies}
-          className="bg-blue-500 text-white px-4 py-2 rounded ml-4 hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 mt-4 block mx-auto md:w-auto"
         >
           Accept Cookies
         </button>
