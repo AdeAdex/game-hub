@@ -27,9 +27,8 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const location = useFetchLocation();
+  const { location, locationError } = useFetchLocation();
   const device = useDetectDevice();
-
 
 
 
@@ -71,14 +70,23 @@ function MyApp() {
     }
   };
 
- 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
+    if (locationError) {
+      enqueueSnackbar(locationError, { variant: "warning" });
+    }
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
   };
+
+  /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await signInWithCredentials(email, password, device, location);
+    setSubmitting(false);
+  };*/
 
   return (
     <form action="" onSubmit={handleSubmit}>
