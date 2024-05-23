@@ -49,7 +49,7 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
     const actualSearchParams = searchParams ?? new URLSearchParams();
 
     const handleRouteChange = () => {
-      if (pathname === '/' || pathname === '/home' || pathname === '/index') {
+      if (pathname === '/' || pathname === 'https://adex-game-hub.vercel.app' || pathname === '/index') {
         const params = new URLSearchParams(actualSearchParams.toString());
         const utmSource = params.get('utm_source');
         const utmMedium = params.get('utm_medium');
