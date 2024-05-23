@@ -24,9 +24,13 @@ const AdminPage: React.FC = () => {
     const fetchVisitors = async () => {
       try {
         const response = await fetch('/api/admin/visitors');
-        const data = await response.json();
-        setVisitors(data);
-      } catch (error) {
+        if (response.ok) {
+          const data = await response.json();
+          setVisitors(data);
+        } else {
+          console.error('Failed to fetch visitors');
+        }
+      } catch (error: any) {
         console.error('Error fetching visitors:', error);
       }
     };
@@ -54,20 +58,28 @@ const AdminPage: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {visitors.map((visitor, index) => (
-              <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.referrer}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.utmSource}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.utmMedium}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.utmCampaign}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.url}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.userAgent}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.ipAddress}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.screenResolution}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{visitor.language}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{new Date(visitor.date).toLocaleString()}</td>
+            {visitors.length === 0 ? (
+              <tr>
+                <td colSpan={10} className="px-6 py-4 text-center text-gray-500">
+                  No visitors found.
+                </td>
               </tr>
-            ))}
+            ) : (
+              visitors.map((visitor, index) => (
+                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.referrer || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.utmSource || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.utmMedium || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.utmCampaign || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.url}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.userAgent}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.ipAddress || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.screenResolution || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{visitor.language || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{new Date(visitor.date).toLocaleString()}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
