@@ -1,7 +1,7 @@
 // /apo/layout.tsx
 
 'use client'
-import React, { useEffect, Suspense, useMemo } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation'; 
 import "./globals.css";
 import { Inter } from 'next/font/google';
@@ -40,27 +40,34 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
     const actualSearchParams = searchParams ?? new URLSearchParams();
 
     const handleRouteChange = () => {
-      const params = new URLSearchParams(actualSearchParams.toString());
-      const utmSource = params.get('utm_source');
-      const utmMedium = params.get('utm_medium');
-      const utmCampaign = params.get('utm_campaign');
-      const referrer = document.referrer;
+      // Only track visits to the home/landing page
+      if (pathname === '/' || pathname === '/adex-game-hub.vercel.app/') {
+        const params = new URLSearchParams(actualSearchParams.toString());
+        const utmSource = params.get('utm_source');
+        const utmMedium = params.get('utm_medium');
+        const utmCampaign = params.get('utm_campaign');
+        const referrer = document.referrer;
 
-      // Send this information to your backend
-      fetch('/api/track-visit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          referrer,
-          utmSource,
-          utmMedium,
-          utmCampaign,
-          url: `${pathname}?${actualSearchParams.toString()}`,
-          userAgent: navigator.userAgent,
-        }),
-      });
+        // Send this information to your backend
+        fetch('/api/track-visit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            referrer,
+            utmSource,
+            utmMedium,
+            utmCampaign,
+            url: `${pathname}?${actualSearchParams.toString()}`,
+            userAgent: navigator.userAgent,
+            screenResolution: `${window.screen.width}x${window.screen.height}`,
+            language: navigator.language,
+          }),
+        }).catch(error => {
+          console.error('Error tracking visit:', error);
+        });
+      }
     };
 
     handleRouteChange(); // Track the initial load

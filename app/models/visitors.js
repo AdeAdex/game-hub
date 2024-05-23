@@ -10,6 +10,8 @@ const visitorSchema = new mongoose.Schema({
   url: { type: String, required: true },
   userAgent: { type: String, required: true },
   ipAddress: { type: String },
+  screenResolution: { type: String },
+  language: { type: String },
   date: { type: Date, default: Date.now },
 });
 

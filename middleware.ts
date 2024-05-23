@@ -16,6 +16,7 @@ export function middleware(request: NextRequest) {
     "/reset-password",
     "/forgot-password-email-sent",
     "/login",
+    "/admin"
   ];
 
   // If the requested route is public, allow access
