@@ -1,18 +1,27 @@
 // /app/layout.tsx
 'use client';
-import React, { useEffect, Suspense } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation'; 
+import React, { useEffect, Suspense, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import "./globals.css";
 import { Inter } from 'next/font/google';
 import CustomProvider from './components/Provider';
 import ReduxProviders from './redux/Provider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Head from './head';
+import CookieConsent from '@/app/components/cookies/CookieConsent';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname() ?? '';
+  const [hasConsent, setHasConsent] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem('cookieConsent');
+    if (consent) {
+      setHasConsent(true);
+    }
+  }, []);
 
   return (
     <html lang="en">
@@ -21,10 +30,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ReduxProviders>
           <CustomProvider>
             <Suspense fallback={<div>Loading...</div>}>
-              <InnerRootLayout pathname={pathname}>{children}</InnerRootLayout>
+              {hasConsent && <InnerRootLayout pathname={pathname}>{children}</InnerRootLayout>}
+              {!hasConsent && children}
             </Suspense>
           </CustomProvider>
         </ReduxProviders>
+        <CookieConsent onConsent={() => setHasConsent(true)} />
         <SpeedInsights />
       </body>
     </html>
@@ -36,16 +47,15 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
 
   useEffect(() => {
     const actualSearchParams = searchParams ?? new URLSearchParams();
-    
+
     const handleRouteChange = () => {
-      if (pathname === '/' || pathname === '/home' || pathname === '/index') { // Ensure it's the home/landing page
+      if (pathname === '/' || pathname === '/home' || pathname === '/index') {
         const params = new URLSearchParams(actualSearchParams.toString());
         const utmSource = params.get('utm_source');
         const utmMedium = params.get('utm_medium');
         const utmCampaign = params.get('utm_campaign');
         const referrer = document.referrer;
 
-        // Send this information to your backend
         fetch('/api/track-visit', {
           method: 'POST',
           headers: {
@@ -65,14 +75,12 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
       }
     };
 
-    handleRouteChange(); // Track the initial load
+    handleRouteChange(); 
 
     const handleComplete = () => handleRouteChange();
 
-    // Subscribe to route changes
     window.addEventListener('routeChangeComplete', handleComplete);
 
-    // Return a cleanup function to remove the event listener
     return () => {
       window.removeEventListener('routeChangeComplete', handleComplete);
     };
