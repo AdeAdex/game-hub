@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Inter } from 'next/font/google';
 import Head from './head';
@@ -47,7 +47,6 @@ export default function RootLayout({
     };
 
     handleRouteChange(); // Track the initial load
-
   }, [pathname, searchParams]); // Trigger effect on pathname or searchParams change
 
   return (
@@ -55,7 +54,11 @@ export default function RootLayout({
       <Head />
       <body className={inter.className}>
         <ReduxProviders>
-          <CustomProvider>{children}</CustomProvider>
+          <CustomProvider>
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
+        </CustomProvider>
         </ReduxProviders>
         <SpeedInsights />
       </body>
