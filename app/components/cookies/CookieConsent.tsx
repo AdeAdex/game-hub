@@ -38,7 +38,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onConsent }) => {
       <div className="container mx-auto relative">
         <p className="text-sm md:text-base">
           We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
-          <Link href="/PrivacyPolicy" className="underline ml-2">
+          <Link href="/privacy-policy" className="underline ml-2">
             Learn more
           </Link>
         </p>
