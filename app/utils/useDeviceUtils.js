@@ -1,17 +1,36 @@
 import { useCallback, useState, useEffect } from "react";
 import UAParser from "ua-parser-js";
+import axios from "axios";
 
 export const useFetchLocation = () => {
   const [location, setLocation] = useState("");
 
   const fetchLocation = useCallback(async () => {
     try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      const deviceLocation = data ? `${data.city} ${data.region} ${data.country_name}` : "Location permission denied";
-      setLocation(deviceLocation);
-    } catch (error) {
-      console.error("Error fetching location:", error);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+              const locationResponse = await axios.get(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+              );
+              setLocation(locationResponse.data.display_name);
+            } catch (error) {
+              console.error("Error fetching location from Nominatim: ", error);
+              setLocation("Location not found");
+            }
+          },
+          (error) => {
+            console.error("Error fetching location: ", error);
+            setLocation("Location permission denied");
+          }
+        );
+      } else {
+        setLocation("Geolocation not supported");
+      }
+    } catch (err) {
+      console.error("Error fetching device and location info: ", err);
     }
   }, []);
 
