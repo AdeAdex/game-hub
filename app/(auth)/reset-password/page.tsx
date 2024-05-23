@@ -11,7 +11,8 @@ import Navbar from "@/app/components/navbar/Navbar";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import Loader from "@/app/components/Loader";
-import Bowser from "bowser";
+import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils"; // Adjust the import path accordingly
+
 
 const ResetPassword = () => {
   return (
@@ -35,8 +36,8 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const { enqueueSnackbar } = useSnackbar();
-  const [device, setDevice] = useState("");
-  const [location, setLocation] = useState("");
+  const { location, locationError, fetchLocation} = useFetchLocation();
+  const device = useDetectDevice();
 
   useEffect(() => {
     const queryToken = new URLSearchParams(window.location.search).get("token");
@@ -87,38 +88,10 @@ function MyApp() {
   }, [enqueueSnackbar]);
 
   useEffect(() => {
-    const getDeviceAndLocation = async () => {
-      try {
-        // Get device info
-        const browser = Bowser.getParser(window.navigator.userAgent);
-        const deviceInfo = browser.getResult();
-        setDevice(`${deviceInfo.platform.type} - ${deviceInfo.browser.name}`);
+    // Ask for location permission when the component mounts
+    fetchLocation();
+  }, [fetchLocation]);
 
-        // Get location info
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              const { latitude, longitude } = position.coords;
-              const locationResponse = await axios.get(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-              );
-              setLocation(locationResponse.data.display_name);
-            },
-            (error) => {
-              console.error("Error fetching location: ", error);
-              setLocation("Location permission denied");
-            }
-          );
-        } else {
-          setLocation("Geolocation not supported");
-        }
-      } catch (err) {
-        console.error("Error fetching device and location info: ", err);
-      }
-    };
-
-    getDeviceAndLocation();
-  }, []);
 
   return (
     <div>
