@@ -5,6 +5,7 @@ import User from "../../models/user";
 import Activity from "../../models/activity"; // Import Activity model
 import { connectToDb } from "../../utils/database";
 import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
+import logActivity from "@/app/utils/activityLogger.js";
 
 export const POST = async (req, res) => {
   if (req.method !== "POST") {
@@ -54,6 +55,15 @@ export const POST = async (req, res) => {
     user.password = hashedPassword;
     user.resetPasswordToken = null;
     await user.save();
+
+    // Update the activities 
+    await logActivity(
+          user._id,
+          "password_change",
+          "You changed your password ",
+          device,
+          location
+        ); // Log activity
 
   
     console.log("Password reset successfully");
