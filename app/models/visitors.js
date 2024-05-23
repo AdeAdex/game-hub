@@ -9,6 +9,6 @@ const visitorSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-const Visitor = mongoose.model('Visitor', visitorSchema);
+const Visitor = mongoose.model.Visitor || mongoose.model('Visitor', visitorSchema);
 
 export default Visitor;
