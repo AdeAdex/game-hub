@@ -34,7 +34,6 @@ export default function RootLayout({
 
 
 
-// app/layout.tsx
 
 'use client';
 
@@ -61,30 +60,32 @@ export default function RootLayout({
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      const utmSource = params.get('utm_source');
-      const utmMedium = params.get('utm_medium');
-      const utmCampaign = params.get('utm_campaign');
-      const referrer = document.referrer;
+      if (searchParams) {
+        const params = new URLSearchParams(searchParams.toString());
+        const utmSource = params.get('utm_source');
+        const utmMedium = params.get('utm_medium');
+        const utmCampaign = params.get('utm_campaign');
+        const referrer = document.referrer;
 
-      // Send this information to your backend
-      fetch('/api/track-visit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          referrer,
-          utmSource,
-          utmMedium,
-          utmCampaign,
-          url,
-          userAgent: navigator.userAgent,
-        }),
-      });
+        // Send this information to your backend
+        fetch('/api/track-visit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            referrer,
+            utmSource,
+            utmMedium,
+            utmCampaign,
+            url,
+            userAgent: navigator.userAgent,
+          }),
+        });
+      }
     };
 
-    handleRouteChange(`${pathname}?${searchParams.toString()}`); // Track the initial load
+    handleRouteChange(`${pathname}?${searchParams?.toString()}`); // Track the initial load
 
     const handleComplete = (url: string) => handleRouteChange(url);
     
