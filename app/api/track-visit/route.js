@@ -10,6 +10,8 @@ export const POST = async (req) => {
     
     await connectToDb();
 
+    const ipAddress = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
+
     const visitorData = {
       referrer,
       utmSource,
@@ -17,12 +19,13 @@ export const POST = async (req) => {
       utmCampaign,
       url,
       userAgent,
-      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      ipAddress,
     };
 
     const newVisitor = new Visitor(visitorData);
     await newVisitor.save();
 
+    console.log("visitor", newVisitor)
     return NextResponse.json(newVisitor, { status: 201 });
   } catch (error) {
     console.error("Error tracking visit:", error.message);
