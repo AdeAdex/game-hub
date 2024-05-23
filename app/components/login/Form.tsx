@@ -6,7 +6,7 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import UAParser from "ua-parser-js";
+import { fetchLocation, detectDevice } from "@/app/utils/deviceUtils";
 
 
 
@@ -52,31 +52,10 @@ function MyApp() {
     }
   }, [status, router]);
 
-   const fetchLocation = useCallback(async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      const deviceLocation = data ? `${data.city} ${data.region} ${data.country_name}` : "Location permission denied";
-      setLocation(deviceLocation);
-    } catch (error) {
-      console.error("Error fetching location:", error);
-    }
+useEffect(() => {
+    fetchLocation(setLocation);
+    detectDevice(setDevice);
   }, []);
-
-  const detectDevice = useCallback(() => {
-    const parser = new UAParser();
-    const result = parser.getResult();
-    const deviceInfo = result.device.vendor
-      ? `${result.device.vendor} ${result.device.model}`
-      : result.os.name || "Unknown Device";
-    setDevice(deviceInfo);
-  }, []);
-
-  useEffect(() => {
-    fetchLocation();
-    detectDevice();
-  }, [fetchLocation, detectDevice]);
-
 
 
   // Function to sign in with credentials and include device and location in request payload
