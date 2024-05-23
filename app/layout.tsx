@@ -1,6 +1,5 @@
-// /apo/layout.tsx
-
-'use client'
+// /app/layout.tsx
+'use client';
 import React, { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation'; 
 import "./globals.css";
@@ -13,7 +12,7 @@ import Head from './head';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const pathname = usePathname() ?? ''; // Assign a default value if usePathname returns null
+  const pathname = usePathname() ?? '';
 
   return (
     <html lang="en">
@@ -21,7 +20,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={inter.className}>
         <ReduxProviders>
           <CustomProvider>
-            {/* Wrap children with Suspense */}
             <Suspense fallback={<div>Loading...</div>}>
               <InnerRootLayout pathname={pathname}>{children}</InnerRootLayout>
             </Suspense>
@@ -38,10 +36,9 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
 
   useEffect(() => {
     const actualSearchParams = searchParams ?? new URLSearchParams();
-
+    
     const handleRouteChange = () => {
-      // Only track visits to the home/landing page
-      if (pathname === '/' || pathname === '/adex-game-hub.vercel.app/') {
+      if (pathname === '/' || pathname === '/home' || pathname === '/index') { // Ensure it's the home/landing page
         const params = new URLSearchParams(actualSearchParams.toString());
         const utmSource = params.get('utm_source');
         const utmMedium = params.get('utm_medium');
@@ -59,13 +56,11 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
             utmSource,
             utmMedium,
             utmCampaign,
-            url: `${pathname}?${actualSearchParams.toString()}`,
+            url: `${window.location.href}`,
             userAgent: navigator.userAgent,
             screenResolution: `${window.screen.width}x${window.screen.height}`,
             language: navigator.language,
           }),
-        }).catch(error => {
-          console.error('Error tracking visit:', error);
         });
       }
     };
