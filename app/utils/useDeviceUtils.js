@@ -4,8 +4,9 @@ import axios from "axios";
 
 export const useFetchLocation = () => {
   const [location, setLocation] = useState("");
+  const [locationError, setLocationError] = useState("");
 
-  const fetchLocation = useCallback(async () => {
+  const fetchLocation = useCallback(() => {
     try {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -16,6 +17,7 @@ export const useFetchLocation = () => {
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
               );
               setLocation(locationResponse.data.display_name);
+              setLocationError(""); // Clear any previous errors
             } catch (error) {
               console.error("Error fetching location from Nominatim: ", error);
               setLocation("Location not found");
@@ -23,14 +25,18 @@ export const useFetchLocation = () => {
           },
           (error) => {
             console.error("Error fetching location: ", error);
+            setLocationError("Location permission denied.");
             setLocation("Location permission denied");
           }
         );
       } else {
+        setLocationError("Geolocation is not supported by your browser.");
         setLocation("Geolocation not supported");
       }
     } catch (err) {
       console.error("Error fetching device and location info: ", err);
+      setLocationError("An error occurred while fetching location.");
+      setLocation("Location error");
     }
   }, []);
 
@@ -38,7 +44,7 @@ export const useFetchLocation = () => {
     fetchLocation();
   }, [fetchLocation]);
 
-  return location;
+  return { location, locationError };
 };
 
 export const useDetectDevice = () => {
