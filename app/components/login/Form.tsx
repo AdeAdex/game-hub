@@ -6,7 +6,8 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import { fetchLocation, detectDevice } from "@/app/utils/deviceUtils";
+import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils"; // Adjust the import path accordingly
+
 
 
 
@@ -38,8 +39,8 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [device, setDevice] = useState<string>(""); 
-  const [location, setLocation] = useState<string>("");
+  const location = useFetchLocation();
+  const device = useDetectDevice();
 
 
 
@@ -51,11 +52,6 @@ function MyApp() {
       router.replace("/dashboard"); // Replace the current URL with /dashboard
     }
   }, [status, router]);
-
-useEffect(() => {
-    fetchLocation(setLocation);
-    detectDevice(setDevice);
-  }, []);
 
 
   // Function to sign in with credentials and include device and location in request payload
