@@ -1,10 +1,14 @@
 // /app/privacy-policy/page.tsx
 
 import React from "react";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="container mx-auto p-8">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+    <Navbar />
+    <div className="container mx-auto py-16 md:py-20">
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
       <p className="mb-4">
         Your privacy is important to us. This privacy policy explains the types
@@ -42,6 +46,8 @@ const PrivacyPolicy: React.FC = () => {
         posted on this page, and we encourage you to review our policy
         periodically.
       </p>
+    </div>
+    <Footer />
     </div>
   );
 };
