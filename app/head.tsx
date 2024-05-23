@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function Head() {
   return (
     <>
-      <title>{metadata.title ?? 'Default Title'}</title>
-      <meta name="description" content={metadata.description ?? 'Default Description'} />
+      <title>{String(metadata.title ?? 'Default Title')}</title>
+      <meta name="description" content={String(metadata.description ?? 'Default Description')} />
     </>
   );
 }
