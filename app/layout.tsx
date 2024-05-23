@@ -33,6 +33,7 @@ export default function RootLayout({
 */
 
 
+
 // app/layout.tsx
 
 'use client';
@@ -56,7 +57,7 @@ export default function RootLayout({
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: string) => {  // Define the type of `url` as `string`
       const params = new URLSearchParams(window.location.search);
       const utmSource = params.get('utm_source');
       const utmMedium = params.get('utm_medium');
