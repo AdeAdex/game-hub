@@ -8,18 +8,6 @@ import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils"; // Adjust the import path accordingly
 
-
-
-
-// import { useDispatch } from "react-redux";
-// import Cookies from "universal-cookie";
-// import axios from "axios";
-// import { signInSuccess } from "@/app/redux/authSlice";
-// import localforage from "localforage";
-// import CryptoJS from 'crypto-js';
-
-// const cookies = new Cookies();
-
 const Form = () => {
   return (
     <SnackbarProvider
