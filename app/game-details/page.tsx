@@ -180,7 +180,9 @@ const GameDetailsPage: React.FC = () => {
         />
       </div>
       <div className="space-y-6 text-sm sm:text-base bg-gray-800 p-6 rounded-lg shadow-lg">
-  <p className="text-gray-400"><strong>Original Name:</strong> {name_original}</p>
+  <p className="text-lg sm:text-xl text-gray-200 font-semibold mt-4">
+          <strong className="text-white">Original Name:</strong> {name_original}
+        </p>
   <p className="text-gray-400"><strong>Description:</strong> {description}</p>
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <p className="text-gray-400"><strong>Released:</strong> {released} {tba && '(To be announced)'}</p>
