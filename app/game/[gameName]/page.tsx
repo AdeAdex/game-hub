@@ -21,6 +21,7 @@ interface GameDetailsProps {
 const GameDetails: React.FC = () => {
   const params = useParams();
   const gameName = params?.gameName;
+  const gameId = params?.gameId;
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +30,7 @@ const GameDetails: React.FC = () => {
       const fetchGameDetails = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`https://api.rawg.io/api/games/${gameName}`, {
+          const response = await axios.get(`https://api.rawg.io/api/games/${gameId}`, {
             params: {
               key: '4e2c61f658d44adcb51ed39f710a9d71',
             },
