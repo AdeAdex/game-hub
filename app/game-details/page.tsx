@@ -1,12 +1,13 @@
-// app/game-details.tsx
+// /app/game-details/page.tsx
+
 'use client';
 
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import Navbar from '../components/navbar/Navbar';
-import Footer from '../components/footer/Footer';
+import Navbar from '../../components/navbar/Navbar';
+import Footer from '../../components/footer/Footer';
 
 interface GameDetailsProps {
   id: number;
@@ -20,8 +21,8 @@ interface GameDetailsProps {
 
 const GameDetails: React.FC = () => {
   const searchParams = useSearchParams();
-  const gameId = searchParams.get('id');
-  const gameName = searchParams.get('name');
+  const gameId = searchParams ? searchParams.get('id') : null;
+  const gameName = searchParams ? searchParams.get('name') : null;
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
 
