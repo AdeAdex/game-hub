@@ -34,7 +34,7 @@ export default function Home() {
             key: '4e2c61f658d44adcb51ed39f710a9d71',
           },
         });
-        console.log(response.data)
+        console.log(response.data.results)
         setGames(response.data.results);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -64,9 +64,9 @@ export default function Home() {
               games.map((game, index) => (
                 <div
                   key={index}
-                  className="w-full md:w-[30%] lg:w-[19%] h-[300px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  className="w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
-                  <div className="relative w-100 h-[70%]">
+                  <div className="relative w-100 h-[65%]">
                     <Image
                       src={game.background_image || "/images/placeholder.png"}
                       alt={game.name}
@@ -77,10 +77,10 @@ export default function Home() {
                       loading="lazy"
                     />
                   </div>
-                  <div className="p-4">
-                    <h2 className="text-xl font-semibold">{game.name}</h2>
+                  <div className="p-4 relative h-[35%] overflow-y-auto  whitespace-nowrap">
+                    <small className="text-[14px] font-semibold">{game.name}</small>
                     {game.stores.map((store, storeIndex) => (
-                      <p key={storeIndex}>
+                      <p key={storeIndex} className=" relative">
                         <a href={store.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                           {store.store.name}
                         </a>
