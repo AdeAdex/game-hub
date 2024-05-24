@@ -30,7 +30,7 @@ const GameDetails: React.FC = () => {
         try {
           const response = await axios.get(`https://api.rawg.io/api/games/${gameName}`, {
             params: {
-              key: 'YOUR_RAWG_API_KEY',
+              key: '4e2c61f658d44adcb51ed39f710a9d71',
             },
           });
           setGameDetails(response.data);
