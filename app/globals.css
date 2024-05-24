@@ -27,6 +27,18 @@ body {
   z-index: 1000;
 }
 
+.bg-gray-800 {
+  background-color: #2d2d2d;
+}
+
+.bg-gray-900 {
+  background-color: #1a1a1a;
+}
+
+.bg-gray-700 {
+  background-color: #3a3a3a;
+}
+
 .nav-list {
   display: flex;
   flex-direction: column;
