@@ -25,6 +25,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const gamePageRegex = /^\/([^/]+)$/;
+if (gamePageRegex.test(pathname)) {
+  return NextResponse.next();
+}
+
+
   // If the user is not authenticated, redirect to login
   if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
