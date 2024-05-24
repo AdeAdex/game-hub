@@ -23,7 +23,7 @@ const AdminPage: React.FC = () => {
   useEffect(() => {
     const fetchVisitors = async () => {
       try {
-        const response = await fetch('/api/admin/visitors');
+        const response = await fetch('/api/admin/visitors', {cache: 'no-store'} /* {next: {revalidate: 10}} */);
         if (response.ok) {
           const data = await response.json();
           setVisitors(data);
