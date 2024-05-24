@@ -1,6 +1,8 @@
 // /app/game-details/page.tsx
 
-import { useSearchParams } from 'next/router';
+'use client'
+
+import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
