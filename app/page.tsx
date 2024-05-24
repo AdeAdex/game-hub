@@ -21,7 +21,7 @@ interface Card {
 export default function Home() {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true); // Initially set loading to true
-  const observer = useRef<IntersectionObserver | null>(null);
+  // const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -44,23 +44,23 @@ export default function Home() {
     fetchCards();
   }, []);
 
-  useEffect(() => {
-    if (!loading) {
-      observer.current = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const img = entry.target as HTMLImageElement;
-            img.src = img.dataset.src || "";
-            observer.current?.unobserve(img);
-          }
-        });
-      });
+  // useEffect(() => {
+  //   if (!loading) {
+  //     observer.current = new IntersectionObserver((entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           const img = entry.target as HTMLImageElement;
+  //           img.src = img.dataset.src || "";
+  //           observer.current?.unobserve(img);
+  //         }
+  //       });
+  //     });
 
-      document.querySelectorAll('img[data-src]').forEach((img) => {
-        observer.current?.observe(img);
-      });
-    }
-  }, [loading]);
+  //     document.querySelectorAll('img[data-src]').forEach((img) => {
+  //       observer.current?.observe(img);
+  //     });
+  //   }
+  // }, [loading]);
 
   return (
     <>
