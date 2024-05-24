@@ -90,6 +90,10 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
 }*/
 
 
+
+
+
+
 'use client';
 import React, { useEffect, Suspense, useState, useContext } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -183,4 +187,3 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
 
   return <div className={theme === 'dark' ? 'dark-mode' : 'light-mode'}>{children}</div>;
 }
-
