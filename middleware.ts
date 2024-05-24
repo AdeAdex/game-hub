@@ -17,7 +17,8 @@ export function middleware(request: NextRequest) {
     "/forgot-password-email-sent",
     "/login",
     "/admin",
-    "/privacy-policy"
+    "/privacy-policy", 
+    "/game-details" 
   ];
 
   // If the requested route is public, allow access
