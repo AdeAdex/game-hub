@@ -9,7 +9,6 @@ import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 
 interface GameDetailsProps {
-  gameName: string;
   id: number;
   name: string;
   description: string;
@@ -20,7 +19,8 @@ interface GameDetailsProps {
 }
 
 const GameDetails: React.FC = () => {
-  const { gameName } = useParams<{ gameName: string }>();
+  const params = useParams();
+  const gameName = params.gameName;
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
 
