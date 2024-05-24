@@ -3,6 +3,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import AdminVisitorsPageLoadingSkeleton from '../components/admin/AdminVisitorsPageLoadingSkeleton';
+import Navbar from '../components/navbar/Navbar';
+import Footer from '../components/footer/Footer';
 
 // Define the Visitor interface
 interface Visitor {
@@ -44,6 +46,8 @@ const AdminPage: React.FC = () => {
   }, []);
 
   return (
+    <div className="min-h-screen flex flex-col bg-gray-50">
+    <Navbar />
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6 text-center">Visitors Information</h1>
       {loading ? (
@@ -94,6 +98,8 @@ const AdminPage: React.FC = () => {
           </table>
         </div>
       )}
+    </div>
+    <Footer />
     </div>
   );
 };
