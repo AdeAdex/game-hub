@@ -1,4 +1,4 @@
-// pages/[gameName]/index.tsx
+// app/[gameName]/page.tsx
 
 import { GetServerSideProps } from "next";
 import React from "react";
