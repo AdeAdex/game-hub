@@ -15,7 +15,7 @@ const AdminVisitorsPageLoadingSkeleton: React.FC = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: 10 }).map((_, index) => (
             <tr key={index} className={`animate-pulse ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
               {Array.from({ length: 10 }).map((_, i) => (
                 <td key={i} className="px-6 py-4 whitespace-nowrap">
