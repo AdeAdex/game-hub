@@ -1,7 +1,7 @@
 // app/game/[gameName]/page.tsx
 'use client'
 
-import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
@@ -19,9 +19,8 @@ interface GameDetailsProps {
   stores: { store: { name: string }, url: string }[];
 }
 
-const GameDetails: React.FC = ({ params }) => {
-  const router = useRouter();
-  const { gameName } = params;
+const GameDetails: React.FC = () => {
+  const { gameName } = useParams<{ gameName: string }>();
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
 
