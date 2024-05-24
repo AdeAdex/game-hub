@@ -17,9 +17,9 @@ interface GameDetailsProps {
   stores: { store: { name: string }, url: string }[];
 }
 
-const GameDetails: React.FC = () => {
+const GameDetails: React.FC = ({ params }) => {
   const router = useRouter();
-  const { gameName } = router.query;
+  const { gameName } = params;
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
 
