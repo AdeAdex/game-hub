@@ -205,13 +205,14 @@ const GameDetailsPage: React.FC = () => {
         <p className="mb-4 text-lg text-gray-700"><strong>Suggestions Count:</strong> {suggestions_count}</p>
         <p className="mb-4 text-lg text-gray-700"><strong>Alternative Names:</strong> {alternative_names.join(', ')}</p>
         <div className="mb-4 text-lg text-gray-700">
-          <strong>Website:</strong> <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
-        </div>
-        <div className="mb-4 text-lg text-gray-700">
-          <strong>Reddit:</strong> <a href={reddit_url} target="_blank" rel="noopener noreferrer">{reddit_name}</a>
-          <p>{reddit_description}</p>
-          <img src={reddit_logo} alt="Reddit Logo" className="h-10 mt-2"/>
-        </div>
+  <strong>Website:</strong> <button onClick={() => window.open(website, '_blank')} className="bg-blue-500 text-white px-4 py-2 rounded-md">Play/Download</button>
+</div>
+<div className="mb-4 text-lg text-gray-700">
+  <strong>Reddit:</strong> <a href={reddit_url} target="_blank" rel="noopener noreferrer">{reddit_name}</a>
+  <p>{reddit_description}</p>
+  <Image src={reddit_logo} alt="Reddit Logo" className="h-10 mt-2" width={100} height={100} />
+</div>
+
         <p className="mb-4 text-lg text-gray-700"><strong>Reddit Count:</strong> {reddit_count}</p>
         <p className="mb-4 text-lg text-gray-700"><strong>Twitch Count:</strong> {twitch_count}</p>
         <p className="mb-4 text-lg text-gray-700"><strong>Youtube Count:</strong> {youtube_count}</p>
