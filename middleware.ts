@@ -25,10 +25,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const gamePageRegex = /^\/([^/]+)$/;
-if (gamePageRegex.test(pathname)) {
-  return NextResponse.next();
-}
+  // Allow access to dynamic game pages
+  const gamePageRegex = /^\/game\/([^/]+)$/;
+  if (gamePageRegex.test(pathname)) {
+    return NextResponse.next();
+  }
 
 
   // If the user is not authenticated, redirect to login
