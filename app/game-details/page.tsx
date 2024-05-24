@@ -102,7 +102,7 @@ const GameDetails: React.FC = () => {
   const { results } = gameDetails;
 
   return (
-    <>
+    <div className="bg-gray-100 min-h-screen">
       <Navbar />
       <main className="w-full max-w-4xl mx-auto p-4 flex flex-col items-center pt-10">
         {results.map((game) => (
@@ -138,8 +138,8 @@ const GameDetails: React.FC = () => {
           </div>
         ))}
       </main>
-      <Footer />
-    </>
+      <Footer/>
+    </div>
   );
 };
 
