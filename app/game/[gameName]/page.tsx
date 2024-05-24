@@ -1,4 +1,6 @@
 // app/game/[gameName]/page.tsx
+'use client'
+
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
