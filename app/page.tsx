@@ -10,7 +10,6 @@ import Link from "next/link";
 import { IoArrowForward } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
 import CardSkeleton from "@/app/components/homePage/CardSkeleton";
-import ThemeToggle from '@/app/components/ThemeToggle';
 
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
@@ -51,7 +50,6 @@ export default function Home() {
     <>
       <Navbar />
       <main className="w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative">
-        <ThemeToggle />
         {/* Pass links and links2 to SideBar */}
         <SideBar links={links} links2={links2} />
         <section className="mt-1 w-full md:w-[83%] bg-[#F4F4F4] md:ml-[16.6%]">
