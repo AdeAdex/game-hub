@@ -37,21 +37,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaLinkedin className="w-6 h-6" />
+              <FaLinkedin className="w-6 h-6 cursor-pointer" />
             </a>
             <a
               href={userData.twitter}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaTwitter className="w-6 h-6" />
+              <FaTwitter className="w-6 h-6 cursor-pointer" />
             </a>
             <a
               href={userData.facebook}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaFacebook className="w-6 h-6" />
+              <FaFacebook className="w-6 h-6 cursor-pointer" />
             </a>
           </div>
           <div className="text-sm text-gray-500">Role: {userData.role}</div>
