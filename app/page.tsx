@@ -66,9 +66,10 @@ export default function Home() {
                   key={game.id}
                   href={`/game-details?id=${game.id}&name=${encodeURIComponent(game.name)}`}
                   passHref
+                  className="cursor-pointer w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   <div
-                    className="cursor-pointer w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                    className="w-full h-full"
                   >
                     <div className="relative w-100 h-[65%]">
                       <Image
