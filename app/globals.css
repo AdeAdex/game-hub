@@ -18,8 +18,8 @@ body {
 
 .theme-toggle-btn {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 30px;
+  right: 20px;
   background: none;
   border: none;
   font-size: 1.5rem;
