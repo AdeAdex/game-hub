@@ -1,5 +1,5 @@
 // app/game/[gameName]/page.tsx
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
