@@ -166,9 +166,9 @@ const GameDetailsPage: React.FC = () => {
   } = gameDetails;
 
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="text-white min-h-screen">
       <Navbar />
-      <main className="w-full max-w-4xl mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]">
+      <main className="bg-black text-white w-full max-w-4xl mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]">
         <h1 className="text-4xl font-bold mb-6 text-center text-red-500">{name}</h1>
         <div className="relative w-full h-80 mb-6">
           <Image
