@@ -179,58 +179,59 @@ const GameDetailsPage: React.FC = () => {
           className="rounded-lg"
         />
       </div>
-      <div className="space-y-4 text-sm sm:text-base">
-        <p className="text-gray-400"><strong>Original Name:</strong> {name_original}</p>
-        <p className="text-gray-400"><strong>Description:</strong> {description}</p>
-        <p className="text-gray-400"><strong>Released:</strong> {released} {tba && '(To be announced)'}</p>
-        <p className="text-gray-400"><strong>Last Updated:</strong> {new Date(updated).toLocaleString()}</p>
-        <p className="text-gray-400"><strong>Rating:</strong> {rating} / {rating_top}</p>
-        <p className="text-gray-400"><strong>Metacritic:</strong> {metacritic}</p>
-        {metacritic_platforms.length > 0 && (
-          <div className="text-gray-400">
-            <strong>Metacritic Platforms:</strong>
-            <ul className="list-disc list-inside ml-4">
-              {metacritic_platforms.map((platform, index) => (
-                <li key={index}>
-                  <a href={platform.url} target="_blank" rel="noopener noreferrer" className="text-red-500">
-                    Metascore: {platform.metascore}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <p className="text-gray-400"><strong>Playtime:</strong> {playtime} hours</p>
-        {esrb_rating && (
-          <p className="text-gray-400"><strong>ESRB Rating:</strong> {esrb_rating.name}</p>
-        )}
-        <p className="text-gray-400"><strong>Ratings Count:</strong> {ratings_count}</p>
-        <p className="text-gray-400"><strong>Reviews Count:</strong> {reviews_text_count}</p>
-        <p className="text-gray-400"><strong>Added by Users:</strong> {added}</p>
-        <p className="text-gray-400"><strong>Suggestions Count:</strong> {suggestions_count}</p>
-        <p className="text-gray-400"><strong>Alternative Names:</strong> {alternative_names.join(', ')}</p>
-        <div className="text-gray-400">
-          <strong>Website:</strong> 
-          <button onClick={() => window.open(website, '_blank')} className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">Play/Download</button>
-        </div>
-        <div className="text-gray-400">
-          <strong>Reddit:</strong> 
-          <a href={reddit_url} target="_blank" rel="noopener noreferrer" className="text-red-500 ml-2">{reddit_name}</a>
-          <p className="mt-1">{reddit_description}</p>
-          <Image src={reddit_logo} alt="Reddit Logo" width={40} height={40} className="mt-2"/>
-        </div>
-        <p className="text-gray-400"><strong>Reddit Count:</strong> {reddit_count}</p>
-        <p className="text-gray-400"><strong>Twitch Count:</strong> {twitch_count}</p>
-        <p className="text-gray-400"><strong>Youtube Count:</strong> {youtube_count}</p>
-        <p className="text-gray-400"><strong>Screenshots Count:</strong> {screenshots_count}</p>
-        <p className="text-gray-400"><strong>Movies Count:</strong> {movies_count}</p>
-        <p className="text-gray-400"><strong>Creators Count:</strong> {creators_count}</p>
-        <p className="text-gray-400"><strong>Achievements Count:</strong> {achievements_count}</p>
-        <p className="text-gray-400"><strong>Parent Achievements Count:</strong> {parent_achievements_count}</p>
-        <p className="text-gray-400"><strong>Parents Count:</strong> {parents_count}</p>
-        <p className="text-gray-400"><strong>Additions Count:</strong> {additions_count}</p>
-        <p className="text-gray-400"><strong>Game Series Count:</strong> {game_series_count}</p>
-      </div>
+      <div className="space-y-6 text-sm sm:text-base bg-gray-800 p-6 rounded-lg shadow-lg">
+  <p className="text-gray-400"><strong>Original Name:</strong> {name_original}</p>
+  <p className="text-gray-400"><strong>Description:</strong> {description}</p>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <p className="text-gray-400"><strong>Released:</strong> {released} {tba && '(To be announced)'}</p>
+    <p className="text-gray-400"><strong>Last Updated:</strong> {new Date(updated).toLocaleString()}</p>
+    <p className="text-gray-400"><strong>Rating:</strong> {rating} / {rating_top}</p>
+    <p className="text-gray-400"><strong>Metacritic:</strong> {metacritic}</p>
+    <p className="text-gray-400"><strong>Playtime:</strong> {playtime} hours</p>
+    {esrb_rating && (
+      <p className="text-gray-400"><strong>ESRB Rating:</strong> {esrb_rating.name}</p>
+    )}
+    <p className="text-gray-400"><strong>Ratings Count:</strong> {ratings_count}</p>
+    <p className="text-gray-400"><strong>Reviews Count:</strong> {reviews_text_count}</p>
+    <p className="text-gray-400"><strong>Added by Users:</strong> {added}</p>
+    <p className="text-gray-400"><strong>Suggestions Count:</strong> {suggestions_count}</p>
+    <p className="text-gray-400"><strong>Alternative Names:</strong> {alternative_names.join(', ')}</p>
+    <p className="text-gray-400"><strong>Reddit Count:</strong> {reddit_count}</p>
+    <p className="text-gray-400"><strong>Twitch Count:</strong> {twitch_count}</p>
+    <p className="text-gray-400"><strong>Youtube Count:</strong> {youtube_count}</p>
+    <p className="text-gray-400"><strong>Screenshots Count:</strong> {screenshots_count}</p>
+    <p className="text-gray-400"><strong>Movies Count:</strong> {movies_count}</p>
+    <p className="text-gray-400"><strong>Creators Count:</strong> {creators_count}</p>
+    <p className="text-gray-400"><strong>Achievements Count:</strong> {achievements_count}</p>
+    <p className="text-gray-400"><strong>Parent Achievements Count:</strong> {parent_achievements_count}</p>
+    <p className="text-gray-400"><strong>Parents Count:</strong> {parents_count}</p>
+    <p className="text-gray-400"><strong>Additions Count:</strong> {additions_count}</p>
+    <p className="text-gray-400"><strong>Game Series Count:</strong> {game_series_count}</p>
+  </div>
+  <div className="text-gray-400">
+    <strong>Metacritic Platforms:</strong>
+    <ul className="list-disc list-inside ml-4">
+      {metacritic_platforms.map((platform, index) => (
+        <li key={index}>
+          <a href={platform.url} target="_blank" rel="noopener noreferrer" className="text-red-500">
+            Metascore: {platform.metascore}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div className="text-gray-400">
+    <strong>Website:</strong>
+    <button onClick={() => window.open(website, '_blank')} className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">Play/Download</button>
+  </div>
+  <div className="text-gray-400">
+    <strong>Reddit:</strong>
+    <a href={reddit_url} target="_blank" rel="noopener noreferrer" className="text-red-500 ml-2">{reddit_name}</a>
+    <p className="mt-1">{reddit_description}</p>
+    <Image src={reddit_logo} alt="Reddit Logo" width={40} height={40} className="mt-2"/>
+  </div>
+</div>
+
     </main>
     <Footer />
   </div>
