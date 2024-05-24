@@ -1,9 +1,6 @@
 // /app/game-details/page.tsx
 
-
-'use client';
-
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
@@ -22,6 +19,11 @@ interface EsrbRating {
   name: string;
 }
 
+interface MetacriticPlatform {
+  metascore: number;
+  url: string;
+}
+
 interface GameDetails {
   id: number;
   slug: string;
@@ -29,10 +31,7 @@ interface GameDetails {
   name_original: string;
   description: string;
   metacritic: number;
-  metacritic_platforms: {
-    metascore: number;
-    url: string;
-  }[];
+  metacritic_platforms: MetacriticPlatform[];
   released: string;
   tba: boolean;
   updated: string;
@@ -77,9 +76,9 @@ interface GameDetails {
   }[];
 }
 
-const GameDetails: React.FC = () => {
-  const searchParams = useSearchParams();
-  const gameId = searchParams ? searchParams.get('id') : null;
+const GameDetailsPage: React.FC = () => {
+  const router = useSearchParams();
+  const gameId = router ? router.get('id') : null;
   const [gameDetails, setGameDetails] = useState<GameDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -123,11 +122,44 @@ const GameDetails: React.FC = () => {
 
   const {
     name,
-    released,
-    rating,
-    esrb_rating,
-    background_image,
+    name_original,
     description,
+    metacritic,
+    metacritic_platforms,
+    released,
+    tba,
+    updated,
+    background_image,
+    background_image_additional,
+    website,
+    rating,
+    rating_top,
+    ratings,
+    reactions,
+    added,
+    added_by_status,
+    playtime,
+    screenshots_count,
+    movies_count,
+    creators_count,
+    achievements_count,
+    parent_achievements_count,
+    reddit_url,
+    reddit_name,
+    reddit_description,
+    reddit_logo,
+    reddit_count,
+    twitch_count,
+    youtube_count,
+    reviews_text_count,
+    ratings_count,
+    suggestions_count,
+    alternative_names,
+    metacritic_url,
+    parents_count,
+    additions_count,
+    game_series_count,
+    esrb_rating,
     platforms,
   } = gameDetails;
 
@@ -145,29 +177,56 @@ const GameDetails: React.FC = () => {
             className="rounded-lg"
           />
         </div>
-        <p className="mb-4 text-lg text-gray-700">Released: {released}</p>
-        <p className="mb-4 text-lg text-gray-700">Rating: {rating}</p>
-        {esrb_rating && (
-          <p className="mb-4 text-lg text-gray-700">ESRB Rating: {esrb_rating.name}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Original Name:</strong> {name_original}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Description:</strong> {description}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Released:</strong> {released} {tba && '(To be announced)'}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Last Updated:</strong> {new Date(updated).toLocaleString()}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Rating:</strong> {rating} / {rating_top}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Metacritic:</strong> {metacritic}</p>
+        {metacritic_platforms.length > 0 && (
+          <div className="mb-4 text-lg text-gray-700">
+            <strong>Metacritic Platforms:</strong>
+            <ul className="list-disc list-inside">
+              {metacritic_platforms.map((platform, index) => (
+                <li key={index}><a href={platform.url} target="_blank" rel="noopener noreferrer">Metascore: {platform.metascore}</a></li>
+              ))}
+            </ul>
+          </div>
         )}
-        <p className="mb-4 text-lg text-gray-700">Description: {description}</p>
-        <div className="w-full">
-          <h2 className="text-2xl font-semibold mb-4">Platforms</h2>
-          <ul className="list-disc list-inside mb-6">
-            {platforms.map((platform, index) => (
-              <li key={index} className="mb-2">
-                <div className="text-lg font-medium">{platform.platform.name}</div>
-                {platform.released_at && <div>Released at: {platform.released_at}</div>}
-                {platform.requirements.minimum && <div>Minimum Requirements: {platform.requirements.minimum}</div>}
-                {platform.requirements.recommended && <div>Recommended Requirements: {platform.requirements.recommended}</div>}
-              </li>
-            ))}
-          </ul>
+        <p className="mb-4 text-lg text-gray-700"><strong>Playtime:</strong> {playtime} hours</p>
+        {esrb_rating && (
+          <p className="mb-4 text-lg text-gray-700"><strong>ESRB Rating:</strong> {esrb_rating.name}</p>
+        )}
+        <p className="mb-4 text-lg text-gray-700"><strong>Ratings Count:</strong> {ratings_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Reviews Count:</strong> {reviews_text_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Added by Users:</strong> {added}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Suggestions Count:</strong> {suggestions_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Alternative Names:</strong> {alternative_names.join(', ')}</p>
+        <div className="mb-4 text-lg text-gray-700">
+          <strong>Website:</strong> <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
         </div>
+        <div className="mb-4 text-lg text-gray-700">
+          <strong>Reddit:</strong> <a href={reddit_url} target="_blank" rel="noopener noreferrer">{reddit_name}</a>
+          <p>{reddit_description}</p>
+          <img src={reddit_logo} alt="Reddit Logo" className="h-10 mt-2"/>
+        </div>
+        <p className="mb-4 text-lg text-gray-700"><strong>Reddit Count:</strong> {reddit_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Twitch Count:</strong> {twitch_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Youtube Count:</strong> {youtube_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Screenshots Count:</strong> {screenshots_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Movies Count:</strong> {movies_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Creators Count:</strong> {creators_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Achievements Count:</strong> {achievements_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Parent Achievements Count:</strong> {parent_achievements_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Parents Count:</strong> {parents_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Additions Count:</strong> {additions_count}</p>
+        <p className="mb-4 text-lg text-gray-700"><strong>Game Series Count:</strong> {game_series_count}</p>
       </main>
       <Footer />
     </div>
   );
 };
 
-export default GameDetails;
+export default GameDetailsPage;
+
+
