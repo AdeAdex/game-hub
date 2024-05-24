@@ -34,7 +34,7 @@ export default function Home() {
             key: '4e2c61f658d44adcb51ed39f710a9d71',
           },
         });
-        console.log(response.data.results)
+        console.log(response.data.results);
         setGames(response.data.results);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -62,32 +62,33 @@ export default function Home() {
             ) : (
               // Render games if not loading
               games.map((game, index) => (
-                <div
-                  key={index}
-                  className="w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  <div className="relative w-100 h-[65%]">
-                    <Image
-                      src={game.background_image || "/images/placeholder.png"}
-                      alt={game.name}
-                      layout="fill"
-                      objectFit="cover"
-                      quality={100}
-                      className=""
-                      loading="lazy"
-                    />
+                <Link key={game.id} href={`/${encodeURIComponent(game.name)}`} passHref>
+                  <div
+                    className="cursor-pointer w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  >
+                    <div className="relative w-100 h-[65%]">
+                      <Image
+                        src={game.background_image || "/images/placeholder.png"}
+                        alt={game.name}
+                        layout="fill"
+                        objectFit="cover"
+                        quality={100}
+                        className=""
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="p-4 relative h-[35%] overflow-y-auto custom-scrollbar whitespace-nowrap">
+                      <small className="text-[14px] font-semibold">{game.name}</small>
+                      {game.stores.map((store, storeIndex) => (
+                        <p key={storeIndex} className="relative">
+                          <a href={store.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                            {store.store.name}
+                          </a>
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                  <div className="p-4 relative h-[35%] overflow-y-auto  whitespace-nowrap">
-                    <small className="text-[14px] font-semibold">{game.name}</small>
-                    {game.stores.map((store, storeIndex) => (
-                      <p key={storeIndex} className=" relative">
-                        <a href={store.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                          {store.store.name}
-                        </a>
-                      </p>
-                    ))}
-                  </div>
-                </div>
+                </Link>
               ))
             )}
             <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">
