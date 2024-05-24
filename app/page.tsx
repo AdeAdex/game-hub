@@ -62,7 +62,7 @@ export default function Home() {
             ) : (
               // Render games if not loading
               games.map((game, index) => (
-                <Link key={game.id} href={`/game/${encodeURIComponent(game.name)}`} passHref>
+                <Link key={game.id} href={`/game-details?name=${encodeURIComponent(game.name)}&id=${game.id}`}  passHref>
                   <div
                     className="cursor-pointer w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
                   >
