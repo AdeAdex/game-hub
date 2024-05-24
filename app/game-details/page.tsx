@@ -104,7 +104,7 @@ const GameDetails: React.FC = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      <main className="w-full max-w-4xl mx-auto p-4 flex flex-col items-center pt-10">
+      <main className="w-full max-w-4xl mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8  mt-[60px] ">
         {results.map((game) => (
           <div key={game.id}>
             <h1 className="text-4xl font-bold mb-6 text-center">{game.name}</h1>
