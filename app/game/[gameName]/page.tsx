@@ -1,5 +1,5 @@
 // app/game/[gameName]/page.tsx
-'use client'
+'use client';
 
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ interface GameDetailsProps {
 
 const GameDetails: React.FC = () => {
   const params = useParams();
-  const gameName = params.gameName;
+  const gameName = params?.gameName;
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
 
