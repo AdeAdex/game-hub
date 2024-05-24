@@ -104,7 +104,7 @@ import ReduxProviders from './redux/Provider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Head from './head';
 import CookieConsent from '@/app/components/cookies/CookieConsent';
-import { ThemeProvider, ThemeContext } from '../lib/ThemeContext';
+import { ThemeProvider, ThemeContext } from '@/app/lib/ThemeContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
