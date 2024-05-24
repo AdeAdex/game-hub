@@ -52,8 +52,8 @@ export default function Home() {
       <main className="w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative">
         {/* Pass links and links2 to SideBar */}
         <SideBar links={links} links2={links2} />
-        <section className="mt-1 w-full md:w-[83%]          md:ml-[16.6%]">
-          <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5        py-[30px] px-[30px]">
+        <section className="mt-1 w-full md:w-[83%] bg-[#F4F4F4] md:ml-[16.6%]">
+          <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5 bg-white py-[30px] px-[30px]">
             {loading ? (
               // Render card skeleton if loading
               Array.from({ length: 10 }).map((_, index) => (
@@ -66,7 +66,7 @@ export default function Home() {
                   key={game.id}
                   href={`/game-details?id=${game.id}&name=${encodeURIComponent(game.name)}`}
                   passHref
-                  className="cursor-pointer w-full md:w-[30%] lg:w-[19%] h-[320px]          rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  className="cursor-pointer w-full md:w-[30%] lg:w-[19%] h-[320px] bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   <div
                     className="w-full h-full"
