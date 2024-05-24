@@ -9,7 +9,8 @@ import SideBar from "./components/sidebar/SideBar";
 import Link from "next/link";
 import { IoArrowForward } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
-import CardSkeleton from "@/app/components/homePage/CardSkeleton"; // Import the CardSkeleton component
+import CardSkeleton from "@/app/components/homePage/CardSkeleton";
+import ThemeToggle from '@/app/components/ThemeToggle';
 
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
