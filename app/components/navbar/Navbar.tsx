@@ -21,6 +21,8 @@ import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { io, Socket } from 'socket.io-client';
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
+import ThemeToggle from "@/app/components/ThemeToggle";
+
 
 interface AuthState {
   firstName?: string;
@@ -169,6 +171,7 @@ function MyApp() {
           inputClassName={`text-[14px] px-3 h-[30px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200 text-black"} my-auto`}
         />
         <div className="flex gap-8">
+        <ThemeToggle />
           {userData && userData.incomingFriendRequests && (
             <Link
               className="flex relative cursor-pointer my-auto hover:bg-gray-200 "
@@ -264,6 +267,7 @@ function MyApp() {
             )}
           </div>
         </div>
+
       </nav>
     </main>
   );

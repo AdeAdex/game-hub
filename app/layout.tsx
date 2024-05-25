@@ -11,7 +11,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "./head";
 import CookieConsent from "@/app/components/cookies/CookieConsent";
 import { ThemeProvider, ThemeContext } from "@/app/lib/ThemeContext";
-import ThemeToggle from "@/app/components/ThemeToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,8 +46,6 @@ export default function RootLayout({
           </ReduxProviders>
           <CookieConsent onConsent={() => setHasConsent(true)} />
           <SpeedInsights />
-          <ThemeToggle />{" "}
-          {/* Add this line to include the ThemeToggle component */}
         </ThemeProvider>
       </body>
     </html>
