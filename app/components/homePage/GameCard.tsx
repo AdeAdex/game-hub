@@ -98,7 +98,9 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
           <small className="text-[14px] font-semibold">{game.name}</small>
           <div className="flex">
             {game.genres.map((genre, index) => (
-              <small key={index}>{genre.name}</small>
+              <small key={index} className={`${
+                theme === "dark" ? "text-yellow-500" : ""
+              }`}>{genre.name}</small>
             ))}
           </div>
           <Carousel
