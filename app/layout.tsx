@@ -1,26 +1,28 @@
 // /app/layout.tsx
 
-'use client';
-import React, { useEffect, Suspense, useState, useContext } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+"use client";
+import React, { useEffect, Suspense, useState, useContext } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import "./globals.css";
-import { Inter } from 'next/font/google';
-import CustomProvider from './components/Provider';
-import ReduxProviders from './redux/Provider';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import Head from './head';
-import CookieConsent from '@/app/components/cookies/CookieConsent';
-import { ThemeProvider, ThemeContext } from '@/app/lib/ThemeContext';
-import ThemeToggle from '@/app/components/ThemeToggle';
+import { Inter } from "next/font/google";
+import CustomProvider from "./components/Provider";
+import ReduxProviders from "./redux/Provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Head from "./head";
+import CookieConsent from "@/app/components/cookies/CookieConsent";
+import { ThemeProvider, ThemeContext } from "@/app/lib/ThemeContext";
+import ThemeToggle from "@/app/components/ThemeToggle";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const pathname = usePathname() ?? '';
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const pathname = usePathname() ?? "";
   const [hasConsent, setHasConsent] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent');
+    const consent = localStorage.getItem("cookieConsent");
     if (consent) {
       setHasConsent(true);
     }
@@ -34,21 +36,32 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <ReduxProviders>
             <CustomProvider>
               <Suspense fallback={<div>Loading...</div>}>
-                {hasConsent && <InnerRootLayout pathname={pathname}>{children}</InnerRootLayout>}
+                {hasConsent && (
+                  <InnerRootLayout pathname={pathname}>
+                    {children}
+                  </InnerRootLayout>
+                )}
                 {!hasConsent && children}
               </Suspense>
             </CustomProvider>
           </ReduxProviders>
           <CookieConsent onConsent={() => setHasConsent(true)} />
           <SpeedInsights />
-          <ThemeToggle /> {/* Add this line to include the ThemeToggle component */}
+          <ThemeToggle />{" "}
+          {/* Add this line to include the ThemeToggle component */}
         </ThemeProvider>
       </body>
     </html>
   );
 }
 
-function InnerRootLayout({ pathname, children }: { pathname: string; children: React.ReactNode }) {
+function InnerRootLayout({
+  pathname,
+  children,
+}: {
+  pathname: string;
+  children: React.ReactNode;
+}) {
   const searchParams = useSearchParams();
   const { theme } = useContext(ThemeContext);
 
@@ -56,17 +69,21 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
     const actualSearchParams = searchParams ?? new URLSearchParams();
 
     const handleRouteChange = () => {
-      if (pathname === '/' || pathname === 'https://adex-game-hub.vercel.app' || pathname === '/index') {
+      if (
+        pathname === "/" ||
+        pathname === "https://adex-game-hub.vercel.app" ||
+        pathname === "/index"
+      ) {
         const params = new URLSearchParams(actualSearchParams.toString());
-        const utmSource = params.get('utm_source');
-        const utmMedium = params.get('utm_medium');
-        const utmCampaign = params.get('utm_campaign');
+        const utmSource = params.get("utm_source");
+        const utmMedium = params.get("utm_medium");
+        const utmCampaign = params.get("utm_campaign");
         const referrer = document.referrer;
 
-        fetch('/api/track-visit', {
-          method: 'POST',
+        fetch("/api/track-visit", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             referrer,
@@ -82,16 +99,20 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
       }
     };
 
-    handleRouteChange(); 
+    handleRouteChange();
 
     const handleComplete = () => handleRouteChange();
 
-    window.addEventListener('routeChangeComplete', handleComplete);
+    window.addEventListener("routeChangeComplete", handleComplete);
 
     return () => {
-      window.removeEventListener('routeChangeComplete', handleComplete);
+      window.removeEventListener("routeChangeComplete", handleComplete);
     };
   }, [pathname, searchParams]);
 
-  return <div className={theme === 'dark' ? 'dark-mode' : 'light-mode'}>{children}</div>;
+  return (
+    <div className={theme === "dark" ? "dark-mode" : "light-mode"}>
+      {children}
+    </div>
+  );
 }

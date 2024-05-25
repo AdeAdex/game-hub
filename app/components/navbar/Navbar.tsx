@@ -1,6 +1,7 @@
-"use client";
 
-import React, { useEffect, useRef, useState } from "react";
+'use client';
+
+import React, { useEffect, useRef, useState, useContext } from "react";
 import Links from "./links/Links";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
@@ -14,15 +15,12 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
-import { useRouter } from "next/navigation";
-import Backdrop from "@mui/material/Backdrop";
 import { IoMdNotifications } from "react-icons/io";
 import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { io, Socket } from 'socket.io-client';
-
-// import { useSelector } from "react-redux";
+import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 
 interface AuthState {
   firstName?: string;
@@ -52,19 +50,15 @@ function MyApp() {
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
-  // const userInfo = useSelector((state: any) => state.auth.userInformation);
-
-  const [userInfo, setUserInfo] = useState<AuthState | null>(null);
-  const [userResponse, setUserResponse] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [token, setToken] = useState<boolean>(false);
   const [userData, setUserData] = useState<AuthState | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
   const socket = useRef<Socket | null>(null);
+  const { theme } = useContext(ThemeContext); // Use the ThemeContext
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -83,23 +77,15 @@ function MyApp() {
       }
     } catch (error) {
       console.error("Error logging out:", error);
-      // Handle network errors or other exceptions
     }
   };
 
   useEffect(() => {
-    //  console.log("session", session)
-    // const token = cookies.get("authToken");
-
     const fetchData = async () => {
       setLoading(true);
       try {
         const response = await axios.post(`/api/prompt/dashboard`);
-
-        // console.log(response);
-
         if (response.data.success === true) {
-
           setToken(true);
           setUserData(response.data.user);
           setFriendRequestCount(response.data.user.friendRequestCount)
@@ -107,7 +93,7 @@ function MyApp() {
       } catch (error: any) {
         console.error("Error fetching user data:", error.message);
       } finally {
-        setLoading(false); // Set loading to false regardless of success or error
+        setLoading(false);
       }
     };
 
@@ -116,7 +102,6 @@ function MyApp() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Check if click occurs outside the dropdown or mobile menu backdrop
       if (
         (dropdownRef.current &&
           !dropdownRef.current.contains(event.target as Node)) ||
@@ -133,7 +118,6 @@ function MyApp() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
 
   useEffect(() => {
     socket.current = io();
@@ -157,7 +141,7 @@ function MyApp() {
 
   return (
     <main>
-      <nav className="w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between bg-white fixed z-50 top-0">
+      <nav className={`w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between fixed z-50 top-0 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
         <div className="flex gap-5">
           <MenuIcon
             isMobileMenuOpen={isMobileMenuOpen}
@@ -182,7 +166,7 @@ function MyApp() {
         <SearchBox
           ClassName={`hidden md:flex`}
           Placeholder={`Search for games or creator`}
-          inputClassName={`text-[14px] px-3 h-[30px] bg-[#F4F4F4] my-auto`}
+          inputClassName={`text-[14px] px-3 h-[30px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200 text-black"} my-auto`}
         />
         <div className="flex gap-8">
           {userData && userData.incomingFriendRequests && (
@@ -203,9 +187,7 @@ function MyApp() {
                   <div className="flex gap-3 cursor-pointer">
                     <PingLoader />
                     <div
-                      className={` bg-gray-100 p-2 rounded-lg border cursor-pointer ${
-                        dropdownOpen ? "border-blue-500" : ""
-                      } `}
+                      className={`bg-gray-100 p-2 rounded-lg border cursor-pointer ${dropdownOpen ? "border-blue-500" : ""} `}
                       onClick={handleDropdownToggle}
                     >
                       {dropdownOpen ? (
@@ -221,7 +203,7 @@ function MyApp() {
                   <div className="flex gap-3">
                     <Link
                       href={`/${userData?.userName}`}
-                      className="flex gap-2 cursor-pointer my-auto hover:bg-gray-200 "
+                      className={`flex gap-2 cursor-pointer my-auto ${theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"}`}
                     >
                       {userData?.profilePicture ? (
                         <Image
@@ -248,9 +230,7 @@ function MyApp() {
                     </Link>
 
                     <div
-                      className={` bg-gray-100 p-2 rounded-lg border cursor-pointer ${
-                        dropdownOpen ? "border-blue-500" : ""
-                      } `}
+                      className={`${theme === "dark" ? "hover:bg-gray-600" : "bg-gray-100"} p-2 rounded-lg border cursor-pointer ${dropdownOpen ? "border-blue-500" : ""} `}
                       onClick={handleDropdownToggle}
                     >
                       {dropdownOpen ? (
