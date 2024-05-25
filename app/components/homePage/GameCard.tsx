@@ -9,6 +9,9 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import { Popover } from "@mui/material";
+import { Game } from "@/app/types/homePage/games"; // Import the Game type
+
+// Placeholder imports for platform icons
 import {
   FaWindows,
   FaPlaystation,
@@ -17,7 +20,6 @@ import {
   FaAndroid,
 } from "react-icons/fa";
 import { IoLogoGameControllerA } from "react-icons/io";
-import { Game } from "@/app/types/homePage/games"; // Import the Game type
 
 interface GameCardProps {
   game: Game;
@@ -61,8 +63,8 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
       className={`w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out ${
         theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
       }`}
-      onMouseEnter={handlePopoverOpen}
-      onMouseLeave={handlePopoverClose}
+//       onMouseEnter={handlePopoverOpen}
+//       onMouseLeave={handlePopoverClose}
     >
       <div className="w-full h-full">
         <Link
@@ -94,6 +96,11 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
 
         <div className="p-4 relative h-[35%] overflow-y-auto custom-scrollbar whitespace-nowrap">
           <small className="text-[14px] font-semibold">{game.name}</small>
+          <div className="flex">
+            {game.genres.map((genre, index) => (
+              <small key={index}>{genre.name}</small>
+            ))}
+          </div>
           <Carousel
             autoPlay
             interval={3000}
@@ -129,7 +136,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: "top",
+          vertical: "bottom",
           horizontal: "right",
         }}
         transformOrigin={{
@@ -139,14 +146,13 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <div className="p-4">
+        <div className="p-4 w-60 max-h-auto overflow-y-auto">
           <h3 className="font-bold">{game.name}</h3>
-          <p>More information about the game...</p>
           {game.short_screenshots.map((screenshot) => (
             <div key={screenshot.id} className="relative w-full h-32 mb-4">
               <Image
                 src={screenshot.image || "/images/placeholder.png"}
-                alt={game.name} // Screenshot objects typically don't have a name property, use the game name instead
+                alt={game.name}
                 layout="fill"
                 objectFit="cover"
                 quality={100}
