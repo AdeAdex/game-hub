@@ -11,32 +11,11 @@ import { FaRandom } from "react-icons/fa";
 import CardSkeleton from "@/app/components/homePage/CardSkeleton";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import GameCard from "./components/homePage/GameCard";
+import { Game } from "@/app/types/homePage/games"; // Import the Game type
+
 
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
-
-interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-
-interface Store {
-  url: string;
-  store: {
-    name: string;
-    domain: string;
-  };
-}
-
-interface Game {
-id: number;
-name: string;
-background_image: string;
-stores: Store[];
-parent_platforms: { platform: Platform }[];
-}
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);

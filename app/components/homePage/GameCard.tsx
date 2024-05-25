@@ -1,4 +1,6 @@
-'use client'
+// components/homePage/GameCard.tsx
+
+"use client";
 
 import React, { useContext, useState } from "react";
 import Link from "next/link";
@@ -7,31 +9,15 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import { Popover } from "@mui/material";
-// Placeholder imports for platform icons
-import { FaWindows, FaPlaystation, FaXbox, FaApple, FaAndroid } from "react-icons/fa";
+import {
+  FaWindows,
+  FaPlaystation,
+  FaXbox,
+  FaApple,
+  FaAndroid,
+} from "react-icons/fa";
 import { IoLogoGameControllerA } from "react-icons/io";
-
-interface Store {
-  url: string;
-  store: {
-    name: string;
-    domain: string;
-  };
-}
-
-interface Platform {
-        id: number;
-        name: string;
-        slug: string;
-      }
-
-interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-  stores: Store[];
-  parent_platforms: { platform: Platform }[];
-}
+import { Game } from "@/app/types/homePage/games"; // Import the Game type
 
 interface GameCardProps {
   game: Game;
@@ -52,23 +38,23 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
   const open = Boolean(anchorEl);
 
   const renderPlatformIcon = (slug: string) => {
-        switch (slug) {
-          case "pc":
-            return <FaWindows className="text-white mx-1" />;
-          case "playstation":
-            return <FaPlaystation className="text-blue-600 mx-1" />;
-          case "xbox":
-            return <FaXbox className="text-green-600 mx-1" />;
-          case "ios":
-            return <FaApple className="text-gray-500 mx-1" />;
-          case "android":
-            return <FaAndroid className="text-green-500 mx-1" />;
-          case "mac":
-            return <FaApple className="text-gray-500 mx-1" />;
-          default:
-            return <IoLogoGameControllerA className="text-gray-500 mx-1" />;
-        }
-      };
+    switch (slug) {
+      case "pc":
+        return <FaWindows className="text-white mx-1" />;
+      case "playstation":
+        return <FaPlaystation className="text-blue-600 mx-1" />;
+      case "xbox":
+        return <FaXbox className="text-green-600 mx-1" />;
+      case "ios":
+        return <FaApple className="text-gray-500 mx-1" />;
+      case "android":
+        return <FaAndroid className="text-green-500 mx-1" />;
+      case "mac":
+        return <FaApple className="text-gray-500 mx-1" />;
+      default:
+        return <IoLogoGameControllerA className="text-gray-500 mx-1" />;
+    }
+  };
 
   return (
     <div
@@ -138,17 +124,17 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
       </div>
       <Popover
         sx={{
-          pointerEvents: 'none',
+          pointerEvents: "auto",
         }}
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
@@ -156,7 +142,19 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
         <div className="p-4">
           <h3 className="font-bold">{game.name}</h3>
           <p>More information about the game...</p>
-          {/* Add any additional information you want to display in the popover here */}
+          {game.short_screenshots.map((screenshot) => (
+            <div key={screenshot.id} className="relative w-full h-32 mb-4">
+              <Image
+                src={screenshot.image || "/images/placeholder.png"}
+                alt={game.name} // Screenshot objects typically don't have a name property, use the game name instead
+                layout="fill"
+                objectFit="cover"
+                quality={100}
+                className=""
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
       </Popover>
     </div>
