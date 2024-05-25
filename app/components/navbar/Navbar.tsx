@@ -171,7 +171,6 @@ function MyApp() {
           inputClassName={`text-[14px] px-3 h-[30px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200 text-black"} my-auto`}
         />
         <div className="flex gap-8">
-        <ThemeToggle />
           {userData && userData.incomingFriendRequests && (
             <Link
               className="flex relative cursor-pointer my-auto hover:bg-gray-200 "
@@ -258,6 +257,7 @@ function MyApp() {
             ) : (
               <AuthButton title="login" to="/login" />
             )}
+
           </div>
           <div className="my-auto hidden md:flex">
             {userData && token ? (
@@ -265,6 +265,10 @@ function MyApp() {
             ) : (
               <AuthButton title="register" to="/register" />
             )}
+          </div>
+          <div className={`my-auto ${userData ? 'ml-[-20px]' : ''}`}>
+
+        <ThemeToggle />
           </div>
         </div>
 

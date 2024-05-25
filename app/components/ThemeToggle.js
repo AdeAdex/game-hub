@@ -5,7 +5,7 @@ const ThemeToggle = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <button onClick={toggleTheme} className="cursor-pointer text-xl my-auto ">
+    <button onClick={toggleTheme} className={`cursor-pointer text-xl my-auto `}>
       {theme === "light" ? "🌞" : "🌜"}
     </button>
   );
