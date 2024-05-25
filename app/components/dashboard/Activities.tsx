@@ -1,8 +1,8 @@
-// app/components/dashboard/Activities.tsx
-import React from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 import { ActivityType, UserDataType } from '../../types/user';
 import avatar from '@/public/images/robot.png';
+import { ThemeContext } from '@/app/lib/ThemeContext'; // Import ThemeContext
 
 interface ActivitiesProps {
   recentActivities: ActivityType[];
@@ -11,9 +11,11 @@ interface ActivitiesProps {
 }
 
 const Activities: React.FC<ActivitiesProps> = ({ recentActivities, userData, formatDateTime }) => {
+  const { theme } = useContext(ThemeContext); // Get the current theme
+
   return (
-    <div className="bg-white shadow-lg rounded-lg p-8 mt-8">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Recent Activities</h2>
+    <div className={`shadow-lg rounded-lg p-8 mt-8 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'}`}>
+      <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Recent Activities</h2>
       <ul className="space-y-4">
         {recentActivities && recentActivities.length > 0 ? (
           recentActivities.map((activity, index) => (
@@ -21,14 +23,14 @@ const Activities: React.FC<ActivitiesProps> = ({ recentActivities, userData, for
               <div className="flex-shrink-0">
                 <Image src={userData?.profilePicture || avatar} alt="Activity" width={24} height={24} className="rounded-full" />
               </div>
-              <div className="text-lg text-gray-700 flex-1">{activity.description}</div>
-              <div className="text-sm text-gray-500 flex-shrink-0">{formatDateTime(activity.date)}</div>
-              <div className="text-sm text-gray-500 flex-shrink-0">Device: {activity.device}</div>
-              <div className="text-sm text-gray-500 flex-shrink-0">Location: {activity.location}</div>
+              <div className={`text-lg flex-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{activity.description}</div>
+              <div className={`text-sm flex-shrink-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>{formatDateTime(activity.date)}</div>
+              <div className={`text-sm flex-shrink-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Device: {activity.device}</div>
+              <div className={`text-sm flex-shrink-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Location: {activity.location}</div>
             </li>
           ))
         ) : (
-          <div className="text-gray-500">No recent activities found</div>
+          <div className={`text-gray-500 ${theme === 'dark' ? 'text-gray-400' : ''}`}>No recent activities found</div>
         )}
       </ul>
     </div>

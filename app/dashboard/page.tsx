@@ -2,7 +2,7 @@
 "use client";
 
 // Import React and necessary libraries
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Chart, registerables } from "chart.js";
@@ -13,11 +13,13 @@ import UserProfile from "../components/dashboard/UserProfile";
 import FlowDiagram from "../components/dashboard/FlowDiagram";
 import Activities from "../components/dashboard/Activities";
 import { UserDataType, ActivityType } from "../types/user";
+import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 
 Chart.register(...registerables);
 
 const DashboardPage = () => {
   const { data: session } = useSession();
+  const { theme } = useContext(ThemeContext); // Get the current theme
   const [userData, setUserData] = useState<UserDataType | null>(null);
   const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,12 +84,12 @@ const DashboardPage = () => {
         type: "linear" as const,
         beginAtZero: true,
         ticks: {
-          color: "#4B5563",
+          color: theme === "dark" ? "#CBD5E0" : "#4B5563", // Adjust ticks color based on theme
         },
       },
       x: {
         ticks: {
-          color: "#4B5563",
+          color: theme === "dark" ? "#CBD5E0" : "#4B5563", // Adjust ticks color based on theme
         },
       },
     },
@@ -98,7 +100,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50"}`}>
       <Navbar />
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="flex flex-col md:flex-row md:space-x-8">
@@ -113,6 +115,7 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
 
 
 // useEffect(() => {

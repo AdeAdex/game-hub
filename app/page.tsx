@@ -13,7 +13,6 @@ import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContex
 import GameCard from "./components/homePage/GameCard";
 import { Game } from "@/app/types/homePage/games"; // Import the Game type
 
-
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
 
@@ -73,7 +72,11 @@ export default function Home() {
                   <GameCard key={game.id} game={game} />
                 ))}
             <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">
-              <span className="my-auto">
+              <span
+                className={`my-auto ${
+                  theme === "dark" ? "text-white" : "text-gray-800"
+                }`}
+              >
                 Don&apos;t see anything you like?{" "}
               </span>
               <Link

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 
 const FooterRowOne = () => {
+  const { theme } = useContext(ThemeContext); // Get the current theme
+
   return (
     <>
       <div className="flex flex-col md:flex-row gap-[30px]">
         <div className="flex gap-[30px]">
-          <FaFacebook size={25} /> <FaTwitter size={25} />
+          <FaFacebook size={25} className={theme === "dark" ? "text-white" : "text-gray-800"} />
+          <FaTwitter size={25} className={theme === "dark" ? "text-white" : "text-gray-800"} />
         </div>
         <div className="flex md:gap-[30px] justify-between font-bold text-[14px] my-auto">
           <Link href="" className="uppercase">
