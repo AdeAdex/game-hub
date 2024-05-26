@@ -97,204 +97,171 @@ function MyApp() {
   }, [fetchLocation]);
 
 
-  return (
-    <div>
-      <Navbar />
-      <main className="bg-[#F4F4F4] h-screen  pt-[80px] md:pt-[100px] ">
-        {loading ? (
-          <Loader />
-        ) : (
-          <div className="">
-            <div className="relative  w-full lg:w-[60%] mx-auto bg-white rounded-sm border-2 border-gray-300 py-[30px] px-[10px] md:px-[30px]">
-              <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] ">
-                Reset Password
-              </h3>
-              <div className="pt-[20px] pb-[10px]">
-                <div
-                  className={`${success ? "text-green-500" : "text-red-500"}`}
-                >
-                  {success ? "" : <small>Error: {message}</small>}
-                </div>
-                <div>
-                  {success ? (
-                    <small>
-                      Please provide a new password for the account {username}.
-                    </small>
-                  ) : (
-                    <small>
-                      Please request for a new link if the token has expired.{" "}
-                    </small>
-                  )}
-                </div>
-              </div>
-              {success && (
-                <Formik
-                  initialValues={{ password: "", confirmPassword: "" }}
-                  validationSchema={Yup.object().shape({
-                    password: Yup.string()
-                      .matches(
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
-                        "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
-                      )
-                      .required("Password is required"),
-                    confirmPassword: Yup.string()
-                      .required("Confirm Password is required")
-                      .oneOf([Yup.ref("password"), ""], "Passwords must match"),
-                  })}
-                  onSubmit={async (values, { setSubmitting }) => {
-                    setSubmitting(true);
-                    try {
-                      console.log(device);
-                      console.log(location);
-                      const response = await axios.post("/api/reset-password", {
-                        token,
-                        password: values.password,
-                        device,
-                        location,
-                      });
-                      console.log(response.data);
-
-                      if (response.status === 200) {
-                        setSuccess(true);
-                        enqueueSnackbar(response.data.message, {
-                          variant: "success",
-                        });
-                        router.push("/login");
-                      } else {
-                        setError(
-                          response.data.error || "Failed to reset password"
-                        );
-                        enqueueSnackbar(response.data.error, {
-                          variant: "error",
-                        });
-                      }
-                    } catch (error: any) {
-                      console.error(error.response.data.error);
-                      setError(
-                        error.response.data.error || "Internal server error"
-                      );
-                      enqueueSnackbar(
-                        error.response.data.error || "Internal server error",
-                        {
-                          variant: "error",
-                        }
-                      );
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                >
-                  {({ isSubmitting, errors, touched }) => (
-                    <Form className="text-[13px] text-[#434343]">
-                      <div className="relative w-full flex flex-col gap-[5px]">
-                        <label
-                          className="w-full font-bold text-[#434343]"
-                          htmlFor="password"
-                        >
-                          Password:
-                        </label>
-                        <Field
-                          type={showPassword ? "text" : "password"}
-                          autoComplete="on"
-                          name="password"
-                          className={`w-full border border-2 px-3 py-[5px] border-gray-300 relative`}
-                          placeholder={
-                            touched.password && errors.password
-                              ? errors.password
-                              : "Enter your password"
-                          }
-                          required
-                        />
-                        <button
-                          type="button"
-                          className={`absolute right-[20px] top-[50%] ${
-                            errors.password ? "transform -translate-y-1/2" : ""
-                          } bg-transparent border-none cursor-pointer`}
-                          onClick={() => setShowPassword((prev) => !prev)}
-                        >
-                          {showPassword ? (
-                            <AiFillEyeInvisible size={25} />
-                          ) : (
-                            <AiFillEye size={25} />
-                          )}
-                        </button>
-                        <ErrorMessage
-                          name="password"
-                          component="div"
-                          className="text-red-500 relative"
-                        />
-                      </div>
-                      <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
-                        <label
-                          className="w-full font-bold text-[#434343]"
-                          htmlFor="confirmPassword"
-                        >
-                          Repeat password:
-                        </label>
-                        <Field
-                          type={showPassword ? "text" : "password"}
-                          autoComplete="on"
-                          name="confirmPassword"
-                          className={`w-full border border-2 px-3 py-[5px] border-gray-300`}
-                          placeholder={
-                            touched.confirmPassword && errors.confirmPassword
-                              ? errors.confirmPassword
-                              : "Enter your confirmPassword"
-                          }
-                          required
-                        />
-                        <button
-                          type="button"
-                          className={`absolute right-[20px] top-[50%] ${
-                            errors.confirmPassword
-                              ? "transform -translate-y-1/2"
-                              : ""
-                          } bg-transparent border-none cursor-pointer`}
-                          onClick={() => setShowPassword((prev) => !prev)}
-                        >
-                          {showPassword ? (
-                            <AiFillEyeInvisible size={25} />
-                          ) : (
-                            <AiFillEye size={25} />
-                          )}
-                        </button>
-                        <ErrorMessage
-                          name="confirmPassword"
-                          component="div"
-                          className="text-red-500 relative"
-                        />
-                      </div>
-                      <div className="py-[25px] flex gap-4">
-                        <button
-                          type="submit"
-                          className="bg-[#FF2E51] px-3 py-[6px] text-white rounded-sm"
-                          disabled={isSubmitting}
-                        >
-                          {isSubmitting ? (
-                            <div>Connecting...</div>
-                          ) : (
-                            <div>Submit</div>
-                          )}
-                        </button>
-                        <div className="flex my-auto text-[12px] md:text-[14px]">
-                          <span>or </span>
-                          <Link href="/login" className="ml-[5px] underline">
-                            Login
-                          </Link>
-                        </div>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
+return (
+  <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
+    <Navbar />
+    <main className="pt-[80px] md:pt-[100px]">
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
+          <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
+            Reset Password
+          </h3>
+          <div className="pt-[20px] pb-[10px]">
+            <div className={`${success ? "text-green-500" : "text-red-500"}`}>
+              {success ? "" : <small>Error: {message}</small>}
+            </div>
+            <div>
+              {success ? (
+                <small>
+                  Please provide a new password for the account {username}.
+                </small>
+              ) : (
+                <small>
+                  Please request for a new link if the token has expired.{" "}
+                </small>
               )}
             </div>
           </div>
-        )}
-
-        <Footer />
-      </main>
-    </div>
-  );
+          {success && (
+            <Formik
+              initialValues={{ password: "", confirmPassword: "" }}
+              validationSchema={Yup.object().shape({
+                password: Yup.string()
+                  .matches(
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+                    "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
+                  )
+                  .required("Password is required"),
+                confirmPassword: Yup.string()
+                  .required("Confirm Password is required")
+                  .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+              })}
+              onSubmit={async (values, { setSubmitting }) => {
+                setSubmitting(true);
+                try {
+                  const response = await axios.post("/api/reset-password", {
+                    token,
+                    password: values.password,
+                    device,
+                    location,
+                  });
+                  if (response.status === 200) {
+                    setSuccess(true);
+                    enqueueSnackbar(response.data.message, {
+                      variant: "success",
+                    });
+                    router.push("/login");
+                  } else {
+                    setMessage(response.data.error || "Failed to reset password");
+                    enqueueSnackbar(response.data.error, {
+                      variant: "error",
+                    });
+                  }
+                } catch (error) {
+                  setMessage(error.response.data.error || "Internal server error");
+                  enqueueSnackbar(error.response.data.error || "Internal server error", {
+                    variant: "error",
+                  });
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
+            >
+              {({ isSubmitting, errors, touched }) => (
+                <Form className="text-[13px] text-[#434343]">
+                  <div className="relative w-full flex flex-col gap-[5px]">
+                    <label className="w-full font-bold" htmlFor="password">
+                      Password:
+                    </label>
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="on"
+                      name="password"
+                      className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+                      placeholder={
+                        touched.password && errors.password
+                          ? errors.password
+                          : "Enter your password"
+                      }
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <AiFillEyeInvisible size={25} />
+                      ) : (
+                        <AiFillEye size={25} />
+                      )}
+                    </button>
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+                  <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
+                    <label className="w-full font-bold" htmlFor="confirmPassword">
+                      Repeat password:
+                    </label>
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="on"
+                      name="confirmPassword"
+                      className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+                      placeholder={
+                        touched.confirmPassword && errors.confirmPassword
+                          ? errors.confirmPassword
+                          : "Enter your confirm password"
+                      }
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <AiFillEyeInvisible size={25} />
+                      ) : (
+                        <AiFillEye size={25} />
+                      )}
+                    </button>
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+                  <div className="py-[25px] flex gap-4">
+                    <button
+                      type="submit"
+                      className={`px-3 py-[6px] rounded-sm text-white ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""} ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? <div>Connecting...</div> : <div>Submit</div>}
+                    </button>
+                    <div className="flex my-auto text-[12px] md:text-[14px]">
+                      <span>or </span>
+                      <Link href="/login" className="ml-[5px] underline">
+                        Login
+                      </Link>
+                    </div>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
+        </div>
+      )}
+      <Footer />
+    </main>
+  </div>
+);
 }
 
 export default ResetPassword;
