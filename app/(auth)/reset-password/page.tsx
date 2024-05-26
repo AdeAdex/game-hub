@@ -159,7 +159,7 @@ return (
                       variant: "error",
                     });
                   }
-                } catch (error) {
+                } catch (error: any) {
                   setMessage(error.response.data.error || "Internal server error");
                   enqueueSnackbar(error.response.data.error || "Internal server error", {
                     variant: "error",
