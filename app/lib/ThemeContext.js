@@ -1,6 +1,6 @@
 // /app/lib/ThemeContext.js
 
-'use client'
+'use client';
 
 import React, { createContext, useState, useEffect } from 'react';
 
@@ -10,24 +10,27 @@ export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
-        const handleBatteryChange = (battery) => {
-            if (battery.level * 100 < 20) {
-                setTheme('dark');
-            } else {
-                setTheme('light');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            // Optionally set theme based on battery level
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then((battery) => {
+                    if (battery.level * 100 < 20) {
+                        setTheme('dark');
+                    }
+                });
             }
-        };
-
-        if ('getBattery' in navigator) {
-            navigator.getBattery().then((battery) => {
-                handleBatteryChange(battery);
-                battery.addEventListener('levelchange', () => handleBatteryChange(battery));
-            });
         }
     }, []);
 
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        setTheme((prevTheme) => {
+            const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            return newTheme;
+        });
     };
 
     return (

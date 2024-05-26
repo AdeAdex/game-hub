@@ -1,12 +1,12 @@
 "use client";
-
-import React, { FormEvent, useEffect, useState, useCallback } from "react";
+import React, { FormEvent, useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils"; // Adjust the import path accordingly
+import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
+import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 
 const Form = () => {
   return (
@@ -27,40 +27,28 @@ function MyApp() {
   const [showPassword, setShowPassword] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { location, locationError, fetchLocation} = useFetchLocation();
+  const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
-
-
-
+  const { theme } = useContext(ThemeContext); // Use the ThemeContext
 
   useEffect(() => {
-    // Redirect to dashboard if user session is authenticated
     if (status === "authenticated") {
-      router.replace("/dashboard"); // Replace the current URL with /dashboard
+      router.replace("/dashboard");
     }
   }, [status, router]);
 
   useEffect(() => {
-    // Ask for location permission when the component mounts
     fetchLocation();
   }, [fetchLocation]);
 
-
-  // Function to sign in with credentials and include device and location in request payload
-  const signInWithCredentials = async (
-    email: string,
-    password: string,
-    device: string,
-    location: string
-  ) => {
+  const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
     try {
-      // Sign in with credentials and include device and location in the request payload
       const result = await signIn("credentials", {
         email,
         password,
-        device, // Include device information
-        location, // Include location information
-        redirect: false, // Prevent automatic redirection after sign-in
+        device,
+        location,
+        redirect: false,
       });
 
       if (result && !result.error) {
@@ -75,7 +63,6 @@ function MyApp() {
     }
   };
 
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
@@ -86,22 +73,15 @@ function MyApp() {
     setSubmitting(false);
   };
 
-  /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitting(true);
-    await signInWithCredentials(email, password, device, location);
-    setSubmitting(false);
-  };*/
-
   return (
     <form action="" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-[25px]">
         <div className="w-full flex flex-col gap-[5px]">
-          <label className="w-full " htmlFor="email">
+          <label className="w-full" htmlFor="email">
             Username or email:
           </label>
           <input
-            className="w-full border border-2 px-3 py-[5px] border-gray-300"
+            className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-700 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
             type="text"
             id="email"
             name="email"
@@ -111,11 +91,11 @@ function MyApp() {
           />
         </div>
         <div className="w-full flex flex-col gap-[5px] relative">
-          <label className="w-full " htmlFor="password">
+          <label className="w-full" htmlFor="password">
             Password:
           </label>
           <input
-            className="w-full border border-2 px-3 py-[5px] border-gray-300"
+            className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-700 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
@@ -125,7 +105,7 @@ function MyApp() {
           />
           <button
             type="button"
-            className="absolute right-[10px] top-[50%] bg-[none] border-none cursor-pointer "
+            className="absolute right-[10px] top-[50%] bg-none border-none cursor-pointer"
             onClick={() => setShowPassword((prev) => !prev)}
           >
             {showPassword ? (
@@ -136,10 +116,10 @@ function MyApp() {
           </button>
         </div>
       </div>
-      <div className="py-[25px] flex gap-4 border-b border-gray-300">
+      <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
-          className="bg-[#FF2E51] px-3 py-[5px] text-white rounded-sm"
+          className={`px-3 py-[5px] rounded-sm ${theme === "dark" ? "bg-[#FF2E51] text-white" : "bg-[#FF2E51] text-white"}`}
           disabled={submitting}
         >
           {submitting ? <div>Connecting...</div> : <div>Login</div>}
