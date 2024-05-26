@@ -13,11 +13,11 @@ const LoginLayout: React.FC<LoginLayoutProps> = ({ children }) => {
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    document.body.className = theme === "dark" ? "dark-mode-content" : "light-mode";
+    document.body.className = theme === "dark" ? "bg-gray-800" : "bg-white";
   }, [theme]);
 
   return (
-    <main className="w-full md:h-screen">
+    <main className={`w-full md:h-screen ${theme === "dark" ? "text-white" : "text-black"}`}>
       <Navbar />
       {children}
       <Footer />

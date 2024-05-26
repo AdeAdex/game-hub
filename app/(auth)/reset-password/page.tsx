@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -12,6 +12,8 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import Loader from "@/app/components/Loader";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils"; // Adjust the import path accordingly
+import { ThemeContext } from "@/app/lib/ThemeContext";
+
 
 
 const ResetPassword = () => {
@@ -38,6 +40,8 @@ function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
   const { location, locationError, fetchLocation} = useFetchLocation();
   const device = useDetectDevice();
+  const { theme } = useContext(ThemeContext);
+
 
   useEffect(() => {
     const queryToken = new URLSearchParams(window.location.search).get("token");

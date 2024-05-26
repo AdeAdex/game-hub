@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import RegisterWith from "./RegisterWith";
 import Link from "next/link";
 import AboutYou from "./AboutYou";
@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const RegisterForm = () => {
   return (
@@ -24,6 +25,7 @@ function MyApp() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { theme } = useContext(ThemeContext);
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +38,7 @@ function MyApp() {
 
     onSubmit: async (values) => {
       setSubmitting(true);
-   
+
       try {
         const response = await fetch("/api/prompt/new", {
           method: "POST",
@@ -47,12 +49,12 @@ function MyApp() {
             prompt: values,
           }),
         });
-      
-        const responseData = await response.json(); 
-      
+
+        const responseData = await response.json();
+
         console.log(responseData);
         if (responseData.status === 201) {
-        console.log("created", responseData);
+          console.log("created", responseData);
 
           enqueueSnackbar(responseData.message, {
             variant: "success",
@@ -74,7 +76,6 @@ function MyApp() {
       } finally {
         setSubmitting(false);
       }
-      
     },
 
     validationSchema: yup.object({
@@ -93,7 +94,11 @@ function MyApp() {
   });
 
   return (
-    <div className="w-full flex flex-col relative w-full md:w-[50%] pb-[40px]">
+    <div
+      className={`w-full flex flex-col relative w-full md:w-[50%] pb-[40px] ${
+        theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
+    >
       {/* Register with github section */}
       <section>
         <RegisterWith />
@@ -102,7 +107,7 @@ function MyApp() {
       <section>
         <form
           onSubmit={formik.handleSubmit}
-          className="px-[10px] flex flex-col gap-[25px] mt-[30px] text-[13px] text-[#434343]"
+          className="px-[10px] flex flex-col gap-[25px] mt-[30px] text-[13px]"
         >
           <div className="w-full flex flex-col gap-[5px]">
             <label className="w-full font-bold" htmlFor="userName">
@@ -114,7 +119,11 @@ function MyApp() {
               name="userName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+              className={`w-full border border-2 px-3 py-[5px] ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-700"
+                  : "border-gray-300"
+              } ${
                 formik.errors.userName && formik.touched.userName
                   ? "register-input"
                   : ""
@@ -127,12 +136,15 @@ function MyApp() {
             />
           </div>
           <div className="text-center">
-            <h3 className="text-black font-bold">Your profile page will be</h3>
+            <h3 className="font-bold">Your profile page will be</h3>
             <div
-              className="py-2 px-3 bg-[#F9F9F9] mt-[5px]"
+              className={`py-2 px-3 mt-[5px] ${
+                theme === "dark" ? "bg-gray-700" : "bg-[#F9F9F9]"
+              }`}
               style={{ userSelect: "none" }}
             >
-              https://adex-game-hub.vercel.app/{formik.values.userName ? formik.values.userName : "username"} 
+              https://adex-game-hub.vercel.app/
+              {formik.values.userName ? formik.values.userName : "username"}
             </div>
           </div>
           <div className="w-full flex flex-col gap-[5px]">
@@ -145,7 +157,11 @@ function MyApp() {
               name="firstName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+              className={`w-full border border-2 px-3 py-[5px] ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-700"
+                  : "border-gray-300"
+              } ${
                 formik.errors.firstName && formik.touched.firstName
                   ? "register-input"
                   : ""
@@ -167,7 +183,11 @@ function MyApp() {
               name="lastName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+              className={`w-full border border-2 px-3 py-[5px] ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-700"
+                  : "border-gray-300"
+              } ${
                 formik.errors.lastName && formik.touched.lastName
                   ? "register-input"
                   : ""
@@ -189,7 +209,11 @@ function MyApp() {
               name="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+              className={`w-full border border-2 px-3 py-[5px] ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-700"
+                  : "border-gray-300"
+              } ${
                 formik.errors.email && formik.touched.email
                   ? "register-input"
                   : ""
@@ -211,7 +235,11 @@ function MyApp() {
               autoComplete="current-password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] border-gray-300 ${
+              className={`w-full border border-2 px-3 py-[5px] ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-700"
+                  : "border-gray-300"
+              } ${
                 formik.errors.password && formik.touched.password
                   ? "register-input"
                   : ""
@@ -236,7 +264,13 @@ function MyApp() {
           <div className="flex flex-col md:flex-row w-full gap-[10px]">
             <button
               type="submit"
-              className="text-center py-2 px-4  text-white bg-[#FF2449] rounded-sm"
+              className={`text-center py-2 px-4 text-white rounded-sm ${
+                submitting
+                  ? "bg-gray-400"
+                  : theme === "dark"
+                  ? "bg-gray-700"
+                  : "bg-[#FF2449]"
+              }`}
               disabled={submitting}
             >
               {submitting ? (
@@ -247,7 +281,12 @@ function MyApp() {
             </button>
             <div className="my-auto">
               <span>or already have an account?</span>
-              <Link href="/login" className="underline ml-[5px]">
+              <Link
+                href="/login"
+                className={`underline ml-[5px] ${
+                  theme === "dark" ? "text-red-300" : "text-red-600"
+                }`}
+              >
                 Log in
               </Link>
             </div>

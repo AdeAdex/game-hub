@@ -1,12 +1,13 @@
 "use client";
+
 import React, { FormEvent, useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const Form = () => {
   return (
@@ -29,7 +30,7 @@ function MyApp() {
   const router = useRouter();
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
-  const { theme } = useContext(ThemeContext); // Use the ThemeContext
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -74,7 +75,7 @@ function MyApp() {
   };
 
   return (
-    <form action="" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-[25px]">
         <div className="w-full flex flex-col gap-[5px]">
           <label className="w-full" htmlFor="email">

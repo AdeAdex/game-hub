@@ -1,11 +1,12 @@
 "use client";
+
 import React, { useContext } from "react";
 import Logo from "../navbar/Logo";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
+import { ThemeContext } from "@/app/lib/ThemeContext";
 import ThemeToggle from "@/app/components/ThemeToggle";
 
 const Navbar = () => {
-  const { theme } = useContext(ThemeContext); // Use the ThemeContext
+  const { theme } = useContext(ThemeContext);
 
   return (
     <nav className={`w-full flex px-5 py-3 shadow-md ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"}`}>

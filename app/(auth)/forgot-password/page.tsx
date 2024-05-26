@@ -4,9 +4,9 @@ import Footer from "@/app/components/footer/Footer";
 import Navbar from "@/app/components/navbar/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
-
+import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 
 const ForgotPasswordPage = () => {
   return (
@@ -17,15 +17,13 @@ const ForgotPasswordPage = () => {
       <MyApp />
     </SnackbarProvider>
   );
- 
 };
-
 
 function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-
+  const { theme } = useContext(ThemeContext); // Use the ThemeContext
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -48,8 +46,6 @@ function MyApp() {
       const responseData = await response.json();
       const status = response.status; // Access the status from the response object
       console.log(responseData);
-      
-
 
       if (status === 200) {
         router.push('/forgot-password-email-sent')
@@ -64,10 +60,10 @@ function MyApp() {
   };
 
   return (
-    <div className="bg-[#F4F4F4] pt-[80px] md:pt-[100px] h-screen">
+    <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
       <Navbar />
-      <div className="relative  w-full lg:w-[60%] mx-auto bg-white rounded-sm border-2 border-gray-300 py-[30px] px-[10px] md:px-[30px]">
-        <h3 className="border-b border-gray-300 font-bold text-[#434343] md:text-[20px] ">
+      <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
+        <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
           Reset Password
         </h3>
         <div className="pt-[20px] pb-[10px]">
@@ -76,16 +72,16 @@ function MyApp() {
             link to reset your password.
           </small>
         </div>
-        <form onSubmit={handleSubmit} className="text-[13px] text-[#434343]">
+        <form onSubmit={handleSubmit} className="text-[13px]">
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold text-[#434343]" htmlFor="email">
+            <label className="w-full font-bold" htmlFor="email">
               Email:
             </label>
             <input
               type="email"
               autoComplete="on"
               name="email"
-              className={`w-[100%] md:w-[65%] border border-2 px-3 py-[5px] border-gray-300`}
+              className={`w-[100%] md:w-[65%] border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
               placeholder="Required"
               required
             />
@@ -93,7 +89,7 @@ function MyApp() {
           <div className="py-[25px] flex gap-4">
             <button
               type="submit"
-              className="bg-[#FF2E51] px-3 py-[6px] text-white rounded-sm"
+              className={`px-3 py-[6px] rounded-sm text-white ${submitting ? "opacity-50 cursor-not-allowed" : ""} ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
               disabled={submitting}
             >
               {submitting ? <div>Connecting...</div> : <div>Submit</div>}
@@ -109,7 +105,7 @@ function MyApp() {
         <div>
           <small>
             If you are having trouble accessing your account, please{" "}
-            <Link href="/support" className="text-[#FF2E51] underline">
+            <Link href="/support" className={`underline ${theme === "dark" ? "text-red-400" : "text-[#FF2E51]"}`}>
               contact Support
             </Link>
             .
