@@ -1,4 +1,3 @@
-import Footer from "@/app/components/footer/Footer";
 import Form from "@/app/components/login/Form";
 import SocialMediaLogin from "@/app/components/login/SocialMediaLogin";
 import Link from "next/link";
@@ -22,7 +21,6 @@ const LoginPage = () => {
           </Link>
         </div>
       </div>
-      <Footer/>
       </>
   );
 };
