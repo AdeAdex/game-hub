@@ -96,166 +96,174 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
-
 return (
-  <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
+  <div className={`h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
     <Navbar />
-    <main className="pt-[80px] md:pt-[100px]">
+    <main className={`h-screen pt-[80px] md:pt-[100px] ${theme === "dark" ? "bg-gray-800" : "bg-[#F4F4F4]"}`}>
       {loading ? (
         <Loader />
       ) : (
-        <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
-          <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
-            Reset Password
-          </h3>
-          <div className="pt-[20px] pb-[10px]">
-            <div className={`${success ? "text-green-500" : "text-red-500"}`}>
-              {success ? "" : <small>Error: {message}</small>}
+        <div className="relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px]">
+          <div className={`${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
+            <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
+              Reset Password
+            </h3>
+            <div className="pt-[20px] pb-[10px]">
+              <div className={`${success ? "text-green-500" : "text-red-500"}`}>
+                {success ? "" : <small>Error: {message}</small>}
+              </div>
+              <div>
+                {success ? (
+                  <small>
+                    Please provide a new password for the account {username}.
+                  </small>
+                ) : (
+                  <small>
+                    Please request for a new link if the token has expired.
+                  </small>
+                )}
+              </div>
             </div>
-            <div>
-              {success ? (
-                <small>
-                  Please provide a new password for the account {username}.
-                </small>
-              ) : (
-                <small>
-                  Please request for a new link if the token has expired.{" "}
-                </small>
-              )}
-            </div>
-          </div>
-          {success && (
-            <Formik
-              initialValues={{ password: "", confirmPassword: "" }}
-              validationSchema={Yup.object().shape({
-                password: Yup.string()
-                  .matches(
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
-                    "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
-                  )
-                  .required("Password is required"),
-                confirmPassword: Yup.string()
-                  .required("Confirm Password is required")
-                  .oneOf([Yup.ref("password"), ""], "Passwords must match"),
-              })}
-              onSubmit={async (values, { setSubmitting }) => {
-                setSubmitting(true);
-                try {
-                  const response = await axios.post("/api/reset-password", {
-                    token,
-                    password: values.password,
-                    device,
-                    location,
-                  });
-                  if (response.status === 200) {
-                    setSuccess(true);
-                    enqueueSnackbar(response.data.message, {
-                      variant: "success",
+            {success && (
+              <Formik
+                initialValues={{ password: "", confirmPassword: "" }}
+                validationSchema={Yup.object().shape({
+                  password: Yup.string()
+                    .matches(
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+                      "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one special character, and one digit"
+                    )
+                    .required("Password is required"),
+                  confirmPassword: Yup.string()
+                    .required("Confirm Password is required")
+                    .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+                })}
+                onSubmit={async (values, { setSubmitting }) => {
+                  setSubmitting(true);
+                  try {
+                    const response = await axios.post("/api/reset-password", {
+                      token,
+                      password: values.password,
+                      device,
+                      location,
                     });
-                    router.push("/login");
-                  } else {
-                    setMessage(response.data.error || "Failed to reset password");
-                    enqueueSnackbar(response.data.error, {
-                      variant: "error",
-                    });
+                    if (response.status === 200) {
+                      setSuccess(true);
+                      enqueueSnackbar(response.data.message, {
+                        variant: "success",
+                      });
+                      router.push("/login");
+                    } else {
+                      setError(
+                        response.data.error || "Failed to reset password"
+                      );
+                      enqueueSnackbar(response.data.error, {
+                        variant: "error",
+                      });
+                    }
+                  } catch (error: any) {
+                    setError(
+                      error.response.data.error || "Internal server error"
+                    );
+                    enqueueSnackbar(
+                      error.response.data.error || "Internal server error",
+                      {
+                        variant: "error",
+                      }
+                    );
+                  } finally {
+                    setSubmitting(false);
                   }
-                } catch (error: any) {
-                  setMessage(error.response.data.error || "Internal server error");
-                  enqueueSnackbar(error.response.data.error || "Internal server error", {
-                    variant: "error",
-                  });
-                } finally {
-                  setSubmitting(false);
-                }
-              }}
-            >
-              {({ isSubmitting, errors, touched }) => (
-                <Form className="text-[13px] text-[#434343]">
-                  <div className="relative w-full flex flex-col gap-[5px]">
-                    <label className="w-full font-bold" htmlFor="password">
-                      Password:
-                    </label>
-                    <Field
-                      type={showPassword ? "text" : "password"}
-                      autoComplete="on"
-                      name="password"
-                      className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
-                      placeholder={
-                        touched.password && errors.password
-                          ? errors.password
-                          : "Enter your password"
-                      }
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      {showPassword ? (
-                        <AiFillEyeInvisible size={25} />
-                      ) : (
-                        <AiFillEye size={25} />
-                      )}
-                    </button>
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="text-red-500"
-                    />
-                  </div>
-                  <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
-                    <label className="w-full font-bold" htmlFor="confirmPassword">
-                      Repeat password:
-                    </label>
-                    <Field
-                      type={showPassword ? "text" : "password"}
-                      autoComplete="on"
-                      name="confirmPassword"
-                      className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
-                      placeholder={
-                        touched.confirmPassword && errors.confirmPassword
-                          ? errors.confirmPassword
-                          : "Enter your confirm password"
-                      }
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      {showPassword ? (
-                        <AiFillEyeInvisible size={25} />
-                      ) : (
-                        <AiFillEye size={25} />
-                      )}
-                    </button>
-                    <ErrorMessage
-                      name="confirmPassword"
-                      component="div"
-                      className="text-red-500"
-                    />
-                  </div>
-                  <div className="py-[25px] flex gap-4">
-                    <button
-                      type="submit"
-                      className={`px-3 py-[6px] rounded-sm text-white ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""} ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? <div>Connecting...</div> : <div>Submit</div>}
-                    </button>
-                    <div className="flex my-auto text-[12px] md:text-[14px]">
-                      <span>or </span>
-                      <Link href="/login" className="ml-[5px] underline">
-                        Login
-                      </Link>
+                }}
+              >
+                {({ isSubmitting, errors, touched }) => (
+                  <Form className="text-[13px]">
+                    <div className="relative w-full flex flex-col gap-[5px]">
+                      <label className={`w-full font-bold ${theme === "dark" ? "text-white" : "text-[#434343]"}`} htmlFor="password">
+                        Password:
+                      </label>
+                      <Field
+                        type={showPassword ? "text" : "password"}
+                        autoComplete="on"
+                        name="password"
+                        className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+                        placeholder={
+                          touched.password && errors.password
+                            ? errors.password
+                            : "Enter your password"
+                        }
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <AiFillEyeInvisible size={25} />
+                        ) : (
+                          <AiFillEye size={25} />
+                        )}
+                      </button>
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="text-red-500"
+                      />
                     </div>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          )}
+                    <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
+                      <label className={`w-full font-bold ${theme === "dark" ? "text-white" : "text-[#434343]"}`} htmlFor="confirmPassword">
+                        Repeat password:
+                      </label>
+                      <Field
+                        type={showPassword ? "text" : "password"}
+                        autoComplete="on"
+                        name="confirmPassword"
+                        className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+                        placeholder={
+                          touched.confirmPassword && errors.confirmPassword
+                            ? errors.confirmPassword
+                            : "Enter your confirm password"
+                        }
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <AiFillEyeInvisible size={25} />
+                        ) : (
+                          <AiFillEye size={25} />
+                        )}
+                      </button>
+                      <ErrorMessage
+                        name="confirmPassword"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
+                    <div className="py-[25px] flex gap-4">
+                      <button
+                        type="submit"
+                        className={`px-3 py-[6px] rounded-sm text-white ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""} ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? <div>Connecting...</div> : <div>Submit</div>}
+                      </button>
+                      <div className={`flex my-auto text-[12px] md:text-[14px] ${theme === "dark" ? "text-white" : "text-[#434343]"}`}>
+                        <span>or </span>
+                        <Link href="/login" className={`ml-[5px] underline ${theme === "dark" ? "text-red-400" : "text-[#FF2E51]"}`}>
+                          Login
+                        </Link>
+                      </div>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            )}
+          </div>
         </div>
       )}
       <Footer />
