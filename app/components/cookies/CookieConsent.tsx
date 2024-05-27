@@ -36,7 +36,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onConsent }) => {
     <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 z-50">
         <CloseIcon onClick={closeBanner} />
       <div className="container mx-auto relative">
-        <p className="text-sm md:text-base">
+        <p className="text-sm md:text-base px-[2px] md:px-[unset]">
           We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
           <Link href="/privacy-policy" className="underline ml-2">
             Learn more
