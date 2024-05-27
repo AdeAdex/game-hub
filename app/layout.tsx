@@ -121,7 +121,7 @@ function InnerRootLayout({
 
 
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, Suspense, useContext } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import "./globals.css";
 import { Inter } from "next/font/google";
