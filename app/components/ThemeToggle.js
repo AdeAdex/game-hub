@@ -7,7 +7,7 @@ const ThemeToggle = () => {
 
   return (
     <button onClick={toggleTheme} className="cursor-pointer text-xl my-auto">
-      {theme === "light" ? <FiSun size={15} /> : <FiMoon size={15}/>}
+      {theme === "light" ? <FiSun size={20} /> : <FiMoon size={20}/>}
     </button>
   );
 };
