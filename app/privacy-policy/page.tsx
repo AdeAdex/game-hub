@@ -11,7 +11,7 @@ const PrivacyPolicy: React.FC = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50 text-black"}`}>
+    <div className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-700 text-white" : "bg-gray-50 text-black"}`}>
       <Navbar />
       <div className="container mx-auto py-16 md:py-20">
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
