@@ -30,7 +30,7 @@ const AboutYou = () => {
           <input type="checkbox" name="" id="checkbox4" />
           <div className="my-auto flex gap-1">
             <span className="my-auto">I accept the </span>
-            <Link href="" className={`my-auto underline ${theme === "dark" ? "text-red-300" : "text-red-500"}`}>
+            <Link href="/privacy-policy" className={`my-auto underline ${theme === "dark" ? "text-red-300" : "text-red-500"}`}>
               Terms of Service
             </Link>
           </div>
