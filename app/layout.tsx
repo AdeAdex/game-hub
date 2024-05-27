@@ -117,8 +117,11 @@ function InnerRootLayout({
 
 
 
+
+
+
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -127,7 +130,7 @@ import ReduxProviders from "./redux/Provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "./head";
 import CookieConsent from "@/app/components/cookies/CookieConsent";
-import { ThemeProvider } from "@/app/lib/ThemeContext";
+import { ThemeProvider, ThemeContext } from "@/app/lib/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -157,7 +160,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ReduxProviders>
             <CustomProvider>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingScreen initialTheme={initialTheme} />}>
                 {hasConsent && (
                   <InnerRootLayout pathname={pathname}>
                     {children}
@@ -241,3 +244,11 @@ function InnerRootLayout({
     </div>
   );
 }
+
+const LoadingScreen = ({ initialTheme }: { initialTheme: string }) => {
+  useEffect(() => {
+    document.documentElement.classList.add(initialTheme);
+  }, [initialTheme]);
+
+  return <div>Loading...</div>;
+};
