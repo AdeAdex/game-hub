@@ -182,7 +182,7 @@ function MyApp() {
       </div>
       {/* ReCAPTCHA component */}
       <ReCAPTCHA
-        sitekey="6LfL8eopAAAAAPrJiGg8WLLFjuPiQxhdTskVW0rb" // Replace with your site key
+        sitekey="6LeFAOspAAAAALGAyRbI5OkPEry79Kp1wXLsw-qs" // Replace with your site key
         onChange={handleRecaptchaChange} // Handle reCAPTCHA token change
       />
       <div className="py-[25px] flex gap-4 border-b">
