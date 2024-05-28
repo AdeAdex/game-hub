@@ -46,44 +46,21 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
-  const signInWithCredentials = async (email: string, password: string, device: string, location: string, recaptchaToken: string | null) => {
-   /* try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        device,
-        location,
-        recaptchaToken,
-        redirect: false,
-      });
+  const verifyRecaptcha = async (token: string | null) => {
+    const response = await fetch('/api/verify-turnstile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
 
-      if (result && !result.error) {
-        // Handle successful sign-in
-      } else {
-        const errorMessage = result?.error || "Error during login";
-        enqueueSnackbar(errorMessage, { variant: "error" });
-      }
-    } catch (error: any) {
-      console.error("Error during login:", error.message);
-      enqueueSnackbar("Error during login", { variant: "error" });
-    }*/
+    const data = await response.json();
+    return data.success;
+  };
 
+  const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
     try {
-      // Verify reCAPTCHA token with the backend
-      const recaptchaResponse = await fetch('/api/verify-turnstile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: recaptchaToken }),
-      });
-
-      const recaptchaResult = await recaptchaResponse.json();
-
-      if (!recaptchaResult.success) {
-        enqueueSnackbar('Failed reCAPTCHA verification', { variant: 'error' });
-        return;
-      }
       const result = await signIn("credentials", {
         email,
         password,
@@ -102,7 +79,7 @@ function MyApp() {
       console.error("Error during login:", error.message);
       enqueueSnackbar("Error during login", { variant: "error" });
     }
-  };
+   };
 
   /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -122,13 +99,19 @@ function MyApp() {
     }
 
     if (!recaptchaToken) {
-      // If reCAPTCHA token is not available, show an error
       enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
       setSubmitting(false);
       return;
     }
 
-    await signInWithCredentials(email, password, device, location, recaptchaToken);
+    const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+    if (!recaptchaVerified) {
+      enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
+    await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
   };
 
