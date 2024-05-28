@@ -46,13 +46,14 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
-  const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
+  const signInWithCredentials = async (email: string, password: string, device: string, location: string, recaptchaToken: string | null) => {
     try {
       const result = await signIn("credentials", {
         email,
         password,
         device,
         location,
+        recaptchaToken,
         redirect: false,
       });
 
@@ -78,11 +79,6 @@ function MyApp() {
     setSubmitting(false);
   };*/
 
-  const handleRecaptchaChange = (token) => {
-    // Called when reCAPTCHA token changes
-    setRecaptchaToken(token);
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
@@ -97,8 +93,13 @@ function MyApp() {
       return;
     }
 
-    await signInWithCredentials(email, password, device, location);
+    await signInWithCredentials(email, password, device, location, recaptchaToken);
     setSubmitting(false);
+  };
+
+  const handleRecaptchaChange = (token: string | null) => {
+    // Called when reCAPTCHA token changes
+    setRecaptchaToken(token);
   };
 
   return (
