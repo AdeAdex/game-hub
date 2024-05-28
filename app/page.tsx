@@ -47,7 +47,14 @@ export default function Home() {
   const handleSearch = (query: string) => {
     // Update the searchQuery state when the user types in the search box
     setSearchQuery(query);
-    console.log(searchQuery)
+
+    // Filter games based on the search query
+    const filteredGames = games.filter((game) =>
+      game.name.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    // Log the filtered games to the console
+    console.log("Filtered Games:", filteredGames);
   };
 
   return (
