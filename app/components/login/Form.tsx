@@ -66,12 +66,35 @@ function MyApp() {
     }
   };
 
+  /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    if (locationError) {
+      enqueueSnackbar(locationError, { variant: "warning" });
+    }
+    await signInWithCredentials(email, password, device, location);
+    setSubmitting(false);
+  };*/
+
+  const handleRecaptchaChange = (token) => {
+    // Called when reCAPTCHA token changes
+    setRecaptchaToken(token);
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
     if (locationError) {
       enqueueSnackbar(locationError, { variant: "warning" });
     }
+
+    if (!recaptchaToken) {
+      // If reCAPTCHA token is not available, show an error
+      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
   };
@@ -119,6 +142,11 @@ function MyApp() {
           </button>
         </div>
       </div>
+      {/* ReCAPTCHA component */}
+      <ReCAPTCHA
+        sitekey="YOUR_RECAPTCHA_SITE_KEY" // Replace with your site key
+        onChange={handleRecaptchaChange} // Handle reCAPTCHA token change
+      />
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
