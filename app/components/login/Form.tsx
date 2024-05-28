@@ -32,7 +32,9 @@ function MyApp() {
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
   const { theme } = useContext(ThemeContext);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
+ 
+ 
 
   useEffect(() => {
     if (status === "authenticated") {
