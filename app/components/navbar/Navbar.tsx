@@ -1,5 +1,4 @@
-
-'use client';
+"use client";
 
 import React, { useEffect, useRef, useState, useContext } from "react";
 import Links from "./links/Links";
@@ -19,10 +18,10 @@ import { IoMdNotifications } from "react-icons/io";
 import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { io, Socket } from 'socket.io-client';
+import { io, Socket } from "socket.io-client";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import ThemeToggle from "@/app/components/ThemeToggle";
-
+import { Game } from "@/app/types/homePage/games";
 
 interface AuthState {
   firstName?: string;
@@ -38,20 +37,21 @@ interface AuthState {
 
 interface NavbarProps {
   onSearch: (query: string) => void; // Callback function for search action
+  suggestions: Game[];
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
+const Navbar: React.FC<NavbarProps> = ({ onSearch, suggestions }) => {
   return (
     <SnackbarProvider
       maxSnack={1}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <MyApp onSearch={onSearch}/>
+      <MyApp onSearch={onSearch} suggestions={suggestions} />
     </SnackbarProvider>
   );
 };
 
-function MyApp({ onSearch }: NavbarProps) {
+function MyApp({ onSearch, suggestions }: NavbarProps) {
   const { enqueueSnackbar } = useSnackbar();
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -94,7 +94,7 @@ function MyApp({ onSearch }: NavbarProps) {
         if (response.data.success === true) {
           setToken(true);
           setUserData(response.data.user);
-          setFriendRequestCount(response.data.user.friendRequestCount)
+          setFriendRequestCount(response.data.user.friendRequestCount);
         }
       } catch (error: any) {
         console.error("Error fetching user data:", error.message);
@@ -129,11 +129,11 @@ function MyApp({ onSearch }: NavbarProps) {
     socket.current = io();
 
     if (socket.current) {
-      socket.current.on('newFriendRequest', () => {
+      socket.current.on("newFriendRequest", () => {
         setFriendRequestCount((prevCount) => prevCount + 1);
       });
 
-      socket.current.on('updateFriendRequestCount', (count: number) => {
+      socket.current.on("updateFriendRequestCount", (count: number) => {
         setFriendRequestCount(count);
       });
     }
@@ -147,7 +147,11 @@ function MyApp({ onSearch }: NavbarProps) {
 
   return (
     <main>
-      <nav className={`w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between fixed z-50 top-0 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
+      <nav
+        className={`w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between fixed z-50 top-0 ${
+          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        }`}
+      >
         <div className="flex gap-5">
           <MenuIcon
             isMobileMenuOpen={isMobileMenuOpen}
@@ -164,16 +168,23 @@ function MyApp({ onSearch }: NavbarProps) {
                 links={links}
                 links2={links2}
                 isMobileMenuOpen={isMobileMenuOpen}
+                onSearch={onSearch}
+                suggestions={suggestions}
               />
             </div>
           </div>
         )}
 
         <SearchBox
-        onSearch={onSearch}
+          onSearch={onSearch}
+          suggestions={suggestions}
           ClassName={`hidden md:flex`}
           Placeholder={`Search for games or creator`}
-          inputClassName={`text-[14px] px-3 h-[30px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200 text-black"} my-auto`}
+          inputClassName={`text-[14px] px-3 h-[30px] ${
+            theme === "dark"
+              ? "bg-gray-800 text-white"
+              : "bg-gray-200 text-black"
+          } my-auto`}
         />
         <div className="flex gap-8">
           {userData && userData.incomingFriendRequests && (
@@ -194,7 +205,9 @@ function MyApp({ onSearch }: NavbarProps) {
                   <div className="flex gap-3 cursor-pointer">
                     <PingLoader />
                     <div
-                      className={`bg-gray-100 p-2 rounded-lg border cursor-pointer ${dropdownOpen ? "border-blue-500" : ""} `}
+                      className={`bg-gray-100 p-2 rounded-lg border cursor-pointer ${
+                        dropdownOpen ? "border-blue-500" : ""
+                      } `}
                       onClick={handleDropdownToggle}
                     >
                       {dropdownOpen ? (
@@ -210,7 +223,11 @@ function MyApp({ onSearch }: NavbarProps) {
                   <div className="flex gap-3">
                     <Link
                       href={`/${userData?.userName}`}
-                      className={`flex gap-2 cursor-pointer my-auto ${theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"}`}
+                      className={`flex gap-2 cursor-pointer my-auto ${
+                        theme === "dark"
+                          ? "hover:bg-gray-600"
+                          : "hover:bg-gray-200"
+                      }`}
                     >
                       {userData?.profilePicture ? (
                         <Image
@@ -237,7 +254,11 @@ function MyApp({ onSearch }: NavbarProps) {
                     </Link>
 
                     <div
-                      className={`${theme === "dark" ? "hover:bg-gray-600" : "bg-gray-100"} p-2 rounded-lg border cursor-pointer ${dropdownOpen ? "border-blue-500" : ""} `}
+                      className={`${
+                        theme === "dark" ? "hover:bg-gray-600" : "bg-gray-100"
+                      } p-2 rounded-lg border cursor-pointer ${
+                        dropdownOpen ? "border-blue-500" : ""
+                      } `}
                       onClick={handleDropdownToggle}
                     >
                       {dropdownOpen ? (
@@ -262,7 +283,6 @@ function MyApp({ onSearch }: NavbarProps) {
             ) : (
               <AuthButton title="login" to="/login" />
             )}
-
           </div>
           <div className="my-auto hidden md:flex">
             {userData && token ? (
@@ -271,12 +291,10 @@ function MyApp({ onSearch }: NavbarProps) {
               <AuthButton title="register" to="/register" />
             )}
           </div>
-          <div className={`my-auto ${userData ? 'ml-[-20px]' : ''}`}>
-
-        <ThemeToggle />
+          <div className={`my-auto ${userData ? "ml-[-20px]" : ""}`}>
+            <ThemeToggle />
           </div>
         </div>
-
       </nav>
     </main>
   );

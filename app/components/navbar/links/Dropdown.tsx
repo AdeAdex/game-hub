@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import Section from "../../sidebar/Section";
 import SearchBox from "../SearchBox";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
+import { Game } from "@/app/types/homePage/games";
 
 interface LinkItem {
   title: string;
@@ -12,12 +13,16 @@ interface SideBarProps {
   links: LinkItem[];
   links2: LinkItem[];
   isMobileMenuOpen: boolean;
+  suggestions: Game[]; // Add suggestions prop
+  onSearch: (query: string) => void; // Add onSearch prop
 }
 
 const Dropdown: React.FC<SideBarProps> = ({
   links,
   links2,
   isMobileMenuOpen,
+  suggestions, // Add suggestions prop
+  onSearch, // Add onSearch prop
 }) => {
   const { theme } = useContext(ThemeContext); // Get the current theme
 
@@ -37,6 +42,7 @@ const Dropdown: React.FC<SideBarProps> = ({
         Placeholder={`Search games & creator`}
         inputClassName={`text-[14px] px-3 h-[30px] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-[#F4F4F4] text-black'} my-auto w-[90%]`}
         onSearch={handleSearch}
+        suggestions={suggestions}
 
       />
       <Section title="popular tags" links={links} />

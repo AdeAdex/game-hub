@@ -20,7 +20,8 @@ export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Game[]>([]);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -43,23 +44,20 @@ export default function Home() {
     fetchGames();
   }, []);
 
-
   const handleSearch = (query: string) => {
-    // Update the searchQuery state when the user types in the search box
     setSearchQuery(query);
 
-    // Filter games based on the search query
     const filteredGames = games.filter((game) =>
       game.name.toLowerCase().includes(query.toLowerCase())
     );
-    
-    // Log the filtered games to the console
+
+    setSuggestions(filteredGames);
     console.log("Filtered Games:", filteredGames);
   };
 
   return (
     <>
-      <Navbar onSearch={handleSearch}/>
+      <Navbar onSearch={handleSearch} suggestions={suggestions} />
       <main
         className={`w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative ${
           theme === "dark" ? "dark-mode" : "light-mode"
