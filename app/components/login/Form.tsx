@@ -70,7 +70,7 @@ function MyApp() {
 
     try {
       // Verify reCAPTCHA token with the backend
-      const recaptchaResponse = await fetch('/api/verify-recaptcha', {
+      const recaptchaResponse = await fetch('/api/verify-turnstile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
