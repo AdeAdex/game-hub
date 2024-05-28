@@ -20,6 +20,7 @@ export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -42,9 +43,16 @@ export default function Home() {
     fetchGames();
   }, []);
 
+
+  const handleSearch = (query: string) => {
+    // Update the searchQuery state when the user types in the search box
+    setSearchQuery(query);
+    console.log(searchQuery)
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch}/>
       <main
         className={`w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative ${
           theme === "dark" ? "dark-mode" : "light-mode"

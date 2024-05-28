@@ -36,18 +36,22 @@ interface AuthState {
   friendRequestCount: number;
 }
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onSearch: (query: string) => void; // Callback function for search action
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
   return (
     <SnackbarProvider
       maxSnack={1}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <MyApp />
+      <MyApp onSearch={onSearch}/>
     </SnackbarProvider>
   );
 };
 
-function MyApp() {
+function MyApp({ onSearch }: NavbarProps) {
   const { enqueueSnackbar } = useSnackbar();
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -166,6 +170,7 @@ function MyApp() {
         )}
 
         <SearchBox
+        onSearch={onSearch}
           ClassName={`hidden md:flex`}
           Placeholder={`Search for games or creator`}
           inputClassName={`text-[14px] px-3 h-[30px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200 text-black"} my-auto`}
