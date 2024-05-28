@@ -47,13 +47,48 @@ function MyApp() {
   }, [fetchLocation]);
 
   const signInWithCredentials = async (email: string, password: string, device: string, location: string, recaptchaToken: string | null) => {
-    try {
+   /* try {
       const result = await signIn("credentials", {
         email,
         password,
         device,
         location,
         recaptchaToken,
+        redirect: false,
+      });
+
+      if (result && !result.error) {
+        // Handle successful sign-in
+      } else {
+        const errorMessage = result?.error || "Error during login";
+        enqueueSnackbar(errorMessage, { variant: "error" });
+      }
+    } catch (error: any) {
+      console.error("Error during login:", error.message);
+      enqueueSnackbar("Error during login", { variant: "error" });
+    }*/
+
+    try {
+      // Verify reCAPTCHA token with the backend
+      const recaptchaResponse = await fetch('/api/verify-recaptcha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: recaptchaToken }),
+      });
+
+      const recaptchaResult = await recaptchaResponse.json();
+
+      if (!recaptchaResult.success) {
+        enqueueSnackbar('Failed reCAPTCHA verification', { variant: 'error' });
+        return;
+      }
+      const result = await signIn("credentials", {
+        email,
+        password,
+        device,
+        location,
         redirect: false,
       });
 
