@@ -4,7 +4,7 @@ import Navbar from '@/app/components/navbar/Navbar'; // Import your Navbar compo
 const PostSkeleton = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Navbar /> {/* Include the Navbar component */}
+      <Navbar onSearch={(query) => {}} suggestions={[]}/> {/* Include the Navbar component */}
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
         {/* Post Skeleton */}
         <div className="bg-white mb-4 p-4 rounded-lg shadow-md animate-pulse">

@@ -5,7 +5,7 @@ import Footer from "../footer/Footer";
 const LoadingSkeleton = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar />
+      <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         {/* Loading User Profile and Flow Diagram */}
         <div className="flex flex-col md:flex-row md:space-x-8">
