@@ -57,7 +57,7 @@ const GameDetails: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <main className="w-full h-full flex flex-col items-center pt-10">
         <h1 className="text-3xl font-bold mb-4">{gameDetails.name}</h1>
         <div className="relative w-full h-64">
