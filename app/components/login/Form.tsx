@@ -8,6 +8,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
 import { ThemeContext } from "@/app/lib/ThemeContext";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Form = () => {
   return (
@@ -31,6 +32,7 @@ function MyApp() {
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
   const { theme } = useContext(ThemeContext);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   useEffect(() => {
     if (status === "authenticated") {
