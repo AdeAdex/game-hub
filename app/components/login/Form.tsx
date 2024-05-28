@@ -44,6 +44,11 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
+  const handleRecaptchaChange = (token) => {
+    // Called when reCAPTCHA token changes
+    setRecaptchaToken(token);
+  };
+
   const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
     try {
       const result = await signIn("credentials", {
@@ -66,12 +71,30 @@ function MyApp() {
     }
   };
 
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setSubmitting(true);
+  //   if (locationError) {
+  //     enqueueSnackbar(locationError, { variant: "warning" });
+  //   }
+  //   await signInWithCredentials(email, password, device, location);
+  //   setSubmitting(false);
+  // };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
     if (locationError) {
       enqueueSnackbar(locationError, { variant: "warning" });
     }
+
+    if (!recaptchaToken) {
+      // If reCAPTCHA token is not available, show an error
+      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
   };
