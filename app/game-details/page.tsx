@@ -168,7 +168,7 @@ const GameDetailsPage: React.FC = () => {
 
   return (
   <div className="min-h-screen bg-gray-900">
-    <Navbar />
+    <Navbar onSearch={(query) => {}} suggestions={[]}/>
     <main className="text-white w-full max-w-4xl mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]">
       <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-center text-red-500">{name}</h1>
       <div className="relative w-full h-64 sm:h-80 mb-6">

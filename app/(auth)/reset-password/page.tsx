@@ -98,7 +98,7 @@ function MyApp() {
 
 return (
   <div className={`h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
-    <Navbar />
+    <Navbar onSearch={(query) => {}} suggestions={[]}/>
     <main className={`h-screen pt-[80px] md:pt-[100px] ${theme === "dark" ? "bg-gray-800" : "bg-[#F4F4F4]"}`}>
       {loading ? (
         <Loader />

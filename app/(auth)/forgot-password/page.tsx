@@ -61,7 +61,7 @@ function MyApp() {
 
   return (
     <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
-      <Navbar />
+      <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
         <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
           Reset Password

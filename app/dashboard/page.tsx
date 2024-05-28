@@ -101,7 +101,7 @@ const DashboardPage = () => {
 
   return (
     <div className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50"}`}>
-      <Navbar />
+      <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="flex flex-col md:flex-row md:space-x-8">
           <UserProfile userData={userData} />

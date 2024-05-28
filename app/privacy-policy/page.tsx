@@ -12,7 +12,7 @@ const PrivacyPolicy: React.FC = () => {
 
   return (
     <div className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-700 text-white" : "bg-gray-50 text-black"}`}>
-      <Navbar />
+      <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className="container mx-auto py-16 md:py-20">
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
         <p className="mb-4">
