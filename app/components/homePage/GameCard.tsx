@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ThemeContext } from "@/app/lib/ThemeContext";
-import { Popover } from "@mui/material";
+import { Popover, Tooltip } from "@mui/material";
 import { Game } from "@/app/types/homePage/games"; // Import the Game type
 
 // Placeholder imports for platform icons
@@ -58,13 +58,32 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
     }
   };
 
+  const getPlatformName = (slug: string) => {
+    switch (slug) {
+      case "pc":
+        return "PC";
+      case "playstation":
+        return "PlayStation";
+      case "xbox":
+        return "Xbox";
+      case "ios":
+        return "iOS";
+      case "android":
+        return "Android";
+      case "mac":
+        return "Mac";
+      default:
+        return "Other";
+    }
+  };
+
   return (
     <div
       className={`w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out ${
         theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
       }`}
-//       onMouseEnter={handlePopoverOpen}
-//       onMouseLeave={handlePopoverClose}
+      //       onMouseEnter={handlePopoverOpen}
+      //       onMouseLeave={handlePopoverClose}
     >
       <div className="w-full h-full">
         <Link
@@ -86,9 +105,14 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
             />
             <div className="absolute bottom-0 left-0 p-2 flex flex-wrap bg-black bg-opacity-50 w-full overflow-hidden">
               {game.parent_platforms.map(({ platform }) => (
-                <div key={platform.id} className="mr-2">
-                  {renderPlatformIcon(platform.slug)}
-                </div>
+                <Tooltip
+                  key={platform.id}
+                  title={getPlatformName(platform.slug)}
+                >
+                  <div className="mr-2">
+                    {renderPlatformIcon(platform.slug)}
+                  </div>
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -96,12 +120,27 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
 
         <div className="p-4 relative h-[35%] overflow-y-auto custom-scrollbar whitespace-nowrap">
           <small className="text-[14px] font-semibold">{game.name}</small>
-          <div className="flex">
+          <div className="flex justify-between">
+            <div>
             {game.genres.map((genre, index) => (
-              <small key={index} className={`${
-                theme === "dark" ? "text-yellow-500" : ""
-              }`}>{genre.name}</small>
+              <small
+                key={index}
+                className={`${theme === "dark" ? "text-yellow-500" : ""}`}
+              >
+                {genre.name}
+              </small>
             ))}
+            </div>
+            <div>
+              {game.tags.map((tag, index) => (
+                <small
+                key={index}
+                className={`${theme === "dark" ? "text-yellow-500" : ""}`}
+              >
+                {tag.name}
+              </small>
+              ))}
+            </div>
           </div>
           <Carousel
             autoPlay
