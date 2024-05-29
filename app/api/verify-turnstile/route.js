@@ -1,12 +1,15 @@
 // app/api/verify-turnstile/route.js
+
+
+// app/api/verify-recaptcha/route.js
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   try {
     const { token } = await req.json();
-    const secretKey = process.env.CLOUDFLARE_SECRET_KEY; // Store your secret key in .env file
+    const secretKey = '6LfL8eopAAAAAH7OPF-qKrYJzfXrkxR_iBIjZVwo'; // Store your secret key in .env file
 
-    const verifyURL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    const verifyURL = 'https://www.google.com/recaptcha/api/siteverify';
 
     const response = await fetch(verifyURL, {
       method: 'POST',
@@ -27,7 +30,8 @@ export const POST = async (req) => {
       return NextResponse.json({ success: false, 'error-codes': data['error-codes'] }, { status: 400 });
     }
   } catch (error) {
-    console.error("Error verifying Turnstile:", error.message);
-    return NextResponse.error(new Error("Failed to verify Turnstile"), { status: 500 });
+    console.error("Error verifying reCAPTCHA:", error.message);
+    return NextResponse.error(new Error("Failed to verify reCAPTCHA"), { status: 500 });
   }
 };
+ 

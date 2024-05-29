@@ -32,7 +32,9 @@ function MyApp() {
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
   const { theme } = useContext(ThemeContext);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
+ 
+ 
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -44,9 +46,17 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
-  const handleRecaptchaChange = (token) => {
-    // Called when reCAPTCHA token changes
-    setRecaptchaToken(token);
+  const verifyRecaptcha = async (token: string | null) => {
+    const response = await fetch('/api/verify-turnstile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
+
+    const data = await response.json();
+    return data.success;
   };
 
   const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
@@ -71,15 +81,15 @@ function MyApp() {
     }
   };
 
-  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setSubmitting(true);
-  //   if (locationError) {
-  //     enqueueSnackbar(locationError, { variant: "warning" });
-  //   }
-  //   await signInWithCredentials(email, password, device, location);
-  //   setSubmitting(false);
-  // };
+  /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    if (locationError) {
+      enqueueSnackbar(locationError, { variant: "warning" });
+    }
+    await signInWithCredentials(email, password, device, location);
+    setSubmitting(false);
+  };*/
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,16 +97,13 @@ function MyApp() {
     if (locationError) {
       enqueueSnackbar(locationError, { variant: "warning" });
     }
-
-    if (!recaptchaToken) {
-      // If reCAPTCHA token is not available, show an error
-      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
-      setSubmitting(false);
-      return;
-    }
-
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
+  };
+
+  const handleRecaptchaChange = (token: string | null) => {
+    // Called when reCAPTCHA token changes
+    setRecaptchaToken(token);
   };
 
   return (
@@ -142,6 +149,11 @@ function MyApp() {
           </button>
         </div>
       </div>
+      {/* ReCAPTCHA component */}
+      <ReCAPTCHA
+        sitekey="6LeFAOspAAAAALGAyRbI5OkPEry79Kp1wXLsw-qs" // Replace with your site key
+        onChange={handleRecaptchaChange} // Handle reCAPTCHA token change
+      />
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
