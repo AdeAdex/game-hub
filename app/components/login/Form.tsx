@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import ReCAPTCHA from "react-google-recaptcha";
+import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
 
 const Form = () => {
