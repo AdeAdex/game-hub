@@ -27,11 +27,7 @@ export default function Home() {
     const fetchGames = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("https://api.rawg.io/api/games", {
-          params: {
-            key: process.env.NEXT_PUBLIC_RAWG_API_KEY,
-          },
-        });
+        const response = await axios.get('/api/games');
         console.log(response.data.results);
         setGames(response.data.results);
       } catch (error) {
@@ -40,9 +36,10 @@ export default function Home() {
         setLoading(false);
       }
     };
-
+  
     fetchGames();
   }, []);
+  
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
