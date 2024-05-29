@@ -131,16 +131,16 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
               </small>
             ))}
             </div>
-            <div>
-              {game.tags.map((tag, index) => (
-                <small
+            {/* <div>
+            {game.tags[0].map((tag, index) => (
+              <small
                 key={index}
                 className={`${theme === "dark" ? "text-yellow-500" : ""}`}
               >
                 {tag.name}
               </small>
-              ))}
-            </div>
+            ))}
+            </div> */}
           </div>
           <Carousel
             autoPlay
