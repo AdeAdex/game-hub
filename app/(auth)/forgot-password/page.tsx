@@ -158,6 +158,15 @@ function MyApp() {
               </Link>
             </div>
           </div>
+          {/* ReCAPTCHA component */}
+          {recaptchaSiteKey && (
+            <div className="flex item-center justify-center mt-5">
+              <ReCAPTCHA
+                sitekey={recaptchaSiteKey}
+                onChange={handleRecaptchaChange}
+              />
+            </div>
+          )}
         </form>
         <div>
           <small>
