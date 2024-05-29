@@ -106,7 +106,7 @@ function MyApp() {
         enqueueSnackbar(responseData.message, { variant: "error" });
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
     } finally {
       setSubmitting(false);
     }
