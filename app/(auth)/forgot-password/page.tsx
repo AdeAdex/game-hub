@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useContext } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const ForgotPasswordPage = () => {
@@ -25,6 +26,8 @@ function MyApp() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior

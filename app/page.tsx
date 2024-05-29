@@ -28,7 +28,7 @@ export default function Home() {
       setLoading(true);
       try {
         const response = await axios.get('/api/games');
-        console.log(response.data.results);
+        // console.log(response.data.results);
         setGames(response.data.results);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);

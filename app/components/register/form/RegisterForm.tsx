@@ -9,6 +9,8 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ThemeContext } from "@/app/lib/ThemeContext";
+import ReCAPTCHA from "react-google-recaptcha";
+
 
 const RegisterForm = () => {
   return (
@@ -26,6 +28,8 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { theme } = useContext(ThemeContext);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
   const formik = useFormik({
     initialValues: {
