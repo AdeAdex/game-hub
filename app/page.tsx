@@ -29,7 +29,7 @@ export default function Home() {
       try {
         const response = await axios.get("https://api.rawg.io/api/games", {
           params: {
-            key: "4e2c61f658d44adcb51ed39f710a9d71",
+            key: process.env.NEXT_PUBLIC_RAWG_API_KEY,
           },
         });
         console.log(response.data.results);

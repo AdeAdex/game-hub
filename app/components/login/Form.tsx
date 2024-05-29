@@ -33,6 +33,8 @@ function MyApp() {
   const device = useDetectDevice();
   const { theme } = useContext(ThemeContext);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
+  
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
  
  
 
@@ -165,12 +167,14 @@ function MyApp() {
         </div>
       </div>
       {/* ReCAPTCHA component */}
-      <div className="flex item-center justify-center mt-5">
-      <ReCAPTCHA
-        sitekey="6LeFAOspAAAAALGAyRbI5OkPEry79Kp1wXLsw-qs" // Replace with your site key
-        onChange={handleRecaptchaChange} // Handle reCAPTCHA token change
-      />
-      </div>
+      {recaptchaSiteKey && (
+        <div className="flex item-center justify-center mt-5">
+          <ReCAPTCHA
+            sitekey={recaptchaSiteKey}
+            onChange={handleRecaptchaChange}
+          />
+        </div>
+      )}
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
