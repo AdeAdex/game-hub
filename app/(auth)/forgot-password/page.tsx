@@ -8,7 +8,7 @@ import React, { useState, useContext } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import ReCAPTCHA from "react-google-recaptcha";
-import { verifyRecaptcha } from "@/utils/recaptchaUtils"; 
+import { verifyRecaptcha } from "@/app/utils/recaptchaUtils"; 
 
 
 const ForgotPasswordPage = () => {
