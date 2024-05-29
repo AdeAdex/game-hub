@@ -47,7 +47,7 @@ function MyApp() {
   }, [fetchLocation]);
 
   const verifyRecaptcha = async (token: string | null) => {
-    const response = await fetch('/api/verify-turnstile', {
+    const response = await fetch('/api/verify-recaptcha', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,6 +56,7 @@ function MyApp() {
     });
 
     const data = await response.json();
+    console.log(data)
     return data.success;
   };
 
@@ -79,7 +80,7 @@ function MyApp() {
       console.error("Error during login:", error.message);
       enqueueSnackbar("Error during login", { variant: "error" });
     }
-  };
+   };
 
   /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,6 +98,20 @@ function MyApp() {
     if (locationError) {
       enqueueSnackbar(locationError, { variant: "warning" });
     }
+
+    if (!recaptchaToken) {
+      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
+    const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+    if (!recaptchaVerified) {
+      enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
   };
@@ -150,10 +165,12 @@ function MyApp() {
         </div>
       </div>
       {/* ReCAPTCHA component */}
+      <div className="flex item-center justify-center mt-5">
       <ReCAPTCHA
         sitekey="6LeFAOspAAAAALGAyRbI5OkPEry79Kp1wXLsw-qs" // Replace with your site key
         onChange={handleRecaptchaChange} // Handle reCAPTCHA token change
       />
+      </div>
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
