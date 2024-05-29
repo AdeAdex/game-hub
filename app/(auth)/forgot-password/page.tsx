@@ -92,7 +92,7 @@ function MyApp() {
         },
         body: JSON.stringify({
           email: email, // Access email value from form
-          recaptchaToken // Include the reCAPTCHA token
+          //recaptchaToken // Include the reCAPTCHA token
         }),
       });
 
