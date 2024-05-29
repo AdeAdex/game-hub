@@ -8,6 +8,7 @@ import React, { useState, useContext } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import ReCAPTCHA from "react-google-recaptcha";
+import { verifyRecaptcha } from "@/utils/recaptchaUtils"; 
 
 
 const ForgotPasswordPage = () => {
@@ -29,7 +30,7 @@ function MyApp() {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  /*const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior
     setSubmitting(true);
 
@@ -61,6 +62,58 @@ function MyApp() {
     } finally {
       setSubmitting(false);
     }
+  };*/
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    setSubmitting(true);
+
+    if (!recaptchaToken) {
+      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
+    const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+    if (!recaptchaVerified) {
+      enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
+      setSubmitting(false);
+      return;
+    }
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+
+    try {
+      const response = await fetch("/api/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email, // Access email value from form
+          recaptchaToken // Include the reCAPTCHA token
+        }),
+      });
+
+      const responseData = await response.json();
+      const status = response.status; // Access the status from the response object
+      console.log(responseData);
+
+      if (status === 200) {
+        router.push('/forgot-password-email-sent')
+      } else {
+        enqueueSnackbar(responseData.message, { variant: "error" });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
   };
 
   return (
