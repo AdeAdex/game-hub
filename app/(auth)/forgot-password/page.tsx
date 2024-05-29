@@ -158,7 +158,8 @@ function MyApp() {
               </Link>
             </div>
           </div>
-          {/* ReCAPTCHA component */}
+        </form>
+        {/* ReCAPTCHA component */}
           {recaptchaSiteKey && (
             <div className="flex item-center justify-center mt-5">
               <ReCAPTCHA
@@ -167,7 +168,6 @@ function MyApp() {
               />
             </div>
           )}
-        </form>
         <div>
           <small>
             If you are having trouble accessing your account, please{" "}
