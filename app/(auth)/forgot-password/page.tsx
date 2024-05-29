@@ -7,9 +7,8 @@ import { useRouter } from "next/navigation";
 import React, { useState, useContext } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
-import ReCAPTCHA from "react-google-recaptcha";
-import { verifyRecaptcha } from "@/app/utils/recaptchaUtils"; 
-
+// import ReCAPTCHA from "react-google-recaptcha";
+// import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
 const ForgotPasswordPage = () => {
   return (
@@ -27,59 +26,27 @@ function MyApp() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
-
-  /*const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    setSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-
-    try {
-      const response = await fetch("/api/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email, // Access email value from form
-        }),
-      });
-
-      const responseData = await response.json();
-      const status = response.status; // Access the status from the response object
-      console.log(responseData);
-
-      if (status === 200) {
-        router.push('/forgot-password-email-sent')
-      } else {
-        enqueueSnackbar(responseData.message, { variant: "error" });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setSubmitting(false);
-    }
-  };*/
+  // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    // Prevent default form submission behavior
+    e.preventDefault();
     setSubmitting(true);
 
-    if (!recaptchaToken) {
-      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
-      setSubmitting(false);
-      return;
-    }
+    //  // Check for reCAPTCHA token
+    //  if (!recaptchaToken) {
+    //   enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+    //   setSubmitting(false);
+    //   return;
+    // }
 
-    const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-    if (!recaptchaVerified) {
-      enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
-      setSubmitting(false);
-      return;
-    }
+    // const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+    // if (!recaptchaVerified) {
+    //   enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
+    //   setSubmitting(false);
+    //   return;
+    // }
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
@@ -92,16 +59,15 @@ function MyApp() {
         },
         body: JSON.stringify({
           email: email, // Access email value from form
-          //recaptchaToken // Include the reCAPTCHA token
         }),
       });
 
       const responseData = await response.json();
       const status = response.status; // Access the status from the response object
-      console.log(responseData);
+      // console.log(responseData);
 
       if (status === 200) {
-        router.push('/forgot-password-email-sent')
+        router.push("/forgot-password-email-sent");
       } else {
         enqueueSnackbar(responseData.message, { variant: "error" });
       }
@@ -112,15 +78,34 @@ function MyApp() {
     }
   };
 
-  const handleRecaptchaChange = (token: string | null) => {
-    setRecaptchaToken(token);
-  };
+  // const handleRecaptchaChange = (token: string | null) => {
+  //   // Called when reCAPTCHA token changes
+  //   setRecaptchaToken(token);
+  // };
 
   return (
-    <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
-      <Navbar onSearch={(query) => {}} suggestions={[]}/>
-      <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
-        <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
+    <div
+      className={`pt-[80px] md:pt-[100px] h-screen ${
+        theme === "dark"
+          ? "bg-gray-800 text-white"
+          : "bg-[#F4F4F4] text-[#434343]"
+      }`}
+    >
+      <Navbar onSearch={(query) => {}} suggestions={[]} />
+      <div
+        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] ${
+          theme === "dark"
+            ? "bg-gray-700 border-gray-600"
+            : "bg-white border-gray-300"
+        }`}
+      >
+        <h3
+          className={`border-b font-bold md:text-[20px] ${
+            theme === "dark"
+              ? "border-gray-600 text-white"
+              : "border-gray-300 text-[#434343]"
+          }`}
+        >
           Reset Password
         </h3>
         <div className="pt-[20px] pb-[10px]">
@@ -138,7 +123,11 @@ function MyApp() {
               type="email"
               autoComplete="on"
               name="email"
-              className={`w-[100%] md:w-[65%] border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-600 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+              className={`w-[100%] md:w-[65%] border border-2 px-3 py-[5px] ${
+                theme === "dark"
+                  ? "border-gray-600 bg-gray-800 text-white"
+                  : "border-gray-300 bg-white text-black"
+              }`}
               placeholder="Required"
               required
             />
@@ -146,7 +135,9 @@ function MyApp() {
           <div className="py-[25px] flex gap-4">
             <button
               type="submit"
-              className={`px-3 py-[6px] rounded-sm text-white ${submitting ? "opacity-50 cursor-not-allowed" : ""} ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
+              className={`px-3 py-[6px] rounded-sm text-white ${
+                submitting ? "opacity-50 cursor-not-allowed" : ""
+              } ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
               disabled={submitting}
             >
               {submitting ? <div>Connecting...</div> : <div>Submit</div>}
@@ -160,18 +151,23 @@ function MyApp() {
           </div>
         </form>
         {/* ReCAPTCHA component */}
-          {recaptchaSiteKey && (
+        {/* {recaptchaSiteKey && (
             <div className="flex item-center justify-center mt-5">
               <ReCAPTCHA
                 sitekey={recaptchaSiteKey}
                 onChange={handleRecaptchaChange}
               />
             </div>
-          )}
+          )} */}
         <div>
           <small>
             If you are having trouble accessing your account, please{" "}
-            <Link href="/support" className={`underline ${theme === "dark" ? "text-red-400" : "text-[#FF2E51]"}`}>
+            <Link
+              href="/support"
+              className={`underline ${
+                theme === "dark" ? "text-red-400" : "text-[#FF2E51]"
+              }`}
+            >
               contact Support
             </Link>
             .

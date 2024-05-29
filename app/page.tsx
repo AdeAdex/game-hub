@@ -27,7 +27,7 @@ export default function Home() {
     const fetchGames = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/api/games');
+        const response = await axios.get("/api/games");
         // console.log(response.data.results);
         setGames(response.data.results);
       } catch (error) {
@@ -36,17 +36,47 @@ export default function Home() {
         setLoading(false);
       }
     };
-  
+
     fetchGames();
   }, []);
-  
+
+  // const handleSearch = (query: string) => {
+  //   setSearchQuery(query);
+
+  //   const filteredGames = games.filter((game) =>
+  //     game.name.toLowerCase().includes(query.toLowerCase())
+  //   );
+
+  //   setSuggestions(filteredGames);
+  //   console.log("Filtered Games:", filteredGames);
+  // };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
 
-    const filteredGames = games.filter((game) =>
-      game.name.toLowerCase().includes(query.toLowerCase())
-    );
+    const filteredGames = games.filter((game) => {
+      const matchesName = game.name.toLowerCase().includes(query.toLowerCase());
+      const matchesGenre = game.genres.some((genre) =>
+        genre.name.toLowerCase().includes(query.toLowerCase())
+      );
+      const matchesParentPlatform = game.parent_platforms.some((platform) =>
+        platform.platform.name.toLowerCase().includes(query.toLowerCase())
+      );
+      const matchesPlatform = game.platforms.some((platform) =>
+        platform.platform.name.toLowerCase().includes(query.toLowerCase())
+      );
+      const matchesStore = game.stores.some((store) =>
+        store.store.name.toLowerCase().includes(query.toLowerCase())
+      );
+
+      return (
+        matchesName ||
+        matchesGenre ||
+        matchesParentPlatform ||
+        matchesPlatform ||
+        matchesStore
+      );
+    });
 
     setSuggestions(filteredGames);
     console.log("Filtered Games:", filteredGames);

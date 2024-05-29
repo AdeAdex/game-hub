@@ -18,7 +18,9 @@ export function middleware(request: NextRequest) {
     "/login",
     "/admin",
     "/privacy-policy", 
-    "/game-details" 
+    "/game-details", 
+    "/error",
+    "/not-found"
   ];
 
   // If the requested route is public, allow access
