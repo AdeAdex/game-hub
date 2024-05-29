@@ -10,6 +10,7 @@ import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import ReCAPTCHA from "react-google-recaptcha";
 
+
 const Form = () => {
   return (
     <SnackbarProvider
@@ -48,19 +49,6 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
-  const verifyRecaptcha = async (token: string | null) => {
-    const response = await fetch('/api/verify-recaptcha', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
-
-    const data = await response.json();
-    console.log(data)
-    return data.success;
-  };
 
   const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
     try {
