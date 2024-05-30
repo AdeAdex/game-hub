@@ -118,29 +118,28 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
           </div>
         </Link>
 
-        <div className="p-4 relative h-[35%] overflow-y-auto custom-scrollbar whitespace-nowrap">
-          <small className="text-[14px] font-semibold">{game.name}</small>
+        <div className="px-4 py-2 relative h-[35%] overflow-hidden text-wrap">
+          <small className="text-[13px] font-semibold">{game.name}</small>
           <div className="flex justify-between">
             <div>
             {game.genres.map((genre, index) => (
               <small
                 key={index}
-                className={`${theme === "dark" ? "text-yellow-500" : ""}`}
+                className={`text-[12px] ${theme === "dark" ? "text-yellow-500" : ""}`}
               >
                 {genre.name}
               </small>
             ))}
             </div>
-            {/* <div>
-            {game.tags[0].map((tag, index) => (
+            {/* <div className="flex my-auto">
+            {game.tags.length > 0 && (
               <small
-                key={index}
-                className={`${theme === "dark" ? "text-yellow-500" : ""}`}
+                className={`text-[8px] ${theme === "dark" ? "text-yellow-500" : ""}`}
               >
-                {tag.name}
+                {game.tags[0].name}/{game.tags[1].name}
               </small>
-            ))}
-            </div> */}
+            )}
+          </div> */}
           </div>
           <Carousel
             autoPlay
@@ -150,18 +149,18 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
             showIndicators={false}
             showStatus={false}
             showArrows={false}
-            className="text-blue-500 underline"
+            className="text-blue-500"
           >
             {game.stores.map((store, storeIndex) => (
               <div
                 key={storeIndex}
-                className="flex items-center justify-center h-full"
+                className="flex items-center justify-center h-full pt-2"
               >
                 <a
                   href={`https://${store.store.domain}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 underline"
+                  className="text-[12px] text-red-500"
                 >
                   {store.store.name}
                 </a>
