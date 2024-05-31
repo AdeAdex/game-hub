@@ -343,7 +343,7 @@ const GameDetailsPage: React.FC = () => {
               src={developer.image_background}
               alt={developer.name} 
               layout="fill"
-              objectFit="cover"
+              objectFit="contain"
             />
           </div>
                      <small className="my-auto">{developer.name}</small> 
