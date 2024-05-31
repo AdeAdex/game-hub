@@ -203,7 +203,7 @@ const GameDetailsPage: React.FC = () => {
             {name_original}
           </p>
           <section className="flex w-full md:gap-x-4">
-            <div className="w-[80%] md:border-r-2">
+            <div className="w-full md:w-[80%] md:border-r-2">
               <p className="text-gray-400 border-b-2 pb-3">
                 <strong>Description:</strong> {description_raw}
               </p>
@@ -325,7 +325,7 @@ const GameDetailsPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="hidden md:flex ">
               <Image
                 src={background_image_additional}
                 alt="Reddit Logo"
