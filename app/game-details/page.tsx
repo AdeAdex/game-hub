@@ -325,7 +325,7 @@ const GameDetailsPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="hidden md:flex ">
+            <div className="hidden md:flex flex-col">
               <Image
                 src={background_image_additional}
                 alt="Reddit Logo"
