@@ -331,12 +331,12 @@ const GameDetailsPage: React.FC = () => {
                 <div className="mt-1">
                   {developers.map((developer, index) => (
                     <div key={developer.id} className="flex gap-2 mt-3">
-                      <div className="rounded-full w-32 h-32 relative overflow-hidden border-2 border-gray-200">
+                      <div className="rounded-lg w-32 h-32 relative overflow-hidden border-2 border-gray-200">
                         <Image
                           src={developer.image_background}
                           alt={developer.name}
                           layout="fill"
-                          objectFit="contain"
+                          objectFit="fill"
                         />
                       </div>
                       <small className="my-auto">{developer.name}</small>
@@ -349,12 +349,12 @@ const GameDetailsPage: React.FC = () => {
                 <div className="mt-1">
                   {genres.map((genre, index) => (
                     <div key={genre.id} className="flex gap-2 mt-3">
-                      <div className="rounded-full w-32 h-32 relative overflow-hidden border-2 border-gray-200">
+                      <div className="rounded-lg w-32 h-32 relative overflow-hidden border-2 border-gray-200">
                         <Image
                           src={genre.image_background}
                           alt={genre.name}
                           layout="fill"
-                          objectFit="contain"
+                          objectFit="fill"
                         />
                       </div>
                       <small className="my-auto">{genre.name}</small>
