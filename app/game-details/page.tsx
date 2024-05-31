@@ -346,7 +346,7 @@ const GameDetailsPage: React.FC = () => {
               objectFit="cover"
             />
           </div>
-                      {developer.name}
+                     <small className="my-auto">{developer.name}</small> 
                     </div>
                   ))}
                 </div>
