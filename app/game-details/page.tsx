@@ -34,6 +34,13 @@ interface Developer {
   slug: string;
 }
 
+interface Genre {
+  id: number;
+  image_background: string;
+  name: string;
+  slug: string;
+}
+
 interface GameDetails {
   id: number;
   slug: string;
@@ -72,6 +79,7 @@ interface GameDetails {
   ratings_count: number;
   suggestions_count: number;
   developers: Developer[];
+  genres: Genre[];
   alternative_names: string[];
   metacritic_url: string;
   parents_count: number;
@@ -171,6 +179,7 @@ const GameDetailsPage: React.FC = () => {
     reviews_text_count,
     ratings_count,
     developers,
+    genres,
     suggestions_count,
     alternative_names,
     metacritic_url,
@@ -307,28 +316,12 @@ const GameDetailsPage: React.FC = () => {
                   Play/Download
                 </button>
               </div>
-              <div className="text-gray-400 mt-4 flex flex-col">
-                <strong>Developers:</strong>
-                <div className="mt-1">
-                  {developers.map((developer, index) => (
-                    <div key={developer.id} className="flex gap-2">
-                      <Image
-                        src={developer.image_background}
-                        alt={developer.name}
-                        width={32}
-                        height={32}
-                        className="mt-2"
-                      />
-                      {developer.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
+             
             </div>
             <div className="hidden md:flex flex-col">
               <Image
                 src={background_image_additional}
-                alt="Reddit Logo"
+                alt="Screenshots"
                 width={400}
                 height={400}
                 className="mt-2"
@@ -339,14 +332,32 @@ const GameDetailsPage: React.FC = () => {
                   {developers.map((developer, index) => (
                     <div key={developer.id} className="flex gap-2 mt-3">
                       <div className="rounded-full w-32 h-32 relative overflow-hidden border-2 border-gray-200">
-            <Image
-              src={developer.image_background}
-              alt={developer.name} 
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-                     <small className="my-auto">{developer.name}</small> 
+                        <Image
+                          src={developer.image_background}
+                          alt={developer.name}
+                          layout="fill"
+                          objectFit="contain"
+                        />
+                      </div>
+                      <small className="my-auto">{developer.name}</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="text-gray-400 mt-4 flex flex-col">
+                <strong>Genre:</strong>
+                <div className="mt-1">
+                  {genres.map((genre, index) => (
+                    <div key={genre.id} className="flex gap-2 mt-3">
+                      <div className="rounded-full w-32 h-32 relative overflow-hidden border-2 border-gray-200">
+                        <Image
+                          src={genre.image_background}
+                          alt={genre.name}
+                          layout="fill"
+                          objectFit="contain"
+                        />
+                      </div>
+                      <small className="my-auto">{genre.name}</small>
                     </div>
                   ))}
                 </div>
