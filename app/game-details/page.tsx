@@ -341,8 +341,10 @@ const GameDetailsPage: React.FC = () => {
                       <Image
                         src={developer.image_background}
                         alt={developer.name}
-                        width={200}
-                        height={200}
+                        width={150}
+                        height={150}
+                        layout="fill"
+                        objectFit="cover"
                         className="mt-2 rounded-full"
                       />
                       {developer.name}
