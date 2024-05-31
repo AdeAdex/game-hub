@@ -337,7 +337,7 @@ const GameDetailsPage: React.FC = () => {
                 <strong>Developers:</strong>
                 <div className="mt-1">
                   {developers.map((developer, index) => (
-                    <div key={developer.id} className="flex gap-2">
+                    <div key={developer.id} className="flex gap-2 mt-3">
                       <div className="rounded-full w-32 h-32 relative overflow-hidden border-2 border-gray-200">
             <Image
               src={developer.image_background}
