@@ -12,6 +12,7 @@ import CardSkeleton from "@/app/components/homePage/CardSkeleton";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import GameCard from "./components/homePage/GameCard";
 import { Game } from "@/app/types/homePage/games"; // Import the Game type
+import ScrollToTop from "@/app/components/utils/ScrollToTop"
 
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
@@ -137,6 +138,7 @@ export default function Home() {
           </div>
           <Footer />
         </section>
+        <ScrollToTop />
       </main>
     </>
   );
