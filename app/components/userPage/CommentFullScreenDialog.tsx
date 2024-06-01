@@ -77,7 +77,7 @@ export default function CommentFullScreenDialog({
   const webcamRef = useRef<Webcam | null>(null);
   const [showCamera, setShowCamera] = useState(false);
 
-  const isFullScreen = useMediaQuery("(max-width:600px)");
+  const isFullScreen = useMediaQuery("(max-width:700px)");
   const { theme } = useContext(ThemeContext);
 
 
