@@ -326,6 +326,7 @@ const GameDetailsPage: React.FC = () => {
                 height={400}
                 className="mt-2"
               />
+              {/*
               <div className="text-gray-400 mt-4 flex flex-col">
                 <strong>Developers:</strong>
                 <div className="mt-1">
@@ -361,7 +362,47 @@ const GameDetailsPage: React.FC = () => {
                     </div>
                   ))}
                 </div>
+              </div>*/} 
+
+              <div className="flex flex-col">
+        <strong className="text-xl text-gray-200 mb-4">Developers:</strong>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {developers.map((developer) => (
+            <div key={developer.id} className="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow-lg">
+              <div className="rounded-lg w-32 h-32 relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+                <Image
+                  src={developer.image_background}
+                  alt={developer.name}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
               </div>
+              <small className="text-center text-white">{developer.name}</small>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col">
+        <strong className="text-xl text-gray-200 mb-4">Genre:</strong>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {genres.map((genre) => (
+            <div key={genre.id} className="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow-lg">
+              <div className="rounded-lg w-32 h-32 relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+                <Image
+                  src={genre.image_background}
+                  alt={genre.name}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              </div>
+              <small className="text-center text-white">{genre.name}</small>
+            </div>
+          ))}
+        </div>
+      </div>
             </div>
           </section>
         </div>
