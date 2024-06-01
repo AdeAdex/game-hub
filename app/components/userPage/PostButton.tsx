@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import PostModal from "./PostModal";
 import { UserDataType } from "@/app/types/user";
 import { PostDataType } from "@/app/types/post";
-
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 interface PostButtonProps {
   user: UserDataType;
@@ -27,15 +27,15 @@ const PostButton: React.FC<PostButtonProps> = ({
   selectedPost,
   setSelectedPost,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   const handleOpen = () => {
     setOpenCreatePostModal(true);
   };
 
-
   return (
     <div>
-      <div className="flex gap-2 bg-white mb-4 p-4 rounded-lg shadow-md mt-6 ">
-        
+      <div className={`flex gap-2 mb-4 p-4 rounded-lg shadow-md mt-6 ${theme === "dark" ? "bg-gray-800 text-gray-200" : "bg-white text-gray-900"}`}>
         <div className="flex relative w-10 h-10 mr-2">
           <Image
             src={user.profilePicture || avatar}
@@ -51,11 +51,11 @@ const PostButton: React.FC<PostButtonProps> = ({
           type="text"
           readOnly
           placeholder={`What's on your mind ${user.firstName}`}
-          className="hover:bg-gray-200 bg-gray-100 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none"
+          className={`hover:bg-gray-200 cursor-pointer rounded-lg py-2 px-3 w-full focus:outline-none focus:border-none ${theme === "dark" ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-100"}`}
         />
       </div>
       <PostModal
-        user={user} // Make sure to replace `user` with the actual user object
+        user={user}
         setPosts={setPosts}
         editSelectedPost={editSelectedPost}
         setEditSelectedPost={setEditSelectedPost}

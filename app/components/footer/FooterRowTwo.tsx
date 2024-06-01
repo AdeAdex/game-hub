@@ -13,10 +13,10 @@ const FooterRowTwo = () => {
           <Link href="">
             <li>directory</li>
           </Link>
-          <Link href="">
+          <Link href="/terms-condition">
             <li>terms</li>
           </Link>
-          <Link href="">
+          <Link href="/privacy-policy">
             <li>privacy</li>
           </Link>
           <Link href="">

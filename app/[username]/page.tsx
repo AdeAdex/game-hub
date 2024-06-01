@@ -1,7 +1,7 @@
 // /app/[username]/page.tsx 
 
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
@@ -14,14 +14,13 @@ import PostButton from "../components/userPage/PostButton";
 import { UserDataType } from "../types/user";
 import { PostDataType } from "../types/post";
 import Footer from "../components/footer/Footer";
-
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 interface UserPageProps {
   params: {
     username: string;
   };
 }
-
 
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
@@ -37,6 +36,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     useState<boolean>(false);
   const [editSelectedPost, setEditSelectedPost] = useState<string>("");
   const [selectedPost, setSelectedPost] = useState<PostDataType | null>(null);
+  const { theme } = useContext(ThemeContext);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -97,19 +97,18 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
     fetchUserAndPosts();
   }, [username, router, cloudImage]);
 
-
   if (loading) {
     return <LoadingSkeleton />;
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className={`${theme === "dark" ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"} min-h-screen`}>
       <Navbar onSearch={(query) => {}} suggestions={[]}/>
       {user ? (
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8  mt-[60px]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg p-6">
+              <div className={`${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-lg shadow-lg p-6`}>
                 <UserAvatarSection
                   isLoading={isLoading}
                   user={user}

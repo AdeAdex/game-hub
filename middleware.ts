@@ -18,6 +18,7 @@ export function middleware(request: NextRequest) {
     "/login",
     "/admin",
     "/privacy-policy", 
+    "/terms-condition",
     "/game-details", 
     "/error",
     "/not-found"

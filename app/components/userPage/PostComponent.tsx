@@ -17,6 +17,8 @@ import { PostDataType } from "@/app/types/post";
 import { UserDataType } from "@/app/types/user";
 import { CommentDataType } from "@/app/types/comments";
 import axios from "axios";
+import { ThemeContext } from "@/app/lib/ThemeContext";
+
 
 
 interface PostProps {
@@ -56,6 +58,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [openModal, setOpenModal] = useState(false);
   const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false);
   const [comments, setComments] = useState<CommentDataType[]>([]);
+  const { theme } = useContext(ThemeContext);
   
 
   const router = useRouter();
