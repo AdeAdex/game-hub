@@ -326,46 +326,10 @@ const GameDetailsPage: React.FC = () => {
                 height={400}
                 className="mt-2"
               />
-              {/*
-              <div className="text-gray-400 mt-4 flex flex-col">
-                <strong>Developers:</strong>
-                <div className="mt-1">
-                  {developers.map((developer, index) => (
-                    <div key={developer.id} className="flex gap-2 mt-3">
-                      <div className="rounded-lg w-32 h-32 relative overflow-hidden border-2 border-gray-200">
-                        <Image
-                          src={developer.image_background}
-                          alt={developer.name}
-                          layout="fill"
-                          objectFit="fill"
-                        />
-                      </div>
-                      <small className="my-auto">{developer.name}</small>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="text-gray-400 mt-4 flex flex-col">
-                <strong>Genre:</strong>
-                <div className="mt-1">
-                  {genres.map((genre, index) => (
-                    <div key={genre.id} className="flex gap-2 mt-3">
-                      <div className="rounded-lg w-32 h-32 relative overflow-hidden border-2 border-gray-200">
-                        <Image
-                          src={genre.image_background}
-                          alt={genre.name}
-                          layout="fill"
-                          objectFit="fill"
-                        />
-                      </div>
-                      <small className="my-auto">{genre.name}</small>
-                    </div>
-                  ))}
-                </div>
-              </div>*/} 
+              
 
               <div className="flex flex-col">
-        <strong className="text-xl text-gray-200 mb-4">Developers:</strong>
+        <strong className="text-xl text-gray-200 mb-4 text-center">Developers:</strong>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {developers.map((developer) => (
             <div key={developer.id} className="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow-lg">
@@ -385,7 +349,7 @@ const GameDetailsPage: React.FC = () => {
       </div>
 
       <div className="flex flex-col">
-        <strong className="text-xl text-gray-200 mb-4">Genre:</strong>
+        <strong className="text-xl text-gray-200 mb-4 text-center">Genre:</strong>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {genres.map((genre) => (
             <div key={genre.id} className="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow-lg">
