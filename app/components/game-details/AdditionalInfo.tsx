@@ -16,7 +16,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
   background_image_additional,
 }) => (
   <div className="flex flex-col gap-y-6">
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-gray-700 p-4 rounded-lg shadow-lg">
       <strong className="text-xl text-gray-200 mb-4 text-center">
         Screenshot:
       </strong>
