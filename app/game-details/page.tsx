@@ -66,7 +66,7 @@ const GameDetailsPage: React.FC = () => {
     );
   }
 
-  return (
+/*  return (
     <div className="min-h-screen bg-gray-900">
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <main className="text-white w-full max-w-[65.25rem] mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]">
@@ -101,7 +101,44 @@ const GameDetailsPage: React.FC = () => {
       </main>
       <Footer />
     </div>
-  );
+  );*/
+
+  return (
+    <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900" : "bg-white"} text-${theme === "dark" ? "white" : "black"}`}>
+      <Navbar onSearch={(query) => {}} suggestions={[]} />
+      <main className={`w-full max-w-[65.25rem] mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]`}>
+        <GameHeader
+          name={gameDetails.name}
+          backgroundImage={gameDetails.background_image}
+        />
+        <div className={`space-y-6 text-sm sm:text-base ${theme === "dark" ? "bg-gray-800" : "bg-gray-200"} p-6 rounded-lg shadow-lg w-full`}>
+          <section className="flex flex-col md:flex-row w-full md:gap-x-4 gap-y-6 md:gap-y-0">
+            <div className="w-full md:w-[75%] md:border-r-2">
+              <GameDescription
+                name_original={gameDetails.name_original}
+                description_raw={gameDetails.description_raw}
+                released={gameDetails.released}
+                tba={gameDetails.tba}
+                updated={gameDetails.updated}
+              />
+              <GameStats gameDetails={gameDetails} />
+            </div>
+            <div className="md:flex flex-col gap-y-4 ">
+              <AdditionalInfo
+                developers={gameDetails.developers}
+                genres={gameDetails.genres}
+                publishers={gameDetails.publishers}
+                background_image_additional={
+                  gameDetails.background_image_additional
+                }
+              />
+            </div>
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </div> 
+ );
 };
 
 export default GameDetailsPage;
