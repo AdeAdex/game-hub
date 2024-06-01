@@ -36,10 +36,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       </strong>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {developers.map((developer) => (
-          <div
-            key={developer.id}
-            className="flex flex-col items-center"
-          >
+          <div key={developer.id} className="flex flex-col items-center">
             <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={developer.image_background}
@@ -61,10 +58,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       </strong>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {publishers.map((publisher) => (
-          <div
-            key={publisher.id}
-            className="flex flex-col items-center"
-          >
+          <div key={publisher.id} className="flex flex-col items-center">
             <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={publisher.image_background}
@@ -84,10 +78,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       <strong className="text-xl text-gray-200 mb-4 text-center">Genre:</strong>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {genres.map((genre) => (
-          <div
-            key={genre.id}
-            className="flex flex-col items-center"
-          >
+          <div key={genre.id} className="flex flex-col items-center">
             <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={genre.image_background}
