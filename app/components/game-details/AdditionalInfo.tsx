@@ -37,7 +37,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {developers.map((developer) => (
           <div key={developer.id} className="relative flex flex-col items-center">
-            <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+            <div className="rounded-lg w-full md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={developer.image_background}
                 alt={developer.name}
@@ -59,7 +59,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {publishers.map((publisher) => (
           <div key={publisher.id} className="flex flex-col items-center">
-            <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+            <div className="rounded-lg w-full md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={publisher.image_background}
                 alt={publisher.name}
@@ -79,7 +79,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {genres.map((genre) => (
           <div key={genre.id} className="flex flex-col items-center">
-            <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+            <div className="rounded-lg w-full md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={genre.image_background}
                 alt={genre.name}
