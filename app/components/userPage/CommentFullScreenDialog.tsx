@@ -219,11 +219,11 @@ export default function CommentFullScreenDialog({
   return (
     <React.Fragment>
       <Dialog
-        fullScreen={isFullScreen}
+        // fullScreen={isFullScreen}
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
-        className="overflow-y-scroll"
+        className={`w-full md:w-[800px] overflow-y-scroll justify-center items-center flex mx-auto ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
       >
         <AppBar sx={{ position: "fixed" }} className="top-0 left-50 w-full md:-w-[700px]">
           <Toolbar className="w-full">
@@ -235,8 +235,8 @@ export default function CommentFullScreenDialog({
             </Typography>
           </Toolbar>
         </AppBar>
-        <List className={`w-full md:-w-[700px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
-          <div className="comments mt-[60px] pb-[100px] px-2 w-full">
+        <List className={`w-full ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+          <div className="comments mt-[60px] pb-[100px] px-2">
             {post && (
               <PostComponent
                 posts={[post]}
