@@ -20,7 +20,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
       <strong className="text-xl text-gray-200 mb-4 text-center">
         Screenshot:
       </strong>
-      <div className="relative w-full h-40 md:h-80">
+      <div className="relative w-full h-44 md:h-80">
         <Image
           src={background_image_additional}
           alt="Screenshots"
