@@ -236,7 +236,7 @@ export default function CommentFullScreenDialog({
           </Toolbar>
         </AppBar>
         <List className={`w-full md:-w-[700px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
-          <div className="comments mt-[60px] pb-[100px] px-2 ">
+          <div className="comments mt-[60px] pb-[100px] px-2 w-full">
             {post && (
               <PostComponent
                 posts={[post]}
