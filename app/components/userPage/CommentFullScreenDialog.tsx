@@ -288,7 +288,7 @@ export default function CommentFullScreenDialog({
               ))
             )}
           </div>
-          <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "700px" }} className={`py-2 flex items-center justify-center flex-col w-full ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
+          <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", maxWidth: "700px", width: "calc(100% - 32px)", padding: "0 16px" }} className={`py-2 flex items-center justify-center flex-col w-full ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
             <Divider className="w-full bg-gray-500" />
             <Divider className="w-full bg-gray-500" />
             {showCamera && (
