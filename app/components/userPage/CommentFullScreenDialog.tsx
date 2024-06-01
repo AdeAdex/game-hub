@@ -37,7 +37,9 @@ const Transition = React.forwardRef(function Transition(
   },
   ref: React.Ref<unknown>
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return (
+  <Slide direction="up" ref={ref} {...props} />
+  );
 });
 
 interface CommentFullScreenDialogProps {
@@ -217,39 +219,29 @@ export default function CommentFullScreenDialog({
   return (
     <React.Fragment>
       <Dialog
-        // fullScreen
         fullScreen={isFullScreen}
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
-        className="overflow-y-scroll "
+        className="overflow-y-scroll"
+        maxWidth="md"
       >
-        <AppBar sx={{ position: "fixed" }} className="top-0 left-0 ">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
+        <AppBar sx={{ position: "fixed" }} className="top-0 left-0 w-full md:-w-[700px]">
+          <Toolbar className="w-full">
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <IoClose />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {post?.userId && (
-                <>
-                  {post?.userId?.firstName} {""}Post
-                </>
-              )}
+              {post?.userId && `${post?.userId?.firstName} Post`}
             </Typography>
           </Toolbar>
         </AppBar>
-        <List>
-          <div className="comments mt-[60px] pb-[100px] px-2">
-           {/* Render PostComponent with the current post */}
-           {post && (
+        <List className={`${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+          <div className="comments mt-[60px] pb-[100px] px-2 w-full md:-w-[700px]">
+            {post && (
               <PostComponent
-                posts={[post]} // Pass post as part of an array of posts
-                likedPosts={likedPosts} // Provide an empty array for liked posts
+                posts={[post]}
+                likedPosts={likedPosts}
                 setLikedPosts={setLikedPosts}
                 username={username}
                 user={user}
@@ -263,21 +255,18 @@ export default function CommentFullScreenDialog({
                 loggedInUserId={user._id}
               />
             )}
-            <small className="py-2 my-2 ">Comments</small>
-            <Divider className="w-full bg-gray-500 " />
+            <small className="py-2 my-2">Comments</small>
+            <Divider className="w-full bg-gray-500" />
             {comments.length === 0 ? (
-              <div className="flex items-center justify-center h-full ">
-                <div className="flex items-center justify-center w-full ">
+              <div className="flex items-center justify-center h-full">
+                <div className="flex items-center justify-center w-full">
                   <AILoader />
                 </div>
               </div>
             ) : (
-              comments
-                .slice()
-                .reverse()
-                .map((comment) => (
-                  <div className="flex gap-2 mb-2 mt-3 px-2" key={comment._id}>
-                    <div className="relative w-9 h-9">
+              comments.slice().reverse().map((comment) => (
+                <div className="flex gap-2 mb-2 mt-3 px-2" key={comment._id}>
+                  <div className="relative w-9 h-9">
                     <Image
                       src={comment.userId?.profilePicture || avatar}
                       alt="Profile Picture"
@@ -285,27 +274,24 @@ export default function CommentFullScreenDialog({
                       className="rounded-full object-cover"
                     />
                   </div>
-                    <div className="">
-                      <div className="flex flex-col rounded-lg bg-gray-100 p-2">
-                        <small className="font-bold">
-                          {comment.userId
-                            ? `${comment.userId.lastName} ${comment.userId.firstName}`
-                            : "Unknown User"}
-                        </small>
-                        <small>{comment.content}</small>
-                      </div>
-                      <small className="flex justify-between text-[10px] px-2">
-                        {calculateElapsedTime(comment.timestamp)}
+                  <div>
+                    <div className={`flex flex-col rounded-lg p-2 ${theme === "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
+                      <small className="font-bold">
+                        {comment.userId ? `${comment.userId.lastName} ${comment.userId.firstName}` : "Unknown User"}
                       </small>
+                      <small>{comment.content}</small>
                     </div>
+                    <small className="flex justify-between text-[10px] px-2">
+                      {calculateElapsedTime(comment.timestamp)}
+                    </small>
                   </div>
-                ))
+                </div>
+              ))
             )}
           </div>
-          <div className="fixed bottom-0 left-0 py-2 bg-white flex items-center justify-center flex-col w-full">
-            <Divider className="w-full bg-gray-500 " />
-            <Divider className="w-full bg-gray-500 " />
-            {/* Conditionally render webcam */}
+          <div className={`fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full md:-w-[700px] ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
+            <Divider className="w-full bg-gray-500" />
+            <Divider className="w-full bg-gray-500" />
             {showCamera && (
               <Webcam
                 audio={false}
@@ -314,39 +300,25 @@ export default function CommentFullScreenDialog({
                 style={{ width: "100%", height: "auto" }}
               />
             )}
-
             <Box
               sx={{
                 p: 2,
-                width: "100%",
+                width: "700px",
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
               }}
-              className=""
             >
               <div className="relative w-8 h-8 my-auto mr-2">
-                {user.profilePicture ? (
-                  <div className="relative w-9 h-9">
-                    <Image
-                      src={user.profilePicture}
-                      alt="Profile Picture"
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-full"
-                    />
-                  </div>
-                ) : (
-                  <div className="relative w-9 h-9 ">
-                    <Image
-                      src={avatar}
-                      alt="Profile Picture"
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-full"
-                    />
-                  </div>
-                )}
+                <div className="relative w-9 h-9">
+                  <Image
+                    src={user.profilePicture || avatar}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
               </div>
               <Textarea
                 placeholder={`Comments as ${user.lastName} ${user.firstName}`}
@@ -365,14 +337,12 @@ export default function CommentFullScreenDialog({
                     outline: "2px solid var(--Textarea-focusedHighlight)",
                     outlineOffset: "2px",
                   },
-                  flex: 1, // This will make the Textarea take up remaining space
-                  minWidth: 0, // Ensure Textarea can shrink to fit content
+                  flex: 1,
+                  minWidth: 0,
                 }}
               />
             </Box>
-            <Divider className="w-full bg-gray-500 " />
-
-            {/* Conditionally render icons */}
+            <Divider className="w-full bg-gray-500" />
             {(commentContent || isFocused) && (
               <div className="flex justify-between w-[90%] py-2">
                 <IoIosCamera
@@ -383,9 +353,7 @@ export default function CommentFullScreenDialog({
                 <BsSendFill
                   onClick={handleSubmitComment}
                   size={25}
-                  className={`cursor-pointer ${
-                    commentContent ? "text-blue-500" : ""
-                  }`}
+                  className={`cursor-pointer ${commentContent ? "text-blue-500" : ""}`}
                 />
               </div>
             )}
