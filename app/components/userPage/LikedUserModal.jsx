@@ -11,6 +11,7 @@ import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { FiMessageCircle } from "react-icons/fi";
 import { io } from 'socket.io-client';
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const style = {
   position: "absolute",
@@ -42,7 +43,8 @@ const LikedUserModal = ({ open, handleClose, likedBy, loggedInUserId }) => {
 function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
   const { enqueueSnackbar } = useSnackbar();
   const [filteredLikedBy, setFilteredLikedBy] = useState([]);
-  const socket = useRef(null);
+  const socket = useRef(null);  
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setFilteredLikedBy(likedBy.filter((user) => user._id !== loggedInUserId));
@@ -110,6 +112,82 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
 
 
   return (
+    // <Modal
+    //   open={open}
+    //   onClose={handleClose}
+    //   aria-labelledby="modal-modal-title"
+    //   aria-describedby="modal-modal-description"
+    // >
+    //   <Box
+    //     sx={style}
+    //     className="rounded-md shadow-sm border-none w-[400px] md:w-[600px]"
+    //   >
+    //     <Typography variant="h6" component="h2" className="text-[12px]">
+    //       Users Who Liked This Post
+    //     </Typography>
+    //     <hr />
+    //     <div className="flex flex-wrap flex-col py-2 gap-2">
+    //       {filteredLikedBy.length > 0 ? (
+    //         filteredLikedBy.map((user) => (
+    //           <div className="flex justify-between" key={user._id}>
+    //             <div className="flex items-center">
+    //               <div className="relative w-10 h-10 mr-2">
+    //                 <Image
+    //                   src={user.profilePicture || avatar}
+    //                   alt="Profile Picture"
+    //                   layout="fill"
+    //                   objectFit="cover"
+    //                   className="rounded-full"
+    //                 />
+    //               </div>
+    //               <div className="text-[12px] fw-bold">
+    //                 {user.firstName} {user.lastName}
+    //               </div>
+    //             </div>
+    //             {user.currentFriends.includes(loggedInUserId) ? (
+    //               <button
+    //                 className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+    //                 onClick={() => handleAction(user._id, "sendMessage")}
+    //               >
+    //                 <FiMessageCircle className="my-auto" />{" "}
+    //                 <span className="my-auto">Message</span>
+    //               </button>
+    //             ) : user.outgoingFriendRequests.includes(loggedInUserId) ? (
+    //               <button
+    //                 className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+    //                 onClick={() => handleAction(user._id, "acceptRequest")}
+    //               >
+    //                 <FaUserCheck className="my-auto" />{" "}
+    //                 <span className="my-auto">Accept Request</span>
+    //               </button>
+    //             ) : user.incomingFriendRequests.includes(loggedInUserId) ? (
+    //               <button
+    //                 className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+    //                 onClick={() => handleAction(user._id, "cancelRequest")}
+    //               >
+    //                 <FaUserCheck className="my-auto" />{" "}
+    //                 <span className="my-auto">Cancel Request</span>
+    //               </button>
+    //             ) : (
+    //               <button
+    //                 className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+    //                 onClick={() => handleAction(user._id, "addFriend")}
+    //               >
+    //                 <FaUserPlus className="my-auto" />{" "}
+    //                 <span className="my-auto">Add Friend</span>
+    //               </button>
+    //             )}
+    //           </div>
+    //         ))
+    //       ) : (
+    //         <Typography key="empty" variant="body2">
+    //           No users liked this post.
+    //         </Typography>
+    //       )}
+    //     </div>
+    //   </Box>
+    // </Modal>
+
     <Modal
       open={open}
       onClose={handleClose}
@@ -118,7 +196,9 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
     >
       <Box
         sx={style}
-        className="rounded-md shadow-sm border-none w-[400px] md:w-[600px]"
+        className={`rounded-md shadow-sm border-none w-[400px] md:w-[600px] ${
+          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        }`}
       >
         <Typography variant="h6" component="h2" className="text-[12px]">
           Users Who Liked This Post
@@ -138,13 +218,15 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
                       className="rounded-full"
                     />
                   </div>
-                  <div className="text-[12px] fw-bold">
+                  <div className="text-[12px] font-bold">
                     {user.firstName} {user.lastName}
                   </div>
                 </div>
                 {user.currentFriends.includes(loggedInUserId) ? (
                   <button
-                    className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                    className={`cursor-pointer py-0 px-2 rounded-lg text-[14px] flex gap-1 ${
+                      theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-300 hover:bg-gray-400"
+                    }`}
                     onClick={() => handleAction(user._id, "sendMessage")}
                   >
                     <FiMessageCircle className="my-auto" />{" "}
@@ -152,7 +234,9 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
                   </button>
                 ) : user.outgoingFriendRequests.includes(loggedInUserId) ? (
                   <button
-                    className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                    className={`cursor-pointer py-0 px-2 rounded-lg text-[14px] flex gap-1 ${
+                      theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-300 hover:bg-gray-400"
+                    }`}
                     onClick={() => handleAction(user._id, "acceptRequest")}
                   >
                     <FaUserCheck className="my-auto" />{" "}
@@ -160,7 +244,9 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
                   </button>
                 ) : user.incomingFriendRequests.includes(loggedInUserId) ? (
                   <button
-                    className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                    className={`cursor-pointer py-0 px-2 rounded-lg text-[14px] flex gap-1 ${
+                      theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-300 hover:bg-gray-400"
+                    }`}
                     onClick={() => handleAction(user._id, "cancelRequest")}
                   >
                     <FaUserCheck className="my-auto" />{" "}
@@ -168,7 +254,9 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
                   </button>
                 ) : (
                   <button
-                    className="bg-gray-300 cursor-pointer hover:bg-gray-400 py-0 px-2 rounded-lg text-[14px] flex gap-1"
+                    className={`cursor-pointer py-0 px-2 rounded-lg text-[14px] flex gap-1 ${
+                      theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-300 hover:bg-gray-400"
+                    }`}
                     onClick={() => handleAction(user._id, "addFriend")}
                   >
                     <FaUserPlus className="my-auto" />{" "}
