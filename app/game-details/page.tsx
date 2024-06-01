@@ -3,7 +3,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Navbar from "@/app/components/navbar/Navbar";
@@ -14,12 +14,15 @@ import GameHeader from "@/app/components/game-details/GameHeader";
 import GameDescription from "@/app/components/game-details/GameDescription";
 import GameStats from "@/app/components/game-details/GameStats";
 import AdditionalInfo from "@/app/components/game-details/AdditionalInfo";
+import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
+
 
 const GameDetailsPage: React.FC = () => {
   const router = useSearchParams();
   const gameId = router ? router.get("id") : null;
   const [gameDetails, setGameDetails] = useState<GameDetails | null>(null);
   const [loading, setLoading] = useState(true);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (gameId) {
