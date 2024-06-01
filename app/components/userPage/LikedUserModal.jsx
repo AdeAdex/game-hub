@@ -18,7 +18,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
+  // bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -197,7 +197,7 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
       <Box
         sx={style}
         className={`rounded-md shadow-sm border-none w-[400px] md:w-[600px] ${
-          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+          theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
       >
         <Typography variant="h6" component="h2" className="text-[12px]">

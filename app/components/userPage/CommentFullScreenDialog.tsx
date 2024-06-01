@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -28,6 +28,8 @@ import { PostDataType } from "@/app/types/post";
 import { CommentDataType } from "@/app/types/comments";
 import PostComponent from "./PostComponent";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { ThemeContext } from "@/app/lib/ThemeContext";
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -74,6 +76,8 @@ export default function CommentFullScreenDialog({
   const [showCamera, setShowCamera] = useState(false);
 
   const isFullScreen = useMediaQuery("(max-width:600px)");
+  const { theme } = useContext(ThemeContext);
+
 
   const handleClose = () => {
     if (webcamRef.current) {

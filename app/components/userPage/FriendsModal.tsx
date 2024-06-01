@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Modal, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "../../../public/images/robot.png";
 import axios from "axios";
 import { FiMessageCircle } from "react-icons/fi";
 import { UserDataType } from "@/app/types/user";
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const style = {
   position: "absolute" as "absolute",
@@ -14,12 +15,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
+  // bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
-
 
 interface FriendsModalProps {
   openFriendsDialog: boolean;
@@ -32,6 +32,7 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
   setOpenFriendsDialog,
   user,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const [friends, setFriends] = useState<UserDataType[]>([]);
 
   useEffect(() => {
@@ -64,7 +65,12 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="rounded-md shadow-sm border-none">
+        <Box
+          sx={style}
+          className={`rounded-md shadow-sm border-none ${
+            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
+          }`}
+        >
           <Typography variant="h6" component="h2">
             Friends
           </Typography>
@@ -85,7 +91,13 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
                   {friend.firstName} {friend.lastName}
                 </div>
               </div>
-              <button className="bg-gray-300 cursor-pointer my-auto hover:bg-gray-400 py-2 px-2 rounded-lg text-[14px] flex gap-1">
+              <button
+                className={`cursor-pointer my-auto py-2 px-2 rounded-lg text-[14px] flex gap-1 ${
+                  theme === "dark"
+                    ? "bg-gray-700 hover:bg-gray-600 text-white"
+                    : "bg-gray-300 hover:bg-gray-400 text-black"
+                }`}
+              >
                 <FiMessageCircle className="my-auto" />{" "}
                 <span className="my-auto">Message</span>
               </button>
