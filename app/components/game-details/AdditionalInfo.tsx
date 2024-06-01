@@ -40,7 +40,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
             key={developer.id}
             className="flex flex-col items-center"
           >
-            <div className="rounded-lg w-32 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+            <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={developer.image_background}
                 alt={developer.name}
@@ -65,7 +65,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
             key={publisher.id}
             className="flex flex-col items-center"
           >
-            <div className="rounded-lg w-32 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+            <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={publisher.image_background}
                 alt={publisher.name}
@@ -88,7 +88,7 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
             key={genre.id}
             className="flex flex-col items-center"
           >
-            <div className="rounded-lg w-32 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
+            <div className="rounded-lg w-80 md:w-[100%] h-32 md:h-[90px] relative overflow-hidden mb-4 border-2 border-gray-200 shadow-md">
               <Image
                 src={genre.image_background}
                 alt={genre.name}
