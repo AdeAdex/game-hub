@@ -224,9 +224,8 @@ export default function CommentFullScreenDialog({
         onClose={handleClose}
         TransitionComponent={Transition}
         className="overflow-y-scroll"
-        maxWidth="md"
       >
-        <AppBar sx={{ position: "fixed" }} className="top-0 left-0 w-full md:-w-[700px]">
+        <AppBar sx={{ position: "fixed" }} className="top-0 left-50 w-full md:-w-[700px]">
           <Toolbar className="w-full">
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <IoClose />
@@ -236,8 +235,8 @@ export default function CommentFullScreenDialog({
             </Typography>
           </Toolbar>
         </AppBar>
-        <List className={`${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
-          <div className="comments mt-[60px] pb-[100px] px-2 w-full md:-w-[700px]">
+        <List className={`w-full md:-w-[700px] ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+          <div className="comments mt-[60px] pb-[100px] px-2 ">
             {post && (
               <PostComponent
                 posts={[post]}
@@ -289,7 +288,7 @@ export default function CommentFullScreenDialog({
               ))
             )}
           </div>
-          <div className={`fixed bottom-0 left-0 py-2 flex items-center justify-center flex-col w-full md:-w-[700px] ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
+          <div className={`fixed bottom-0 left-50 right-50 py-2 flex items-center justify-center flex-col w-full  ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
             <Divider className="w-full bg-gray-500" />
             <Divider className="w-full bg-gray-500" />
             {showCamera && (
