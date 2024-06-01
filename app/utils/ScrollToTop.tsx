@@ -1,4 +1,5 @@
 // /app/components/utils/ScrollToTop.tsx
+'use client' 
 
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
