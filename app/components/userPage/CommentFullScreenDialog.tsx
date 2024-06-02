@@ -222,8 +222,8 @@ export default function CommentFullScreenDialog({
           theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
         }`}
       >
-        <AppBar className={`fixed top-0 left-0 right-0 md:left-1/2  w-full`}>
-          <Toolbar className={`w-full`}>
+        <AppBar className={`fixed top-0 left-0 right-0 w-full md:left-1/2 md:transform md:-translate-x-1/2 md:max-w-[800px]`}>
+          <Toolbar className={``}>
             <IconButton
               edge="start"
               color="inherit"
