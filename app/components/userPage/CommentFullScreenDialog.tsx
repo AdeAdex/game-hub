@@ -223,7 +223,7 @@ export default function CommentFullScreenDialog({
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
-        className={`w-full md:w-[800px] overflow-y-scroll justify-center items-center flex mx-auto relative ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+        className={`w-full md:w-[800px] relative overflow-y-scroll justify-center items-center flex mx-auto ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
       >
         <AppBar sx={{ position: "fixed" }} className="top-0 left-50 w-full md:-w-[700px]">
           <Toolbar className="w-full">
