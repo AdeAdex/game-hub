@@ -30,16 +30,13 @@ import PostComponent from "./PostComponent";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 
-
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },
   ref: React.Ref<unknown>
 ) {
-  return (
-  <Slide direction="up" ref={ref} {...props} />
-  );
+  return <Slide direction="up" ref={ref} {...props} className="w-full" />;
 });
 
 interface CommentFullScreenDialogProps {
@@ -54,8 +51,7 @@ interface CommentFullScreenDialogProps {
   updatePostComments: (postId: string, newComments: CommentDataType[]) => void;
   username: string;
   likedPosts: string[];
-  setLikedPosts:React.Dispatch<React.SetStateAction<string[]>>;
-
+  setLikedPosts: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export default function CommentFullScreenDialog({
@@ -79,7 +75,6 @@ export default function CommentFullScreenDialog({
 
   const isFullScreen = useMediaQuery("(max-width:700px)");
   const { theme } = useContext(ThemeContext);
-
 
   const handleClose = () => {
     if (webcamRef.current) {
@@ -223,11 +218,18 @@ export default function CommentFullScreenDialog({
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
-        className={`w-full md:w-[800px] relative overflow-y-scroll justify-center items-center flex mx-auto ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+        className={`w-full max-w-[800px]  relative overflow-y-auto flex mx-auto ${
+          theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
+        }`}
       >
-        <AppBar sx={{ position: "fixed" }} className="top-0 left-50 w-full md:-w-[700px]">
-          <Toolbar className="w-full">
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+        <AppBar className={`fixed top-0 left-0 right-0 md:left-1/2  w-full`}>
+          <Toolbar className={`w-full`}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
               <IoClose />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
@@ -235,8 +237,13 @@ export default function CommentFullScreenDialog({
             </Typography>
           </Toolbar>
         </AppBar>
-        <List className={`w-full ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
-          <div className="comments mt-[60px] pb-[100px] px-2">
+        <List
+          sx={{ width: "100%" }}
+          className={`w-full ${
+            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
+          }`}
+        >
+          <div className="comments mt-[60px] pb-[100px] px-2 w-full">
             {post && (
               <PostComponent
                 posts={[post]}
@@ -263,32 +270,45 @@ export default function CommentFullScreenDialog({
                 </div>
               </div>
             ) : (
-              comments.slice().reverse().map((comment) => (
-                <div className="flex gap-2 mb-2 mt-3 px-2" key={comment._id}>
-                  <div className="relative w-9 h-9">
-                    <Image
-                      src={comment.userId?.profilePicture || avatar}
-                      alt="Profile Picture"
-                      layout="fill"
-                      className="rounded-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className={`flex flex-col rounded-lg p-2 ${theme === "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-                      <small className="font-bold">
-                        {comment.userId ? `${comment.userId.lastName} ${comment.userId.firstName}` : "Unknown User"}
-                      </small>
-                      <small>{comment.content}</small>
+              comments
+                .slice()
+                .reverse()
+                .map((comment) => (
+                  <div className="flex gap-2 mb-2 mt-3 px-2" key={comment._id}>
+                    <div className="relative w-9 h-9">
+                      <Image
+                        src={comment.userId?.profilePicture || avatar}
+                        alt="Profile Picture"
+                        layout="fill"
+                        className="rounded-full object-cover"
+                      />
                     </div>
-                    <small className="flex justify-between text-[10px] px-2">
-                      {calculateElapsedTime(comment.timestamp)}
-                    </small>
+                    <div>
+                      <div
+                        className={`flex flex-col rounded-lg p-2 ${
+                          theme === "dark" ? "bg-gray-700" : "bg-gray-100"
+                        }`}
+                      >
+                        <small className="font-bold">
+                          {comment.userId
+                            ? `${comment.userId.lastName} ${comment.userId.firstName}`
+                            : "Unknown User"}
+                        </small>
+                        <small>{comment.content}</small>
+                      </div>
+                      <small className="flex justify-between text-[10px] px-2">
+                        {calculateElapsedTime(comment.timestamp)}
+                      </small>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
             )}
           </div>
-          <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", padding: "0 16px" }} className={`py-2 flex items-center justify-center flex-col w-full ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
+          <div
+            className={`fixed bottom-0 left-0 right-0 transform md:left-1/2 md:transform md:-translate-x-1/2 py-2 flex items-center justify-center flex-col w-full md:w-auto md:px-4 lg:px-8 ${
+              theme === "dark" ? "bg-gray-800" : "bg-white"
+            }`}
+          >
             <Divider className="w-full bg-gray-500" />
             <Divider className="w-full bg-gray-500" />
             {showCamera && (
@@ -302,7 +322,7 @@ export default function CommentFullScreenDialog({
             <Box
               sx={{
                 p: 2,
-                width: "700px",
+                width: "100%",
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
@@ -352,7 +372,9 @@ export default function CommentFullScreenDialog({
                 <BsSendFill
                   onClick={handleSubmitComment}
                   size={25}
-                  className={`cursor-pointer ${commentContent ? "text-blue-500" : ""}`}
+                  className={`cursor-pointer ${
+                    commentContent ? "text-blue-500" : ""
+                  }`}
                 />
               </div>
             )}
