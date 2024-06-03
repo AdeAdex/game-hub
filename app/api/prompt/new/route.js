@@ -43,7 +43,7 @@ export const POST = async (req) => {
       console.error("Error sending welcome email:", error);
     }
 
-    return NextResponse.json({newUser, message: "Account created successfully. Please check your email.", status: 201});
+    return NextResponse.json({ message: "Account created successfully. Please check your email.", status: 201});
   } catch (error) {
     console.error("Error creating user:", error.message);
     return NextResponse.json({ message: "Failed to create a new user" }, { status: 500 });
