@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
 import { UserDataType } from "@/app/types/user";
 import { PostDataType } from "@/app/types/post";
+import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const style = {
   position: "absolute" as "absolute",
@@ -14,7 +15,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
+  // bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -54,6 +55,7 @@ const PostModal: React.FC<PostModalProps> = ({
   );
   const [loading, setLoading] = useState(false);
   const [myPost, setMyPost] = useState<PostDataType | null>(null);
+  const { theme } = useContext(ThemeContext);
 
   // useEffect(() => {
   //  if (selectedPost) {
@@ -162,7 +164,7 @@ const PostModal: React.FC<PostModalProps> = ({
 
   return (
     <div>
-      <Modal
+      {/* <Modal
         open={openCreatePostModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -243,6 +245,115 @@ const PostModal: React.FC<PostModalProps> = ({
                 ? "bg-blue-500 text-white mt-2 "
                 : "bg-gray-400"
             }`}
+            disabled={!postContent && !postImage}
+          >
+            {loading
+              ? editSelectedPost
+                ? "Saving..."
+                : "Posting..."
+              : editSelectedPost
+              ? "Save"
+              : "Post"}
+          </button>
+        </Box>
+      </Modal> */}
+      <Modal
+        open={openCreatePostModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={style}
+          className={`rounded-md shadow-sm border-none ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+        >
+          <Typography variant="h6" component="h2">
+            {editSelectedPost ? "Edit Post" : "Create a Post"}
+          </Typography>
+          <hr />
+          <div className="flex py-2 gap-2">
+            <div className="relative w-8 h-8 mr-2">
+              {user.profilePicture ? (
+                <div className="relative w-10 h-10 mr-2">
+                  <Image
+                    src={user.profilePicture}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
+              ) : (
+                <div className="relative w-10 h-10 mr-2">
+                  <Image
+                    src={avatar}
+                    alt="Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="text-[12px] font-bold">
+              {user.firstName} {user.lastName}
+            </div>
+          </div>
+          <TextField
+            label={`What's on your mind ${user.firstName}`}
+            multiline
+            rows={4}
+            variant="outlined"
+            value={postContent}
+            onChange={handlePostContentChange}
+            fullWidth
+            margin="normal"
+            // className={theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}
+            InputProps={{
+              className: `${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}`,
+              style: {
+                color: theme === "dark" ? "white" : "black",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                color: theme === "dark" ? "white" : "",
+              },
+            }}
+          />
+          <div>
+            {editSelectedPost ? (
+              postImage ? (
+                <Image
+                  src={postImage}
+                  alt="PostImage"
+                  width={100}
+                  height={100}
+                  layout="fixed"
+                  className="w-full h-full object-cover cursor-pointer"
+                  priority // Optional: indicates that this image is considered high priority
+                />
+              ) : (
+                <div>No image selected</div>
+              )
+            ) : (
+              <input
+                type="file"
+                onChange={handleFileChange}
+                accept="image/*"
+                style={{ margin: "16px 0" }}
+                className={theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}
+              />
+            )}
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            className={`w-full rounded-lg py-2 ${
+              postContent || postImage
+                ? "bg-blue-500 text-white mt-2"
+                : "bg-gray-400"
+            } ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}`}
             disabled={!postContent && !postImage}
           >
             {loading
