@@ -17,7 +17,7 @@ const AboutYou = () => {
         </div>
         <div className="flex gap-2">
           <input type="checkbox" name="" id="checkbox2" />
-          <span className="my-auto">I'm interested in distributing content on adex.co</span>
+          <span className="my-auto">I'm interested in distributing content on Adex gameHub </span>
         </div>
         <div>You can change your responses to these questions later, they are used to hint adex.co in how it should present itself to you.</div>
       </div>
