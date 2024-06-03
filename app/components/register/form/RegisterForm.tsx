@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import ReCAPTCHA from "react-google-recaptcha";
+import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
 
 const RegisterForm = () => {
@@ -43,6 +44,20 @@ function MyApp() {
     onSubmit: async (values) => {
       setSubmitting(true);
 
+
+      if (!recaptchaToken) {
+        enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+        setSubmitting(false);
+        return;
+      }
+
+      const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+      if (!recaptchaVerified) {
+        enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
+        setSubmitting(false);
+        return;
+      }
+
       try {
         const response = await fetch("/api/prompt/new", {
           method: "POST",
@@ -56,7 +71,6 @@ function MyApp() {
 
         const responseData = await response.json();
 
-        console.log(responseData);
         if (responseData.status === 201) {
           console.log("created", responseData);
 
@@ -96,6 +110,11 @@ function MyApp() {
         .required("Password is required"),
     }),
   });
+
+  const handleRecaptchaChange = (token: string | null) => {
+    // Called when reCAPTCHA token changes
+    setRecaptchaToken(token);
+  };
 
   return (
     <div
@@ -264,6 +283,12 @@ function MyApp() {
           <section>
             <AboutYou />
           </section>
+          <div>
+            <ReCAPTCHA
+              sitekey={recaptchaSiteKey}
+              onChange={handleRecaptchaChange}
+            />
+          </div>
           {/* form button */}
           <div className="flex flex-col md:flex-row w-full gap-[10px]">
             <button
