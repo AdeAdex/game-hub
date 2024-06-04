@@ -73,44 +73,44 @@ function MyApp() {
     }
    };
 
-  /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitting(true);
-    if (locationError) {
-      enqueueSnackbar(locationError, { variant: "warning" });
-    }
-    await signInWithCredentials(email, password, device, location);
-    setSubmitting(false);
-  };*/
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
     if (locationError) {
       enqueueSnackbar(locationError, { variant: "warning" });
     }
-
-    if (!recaptchaToken) {
-      enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
-      setSubmitting(false);
-      return;
-    }
-
-    const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-    if (!recaptchaVerified) {
-      enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
-      setSubmitting(false);
-      return;
-    }
-
     await signInWithCredentials(email, password, device, location);
     setSubmitting(false);
   };
 
-  const handleRecaptchaChange = (token: string | null) => {
-    // Called when reCAPTCHA token changes
-    setRecaptchaToken(token);
-  };
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setSubmitting(true);
+  //   if (locationError) {
+  //     enqueueSnackbar(locationError, { variant: "warning" });
+  //   }
+
+  //   if (!recaptchaToken) {
+  //     enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
+  //     setSubmitting(false);
+  //     return;
+  //   }
+
+  //   const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+  //   if (!recaptchaVerified) {
+  //     enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
+  //     setSubmitting(false);
+  //     return;
+  //   }
+
+  //   await signInWithCredentials(email, password, device, location);
+  //   setSubmitting(false);
+  // };
+
+  // const handleRecaptchaChange = (token: string | null) => {
+  //   // Called when reCAPTCHA token changes
+  //   setRecaptchaToken(token);
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -156,14 +156,14 @@ function MyApp() {
         </div>
       </div>
       {/* ReCAPTCHA component */}
-      {recaptchaSiteKey && (
+      {/* {recaptchaSiteKey && (
         <div className="flex item-center justify-center mt-5">
           <ReCAPTCHA
             sitekey={recaptchaSiteKey}
             onChange={handleRecaptchaChange}
           />
         </div>
-      )}
+      )} */}
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
