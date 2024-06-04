@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -19,9 +21,16 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
       const targetRect = targetRef.current.getBoundingClientRect();
       const scrollY = window.scrollY || window.pageYOffset;
       const scrollX = window.scrollX || window.pageXOffset;
+      const viewportWidth = window.innerWidth;
 
-      tooltipEl.style.top = `${targetRect.top + scrollY - 10}px`; // Adjust for vertical scroll
-      tooltipEl.style.left = `${targetRect.right + scrollX + 10}px`; // Position to the right of the card
+      let leftPosition = targetRect.right + scrollX + 10;
+      // Check if tooltip overflows the right edge of the screen
+      if (leftPosition + tooltipEl.offsetWidth > viewportWidth) {
+        leftPosition = targetRect.left + scrollX - tooltipEl.offsetWidth - 10;
+      }
+
+      tooltipEl.style.top = `${targetRect.top + scrollY - 10}px`;
+      tooltipEl.style.left = `${leftPosition}px`;
     }
   };
 
