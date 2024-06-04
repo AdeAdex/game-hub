@@ -212,18 +212,16 @@
 
 
 
-"use client";
-
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ThemeContext } from "@/app/lib/ThemeContext";
-import { Popover, Tooltip } from "@mui/material";
-import { Game } from "@/app/types/homePage/games"; // Import the Game type
+import { Tooltip } from "@mui/material";
+import { Game } from "@/app/types/homePage/games";
+import CustomTooltip from "./CustomTooltip"; // Import CustomTooltip
 
-// Placeholder imports for platform icons
 import {
   FaWindows,
   FaPlaystation,
@@ -239,25 +237,16 @@ interface GameCardProps {
 
 const GameCard: React.FC<GameCardProps> = ({ game }) => {
   const { theme } = useContext(ThemeContext);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [popoverTimeout, setPopoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null); // Create a ref for the card
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    if (popoverTimeout) {
-      clearTimeout(popoverTimeout);
-      setPopoverTimeout(null);
-    }
-    setAnchorEl(event.currentTarget);
+  const handleMouseEnter = () => {
+    setTooltipVisible(true);
   };
 
-  const handlePopoverClose = () => {
-    const timeout = setTimeout(() => {
-      setAnchorEl(null);
-    }, 300); // Adjust the delay as needed
-    setPopoverTimeout(timeout);
+  const handleMouseLeave = () => {
+    setTooltipVisible(false);
   };
-
-  const open = Boolean(anchorEl);
 
   const renderPlatformIcon = (slug: string) => {
     switch (slug) {
@@ -299,11 +288,12 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
 
   return (
     <div
+      ref={cardRef} // Attach the ref to the card
       className={`w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out ${
         theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
       }`}
-      onMouseEnter={handlePopoverOpen}
-      onMouseLeave={handlePopoverClose}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="w-full h-full">
         <Link
@@ -345,7 +335,9 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
               {game.genres.map((genre, index) => (
                 <small
                   key={index}
-                  className={`text-[12px] ${theme === "dark" ? "text-yellow-500" : ""}`}
+                  className={`text-[12px] ${
+                    theme === "dark" ? "text-yellow-500" : ""
+                  }`}
                 >
                   {genre.name}
                 </small>
@@ -380,40 +372,28 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
           </Carousel>
         </div>
       </div>
-      <Popover
-        sx={{
-          pointerEvents: "auto",
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-      >
-        <div className="p-4 w-60 max-h-auto overflow-y-auto">
-          <h3 className="font-bold">{game.name}</h3>
-          {game.short_screenshots.map((screenshot) => (
-            <div key={screenshot.id} className="relative w-full h-32 mb-4">
-              <Image
-                src={screenshot.image || "/images/placeholder.png"}
-                alt={game.name}
-                layout="fill"
-                objectFit="cover"
-                quality={100}
-                className=""
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
-      </Popover>
+      <CustomTooltip
+        content={
+          <div className="p-4 w-60 max-h-[600px] overflow-y-auto">
+            <h3 className="font-bold">{game.name}</h3>
+            {game.short_screenshots.map((screenshot) => (
+              <div key={screenshot.id} className="relative w-full h-32 mb-4">
+                <Image
+                  src={screenshot.image || "/images/placeholder.png"}
+                  alt={game.name}
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  className=""
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        }
+        targetRef={cardRef}
+        visible={tooltipVisible}
+      />
     </div>
   );
 };
