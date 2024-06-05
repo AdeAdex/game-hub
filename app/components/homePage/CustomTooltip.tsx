@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -15,6 +14,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
   visible,
 }) => {
   const [tooltipEl, setTooltipEl] = useState<HTMLDivElement | null>(null);
+  const [delayedVisible, setDelayedVisible] = useState(false);
 
   const updatePosition = () => {
     if (tooltipEl && targetRef.current) {
@@ -35,7 +35,22 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
   };
 
   useEffect(() => {
-    if (visible && tooltipEl && targetRef.current) {
+    let timeout: NodeJS.Timeout;
+    if (visible) {
+      timeout = setTimeout(() => {
+        setDelayedVisible(true);
+      }, 1500);
+    } else {
+      setDelayedVisible(false);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [visible]);
+
+  useEffect(() => {
+    if (delayedVisible && tooltipEl && targetRef.current) {
       updatePosition();
       window.addEventListener("scroll", updatePosition);
       window.addEventListener("resize", updatePosition);
@@ -44,15 +59,15 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
       window.removeEventListener("scroll", updatePosition);
       window.removeEventListener("resize", updatePosition);
     };
-  }, [visible, tooltipEl, targetRef]);
+  }, [delayedVisible, tooltipEl, targetRef]);
 
-  if (!visible) return null;
+  if (!delayedVisible) return null;
 
   return createPortal(
     <div
       ref={setTooltipEl}
       className="absolute bg-white shadow-lg rounded p-2 z-50 transition-opacity duration-200"
-      style={{ opacity: visible ? 1 : 0 }}
+      style={{ opacity: delayedVisible ? 1 : 0 }}
     >
       {content}
     </div>,
