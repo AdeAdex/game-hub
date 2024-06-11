@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 interface CustomTooltipProps {
   content: React.ReactNode;
   targetRef: React.RefObject<HTMLElement>;
-  visible: boolean;
+  visible: boolean; 
 }
 
 const CustomTooltip: React.FC<CustomTooltipProps> = ({
