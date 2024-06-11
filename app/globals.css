@@ -22,6 +22,12 @@ input:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 }
 
+/* Remove focus border from input elements */
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Autofill styles for light mode */
 body.light-mode input:-webkit-autofill,
 body.light-mode input:-webkit-autofill:focus {
