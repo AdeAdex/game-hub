@@ -194,8 +194,7 @@ function InnerRootLayout({
     const handleRouteChange = () => {
       if (
         pathname === "/" ||
-        pathname === "https://adex-game-hub.vercel.app" ||
-        pathname === "/index"
+        pathname === "https://adex-game-hub.vercel.app"
       ) {
         const params = new URLSearchParams(actualSearchParams.toString());
         const utmSource = params.get("utm_source");

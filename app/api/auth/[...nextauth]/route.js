@@ -84,7 +84,9 @@ async function handleAuthentication(credentials, profile, provider) {
   try {
     await connectToDb();
 
-    if (credentials.email && credentials.password) {
+    if (credentials && credentials.email && credentials.password) {
+      // console.log("credentials", credentials)
+      // console.log("profile", profile)
       const { email, password, location, device } = credentials;
       const user = await User.findOne({
         $or: [{ email: email }, { userName: email }],
@@ -140,6 +142,7 @@ async function handleAuthentication(credentials, profile, provider) {
         return { email: user.email, token, ...user.toObject() };
       }
     } else if (profile) {
+      // console.log("email", profile.email)
       const userExists = await User.findOne({ email: profile.email });
 
       if (!userExists) {
