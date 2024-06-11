@@ -59,11 +59,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // If the user is authenticated and trying to access the login page, redirect to dashboard
-  if (pathname === "/login") {
+  // If the user is authenticated and trying to access the login or register page, redirect to dashboard
+  if (pathname === "/login"  || pathname === "/register") {
     // Check if the user is already in the dashboard, if yes, remain in the dashboard
     return NextResponse.redirect(new URL("/dashboard", request.url));
-  } // If the user is authenticated and trying to access the register page, redirect to dashboard
+  } 
 
   // If the route is a dynamic username page and the user is authenticated, allow access
   if (pathname.startsWith("/")) {
