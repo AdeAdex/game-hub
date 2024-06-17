@@ -135,8 +135,8 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
     //                 <Image
     //                   src={user.profilePicture || avatar}
     //                   alt="Profile Picture"
-    //                   layout="fill"
-    //                   objectFit="cover"
+    //                    fill
+              // style={{ objectFit: "cover" }}
     //                   className="rounded-full"
     //                 />
     //               </div>
@@ -213,8 +213,8 @@ function MyApp({ open, handleClose, likedBy, loggedInUserId }) {
                     <Image
                       src={user.profilePicture || avatar}
                       alt="Profile Picture"
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: "cover" }}
                       className="rounded-full"
                     />
                   </div>

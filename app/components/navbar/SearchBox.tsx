@@ -66,8 +66,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                   <Image
                     src={suggestion.background_image || '/default-image.png'} // Provide a default image if none exists
                     alt={suggestion.name}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     className="rounded-sm"
                   />
                 </div>

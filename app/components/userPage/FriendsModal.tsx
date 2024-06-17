@@ -82,8 +82,8 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
                   <Image
                     src={friend.profilePicture || avatar}
                     alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     className="rounded-full"
                   />
                 </div>

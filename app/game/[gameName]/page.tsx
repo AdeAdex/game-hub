@@ -64,8 +64,8 @@ const GameDetails: React.FC = () => {
           <Image
             src={gameDetails.background_image}
             alt={gameDetails.name}
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
             className="rounded"
           />
         </div>

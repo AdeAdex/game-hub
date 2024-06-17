@@ -14,6 +14,7 @@ import FlowDiagram from "../components/dashboard/FlowDiagram";
 import Activities from "../components/dashboard/Activities";
 import { UserDataType, ActivityType } from "../types/user";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
+import D3Chart from "../components/dashboard/D3Chart";
 
 Chart.register(...registerables);
 
@@ -108,6 +109,8 @@ const DashboardPage = () => {
           <FlowDiagram chartData={chartData} chartOptions={chartOptions} />
         </div>
         <Activities recentActivities={recentActivities} userData={userData} formatDateTime={formatDateTime} />
+        <h1 className="mt-8">My D3.js Visualization</h1>
+        {/* <D3Chart /> */}
       </div>
       <Footer />
     </div>

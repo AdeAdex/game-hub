@@ -19,8 +19,8 @@ const GameHeader: React.FC<GameHeaderProps> = ({ name, backgroundImage }) => {
         <Image
           src={backgroundImage}
           alt={name}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover" }}
           className="rounded-lg"
         />
       </div>

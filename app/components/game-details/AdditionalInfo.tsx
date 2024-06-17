@@ -29,8 +29,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
           <Image
             src={background_image_additional}
             alt="Screenshots"
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
           />
         </div>
       </div>
@@ -46,8 +46,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
                 <Image
                   src={developer.image_background}
                   alt={developer.name}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                   className="rounded-lg"
                 />
               </div>
@@ -68,8 +68,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
                 <Image
                   src={publisher.image_background}
                   alt={publisher.name}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                   className="rounded-lg"
                 />
               </div>
@@ -90,8 +90,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
                 <Image
                   src={genre.image_background}
                   alt={genre.name}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                   className="rounded-lg"
                 />
               </div>

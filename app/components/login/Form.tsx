@@ -8,8 +8,8 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
 import { ThemeContext } from "@/app/lib/ThemeContext";
-import ReCAPTCHA from "react-google-recaptcha";
-import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
+// import ReCAPTCHA from "react-google-recaptcha";
+// import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
 
 const Form = () => {
@@ -34,9 +34,9 @@ function MyApp() {
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
   const { theme } = useContext(ThemeContext);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
+  // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
   
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
+  // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
  
  
 
@@ -62,6 +62,7 @@ function MyApp() {
       });
 
       if (result && !result.error) {
+        // console.log("sign in succeefully")
         // Handle successful sign-in
       } else {
         const errorMessage = result?.error || "Error during login";
@@ -83,34 +84,6 @@ function MyApp() {
     setSubmitting(false);
   };
 
-  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setSubmitting(true);
-  //   if (locationError) {
-  //     enqueueSnackbar(locationError, { variant: "warning" });
-  //   }
-
-  //   if (!recaptchaToken) {
-  //     enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
-  //     setSubmitting(false);
-  //     return;
-  //   }
-
-  //   const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-  //   if (!recaptchaVerified) {
-  //     enqueueSnackbar("Failed reCAPTCHA verification", { variant: "error" });
-  //     setSubmitting(false);
-  //     return;
-  //   }
-
-  //   await signInWithCredentials(email, password, device, location);
-  //   setSubmitting(false);
-  // };
-
-  // const handleRecaptchaChange = (token: string | null) => {
-  //   // Called when reCAPTCHA token changes
-  //   setRecaptchaToken(token);
-  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -155,15 +128,7 @@ function MyApp() {
           </button>
         </div>
       </div>
-      {/* ReCAPTCHA component */}
-      {/* {recaptchaSiteKey && (
-        <div className="flex item-center justify-center mt-5">
-          <ReCAPTCHA
-            sitekey={recaptchaSiteKey}
-            onChange={handleRecaptchaChange}
-          />
-        </div>
-      )} */}
+     
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"

@@ -279,7 +279,8 @@ export default function CommentFullScreenDialog({
                       <Image
                         src={comment.userId?.profilePicture || avatar}
                         alt="Profile Picture"
-                        layout="fill"
+                        fill
+                        style={{ objectFit: "cover" }}
                         className="rounded-full object-cover"
                       />
                     </div>
@@ -333,8 +334,8 @@ export default function CommentFullScreenDialog({
                   <Image
                     src={user.profilePicture || avatar}
                     alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     className="rounded-full"
                   />
                 </div>

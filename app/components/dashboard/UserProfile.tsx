@@ -20,8 +20,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
             <Image
               src={userData.profilePicture || avatar}
               alt="Profile"
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: "cover" }}
             />
           </div>
           <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>

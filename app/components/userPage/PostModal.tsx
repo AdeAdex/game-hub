@@ -185,8 +185,8 @@ const PostModal: React.FC<PostModalProps> = ({
                   <Image
                     src={user.profilePicture}
                     alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     className="rounded-full"
                   />
                 </div>
@@ -195,8 +195,8 @@ const PostModal: React.FC<PostModalProps> = ({
                   <Image
                     src={avatar}
                     alt="Profile Picture"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     className="rounded-full"
                   />
                 </div>

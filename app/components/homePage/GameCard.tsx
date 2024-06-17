@@ -114,8 +114,8 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
             <Image
               src={game.background_image || "/images/placeholder.png"}
               alt={game.name}
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: "cover" }}
               quality={100}
               className=""
               loading="lazy"
@@ -188,8 +188,8 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
                 <Image
                   src={screenshot.image || "/images/placeholder.png"}
                   alt={game.name}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                   quality={100}
                   className=""
                   loading="lazy"
