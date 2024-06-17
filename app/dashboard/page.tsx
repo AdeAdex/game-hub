@@ -110,7 +110,7 @@ const DashboardPage = () => {
         </div>
         <Activities recentActivities={recentActivities} userData={userData} formatDateTime={formatDateTime} />
         <h1 className="mt-8">My D3.js Visualization</h1>
-        {/* <D3Chart /> */}
+        <D3Chart />
       </div>
       <Footer />
     </div>
