@@ -26,10 +26,10 @@ const Dropdown: React.FC<SideBarProps> = ({
 }) => {
   const { theme } = useContext(ThemeContext); // Get the current theme
 
-  const handleSearch = (query: string) => {
-    // Implement search functionality here
-    console.log("Searching for:", query);
-  };
+  // const handleSearch = (query: string) => {
+  //   // Implement search functionality here
+  //   console.log("Searching for:", query);
+  // };
 
   return (
     <section
@@ -41,7 +41,7 @@ const Dropdown: React.FC<SideBarProps> = ({
         ClassName={`mb-[10px] flex`}
         Placeholder={`Search games & creator`}
         inputClassName={`text-[14px] px-3 h-[30px] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-[#F4F4F4] text-black'} my-auto w-[90%]`}
-        onSearch={handleSearch}
+        onSearch={onSearch}
         suggestions={suggestions}
 
       />
