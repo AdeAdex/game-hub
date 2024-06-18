@@ -256,8 +256,8 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
 
                     <div
                       className={`${
-                        theme === "dark" ? "hover:bg-gray-600" : "bg-gray-100"
-                      } p-1 md:p-2 rounded-lg border cursor-pointer ${
+                        theme === "dark" ? "hover:bg-gray-200" : "bg-gray-100"
+                      } px-1 md:p-2 rounded-lg border cursor-pointer ${
                         dropdownOpen ? "border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
