@@ -190,7 +190,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
         <div className="flex gap-3 md:gap-8">
           {userData && userData.incomingFriendRequests && (
             <Link
-              className="flex relative cursor-pointer my-auto hover:bg-gray-100 "
+              className="flex relative cursor-pointer my-auto hover:bg-gray-100 rounded-md "
               href={`/${userData?.userName}/notifications?status=all`}
             >
               <IoMdNotifications size={25} className="my-auto " />
@@ -263,9 +263,9 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                       onClick={handleDropdownToggle}
                     >
                       {dropdownOpen ? (
-                        <FaAngleUp size={18} className="my-auto bg-red-500 " />
+                        <FaAngleUp size={18} className="my-auto" />
                       ) : (
-                        <FaAngleDown size={18} className="my-auto bg-red-500 " />
+                        <FaAngleDown size={18} className="my-auto" />
                       )}
                     </div>
                   </div>
