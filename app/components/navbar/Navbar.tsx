@@ -153,7 +153,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
           theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
         }`}
       >
-        <div className="flex gap-5">
+        <div className="flex gap-3 md:gap-5">
           <MenuIcon
             isMobileMenuOpen={isMobileMenuOpen}
             setMobileMenuOpen={setMobileMenuOpen}
@@ -187,7 +187,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
               : "bg-gray-200 text-black"
           } my-auto`}
         />
-        <div className="flex gap-8">
+        <div className="flex gap-3 md:gap-8">
           {userData && userData.incomingFriendRequests && (
             <Link
               className="flex relative cursor-pointer my-auto hover:bg-gray-200 "
