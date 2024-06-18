@@ -51,7 +51,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
           <div className="text-[12px] text-center p-2 w-full">See results for "{query}"</div>
           {suggestions.length > 0 ? (
             <>
-              <div className={`${theme === "dark" ? "bg-gray-700" : "bg-gray-200"} px-4 py-2`}>TAGS</div>
+              <div className={`${theme === "dark" ? "bg-gray-700" : "bg-gray-200"} text-[12px] px-4 py-1`}>TAGS</div>
               <div className="text-[10px] text-center py-1 px-2 w-full border-b border-gray-600">
                 {suggestions.length} match{suggestions.length > 1 ? 'es' : ''} found
               </div>
