@@ -49,7 +49,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       {query && (
         <ul className={`absolute top-[55px] left-50 w-[85%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} border ${theme === "dark" ? "border-gray-700" : "border-gray-300"} rounded-md shadow-lg z-50`}
           >
-          <small className="text-center p-2 w-full ">See results for "{query}" </small>
+          <small className="text-center p-2 w-full bg-red-500">See results for "{query}" </small>
           {suggestions.length > 0 ? (
         
             suggestions.map((suggestion) => (
