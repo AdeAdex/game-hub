@@ -47,10 +47,11 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         <FaSearch size={15} />
       </button>
       {query && (
-      <>
-      <small>See results for "{query}" </small>
-        <ul className={`absolute top-[55px] left-50 w-[85%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} border ${theme === "dark" ? "border-gray-700" : "border-gray-300"} rounded-md shadow-lg z-50`}>
+        <ul className={`absolute top-[55px] left-50 w-[85%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} border ${theme === "dark" ? "border-gray-700" : "border-gray-300"} rounded-md shadow-lg z-50`}
+          >
+          <small>See results for "{query}" </small>
           {suggestions.length > 0 ? (
+        
             suggestions.map((suggestion) => (
               <Link
               key={suggestion.id}
@@ -91,7 +92,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             <li className="px-4 py-2">Game not found</li>
           )}
         </ul>
-      </>
       )}
     </div>
   );
