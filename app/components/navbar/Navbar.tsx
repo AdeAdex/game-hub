@@ -263,9 +263,9 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                       onClick={handleDropdownToggle}
                     >
                       {dropdownOpen ? (
-                        <FaAngleUp size={18} className="my-auto " />
+                        <FaAngleUp size={18} className="my-auto bg-red-500 " />
                       ) : (
-                        <FaAngleDown size={18} className="my-auto" />
+                        <FaAngleDown size={18} className="my-auto bg-red-500 " />
                       )}
                     </div>
                   </div>
