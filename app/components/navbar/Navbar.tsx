@@ -190,7 +190,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
         <div className="flex gap-3 md:gap-8">
           {userData && userData.incomingFriendRequests && (
             <Link
-              className="flex relative cursor-pointer my-auto hover:bg-gray-200 "
+              className="flex relative cursor-pointer my-auto hover:bg-gray-100 "
               href={`/${userData?.userName}/notifications?status=all`}
             >
               <IoMdNotifications size={25} className="my-auto " />
