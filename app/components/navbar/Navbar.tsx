@@ -206,7 +206,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                   <div className="flex gap-3 cursor-pointer">
                     <PingLoader />
                     <div
-                      className={`bg-gray-100 p-2 rounded-lg border cursor-pointer ${
+                      className={`bg-gray-100 p-1 md:p-2 rounded-lg border cursor-pointer ${
                         dropdownOpen ? "border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
@@ -257,7 +257,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                     <div
                       className={`${
                         theme === "dark" ? "hover:bg-gray-600" : "bg-gray-100"
-                      } py-1 md:p-2 rounded-lg border cursor-pointer ${
+                      } p-1 md:p-2 rounded-lg border cursor-pointer ${
                         dropdownOpen ? "border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
