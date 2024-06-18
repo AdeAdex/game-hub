@@ -49,10 +49,10 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       {query && (
         <ul className={`absolute top-[55px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} border ${theme === "dark" ? "border-gray-700" : "border-gray-300"} rounded-md shadow-lg z-50`}
           >
-          <div className="text-[10px] text-center p-2 w-full ">See results for "{query}" </div>
+          <div className="text-[12px] text-center p-2 w-full ">See results for "{query}" </div>
           {suggestions.length > 0 ? (
-        
             suggestions.map((suggestion) => (
+              <div className={`${theme === "dark" ? "bg-gray-700" : "bg-gray-200" } `}>TAGS</div>
               <Link
               key={suggestion.id}
               href={`/game-details?id=${suggestion.id}&name=${encodeURIComponent(
