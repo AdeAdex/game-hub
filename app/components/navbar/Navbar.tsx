@@ -292,7 +292,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
               <AuthButton title="register" to="/register" />
             )}
           </div>
-          <div className={`my-auto ${userData ? "ml-[-10px]" : ""}`}>
+          <div className={`my-auto ${userData ? "ml-[-5px]" : ""}`}>
             <ThemeToggle />
           </div>
         </div>
