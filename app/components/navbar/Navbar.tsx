@@ -23,6 +23,7 @@ import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContex
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { Game } from "@/app/types/homePage/games";
 
+
 interface AuthState {
   firstName?: string;
   lastName?: string;

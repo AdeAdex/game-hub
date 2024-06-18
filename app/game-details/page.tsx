@@ -19,7 +19,7 @@ import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 
 const GameDetailsPage: React.FC = () => {
   const router = useSearchParams();
-  console.log("post id", router?.get('id'))
+  // console.log("post id", router?.get('id'))
   const gameId = router ? router.get("id") : null;
   const [gameDetails, setGameDetails] = useState<GameDetails | null>(null);
   const [loading, setLoading] = useState(true);
@@ -39,7 +39,7 @@ const GameDetailsPage: React.FC = () => {
             }
           );
           setGameDetails(response.data);
-          console.log(response.data);
+          // console.log(response.data);
         } catch (error) {
           console.error("Error fetching game details:", error);
         } finally {

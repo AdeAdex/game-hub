@@ -25,12 +25,7 @@ const Dropdown: React.FC<SideBarProps> = ({
   onSearch, // Add onSearch prop
 }) => {
   const { theme } = useContext(ThemeContext); // Get the current theme
-
-  // const handleSearch = (query: string) => {
-  //   // Implement search functionality here
-  //   console.log("Searching for:", query);
-  // };
-
+ 
   return (
     <section
       className={`md:hidden w-full px-[15px] pt-[15px] pb-[80px] overflow-y-auto h-screen nav-list relative ${isMobileMenuOpen ? "open" : ""} ${

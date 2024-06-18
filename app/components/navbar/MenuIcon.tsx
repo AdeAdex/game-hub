@@ -12,21 +12,21 @@ const MenuIcon: React.FC<MenuIconProps> = ({
   isMobileMenuOpen,
 }) => {
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
+    setMobileMenuOpen((prevOpen) => !prevOpen);
   };
   return (
-    <>
-      <div
-        className={`md:hidden my-auto cursor-pointer ${isMobileMenuOpen ? "menu-open" : ""}`}
-        onClick={toggleMobileMenu}
-      >
-        {isMobileMenuOpen ? (
-          <AiOutlineClose size={32} />
-        ) : (
-          <AiOutlineMenu size={32} />
-        )}
-      </div>
-    </>
+    <div
+      className={`md:hidden my-auto cursor-pointer ${
+        isMobileMenuOpen ? "menu-open" : ""
+      }`}
+      onClick={toggleMobileMenu}
+    >
+      {isMobileMenuOpen ? (
+        <AiOutlineClose size={32} />
+      ) : (
+        <AiOutlineMenu size={32} />
+      )}
+    </div>
   );
 };
 

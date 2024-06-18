@@ -53,7 +53,7 @@ body.light-mode input:-webkit-autofill:focus {
   background-color: #000000;
 }
 
-.nav-list {
+/* .nav-list {
   display: flex;
   flex-direction: column;
   transform: scaleX(0);
@@ -70,11 +70,32 @@ body.light-mode input:-webkit-autofill:focus {
 .nav-list.open {
   transform: scaleX(1);
   opacity: 1;
+} */
+
+
+/* Animation for the dropdown */
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%; 
+  max-width: 300px; /* Optional: Set a maximum width */
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 3;
 }
 
-/* .menu-open {
-  transform: rotate(90deg);
-} */
+.nav-list.open {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+
+
+
 .rotate-icon {
   transition: transform 0.3s ease;
 }
@@ -121,6 +142,8 @@ body.light-mode input:-webkit-autofill:focus {
 .nav-links::-webkit-scrollbar {
   width: 0;
 }
+
+
 
 
 
