@@ -47,15 +47,15 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         <FaSearch size={15} />
       </button>
       {query && (
-      <ul className={`absolute top-[55px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} border ${theme === "dark" ? "border-gray-700" : "border-gray-300"} rounded-md shadow-lg z-50`}>
+        <ul className={`absolute top-[55px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"} border ${theme === "dark" ? "border-gray-700" : "border-gray-300"} rounded-md shadow-lg z-50`}>
           <div className="text-[12px] text-center p-2 w-full">See results for "{query}"</div>
           {suggestions.length > 0 ? (
             <>
               <div className={`${theme === "dark" ? "bg-gray-700" : "bg-gray-200"} px-4 py-2`}>TAGS</div>
-              {suggestions.map((suggestion) => (
               <div className="text-[12px] text-center p-2 w-full">
                 {suggestions.length} match{suggestions.length > 1 ? 'es' : ''} found
               </div>
+              {suggestions.map((suggestion) => (
                 <Link
                   key={suggestion.id}
                   href={`/game-details?id=${suggestion.id}&name=${encodeURIComponent(suggestion.name)}`}
