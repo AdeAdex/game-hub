@@ -22,7 +22,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
   const [searchQuery, setSearchQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<Game[]>([]);
+  // const [suggestions, setSuggestions] = useState<Game[]>([]);
+  const [suggestions, setSuggestions] = useState<{ game: Game; matchType: string }[]>([]);
+
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -52,10 +54,42 @@ export default function Home() {
   //   console.log("Filtered Games:", filteredGames);
   // };
 
+  // const handleSearch = (query: string) => {
+  //   setSearchQuery(query);
+
+  //   const filteredGames = games.filter((game) => {
+  //     const matchesName = game.name.toLowerCase().includes(query.toLowerCase());
+  //     const matchesGenre = game.genres.some((genre) =>
+  //       genre.name.toLowerCase().includes(query.toLowerCase())
+  //     );
+  //     const matchesParentPlatform = game.parent_platforms.some((platform) =>
+  //       platform.platform.name.toLowerCase().includes(query.toLowerCase())
+  //     );
+  //     const matchesPlatform = game.platforms.some((platform) =>
+  //       platform.platform.name.toLowerCase().includes(query.toLowerCase())
+  //     );
+  //     const matchesStore = game.stores.some((store) =>
+  //       store.store.name.toLowerCase().includes(query.toLowerCase())
+  //     );
+
+  //     return (
+  //       matchesName ||
+  //       matchesGenre ||
+  //       matchesParentPlatform ||
+  //       matchesPlatform ||
+  //       matchesStore
+  //     );
+  //   });
+
+  //   setSuggestions(filteredGames);
+  //   console.log("Filtered Games:", filteredGames);
+  // };
+
+
   const handleSearch = (query: string) => {
     setSearchQuery(query);
 
-    const filteredGames = games.filter((game) => {
+    const filteredGames = games.reduce<{ game: Game; matchType: string }[]>((acc, game) => {
       const matchesName = game.name.toLowerCase().includes(query.toLowerCase());
       const matchesGenre = game.genres.some((genre) =>
         genre.name.toLowerCase().includes(query.toLowerCase())
@@ -70,14 +104,14 @@ export default function Home() {
         store.store.name.toLowerCase().includes(query.toLowerCase())
       );
 
-      return (
-        matchesName ||
-        matchesGenre ||
-        matchesParentPlatform ||
-        matchesPlatform ||
-        matchesStore
-      );
-    });
+      if (matchesName) acc.push({ game, matchType: "name" });
+      else if (matchesGenre) acc.push({ game, matchType: "genre" });
+      else if (matchesParentPlatform) acc.push({ game, matchType: "parent platform" });
+      else if (matchesPlatform) acc.push({ game, matchType: "platform" });
+      else if (matchesStore) acc.push({ game, matchType: "store" });
+
+      return acc;
+    }, []);
 
     setSuggestions(filteredGames);
     console.log("Filtered Games:", filteredGames);

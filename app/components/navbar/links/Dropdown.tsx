@@ -13,7 +13,8 @@ interface SideBarProps {
   links: LinkItem[];
   links2: LinkItem[];
   isMobileMenuOpen: boolean;
-  suggestions: Game[]; // Add suggestions prop
+  // suggestions: Game[]; // Add suggestions prop
+  suggestions: { game: Game; matchType: string }[];
   onSearch: (query: string) => void; // Add onSearch prop
 }
 

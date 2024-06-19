@@ -38,7 +38,8 @@ interface AuthState {
 
 interface NavbarProps {
   onSearch: (query: string) => void; // Callback function for search action
-  suggestions: Game[];
+  // suggestions: Game[];
+  suggestions: { game: Game; matchType: string }[];
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onSearch, suggestions }) => {
