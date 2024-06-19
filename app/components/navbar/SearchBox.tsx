@@ -193,7 +193,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       </button>
       {query && (
         <ul
-          className={`absolute top-[45px] md:top-[52px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen pb-[120px] md:pb-[55px] ${
+          className={`absolute top-[45px] md:top-[52px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen pb-[20px] md:pb-[55px] ${
             theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
           } border ${
             theme === "dark" ? "border-gray-700" : "border-gray-300"
