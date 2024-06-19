@@ -193,7 +193,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       </button>
       {query && (
         <ul
-          className={`absolute top-[55px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen ${
+          className={`absolute top-[45px] md:top-[52px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen pb-[120px] md:pb-[55px] ${
             theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
           } border ${
             theme === "dark" ? "border-gray-700" : "border-gray-300"
@@ -223,9 +223,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                         theme === "dark" ? "bg-gray-700" : "bg-gray-200"
                       } text-[12px] px-4 py-1`}
                     >
-                      {matchType.toUpperCase()}
+                      ({games.length}) GAMES BY {matchType.toUpperCase()}
                     </div>
-                    {games.slice(0, matchType === "name" ? 10 : 5).map((game) => (
+                    {games.map((game) => (
                       <Link
                         key={game.id}
                         href={`/game-details?id=${game.id}&name=${encodeURIComponent(
@@ -278,4 +278,3 @@ const SearchBox: React.FC<SearchBoxProps> = ({
 };
 
 export default SearchBox;
-
