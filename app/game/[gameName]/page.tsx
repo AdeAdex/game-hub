@@ -28,6 +28,8 @@ const GameDetails: React.FC = () => {
   useEffect(() => {
     if (gameName) {
       const fetchGameDetails = async () => {
+        // if (!gameName || !gameId) return;
+
         setLoading(true);
         try {
           const response = await axios.get(`https://api.rawg.io/api/games/${gameId}`, {
@@ -45,7 +47,7 @@ const GameDetails: React.FC = () => {
 
       fetchGameDetails();
     }
-  }, [gameName]);
+  }, [gameName, gameId]);
 
   if (loading) {
     return <p>Loading...</p>;

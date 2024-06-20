@@ -1,17 +1,17 @@
-// /pages/api/conversation/support/route.ts
+// /api/conversation/support/tickets/route.ts
 
 import { NextResponse } from "next/server";
-import { connectToDb } from "../../../utils/database";
-import SupportTicket from "../../../models/supportTicket";
-import { sendSupportEmail } from "../../../utils/emailUtils";
+import { connectToDb } from "@/app/utils/database";
+import SupportTicket from "@/app/models/supportTicket";
 
 export const POST = async (req) => {
   try {
-    const { name, email, message } = await req.json();
+    const { title, description } = await req.json();
+    console.log(title, description)
 
-    if (!name || !email || !message) {
+    if (!title || !description) {
       return NextResponse.json(
-        { success: false, message: "Name, email, and message are required." },
+        { success: false, message: "Title and Description are required." },
         { status: 400 }
       );
     }
@@ -19,14 +19,13 @@ export const POST = async (req) => {
     await connectToDb();
 
     const newSupportTicket = new SupportTicket({
-      name,
-      email,
-      message,
+      title,
+      description,
     });
 
     await newSupportTicket.save();
 
-    await sendSupportEmail(name, email, message);
+    await sendSupportEmail(title, description);
 
     return NextResponse.json(
       { success: true, message: "Message sent successfully!" },

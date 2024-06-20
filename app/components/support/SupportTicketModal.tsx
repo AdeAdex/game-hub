@@ -26,7 +26,7 @@ const SupportTicketModal: React.FC<SupportTicketModalProps> = ({ isOpen, onClose
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       setSubmitting(true);
       try {
-        const response = await axios.post('/api/conversation/support', values);
+        const response = await axios.post('/api/conversation/support/tickets', values);
         enqueueSnackbar(response.data.message || 'Message sent successfully!', {
           variant: 'success',
         });

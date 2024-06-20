@@ -1,4 +1,4 @@
-// /app/models/activity
+// /app/models/activity.ts
 
 import mongoose from "mongoose";
 

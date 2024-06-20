@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../utils/database";
-import Visitor from "../../models/visitors.js";
+import Visitor from "../../models/visitors.ts";
 
 export const POST = async (req) => {
   try {

@@ -1,4 +1,4 @@
-// /app/models/post.js
+// /app/models/post.ts
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(

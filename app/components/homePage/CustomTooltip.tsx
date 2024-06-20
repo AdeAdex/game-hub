@@ -59,7 +59,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
       window.removeEventListener("scroll", updatePosition);
       window.removeEventListener("resize", updatePosition);
     };
-  }, [delayedVisible, tooltipEl, targetRef]);
+  }, [delayedVisible, tooltipEl, targetRef, updatePosition]);
 
   if (!delayedVisible) return null;
 

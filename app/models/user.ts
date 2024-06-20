@@ -1,4 +1,4 @@
-// /app/models/user.js
+// /app/models/user.ts
 import mongoose from "mongoose";
 
 const loginDataSchema = new mongoose.Schema({
