@@ -4,8 +4,8 @@ import { LinkDataType } from "../types/links";
 export const links: LinkDataType[] = [
   {
     title: "browse game",
-    pathname: "/user",
-    path: "/user",
+    pathname: "/browse-game",
+    path: "/browse-game",
     icon: "browse game",
   },
   {
@@ -22,8 +22,8 @@ export const links: LinkDataType[] = [
   },
   {
     title: "upload game",
-    pathname: "/upload game",
-    path: "/upload game",
+    pathname: "/upload-game",
+    path: "/upload-game",
     icon: "upload game",
   },
   {

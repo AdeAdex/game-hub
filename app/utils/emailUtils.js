@@ -64,3 +64,29 @@ export const sendResetPasswordEmail = async (email, resetLink, username) => {
 
   return transporter.sendMail(mailOptions);
 };
+
+
+
+export const sendSupportEmail = async (name, email, message) => {
+  const mailOptions = {
+    from: process.env.USER,
+    to: email, // Replace with your support email
+    subject: "Support Request",
+    html: `
+      <div style="background-color: #2E3440; padding: 20px; color: #ffffff; border-radius: 5px">
+        <img src="${gamehubLogo}" alt="GameHub Logo" style="max-width: 150px; height: 30px; margin-bottom: 20px;">
+        <div style="text-align: center;">
+          <h1 style="font-size: 24px; margin-bottom: 20px;">Support Request</h1>
+          <p style="font-size: 16px;">Name: ${name}</p>
+          <p style="font-size: 16px;">Email: ${email}</p>
+          <p style="font-size: 16px;">Message: ${message}</p>
+          <br>
+          <p style="font-size: 16px;">Best regards,</p>
+          <p style="font-size: 16px;">The GameHub Team</p>
+        </div>
+      </div>
+    `,
+  };
+
+  return transporter.sendMail(mailOptions);
+};

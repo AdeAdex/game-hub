@@ -21,7 +21,15 @@ export function middleware(request: NextRequest) {
     "/terms-condition",
     "/game-details", 
     "/error",
-    "/not-found"
+    "/not-found",
+    "/browse-game", 
+    "/about", 
+    "/services", 
+    "/upload-game",
+    "/news", 
+    "/store", 
+    "/support", 
+    "/community", 
   ];
 
 
