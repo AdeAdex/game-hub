@@ -1,16 +1,26 @@
-### Adex Game Hub
+# Adex GameHub
 
-This project is a **Next.js** application designed as a game hub platform, bootstrapped with `create-next-app`.
+Adex GameHub is a full-stack, dynamic, and immersive platform designed for gamers to discover, connect, and enjoy games seamlessly. Built with Next.js, this application offers a comprehensive suite of features to enhance the gaming experience for users worldwide.
+
+## Description
+
+Adex GameHub is designed for gamers to discover, connect, and enjoy games. The platform integrates both client-side and server-side functionalities to provide a comprehensive gaming experience. Key features include secure user authentication with support for Google and GitHub login, customizable user profiles, efficient game library management, real-time notifications, a powerful admin dashboard, and an interactive user dashboard with visualizations. Additionally, the application supports social media-like interactions, flexible game search functionalities, and email notifications for user activities. The architecture ensures scalability, maintainability, and ease of navigation for both developers and users.
 
 ## Features
 
 - User authentication (login, registration, password reset)
-- User profiles with customizable pages
+- Google and GitHub authentication
+- reCAPTCHA integration during registration
+- Customizable user profiles
 - Game library management
-- Notifications for user activities
+- Real-time notifications
+- Social media functionalities (posts, comments, likes, etc.)
 - Admin dashboard
+- Interactive user dashboard with visualizations
 - Activity logging and data migration scripts
 - API routes for various functionalities (activities, admin visitors, etc.)
+- Game search by name, category, genre, platform
+- Email notifications for user activities
 
 ## Getting Started
 
@@ -26,8 +36,9 @@ Ensure you have the following installed on your system:
 1. Clone the repository:
 
    ```bash
-   https://github.com/AdeAdex/game-hub.git 
+   git clone https://github.com/AdeAdex/game-hub.git
    cd game-hub
+
    ```
 
 2. Install dependencies:
