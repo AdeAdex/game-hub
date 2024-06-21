@@ -10,6 +10,7 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import axios from "axios";
 import { Discussion } from "@/app/types/discussion";
 import { Contributor } from "@/app/types/contributor";
+import ContributorModal from "@/app/components/community/ContributorModal";
 import {
   Dialog,
   DialogTitle,
@@ -120,52 +121,81 @@ function MyApp() {
     },
   });
 
-  const contributorFormik = useFormik({
-    initialValues: {
-      name: "",
-      description: "",
-    },
-    onSubmit: async (values) => {
-      setSubmitting(true);
-      try {
-        const response = await axios.post(
-          "/api/conversation/contributors",
-          values
-        );
-        console.log("Contributor Post Response:", response.data);
+  // const contributorFormik = useFormik({
+  //   initialValues: {
+  //     name: "",
+  //     description: "",
+  //   },
+  //   onSubmit: async (values) => {
+  //     setSubmitting(true);
+  //     try {
+  //       const response = await axios.post(
+  //         "/api/conversation/contributors",
+  //         values
+  //       );
+  //       console.log("Contributor Post Response:", response.data);
 
-        enqueueSnackbar(
-          response.data.message || "Contributor added successfully!",
-          {
-            variant: "success",
-          }
-        );
+  //       enqueueSnackbar(
+  //         response.data.message || "Contributor added successfully!",
+  //         {
+  //           variant: "success",
+  //         }
+  //       );
 
-        contributorFormik.resetForm();
+  //       contributorFormik.resetForm();
 
-        // Ensure response.data.newContributor matches the expected structure
-        if (response.data.newContributor) {
-          setContributors((prevContributors) => [
-            response.data.newContributor,
-            ...prevContributors,
-          ]);
-          handleCloseContributorDialog();
-        } else {
-          console.error("Unexpected response structure:", response.data);
-          enqueueSnackbar("Unexpected response structure. Please try again.", {
-            variant: "error",
-          });
-        }
-      } catch (error: any) {
-        console.error("Error adding contributor:", error.message);
-        enqueueSnackbar("Failed to add contributor. Please try again.", {
+  //       // Ensure response.data.newContributor matches the expected structure
+  //       if (response.data.newContributor) {
+  //         setContributors((prevContributors) => [
+  //           response.data.newContributor,
+  //           ...prevContributors,
+  //         ]);
+  //         handleCloseContributorDialog();
+  //       } else {
+  //         console.error("Unexpected response structure:", response.data);
+  //         enqueueSnackbar("Unexpected response structure. Please try again.", {
+  //           variant: "error",
+  //         });
+  //       }
+  //     } catch (error: any) {
+  //       console.error("Error adding contributor:", error.message);
+  //       enqueueSnackbar("Failed to add contributor. Please try again.", {
+  //         variant: "error",
+  //       });
+  //     } finally {
+  //       setSubmitting(false);
+  //     }
+  //   },
+  // });
+
+  const handleAddContributor = async (values: { name: string; description: string }) => {
+    setSubmitting(true);
+    try {
+      const response = await axios.post("/api/conversation/contributors", values);
+      console.log("Contributor Post Response:", response.data);
+
+      if (response.data.newContributor) {
+        enqueueSnackbar(response.data.message || "Contributor added successfully!", {
+          variant: "success",
+        });
+        setContributors((prevContributors) => [response.data.newContributor, ...prevContributors]);
+        handleCloseContributorDialog();
+      } else {
+        console.error("Unexpected response structure:", response.data);
+        enqueueSnackbar("Unexpected response structure. Please try again.", {
           variant: "error",
         });
-      } finally {
-        setSubmitting(false);
       }
-    },
-  });
+    } catch (error: any) {
+      console.error("Error adding contributor:", error.message);
+      enqueueSnackbar("Failed to add contributor. Please try again.", {
+        variant: "error",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
 
   return (
     <div
@@ -260,14 +290,22 @@ function MyApp() {
                 <p>No contributors available.</p>
               )}
             </div>
-            <div className="text-right mt-4">
-              <button
-                className={`px-3 py-2 shadow rounded-lg text-white ${ theme === "dark" ? "bg-blue-700" : "bg-blue-500"}`}
-                onClick={handleOpenContributorDialog}
-              >
-                Add Contributor
-              </button>
-            </div>
+            
+          </section>
+
+          <section className="community-section text-right mt-4">
+            <button
+              onClick={handleOpenContributorDialog}
+              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+            >
+              Add Contributor
+            </button>
+            <ContributorModal
+              open={openContributorDialog}
+              onClose={handleCloseContributorDialog}
+              onSubmit={handleAddContributor}
+              submitting={submitting}
+            />
           </section>
 
           <section className="community-section">
@@ -357,7 +395,7 @@ function MyApp() {
       </div>
       <Footer />
 
-      <Dialog
+      {/* <Dialog
         open={openContributorDialog}
         onClose={handleCloseContributorDialog}
       >
@@ -438,7 +476,7 @@ function MyApp() {
             </Button>
           </DialogActions>
         </form>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }
