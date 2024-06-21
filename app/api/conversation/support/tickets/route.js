@@ -25,16 +25,14 @@ export const POST = async (req) => {
 
     await newSupportTicket.save();
 
-    await sendSupportEmail(title, description);
-
     return NextResponse.json(
-      { success: true, message: "Message sent successfully!" },
+      { success: true, message: "Support Ticket sent successfully!" },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error sending support email:", error.message);
+    console.error("Error sending support ticket:", error.message);
     return NextResponse.json(
-      { success: false, message: "Failed to send message. Please try again." },
+      { success: false, message: "Failed to submit support ticket. Please try again." },
       { status: 500 }
     );
   }

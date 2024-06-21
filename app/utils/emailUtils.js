@@ -69,20 +69,25 @@ export const sendResetPasswordEmail = async (email, resetLink, username) => {
 
 export const sendSupportEmail = async (name, email, message) => {
   const mailOptions = {
-    from: process.env.USER,
-    to: email, // Replace with your support email
+    from: email,
+    to: process.env.USER, // Replace with your support email
     subject: "Support Request",
     html: `
-      <div style="background-color: #2E3440; padding: 20px; color: #ffffff; border-radius: 5px">
-        <img src="${gamehubLogo}" alt="GameHub Logo" style="max-width: 150px; height: 30px; margin-bottom: 20px;">
-        <div style="text-align: center;">
-          <h1 style="font-size: 24px; margin-bottom: 20px;">Support Request</h1>
-          <p style="font-size: 16px;">Name: ${name}</p>
-          <p style="font-size: 16px;">Email: ${email}</p>
-          <p style="font-size: 16px;">Message: ${message}</p>
+      <div style="background-color: #2E3440; padding: 30px; color: #ffffff; border-radius: 8px; font-family: Arial, sans-serif;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <img src="${gamehubLogo}" alt="GameHub Logo" style="max-width: 150px; height: auto;">
+        </div>
+        <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+          <h1 style="font-size: 26px; margin-bottom: 20px; text-align: center;">Support Request</h1>
+          <p style="font-size: 18px; line-height: 1.6;">Dear Support Team,</p>
+          <p style="font-size: 18px; line-height: 1.6;">You have received a new support request. Please find the details below:</p>
+          <p style="font-size: 18px; line-height: 1.6;"><strong>Name:</strong> ${name}</p>
+          <p style="font-size: 18px; line-height: 1.6;"><strong>Email:</strong> ${email}</p>
+          <p style="font-size: 18px; line-height: 1.6;"><strong>Message:</strong></p>
+          <p style="font-size: 18px; line-height: 1.6;">${message}</p>
           <br>
-          <p style="font-size: 16px;">Best regards,</p>
-          <p style="font-size: 16px;">The GameHub Team</p>
+          <p style="font-size: 18px; line-height: 1.6;">Best regards,</p>
+          <p style="font-size: 18px; line-height: 1.6;">The GameHub Team</p>
         </div>
       </div>
     `,

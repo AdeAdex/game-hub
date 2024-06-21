@@ -1,17 +1,13 @@
 // /models/supportTicket.js
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const SupportTicketSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  message: {
+  description: {
     type: String,
     required: true,
   },
@@ -21,6 +17,8 @@ const SupportTicketSchema = new mongoose.Schema({
   },
 });
 
-const SupportTicket = mongoose.models.SupportTicket || mongoose.model('SupportTicket', SupportTicketSchema);
+const SupportTicket =
+  mongoose.models.SupportTicket ||
+  mongoose.model("Support-ticket", SupportTicketSchema);
 
 export default SupportTicket;

@@ -10,6 +10,10 @@ import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { supportValidationSchema } from "@/app/components/validations/supportValidationSchema";
 import SupportTicketModal from "@/app/components/support/SupportTicketModal";
+import { faqs } from "../lib/FaqsData";
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
+import { MdExpandMore } from "react-icons/md";
+
 
 const SupportPage: React.FC = () => {
   return (
@@ -78,29 +82,22 @@ function MyApp() {
           Support
         </h3>
         <div className="mt-8 space-y-12">
-          <section className="support-section">
+        <section className="support-section">
             <h4 className="text-xl font-semibold">Frequently Asked Questions</h4>
             <div className="mt-4 space-y-4">
-              <div className={`faq-item bg-${theme === "dark" ? "gray-700" : "white"} border rounded-md p-4 transition-transform transform hover:scale-105`}>
-                <h5 className="text-lg font-medium">How do I reset my password?</h5>
-                <p className="text-sm">
-                  To reset your password, go to the Forgot Password page and follow the instructions.
-                </p>
-              </div>
-              <div className={`faq-item bg-${theme === "dark" ? "gray-700" : "white"} border rounded-md p-4 transition-transform transform hover:scale-105`}>
-                <h5 className="text-lg font-medium">How can I contact support?</h5>
-                <p className="text-sm">
-                  You can contact support by filling out the contact form in the Contact Us section below.
-                </p>
-              </div>
-              <div className={`faq-item bg-${theme === "dark" ? "gray-700" : "white"} border rounded-md p-4 transition-transform transform hover:scale-105`}>
-                <h5 className="text-lg font-medium">Where can I find my purchase history?</h5>
-                <p className="text-sm">
-                  Your purchase history can be found in your account settings under the "Purchase History" tab.
-                </p>
-              </div>
+              {faqs.map((faq, index) => (
+                <Accordion key={index} style={{ backgroundColor: theme === 'dark' ? '#424242' : 'white', color: theme === 'dark' ? 'white' : 'black' }}>
+                  <AccordionSummary expandIcon={<MdExpandMore style={{ color: theme === 'dark' ? 'white' : 'black', fontSize: '1.5rem' }} />}>
+                    <Typography className="text-lg font-medium">{faq.question}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography className="text-sm">{faq.answer}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
             </div>
           </section>
+
 
           <section className="support-section">
             <h4 className="text-xl font-semibold">Contact Us</h4>

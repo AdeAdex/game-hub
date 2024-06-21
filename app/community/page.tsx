@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
@@ -8,6 +8,15 @@ import { ThemeContext } from "@/app/lib/ThemeContext";
 import { communityValidationSchema } from "@/app/components/validations/communityValidationSchema";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import axios from "axios";
+import { Discussion } from "@/app/types/discussion";
+import { Contributor } from "@/app/types/contributor";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 
 const CommunityPage: React.FC = () => {
   return (
@@ -24,8 +33,47 @@ function MyApp() {
   const { theme } = useContext(ThemeContext);
   const { enqueueSnackbar } = useSnackbar();
   const [submitting, setSubmitting] = useState(false);
+  const [discussions, setDiscussions] = useState<Discussion[]>([]);
+  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [expandedDiscussion, setExpandedDiscussion] = useState<number | null>(
+    null
+  );
+  const [openContributorDialog, setOpenContributorDialog] = useState(false);
 
-  const formik = useFormik({
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [discussionsResponse, contributorsResponse] = await Promise.all([
+          axios.get("/api/conversation/discussions"),
+          axios.get("/api/conversation/contributors"),
+        ]);
+
+        // console.log("Discussions Response:", discussionsResponse.data);
+        // console.log("Contributors Response:", contributorsResponse.data);
+
+        setDiscussions(discussionsResponse.data);
+        setContributors(contributorsResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleReadMore = (index: number) => {
+    setExpandedDiscussion(expandedDiscussion === index ? null : index);
+  };
+
+  const handleOpenContributorDialog = () => {
+    setOpenContributorDialog(true);
+  };
+
+  const handleCloseContributorDialog = () => {
+    setOpenContributorDialog(false);
+  };
+
+  const discussionFormik = useFormik({
     initialValues: {
       title: "",
       content: "",
@@ -34,14 +82,83 @@ function MyApp() {
     onSubmit: async (values) => {
       setSubmitting(true);
       try {
-        const response = await axios.post("/api/conversation/community", values);
-        enqueueSnackbar(response.data.message || "Discussion posted successfully!", {
-          variant: "success",
-        });
-        formik.resetForm();
+        const response = await axios.post(
+          "/api/conversation/discussions",
+          values
+        );
+        console.log("Discussion Post Response:", response.data);
+
+        enqueueSnackbar(
+          response.data.message || "Discussion posted successfully!",
+          {
+            variant: "success",
+          }
+        );
+
+        discussionFormik.resetForm();
+
+        // Ensure response.data.newDiscussion matches the expected structure
+        if (response.data.newDiscussion) {
+          setDiscussions((prevDiscussions) => [
+            response.data.newDiscussion,
+            ...prevDiscussions,
+          ]);
+        } else {
+          console.error("Unexpected response structure:", response.data);
+          enqueueSnackbar("Unexpected response structure. Please try again.", {
+            variant: "error",
+          });
+        }
       } catch (error: any) {
         console.error("Error posting discussion:", error.message);
         enqueueSnackbar("Failed to post discussion. Please try again.", {
+          variant: "error",
+        });
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
+
+  const contributorFormik = useFormik({
+    initialValues: {
+      name: "",
+      description: "",
+    },
+    onSubmit: async (values) => {
+      setSubmitting(true);
+      try {
+        const response = await axios.post(
+          "/api/conversation/contributors",
+          values
+        );
+        console.log("Contributor Post Response:", response.data);
+
+        enqueueSnackbar(
+          response.data.message || "Contributor added successfully!",
+          {
+            variant: "success",
+          }
+        );
+
+        contributorFormik.resetForm();
+
+        // Ensure response.data.newContributor matches the expected structure
+        if (response.data.newContributor) {
+          setContributors((prevContributors) => [
+            response.data.newContributor,
+            ...prevContributors,
+          ]);
+          handleCloseContributorDialog();
+        } else {
+          console.error("Unexpected response structure:", response.data);
+          enqueueSnackbar("Unexpected response structure. Please try again.", {
+            variant: "error",
+          });
+        }
+      } catch (error: any) {
+        console.error("Error adding contributor:", error.message);
+        enqueueSnackbar("Failed to add contributor. Please try again.", {
           variant: "error",
         });
       } finally {
@@ -79,96 +196,77 @@ function MyApp() {
           <section className="community-section">
             <h4 className="text-xl font-semibold">Latest Discussions</h4>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div
-                className={`discussion-item bg-${
-                  theme === "dark" ? "gray-700" : "white"
-                } border rounded-md p-4 transition-transform transform hover:scale-105`}
-              >
-                <h5 className="text-lg font-medium">Discussion Title 1</h5>
-                <p className="text-sm">
-                  A brief description of the discussion topic. Click to read
-                  more.
-                </p>
-                <div className="text-right">
-                  <button className="text-blue-500">Read More</button>
-                </div>
-              </div>
-              <div
-                className={`discussion-item bg-${
-                  theme === "dark" ? "gray-700" : "white"
-                } border rounded-md p-4 transition-transform transform hover:scale-105`}
-              >
-                <h5 className="text-lg font-medium">Discussion Title 2</h5>
-                <p className="text-sm">
-                  A brief description of the discussion topic. Click to read
-                  more.
-                </p>
-                <div className="text-right">
-                  <button className="text-blue-500">Read More</button>
-                </div>
-              </div>
-              <div
-                className={`discussion-item bg-${
-                  theme === "dark" ? "gray-700" : "white"
-                } border rounded-md p-4 transition-transform transform hover:scale-105`}
-              >
-                <h5 className="text-lg font-medium">Discussion Title 3</h5>
-                <p className="text-sm">
-                  A brief description of the discussion topic. Click to read
-                  more.
-                </p>
-                <div className="text-right">
-                  <button className="text-blue-500">Read More</button>
-                </div>
-              </div>
+              {discussions && discussions.length > 0 ? (
+                discussions.map((discussion, index) => (
+                  <div
+                    key={index}
+                    className={`discussion-item bg-${
+                      theme === "dark" ? "gray-700" : "white"
+                    } border rounded-md p-4 transition-transform transform hover:scale-105`}
+                  >
+                    <h5 className="text-lg font-medium">{discussion.title}</h5>
+                    <p className="text-sm">
+                      {expandedDiscussion === index
+                        ? discussion.content
+                        : `${discussion.content.slice(0, 100)}...`}
+                    </p>
+                    <div className="text-right">
+                      <button
+                        className="text-blue-500 hover:underline"
+                        onClick={() => handleReadMore(index)}
+                      >
+                        {expandedDiscussion === index
+                          ? "Show Less"
+                          : "Read More"}
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No discussions available.</p>
+              )}
             </div>
           </section>
 
           <section className="community-section">
             <h4 className="text-xl font-semibold">Top Contributors</h4>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div
-                className={`contributor-item bg-${
-                  theme === "dark" ? "gray-700" : "white"
-                } border rounded-md p-4 transition-transform transform hover:scale-105`}
+              {contributors && contributors.length > 0 ? (
+                contributors.map((contributor, index) => (
+                  <div
+                    key={index}
+                    className={`contributor-item bg-${
+                      theme === "dark" ? "gray-700" : "white"
+                    } border rounded-md p-4 transition-transform transform hover:scale-105`}
+                  >
+                    <h5 className="text-lg font-medium">{contributor.name}</h5>
+                    <p className="text-sm">{contributor.description}</p>
+                    <div className="text-right">
+                      <button
+                        className="text-blue-500 hover:underline"
+                        onClick={() =>
+                          console.log(
+                            "View Profile clicked for:",
+                            contributor.name
+                          )
+                        }
+                      >
+                        View Profile
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No contributors available.</p>
+              )}
+            </div>
+            <div className="text-right mt-4">
+              <button
+                className={`px-3 py-2 shadow rounded-lg text-white ${ theme === "dark" ? "bg-blue-700" : "bg-blue-500"}`}
+                onClick={handleOpenContributorDialog}
               >
-                <h5 className="text-lg font-medium">User 1</h5>
-                <p className="text-sm">
-                  A brief description of the top contributor. Click to view
-                  profile.
-                </p>
-                <div className="text-right">
-                  <button className="text-blue-500">View Profile</button>
-                </div>
-              </div>
-              <div
-                className={`contributor-item bg-${
-                  theme === "dark" ? "gray-700" : "white"
-                } border rounded-md p-4 transition-transform transform hover:scale-105`}
-              >
-                <h5 className="text-lg font-medium">User 2</h5>
-                <p className="text-sm">
-                  A brief description of the top contributor. Click to view
-                  profile.
-                </p>
-                <div className="text-right">
-                  <button className="text-blue-500">View Profile</button>
-                </div>
-              </div>
-              <div
-                className={`contributor-item bg-${
-                  theme === "dark" ? "gray-700" : "white"
-                } border rounded-md p-4 transition-transform transform hover:scale-105`}
-              >
-                <h5 className="text-lg font-medium">User 3</h5>
-                <p className="text-sm">
-                  A brief description of the top contributor. Click to view
-                  profile.
-                </p>
-                <div className="text-right">
-                  <button className="text-blue-500">View Profile</button>
-                </div>
-              </div>
+                Add Contributor
+              </button>
             </div>
           </section>
 
@@ -176,7 +274,7 @@ function MyApp() {
             <h4 className="text-xl font-semibold">Join the Conversation</h4>
             <form
               className="mt-4 space-y-4 lg:mx-auto lg:w-3/4 xl:w-1/2"
-              onSubmit={formik.handleSubmit}
+              onSubmit={discussionFormik.handleSubmit}
             >
               <div className="flex flex-col gap-[5px]">
                 <label
@@ -189,21 +287,23 @@ function MyApp() {
                   type="text"
                   id="discussion-title"
                   name="title"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.title}
+                  onChange={discussionFormik.handleChange}
+                  onBlur={discussionFormik.handleBlur}
+                  value={discussionFormik.values.title}
                   className={`w-full border border-2 px-3 py-[5px] rounded-md ${
                     theme === "dark"
                       ? "bg-gray-700 border-gray-600"
                       : "bg-white border-gray-300"
                   } ${
-                    formik.errors.title && formik.touched.title
+                    discussionFormik.errors.title &&
+                    discussionFormik.touched.title
                       ? "register-input"
                       : ""
                   }`}
                   placeholder={
-                    formik.touched.title && formik.errors.title
-                      ? formik.errors.title
+                    discussionFormik.touched.title &&
+                    discussionFormik.errors.title
+                      ? discussionFormik.errors.title
                       : "Enter the discussion title"
                   }
                 />
@@ -218,22 +318,24 @@ function MyApp() {
                 <textarea
                   id="discussion-content"
                   name="content"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.content}
+                  onChange={discussionFormik.handleChange}
+                  onBlur={discussionFormik.handleBlur}
+                  value={discussionFormik.values.content}
                   className={`w-full border border-2 px-3 py-[5px] rounded-md ${
                     theme === "dark"
                       ? "bg-gray-700 border-gray-600"
                       : "bg-white border-gray-300"
                   } ${
-                    formik.errors.content && formik.touched.content
+                    discussionFormik.errors.content &&
+                    discussionFormik.touched.content
                       ? "register-input"
                       : ""
                   }`}
                   rows={5}
                   placeholder={
-                    formik.touched.content && formik.errors.content
-                      ? formik.errors.content
+                    discussionFormik.touched.content &&
+                    discussionFormik.errors.content
+                      ? discussionFormik.errors.content
                       : "Enter the discussion content"
                   }
                 ></textarea>
@@ -254,6 +356,89 @@ function MyApp() {
         </div>
       </div>
       <Footer />
+
+      <Dialog
+        open={openContributorDialog}
+        onClose={handleCloseContributorDialog}
+      >
+        <DialogTitle>Add a Contributor</DialogTitle>
+        <form onSubmit={contributorFormik.handleSubmit}>
+          <DialogContent>
+            <div className="flex flex-col gap-[5px]">
+              <label
+                htmlFor="contributor-name"
+                className="w-full font-bold text-sm"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="contributor-name"
+                name="name"
+                onChange={contributorFormik.handleChange}
+                onBlur={contributorFormik.handleBlur}
+                value={contributorFormik.values.name}
+                className={`w-full border border-2 px-3 py-[5px] rounded-md ${
+                  theme === "dark"
+                    ? "bg-gray-700 border-gray-600"
+                    : "bg-white border-gray-300"
+                } ${
+                  contributorFormik.errors.name &&
+                  contributorFormik.touched.name
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  contributorFormik.touched.name &&
+                  contributorFormik.errors.name
+                    ? contributorFormik.errors.name
+                    : "Enter the contributor name"
+                }
+              />
+            </div>
+            <div className="flex flex-col gap-[5px] mt-4">
+              <label
+                htmlFor="contributor-description"
+                className="w-full font-bold text-sm"
+              >
+                Description
+              </label>
+              <textarea
+                id="contributor-description"
+                name="description"
+                onChange={contributorFormik.handleChange}
+                onBlur={contributorFormik.handleBlur}
+                value={contributorFormik.values.description}
+                className={`w-full border border-2 px-3 py-[5px] rounded-md ${
+                  theme === "dark"
+                    ? "bg-gray-700 border-gray-600"
+                    : "bg-white border-gray-300"
+                } ${
+                  contributorFormik.errors.description &&
+                  contributorFormik.touched.description
+                    ? "register-input"
+                    : ""
+                }`}
+                rows={3}
+                placeholder={
+                  contributorFormik.touched.description &&
+                  contributorFormik.errors.description
+                    ? contributorFormik.errors.description
+                    : "Enter the contributor description"
+                }
+              ></textarea>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseContributorDialog} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" color="primary" disabled={submitting}>
+              {submitting ? "Submitting..." : "Add Contributor"}
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </div>
   );
 }

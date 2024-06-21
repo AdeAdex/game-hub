@@ -2,8 +2,8 @@
 
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../../utils/database";
-import SupportTicket from "../../../models/supportTicket";
 import { sendSupportEmail } from "../../../utils/emailUtils";
+import Support from "@/app/models/support"
 
 export const POST = async (req) => {
   try {
@@ -18,7 +18,7 @@ export const POST = async (req) => {
 
     await connectToDb();
 
-    const newSupportTicket = new SupportTicket({
+    const newSupportTicket = new Support({
       name,
       email,
       message,
