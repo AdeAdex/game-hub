@@ -212,7 +212,7 @@ function MyApp() {
                     </p>
                     <div className="text-right">
                       <button
-                        className="text-blue-500 hover:underline"
+                        className={` hover:underline ${ theme === "dark" ? "text-orange-500" : "text-blue-500"}`}
                         onClick={() => handleReadMore(index)}
                       >
                         {expandedDiscussion === index
@@ -243,7 +243,7 @@ function MyApp() {
                     <p className="text-sm">{contributor.description}</p>
                     <div className="text-right">
                       <button
-                        className="text-blue-500 hover:underline"
+                        className={`hover:underline ${ theme === "dark" ? "text-orange-500" : "text-blue-500"}`}
                         onClick={() =>
                           console.log(
                             "View Profile clicked for:",
