@@ -7,7 +7,6 @@ import Discussion from "../../../models/discussion";
 export const POST = async (req, res) => {
   try {
     const { title, content } = await req.json();
-    console.log(title, content);
 
     await connectToDb();
 
@@ -37,8 +36,7 @@ export const GET = async (req, res) => {
   try {
     await connectToDb();
 
-    const discussions = await Discussion.find().sort({ createdAt: -1 }).limit(10);
-    console.log(discussions);
+    const discussions = await Discussion.find().sort({ createdAt: -1 }).limit(3);
 
     return NextResponse.json(discussions, { status: 200 });
   } catch (error) {

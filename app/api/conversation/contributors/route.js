@@ -8,7 +8,6 @@ import Contributor from "../../../models/contributor";
 export const POST = async (req, res) => {
   try {
     const { name, description } = await req.json();
-    console.log(name, description);
 
     await connectToDb();
 
@@ -38,8 +37,7 @@ export const GET = async (req, res) => {
   try {
     await connectToDb();
 
-    const contributors = await Contributor.find().sort({ joinedAt: -1 }).limit(10);
-    console.log(contributors);
+    const contributors = await Contributor.find().sort({ joinedAt: -1 }).limit(3);
 
     return NextResponse.json(contributors, { status: 200 });
   } catch (error) {
