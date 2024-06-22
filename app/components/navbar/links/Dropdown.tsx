@@ -4,6 +4,7 @@ import Section from "../../sidebar/Section";
 import SearchBox from "../SearchBox";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 import { Game } from "@/app/types/homePage/games";
+import Links from "@/app/components/navbar/links/Links";
 
 interface LinkItem {
   title: string;
@@ -41,6 +42,7 @@ const Dropdown: React.FC<SideBarProps> = ({
         suggestions={suggestions}
 
       />
+      <Links />
       <Section title="popular tags" links={links} />
       <Link href="" className="text-[14px] capitalize leading-[28px]">
         browse all tags →
