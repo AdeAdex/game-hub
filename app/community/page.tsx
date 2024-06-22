@@ -289,7 +289,7 @@ function MyApp() {
                   </div>
                 ))
               ) : (
-                  <LoadingSkeleton type="contributors" />
+                  <LoadingSkeleton type="contributor" />
               )}
             </div>
             
