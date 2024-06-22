@@ -52,9 +52,6 @@ const Dropdown: React.FC<SideBarProps> = ({
 
       <div className="mt-[30px] flex flex-col gap-y-[30px]">
         <Section title="browse" links={links2} />
-        <Section title="browse" links={links2} />
-        <Section title="browse" links={links2} />
-        <Section title="browse" links={links2} />
       </div>
     </section>
   );
