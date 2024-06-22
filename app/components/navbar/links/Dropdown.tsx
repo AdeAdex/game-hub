@@ -42,7 +42,9 @@ const Dropdown: React.FC<SideBarProps> = ({
         suggestions={suggestions}
 
       />
-      <Links ClassName={`flex flex-col`} />
+      <div className="flex">
+        <Links ClassName={`flex flex-col`} />
+      </div>
       <Section title="popular tags" links={links} />
       <Link href="" className="text-[14px] capitalize leading-[28px]">
         browse all tags →
