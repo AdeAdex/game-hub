@@ -14,7 +14,7 @@ const Links: React.FC<LinksProps> = ({ ClassName }) => {
       {/* <ul className="flex gap-4 my-auto"> */} 
         {links.map((link, index) => (
           <Link key={index} href={link.pathname} className="w-auto link py-2">
-            <li className="w-auto whitespace-nowrap overflow-hidden">{link.title}</li>
+            <span className="w-auto whitespace-nowrap overflow-hidden">{link.title}</span>
           </Link>
         ))}
       {/* </ul> */} 
