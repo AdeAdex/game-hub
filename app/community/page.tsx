@@ -11,6 +11,8 @@ import axios from "axios";
 import { Discussion } from "@/app/types/discussion";
 import { Contributor } from "@/app/types/contributor";
 import ContributorModal from "@/app/components/community/ContributorModal";
+import LoadingSkeleton from "@/app/components/community/LoadingSkeleton";
+
 import {
   Dialog,
   DialogTitle,
@@ -253,7 +255,7 @@ function MyApp() {
                   </div>
                 ))
               ) : (
-                <p>No discussions available.</p>
+                  <LoadingSkeleton type="discussion" />
               )}
             </div>
           </section>
@@ -287,7 +289,7 @@ function MyApp() {
                   </div>
                 ))
               ) : (
-                <p>No contributors available.</p>
+                  <LoadingSkeleton type="contributors" />
               )}
             </div>
             
