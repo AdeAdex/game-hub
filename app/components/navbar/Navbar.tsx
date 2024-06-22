@@ -161,7 +161,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
           />
           <Logo />
         </div>
-        <Links />
+        <Links ClassName={`hidden md:flex`}/>
 
         {isMobileMenuOpen && (
           <div className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
