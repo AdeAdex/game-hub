@@ -13,16 +13,16 @@ const FooterRowOne = () => {
           <FaFacebook size={25} /> <FaTwitter size={25} />
         </div>
         <div className={`flex md:gap-[30px] justify-between font-bold text-[14px] my-auto ${theme === "dark" ? "text-white" : "text-[#434343]"}`}>
-          <Link href="" className="uppercase">
+          <Link href="/about" className="uppercase">
             about
           </Link>
-          <Link href="" className="uppercase">
+          <Link href="/support" className="uppercase">
             faq
           </Link>
           <Link href="" className="uppercase">
             blog
           </Link>
-          <Link href="" className="uppercase">
+          <Link href="/support" className="uppercase">
             contact us
           </Link>
         </div>
