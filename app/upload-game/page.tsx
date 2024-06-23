@@ -31,10 +31,41 @@ const UploadGamePage: React.FC = () => {
         </h3>
         <div className="mt-4">
           <form className="space-y-4">
-            <input type="text" placeholder="Game Title" className="w-full px-4 py-2 border rounded"/>
-            <textarea placeholder="Game Description" className="w-full px-4 py-2 border rounded h-32"></textarea>
-            <input type="file" className="w-full px-4 py-2 border rounded"/>
-            <button type="submit" className="w-full py-2 bg-green-500 text-white rounded">Upload</button>
+            <input
+              type="text"
+              placeholder="Game Title"
+              className={`w-full px-4 py-2 border rounded ${
+                theme === "dark"
+                  ? "bg-gray-700 border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-gray-900"
+              }`}
+            />
+            <textarea
+              placeholder="Game Description"
+              className={`w-full px-4 py-2 border rounded h-32 ${
+                theme === "dark"
+                  ? "bg-gray-700 border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-gray-900"
+              }`}
+            ></textarea>
+            <input
+              type="file"
+              className={`w-full px-4 py-2 border rounded ${
+                theme === "dark"
+                  ? "bg-gray-700 border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-gray-900"
+              }`}
+            />
+            <button
+              type="submit"
+              className={`w-full py-2 rounded ${
+                theme === "dark"
+                  ? "bg-green-600 text-white hover:bg-green-500"
+                  : "bg-green-500 text-white hover:bg-green-400"
+              }`}
+            >
+              Upload
+            </button>
           </form>
         </div>
       </div>
