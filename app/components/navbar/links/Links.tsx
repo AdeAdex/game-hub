@@ -13,7 +13,7 @@ const Links: React.FC<LinksProps> = ({ ClassName }) => {
     <div className={`${theme === "dark" ? 'text-white' : 'text-[#434343]' } ${ClassName} md:my-auto uppercase nav-links gap-2 md:gap-4 text-[14px] font-[700] overflow-x-auto relative`}>
       {/* <ul className="flex gap-4 my-auto"> */} 
         {links.map((link, index) => (
-          <Link key={index} href={link.pathname} className="w-auto link py-2">
+          <Link key={index} href={link.pathname} className="w-full md:w-auto link py-2">
             <span className="w-auto whitespace-nowrap overflow-hidden">{link.title}</span>
           </Link>
         ))}
