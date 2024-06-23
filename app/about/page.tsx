@@ -90,7 +90,7 @@ const AboutPage: React.FC = () => {
           <section>
             <h4 className="text-xl font-semibold mb-2">Contact Us</h4>
             <p>
-              Have questions or need support? Feel free to reach out to us. Our team is here to help you with any inquiries or issues you may have. You can contact us on the contact us page or follow us on our social media channels for the latest updates.
+              Have questions or need assistance? Don't hesitate to contact us. Our dedicated team is here to help you every step of the way. Reach out to us via email, phone, or connect with us on social media for the latest updates and announcements.
             </p>
           </section>
         </div>
