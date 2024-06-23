@@ -6,7 +6,7 @@ import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import axios from "axios";
 import { NewsArticle } from "@/app/types/news";
-import NewsSkeleton from "@/app/components/skeletons/NewsSkeleton";
+import NewsSkeleton from "@/app/components/news/NewsSkeleton";
 
 const NewsPage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
