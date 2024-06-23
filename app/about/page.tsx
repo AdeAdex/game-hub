@@ -62,7 +62,7 @@ const AboutPage: React.FC = () => {
           <section>
             <h4 className="text-xl font-semibold mb-2">Our History</h4>
             <p>
-              Adex GameHub was founded in <strong>2024</strong> by a <a href="https://www.linkedin.com/in/adeolu-amole" target="_blank" rel="noopener noreferrer" className="underline text-blue-500 hover:text-blue-700">Adex</a> of passionate gamers who envisioned a platform that could bring the best of gaming to everyone. Over the years, we have grown from a small startup to a leading name in the gaming industry, continually evolving to meet the needs of our community.
+              Adex GameHub was founded in <strong>2024</strong> by <a href="https://www.linkedin.com/in/adeolu-amole" target="_blank" rel="noopener noreferrer" className="underline text-blue-500 hover:text-blue-700">Adex</a> of passionate gamers who envisioned a platform that could bring the best of gaming to everyone. Over the years, we have grown from a small startup to a leading name in the gaming industry, continually evolving to meet the needs of our community.
             </p>
           </section>
           
