@@ -1,12 +1,31 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const NewsPage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
+  const [newsArticles, setNewsArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get("/api/news");
+        setNewsArticles(response.data.articles);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   return (
     <div
@@ -30,11 +49,21 @@ const NewsPage: React.FC = () => {
           News
         </h3>
         <div className="mt-4">
-          {/* Placeholder for news articles */}
-          <div className="bg-gray-200 rounded-lg p-4 mb-4">News Article 1</div>
-          <div className="bg-gray-200 rounded-lg p-4 mb-4">News Article 2</div>
-          <div className="bg-gray-200 rounded-lg p-4 mb-4">News Article 3</div>
-          {/* Add more news articles as needed */}
+          {loading ? (
+            <p>Loading news...</p>
+          ) : error ? (
+            <p>Failed to load news: {error.message}</p>
+          ) : (
+            newsArticles.map((article, index) => (
+              <div key={index} className={`bg-${theme === "dark" ? "gray-700" : "gray-200"} rounded-lg p-4 mb-4`}>
+                <h4 className="font-bold">{article.title}</h4>
+                <p>{article.description}</p>
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                  Read more
+                </a>
+              </div>
+            ))
+          )}
         </div>
       </div>
       <Footer />
