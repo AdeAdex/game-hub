@@ -10,7 +10,7 @@ const Links: React.FC<LinksProps> = ({ ClassName }) => {
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
 
   return (
-    <div className={`${theme === "dark" ? 'text-white' : 'text-[#434343]' } ${ClassName} md:my-auto uppercase nav-links gap-2 md:gap-4 text-[14px] font-[700] overflow-x-auto relative bg-red-500 `}>
+    <div className={`${theme === "dark" ? 'text-white' : 'text-[#434343]' } ${ClassName} md:my-auto uppercase nav-links gap-2 md:gap-4 text-[14px] font-[700] overflow-x-auto relative `}>
       {/* <ul className="flex gap-4 my-auto"> */} 
         {links.map((link, index) => (
           <Link key={index} href={link.pathname} className="w-full md:w-auto link py-2">
