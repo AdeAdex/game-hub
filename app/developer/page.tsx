@@ -10,6 +10,7 @@ import ApiKeyDisplay from "@/app/components/developer/ApiKeyDisplay";
 import RegisterForm from "@/app/components/developer/RegisterForm";
 import RegisterPrompt from "@/app/components/developer/RegisterPrompt";
 import { useRouter, useSearchParams } from "next/navigation";
+import LoadingSkeleton from "@/app/components/developer/LoadingSkeleton";
 
 const DeveloperPage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
@@ -40,9 +41,9 @@ const DeveloperPage: React.FC = () => {
 
   const handleRegister = () => {
         setShowForm(true);
-        const newParams = new URLSearchParams(window.location.search);
-        newParams.set("action", "register-for-api");
-        router.push(`${window.location.pathname}?${newParams.toString()}`);
+        // const newParams = new URLSearchParams(window.location.search);
+        // newParams.set("action", "register-for-api");
+        // router.push(`${window.location.pathname}?${newParams.toString()}`);
       };
 
   const handleFormSubmit = (formData: { appName: string; country: string }) => {
@@ -79,7 +80,7 @@ const DeveloperPage: React.FC = () => {
         }`}
       >
         {loading ? (
-          <p>Loading...</p>
+          <LoadingSkeleton />
         ) : session ? (
           apiKey ? (
             <ApiKeyDisplay apiKey={apiKey} theme={theme} />
