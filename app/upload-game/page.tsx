@@ -88,7 +88,9 @@ const UploadGamePage: React.FC = () => {
                 type="file"
                 name="file"
                 onChange={(event) => {
-                  formik.setFieldValue("file", event.currentTarget.files[0]);
+                  if (event.currentTarget.files) {
+                    formik.setFieldValue("file", event.currentTarget.files[0]);
+                  }
                 }}
                 onBlur={formik.handleBlur}
                 className={`w-full px-4 py-2 border rounded ${
