@@ -4,6 +4,8 @@ import { FaLinkedin, FaTwitter, FaFacebook } from "react-icons/fa";
 import { UserDataType } from "../../types/user";
 import avatar from "@/public/images/robot.png";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
+import Link from "next/link";
+
 
 interface UserProfileProps {
   userData: UserDataType | null;
@@ -58,9 +60,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
           </div>
           <div className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Role: {userData.role}</div>
           <div className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Status: {userData.status}</div>
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg">
+          <Link href="/settings" className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-3">
             Settings
-          </button>
+          </Link>
         </div>
       )}
     </div>

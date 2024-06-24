@@ -97,13 +97,14 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
       >
         View profile
       </Link>
-      <div
+      <Link
+        href="/settings"
         className={`px-4 nav-dropdown ${
           theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
         }`}
       >
         Settings
-      </div>
+        </Link>
       <div
         className={`px-4 nav-dropdown ${
           theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"

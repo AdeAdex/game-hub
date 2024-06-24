@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "@/app/lib/ThemeContext";
+import Link from "next/link";
+
 
 const UserProfileSection = () => {
   const { theme } = useContext(ThemeContext);
@@ -13,7 +15,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Notifications</h2>
+        <Link href="" className="text-xl font-semibold mb-4">Notifications</Link>
         {/* Add notifications component */}
       </div>
       <div
@@ -23,7 +25,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Settings</h2>
+        <Link href="/settings" className="text-xl font-semibold mb-4">Settings</Link>
         {/* Add settings component */}
       </div>
       <div
@@ -33,7 +35,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Profile Summary</h2>
+        <Link href="" className="text-xl font-semibold mb-4">Profile Summary</Link>
         {/* Add profile summary component */}
       </div>
       <div
@@ -43,7 +45,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Photos</h2>
+        <Link href="" className="text-xl font-semibold mb-4">Photos</Link>
         {/* Add photos component */}
       </div>
       <div
@@ -53,7 +55,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Albums</h2>
+        <Link href="" className="text-xl font-semibold mb-4">Albums</Link>
         {/* Add albums component */}
       </div>
       <div
@@ -63,7 +65,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Activities</h2>
+        <Link href="" className="text-xl font-semibold mb-4">Activities</Link>
         {/* Add activities component */}
       </div>
       <div
@@ -73,7 +75,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <h2 className="text-xl font-semibold mb-4">Friends</h2>
+        <Link href="" className="text-xl font-semibold mb-4">Friends</Link>
         {/* Add friends list component */}
       </div>
     </>
