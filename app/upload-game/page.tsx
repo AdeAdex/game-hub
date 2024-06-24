@@ -4,9 +4,28 @@ import React, { useContext } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const UploadGamePage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      file: null,
+    },
+    validationSchema: Yup.object({
+      title: Yup.string().required("Game title is required"),
+      description: Yup.string().required("Game description is required"),
+      file: Yup.mixed().required("A file is required"),
+    }),
+    onSubmit: (values) => {
+      // Handle form submission
+      console.log(values);
+    },
+  });
 
   return (
     <div
@@ -30,32 +49,64 @@ const UploadGamePage: React.FC = () => {
           Upload Your Game
         </h3>
         <div className="mt-4">
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Game Title"
-              className={`w-full px-4 py-2 border rounded ${
-                theme === "dark"
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
-              }`}
-            />
-            <textarea
-              placeholder="Game Description"
-              className={`w-full px-4 py-2 border rounded h-32 ${
-                theme === "dark"
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
-              }`}
-            ></textarea>
-            <input
-              type="file"
-              className={`w-full px-4 py-2 border rounded ${
-                theme === "dark"
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300 text-gray-900"
-              }`}
-            />
+          <form onSubmit={formik.handleSubmit} className="space-y-4">
+            <div>
+              <input
+                type="text"
+                name="title"
+                placeholder={
+                  formik.touched.title && formik.errors.title
+                    ? formik.errors.title
+                    : "Game Title"
+                }
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.title}
+                className={`w-full px-4 py-2 border rounded ${
+                  theme === "dark"
+                    ? "bg-gray-700 border-gray-600 text-white"
+                    : "bg-white border-gray-300 text-gray-900"
+                }`}
+              />
+            </div>
+            <div>
+              <textarea
+                name="description"
+                placeholder={
+                  formik.touched.description && formik.errors.description
+                    ? formik.errors.description
+                    : "Game Description"
+                }
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.description}
+                className={`w-full px-4 py-2 border rounded h-32 ${
+                  theme === "dark"
+                    ? "bg-gray-700 border-gray-600 text-white"
+                    : "bg-white border-gray-300 text-gray-900"
+                }`}
+              ></textarea>
+            </div>
+            <div>
+              <input
+                type="file"
+                name="file"
+                onChange={(event) => {
+                  formik.setFieldValue("file", event.currentTarget.files[0]);
+                }}
+                onBlur={formik.handleBlur}
+                className={`w-full px-4 py-2 border rounded ${
+                  theme === "dark"
+                    ? "bg-gray-700 border-gray-600 text-white"
+                    : "bg-white border-gray-300 text-gray-900"
+                }`}
+                placeholder={
+                  formik.touched.file && formik.errors.file
+                    ? formik.errors.file
+                    : undefined
+                }
+              />
+            </div>
             <button
               type="submit"
               className={`w-full py-2 rounded ${
