@@ -5,7 +5,8 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import uploadGameValidationSchema from "@/app/components/validations
+/uploadGameValidationSchema" 
 
 const UploadGamePage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
@@ -16,11 +17,7 @@ const UploadGamePage: React.FC = () => {
       description: "",
       file: null,
     },
-    validationSchema: Yup.object({
-      title: Yup.string().required("Game title is required"),
-      description: Yup.string().required("Game description is required"),
-      file: Yup.mixed().required("A file is required"),
-    }),
+    validationSchema: uploadGameValidationSchema,
     onSubmit: (values) => {
       // Handle form submission
       console.log(values);
