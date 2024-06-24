@@ -61,8 +61,6 @@ export const POST = async (req) => {
     return NextResponse.json({ message: "User information updated successfully" }, { status: 200 });
   } catch (error) {
     console.error("Error updating user information:", error.message);
-    return NextResponse.error(new Error("Failed to update user information"), {
-      status: 500,
-    });
+    return NextResponse.json({ error: "Failed to update user information" }, { status: 500 });
   }
 };
