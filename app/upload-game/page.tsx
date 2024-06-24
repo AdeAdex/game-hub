@@ -5,8 +5,7 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import { useFormik } from "formik";
-import uploadGameValidationSchema from "@/app/components/validations
-/uploadGameValidationSchema";
+import uploadGameValidationSchema from "@/app/components/validations/uploadGameValidationSchema";
 
 const UploadGamePage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
