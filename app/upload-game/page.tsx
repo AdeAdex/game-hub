@@ -62,6 +62,8 @@ const UploadGamePage: React.FC = () => {
                   theme === "dark"
                     ? "bg-gray-700 border-gray-600 text-white"
                     : "bg-white border-gray-300 text-gray-900"
+                } ${
+                  formik.touched.title && formik.errors.title ? "register-input" : ""
                 }`}
               />
             </div>
@@ -80,6 +82,8 @@ const UploadGamePage: React.FC = () => {
                   theme === "dark"
                     ? "bg-gray-700 border-gray-600 text-white"
                     : "bg-white border-gray-300 text-gray-900"
+                } ${
+                  formik.touched.description && formik.errors.description ? "register-input" : ""
                 }`}
               ></textarea>
             </div>
@@ -97,6 +101,8 @@ const UploadGamePage: React.FC = () => {
                   theme === "dark"
                     ? "bg-gray-700 border-gray-600 text-white"
                     : "bg-white border-gray-300 text-gray-900"
+                } ${
+                  formik.touched.file && formik.errors.file ? "register-input" : ""
                 }`}
                 placeholder={
                   formik.touched.file && formik.errors.file
