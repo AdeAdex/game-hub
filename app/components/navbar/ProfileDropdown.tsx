@@ -65,13 +65,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
       >
         Dashboard
       </Link>
-      <div
-        className={`px-4 nav-dropdown ${
-          theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
-        }`}
-      >
-        Posts
-      </div>
+     
       <Link
         href="/upload-game"
         className={`px-4 nav-dropdown ${

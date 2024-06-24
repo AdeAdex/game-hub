@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 interface ApiKeyDisplayProps {
   apiKey: string;
@@ -8,10 +9,28 @@ interface ApiKeyDisplayProps {
 }
 
 const ApiKeyDisplay: React.FC<ApiKeyDisplayProps> = ({ apiKey, theme }) => {
+  return (
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
+      <MyApp apiKey={apiKey} theme={theme} />
+    </SnackbarProvider>
+  );
+};
+
+function MyApp({ apiKey, theme }: ApiKeyDisplayProps) {
   const [showApiKey, setShowApiKey] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const toggleApiKeyVisibility = () => {
     setShowApiKey((prev) => !prev);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(apiKey).then(() => {
+      enqueueSnackbar(`API key copied successfully.`, { variant: "success" });
+    });
   };
 
   return (
@@ -45,14 +64,14 @@ const ApiKeyDisplay: React.FC<ApiKeyDisplayProps> = ({ apiKey, theme }) => {
               publicly.
             </p>
             <div className="mt-4">
-                <div className="flex justify-between">
+              <div className="flex justify-between">
                 <p
-                className={`font-semibold ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                Your API Key:
-              </p>
+                  className={`font-semibold ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  Your API Key:
+                </p>
                 <button
                   onClick={toggleApiKeyVisibility}
                   className={`md:hidden text-sm my-auto ${
@@ -63,16 +82,16 @@ const ApiKeyDisplay: React.FC<ApiKeyDisplayProps> = ({ apiKey, theme }) => {
                 >
                   {showApiKey ? "Hide" : "Show"} API Key
                 </button>
-                </div>
-             
+              </div>
+
               <div className="flex justify-between">
-                <p
-                  className={`mt-2 text-lg font-mono ${
+                <small
+                  className={`mt-2 text-lg font-mono break-all ${
                     theme === "dark" ? "text-white" : "text-gray-900"
                   } ${showApiKey ? "" : "opacity-0"}`}
                 >
                   {apiKey}
-                </p>
+                </small>
                 <button
                   onClick={toggleApiKeyVisibility}
                   className={`hidden md:flex text-sm my-auto ${
@@ -84,6 +103,16 @@ const ApiKeyDisplay: React.FC<ApiKeyDisplayProps> = ({ apiKey, theme }) => {
                   {showApiKey ? "Hide" : "Show"} API Key
                 </button>
               </div>
+
+              <button
+                onClick={handleCopy}
+                className="mt-4 cursor-pointer transition-all bg-green-500 text-white px-3 py-1 rounded-lg
+border-green-600
+border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+              >
+                Copy API Key
+              </button>
             </div>
           </div>
         </div>
@@ -98,6 +127,6 @@ const ApiKeyDisplay: React.FC<ApiKeyDisplayProps> = ({ apiKey, theme }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ApiKeyDisplay;
