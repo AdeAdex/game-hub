@@ -16,7 +16,7 @@ const UploadGamePage: React.FC = () => {
       description: "",
       file: null,
     },
-    validationSchema: uploadGameValidationSchema,
+    validationSchema: uploadGameSchema,
     onSubmit: (values) => {
       // Handle form submission
       console.log(values);
