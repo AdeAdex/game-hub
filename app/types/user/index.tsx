@@ -15,6 +15,7 @@ export interface UserDataType {
   role?: string;
   status?: string;
   currentFriends?: string[];
+  apiKey?: string;
 }
 
 
@@ -28,3 +29,5 @@ export interface ActivityType {
   location: string; // Change location to string
   date: string;
 }
+
+

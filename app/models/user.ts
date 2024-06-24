@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     loginData: [loginDataSchema], // Add loginData field
+    apiKey: { type: String, required: true },
   },
   { timestamps: true }
 );

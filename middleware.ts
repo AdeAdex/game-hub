@@ -30,6 +30,7 @@ export function middleware(request: NextRequest) {
     "/store", 
     "/support", 
     "/community", 
+    "/developer",
   ];
 
 
