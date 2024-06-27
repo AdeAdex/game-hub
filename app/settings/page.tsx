@@ -11,7 +11,6 @@ import validationSchema from "@/app/components/validations/settingsValidationSch
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useSearchParams } from "next/navigation";
 
-
 const SettingsPage: React.FC = () => {
   return (
     <SnackbarProvider
@@ -34,8 +33,8 @@ function MyApp() {
 
   useEffect(() => {
     if (searchParams) {
-      const email = searchParams.get('email');
-      console.log(email)
+      const email = searchParams.get("email");
+      console.log(email);
       setUserEmail(email);
     }
   }, [searchParams]);
@@ -47,18 +46,21 @@ function MyApp() {
       userName: "",
       email: "",
       password: "",
+      facebook: "",
+      linkedin: "",
+      twitter: "",
     },
     validationSchema: validationSchema(selectedOption),
     enableReinitialize: true,
     onSubmit: async (values) => {
-      console.log(values)
+      console.log(values);
       try {
         setIsLoading(true);
-        
-        const response = await axios.post("/api/settings", { 
-          ...values, 
-          profilePicture: newImage ,
-          userEmail: userEmail
+
+        const response = await axios.post("/api/settings", {
+          ...values,
+          profilePicture: newImage,
+          userEmail: userEmail,
         });
 
         if (response.status === 200) {
@@ -82,7 +84,9 @@ function MyApp() {
     },
   });
 
-  const handleProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePictureChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -257,6 +261,92 @@ function MyApp() {
             />
           </div>
         );
+      case "socialMedia":
+        return (
+          <>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="facebook">
+                Facebook:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="facebook"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                } ${
+                  formik.errors.facebook && formik.touched.facebook
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.facebook && formik.errors.facebook
+                    ? formik.errors.facebook
+                    : "Enter your Facebook profile link"
+                }
+                value={formik.values.facebook}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="linkedin">
+                LinkedIn:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="linkedin"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                } ${
+                  formik.errors.linkedin && formik.touched.linkedin
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.linkedin && formik.errors.linkedin
+                    ? formik.errors.linkedin
+                    : "Enter your LinkedIn profile link"
+                }
+                value={formik.values.linkedin}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="twitter">
+                Twitter:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="twitter"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                } ${
+                  formik.errors.twitter && formik.touched.twitter
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.twitter && formik.errors.twitter
+                    ? formik.errors.twitter
+                    : "Enter your Twitter profile link"
+                }
+                value={formik.values.twitter}
+              />
+            </div>
+          </>
+        );
       default:
         return null;
     }
@@ -315,6 +405,18 @@ function MyApp() {
               onClick={() => setSelectedOption("password")}
             >
               Password
+            </div>
+            <div
+              className={`p-2 cursor-pointer rounded-md ${
+                selectedOption === "socialMedia"
+                  ? theme === "dark"
+                    ? "bg-gray-700 hover:bg-gray-600"
+                    : "bg-gray-300 hover:bg-gray-200"
+                  : ""
+              }`}
+              onClick={() => setSelectedOption("socialMedia")}
+            >
+              Social Media
             </div>
           </div>
           <div className="md:w-3/4 w-full p-4">

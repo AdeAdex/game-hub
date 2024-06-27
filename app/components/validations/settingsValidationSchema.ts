@@ -37,6 +37,24 @@ const settingsValidationSchema = (selectedOption: string) => {
         .min(8, 'Password must be at least 8 characters')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
     }),
+    facebook: Yup.string().when([], {
+      is: () => selectedOption === 'socialMedia',
+      then: (schema) => schema
+        .url('Invalid URL format')
+        .nullable(),
+    }),
+    linkedin: Yup.string().when([], {
+      is: () => selectedOption === 'socialMedia',
+      then: (schema) => schema
+        .url('Invalid URL format')
+        .nullable(),
+    }),
+    twitter: Yup.string().when([], {
+      is: () => selectedOption === 'socialMedia',
+      then: (schema) => schema
+        .url('Invalid URL format')
+        .nullable(),
+    }),
   });
 };
 

@@ -12,9 +12,20 @@ cloudinary.config({
 
 export const POST = async (req) => {
   try {
-    const { email, firstName, lastName, userName, profilePicture, password, userEmail } =
-      await req.json();
-    console.log(email, firstName, lastName, userName, password, userEmail);
+    const { 
+      email, 
+      firstName, 
+      lastName, 
+      userName, 
+      profilePicture, 
+      password, 
+      userEmail, 
+      facebook, 
+      linkedin, 
+      twitter 
+    } = await req.json();
+    
+    console.log(email, firstName, lastName, userName, password, userEmail, facebook, linkedin, twitter);
 
     if (!userEmail) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -53,6 +64,9 @@ export const POST = async (req) => {
     if (firstName) user.firstName = firstName;
     if (lastName) user.lastName = lastName;
     if (userName) user.userName = userName;
+    if (facebook) user.facebook = facebook;
+    if (linkedin) user.linkedin = linkedin;
+    if (twitter) user.twitter = twitter;
 
     // Handle profile picture upload to Cloudinary
     if (profilePicture) {
