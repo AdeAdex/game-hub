@@ -40,18 +40,21 @@ const settingsValidationSchema = (selectedOption: string) => {
     facebook: Yup.string().when([], {
       is: () => selectedOption === 'socialMedia',
       then: (schema) => schema
+      .required('Facebook link is required')
         .url('Invalid URL format')
         .nullable(),
     }),
     linkedin: Yup.string().when([], {
       is: () => selectedOption === 'socialMedia',
       then: (schema) => schema
+      .required('Linkedin link is required')
         .url('Invalid URL format')
         .nullable(),
     }),
     twitter: Yup.string().when([], {
       is: () => selectedOption === 'socialMedia',
       then: (schema) => schema
+      .required('Twitter link is required')
         .url('Invalid URL format')
         .nullable(),
     }),
