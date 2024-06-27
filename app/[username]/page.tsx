@@ -127,7 +127,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               />
 
               <div className="mt-8 hidden md:flex flex-col">
-                <UserProfileSection />
+                <UserProfileSection email={user.email}/>
               </div>
             </div>
             <div className="md:col-span-2">

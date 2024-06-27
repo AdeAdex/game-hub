@@ -5,11 +5,13 @@ import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 interface ProfileDropdownProps {
   handleClick: () => void; // Assuming handleClick is a function that doesn't take any arguments and returns void
   username: string;
+  email: string;
 }
 
 const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   handleClick,
   username,
+  email
 }) => {
   const { theme } = useContext(ThemeContext); // Get the current theme
 
@@ -98,7 +100,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         View profile
       </Link>
       <Link
-        href="/settings"
+        href={`/settings?email=${email}`}
         className={`px-4 nav-dropdown ${
           theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
         }`}

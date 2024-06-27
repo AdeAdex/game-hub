@@ -276,6 +276,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                         <ProfileDropdown
                           handleClick={handleLogout}
                           username={userData?.userName || ""}
+                          email={userData?.email || ""}
                         />
                       </div>
                     </div>

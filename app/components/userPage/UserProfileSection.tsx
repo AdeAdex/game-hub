@@ -3,7 +3,12 @@ import { ThemeContext } from "@/app/lib/ThemeContext";
 import Link from "next/link";
 
 
-const UserProfileSection = () => {
+interface UserProfileSectionProps {
+  email: string; // Define the prop type
+}
+
+
+const UserProfileSection: React.FC<UserProfileSectionProps> = ({ email }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -25,7 +30,7 @@ const UserProfileSection = () => {
             : "bg-white text-gray-900"
         } rounded-lg shadow-lg p-6 mb-8`}
       >
-        <Link href="/settings" className="text-xl font-semibold mb-4">Settings</Link>
+        <Link href={`/settings?email=${email}`} className="text-xl font-semibold mb-4">Settings</Link>
         {/* Add settings component */}
       </div>
       <div

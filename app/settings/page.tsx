@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
@@ -9,6 +9,8 @@ import { useFormik } from "formik";
 import axios from "axios";
 import validationSchema from "@/app/components/validations/settingsValidationSchema";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { useSearchParams } from "next/navigation";
+
 
 const SettingsPage: React.FC = () => {
   return (
@@ -23,9 +25,20 @@ const SettingsPage: React.FC = () => {
 
 function MyApp() {
   const { theme } = useContext(ThemeContext);
+  const [selectedOption, setSelectedOption] = useState("profile");
   const [isLoading, setIsLoading] = useState(false);
   const [newImage, setNewImage] = useState<string | null>(null);
   const { enqueueSnackbar } = useSnackbar();
+  const searchParams = useSearchParams();
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (searchParams) {
+      const email = searchParams.get('email');
+      console.log(email)
+      setUserEmail(email);
+    }
+  }, [searchParams]);
 
   const formik = useFormik({
     initialValues: {
@@ -35,7 +48,8 @@ function MyApp() {
       email: "",
       password: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: validationSchema(selectedOption),
+    enableReinitialize: true,
     onSubmit: async (values) => {
       console.log(values)
       try {
@@ -43,7 +57,8 @@ function MyApp() {
         
         const response = await axios.post("/api/settings", { 
           ...values, 
-          profilePicture: newImage 
+          profilePicture: newImage ,
+          userEmail: userEmail
         });
 
         if (response.status === 200) {
@@ -78,116 +93,112 @@ function MyApp() {
     }
   };
 
-  return (
-    <div
-      className={`min-h-screen py-[100px] ${
-        theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
-    >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
-      <div
-        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}
-      >
-        <h3
-          className={`border-b md:text-[24px] pb-[20px] ${
-            theme === "dark"
-              ? "border-gray-700 text-white"
-              : "border-gray-300 text-[#434343]"
-          } font-bold`}
-        >
-          Settings
-        </h3>
-        <form onSubmit={formik.handleSubmit} className="space-y-6 mt-6">
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold" htmlFor="firstName">
-              First Name:
-            </label>
-            <input
-              type="text"
-              autoComplete="on"
-              name="firstName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
-                formik.errors.firstName && formik.touched.firstName
-                  ? "register-input"
-                  : ""
-              }`}
-              placeholder={
-                formik.touched.firstName && formik.errors.firstName
-                  ? formik.errors.firstName
-                  : "Enter your first name"
-              }
-              value={formik.values.firstName}
-            />
-          </div>
-
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold" htmlFor="lastName">
-              Last Name:
-            </label>
-            <input
-              type="text"
-              autoComplete="on"
-              name="lastName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
-                formik.errors.lastName && formik.touched.lastName
-                  ? "register-input"
-                  : ""
-              }`}
-              placeholder={
-                formik.touched.lastName && formik.errors.lastName
-                  ? formik.errors.lastName
-                  : "Enter your last name"
-              }
-              value={formik.values.lastName}
-            />
-          </div>
-
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold" htmlFor="userName">
-              User Name:
-            </label>
-            <input
-              type="text"
-              autoComplete="on"
-              name="userName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
-                formik.errors.userName && formik.touched.userName
-                  ? "register-input"
-                  : ""
-              }`}
-              placeholder={
-                formik.touched.userName && formik.errors.userName
-                  ? formik.errors.userName
-                  : "Enter your user name"
-              }
-              value={formik.values.userName}
-            />
-          </div>
-
+  const renderForm = () => {
+    switch (selectedOption) {
+      case "profile":
+        return (
+          <>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="firstName">
+                First Name:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="firstName"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                } ${
+                  formik.errors.firstName && formik.touched.firstName
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.firstName && formik.errors.firstName
+                    ? formik.errors.firstName
+                    : "Enter your first name"
+                }
+                value={formik.values.firstName}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="lastName">
+                Last Name:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="lastName"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                } ${
+                  formik.errors.lastName && formik.touched.lastName
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.lastName && formik.errors.lastName
+                    ? formik.errors.lastName
+                    : "Enter your last name"
+                }
+                value={formik.values.lastName}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="userName">
+                User Name:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="userName"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                } ${
+                  formik.errors.userName && formik.touched.userName
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.userName && formik.errors.userName
+                    ? formik.errors.userName
+                    : "Enter your user name"
+                }
+                value={formik.values.userName}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="profilePicture">
+                Profile Picture:
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                name="profilePicture"
+                onChange={handleProfilePictureChange}
+                className={`w-full border border-2 px-3 py-[5px] ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700"
+                    : "border-gray-300"
+                }`}
+              />
+            </div>
+          </>
+        );
+      case "email":
+        return (
           <div className="w-full flex flex-col gap-[5px]">
             <label className="w-full font-bold" htmlFor="email">
               Email:
@@ -215,7 +226,9 @@ function MyApp() {
               value={formik.values.email}
             />
           </div>
-
+        );
+      case "password":
+        return (
           <div className="w-full flex flex-col gap-[5px]">
             <label className="w-full font-bold" htmlFor="password">
               Password:
@@ -243,33 +256,100 @@ function MyApp() {
               value={formik.values.password}
             />
           </div>
+        );
+      default:
+        return null;
+    }
+  };
 
-          <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold" htmlFor="profilePicture">
-              Profile Picture:
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              name="profilePicture"
-              onChange={handleProfilePictureChange}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
+  return (
+    <div
+      className={`min-h-screen py-[100px] ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
+      <Navbar onSearch={(query) => {}} suggestions={[]} />
+      <div
+        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
+          theme === "dark"
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-300"
+        }`}
+      >
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/4 w-full p-4">
+            <div
+              className={`p-2 cursor-pointer rounded-md ${
+                selectedOption === "profile"
+                  ? theme === "dark"
+                    ? "bg-gray-700 hover:bg-gray-600"
+                    : "bg-gray-300 hover:bg-gray-200"
+                  : ""
               }`}
-            />
+              onClick={() => setSelectedOption("profile")}
+            >
+              Profile
+            </div>
+            <div
+              className={`p-2 cursor-pointer rounded-md ${
+                selectedOption === "email"
+                  ? theme === "dark"
+                    ? "bg-gray-700 hover:bg-gray-600"
+                    : "bg-gray-300 hover:bg-gray-200"
+                  : ""
+              }`}
+              onClick={() => setSelectedOption("email")}
+            >
+              Email
+            </div>
+            <div
+              className={`p-2 cursor-pointer rounded-md ${
+                selectedOption === "password"
+                  ? theme === "dark"
+                    ? "bg-gray-700 hover:bg-gray-600"
+                    : "bg-gray-300 hover:bg-gray-200"
+                  : ""
+              }`}
+              onClick={() => setSelectedOption("password")}
+            >
+              Password
+            </div>
           </div>
-
-          <button
-            type="submit"
-            className={`w-full py-2 mt-4 font-bold text-white rounded-md ${
-              theme === "dark" ? "bg-blue-600" : "bg-blue-500"
-            }`}
-          >
-            {isLoading ? "Saving..." : "Save Settings"}
-          </button>
-        </form>
+          <div className="md:w-3/4 w-full p-4">
+            <div
+              className={`relative w-full rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
+                theme === "dark"
+                  ? "bg-gray-800 border-gray-700"
+                  : "bg-white border-gray-300"
+              }`}
+            >
+              <h3
+                className={`border-b md:text-[24px] pb-[20px] ${
+                  theme === "dark"
+                    ? "border-gray-700 text-white"
+                    : "border-gray-300 text-[#434343]"
+                } font-bold`}
+              >
+                {selectedOption.charAt(0).toUpperCase() +
+                  selectedOption.slice(1)}{" "}
+                Settings
+              </h3>
+              <form onSubmit={formik.handleSubmit} className="space-y-6 mt-6">
+                {renderForm()}
+                <button
+                  type="submit"
+                  className={`w-full py-2 mt-4 font-bold text-white rounded-md ${
+                    theme === "dark" ? "bg-blue-600" : "bg-blue-500"
+                  }`}
+                >
+                  {isLoading ? "Saving..." : "Save Settings"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

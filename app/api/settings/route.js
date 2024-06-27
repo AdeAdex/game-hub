@@ -12,17 +12,17 @@ cloudinary.config({
 
 export const POST = async (req) => {
   try {
-    const { email, firstName, lastName, userName, profilePicture, password } =
+    const { email, firstName, lastName, userName, profilePicture, password, userEmail } =
       await req.json();
-    // console.log(email, firstName, lastName, userName, password);
+    console.log(email, firstName, lastName, userName, password, userEmail);
 
-    if (!email) {
+    if (!userEmail) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
     await connectToDb();
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: userEmail });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
