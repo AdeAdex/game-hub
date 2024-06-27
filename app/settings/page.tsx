@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useContext, useState } from "react";
@@ -5,7 +6,6 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { ThemeContext } from "@/app/lib/ThemeContext";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
 import validationSchema from "@/app/components/validations/settingsValidationSchema";
 import { SnackbarProvider, useSnackbar } from "notistack";
@@ -23,34 +23,27 @@ const SettingsPage: React.FC = () => {
 
 function MyApp() {
   const { theme } = useContext(ThemeContext);
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [newImage, setNewImage] = useState<string | null>(null);
   const { enqueueSnackbar } = useSnackbar();
 
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
-      username: "",
+      userName: "",
       email: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      console.log(values)
       try {
-        const formData = new FormData();
-        formData.append("firstName", values.firstName);
-        formData.append("lastName", values.lastName);
-        formData.append("username", values.username);
-        formData.append("email", values.email);
-        formData.append("password", values.password);
-        if (profilePicture) {
-          formData.append("profilePicture", profilePicture);
-        }
-
-        const response = await axios.post("/api/settings", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+        setIsLoading(true);
+        
+        const response = await axios.post("/api/settings", { 
+          ...values, 
+          profilePicture: newImage 
         });
 
         if (response.status === 200) {
@@ -65,19 +58,23 @@ function MyApp() {
       } catch (error: any) {
         console.error("Error making request:", error);
         enqueueSnackbar(
-          error.response?.data?.message || "Error saving settings",
+          error.response?.data?.error || "Error saving settings",
           { variant: "error" }
         );
+      } finally {
+        setIsLoading(false);
       }
     },
   });
 
-  const handleProfilePictureChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setProfilePicture(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setNewImage(reader.result as string);
+      };
     }
   };
 
@@ -164,13 +161,13 @@ function MyApp() {
           </div>
 
           <div className="w-full flex flex-col gap-[5px]">
-            <label className="w-full font-bold" htmlFor="username">
-              Username:
+            <label className="w-full font-bold" htmlFor="userName">
+              User Name:
             </label>
             <input
               type="text"
               autoComplete="on"
-              name="username"
+              name="userName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`w-full border border-2 px-3 py-[5px] ${
@@ -178,16 +175,16 @@ function MyApp() {
                   ? "border-gray-600 bg-gray-700"
                   : "border-gray-300"
               } ${
-                formik.errors.username && formik.touched.username
+                formik.errors.userName && formik.touched.userName
                   ? "register-input"
                   : ""
               }`}
               placeholder={
-                formik.touched.username && formik.errors.username
-                  ? formik.errors.username
-                  : "Enter your username"
+                formik.touched.userName && formik.errors.userName
+                  ? formik.errors.userName
+                  : "Enter your user name"
               }
-              value={formik.values.username}
+              value={formik.values.userName}
             />
           </div>
 
@@ -270,7 +267,7 @@ function MyApp() {
               theme === "dark" ? "bg-blue-600" : "bg-blue-500"
             }`}
           >
-            Save Settings
+            {isLoading ? "Saving..." : "Save Settings"}
           </button>
         </form>
       </div>

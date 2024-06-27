@@ -9,11 +9,11 @@ const settingsValidationSchema = Yup.object().shape({
     .required('Last Name is required')
     .min(2, 'Last Name must be at least 2 characters')
     .max(50, 'Last Name cannot be longer than 50 characters'),
-  username: Yup.string()
-    .required('Username is required')
-    .min(4, 'Username must be at least 4 characters')
-    .max(20, 'Username cannot be longer than 20 characters')
-    .matches(/^[a-zA-Z0-9_-]+$/, 'Invalid username format. Use only letters, numbers, underscore, and hyphen'),
+  userName: Yup.string()
+    .required('User Name is required')
+    .min(4, 'User Name must be at least 4 characters')
+    .max(20, 'User Name cannot be longer than 20 characters')
+    .matches(/^[a-zA-Z0-9_-]+$/, 'Invalid user Name format. Use only letters, numbers, underscore, and hyphen'),
   email: Yup.string()
     .required('Email is required')
     .email('Invalid email format'),

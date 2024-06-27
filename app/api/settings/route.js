@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../utils/database";
 import User from "../../models/user";
-import { hashPassword } from "../../utils/bcrypt";
+import { hashPassword, comparePassword } from "../../utils/bcrypt"; // Make sure to import comparePassword
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -12,8 +12,10 @@ cloudinary.config({
 
 export const POST = async (req) => {
   try {
-    const { email, firstName, lastName, userName, profilePicture, password } = await req.json();
-    
+    const { email, firstName, lastName, userName, profilePicture, password } =
+      await req.json();
+    // console.log(email, firstName, lastName, userName, password);
+
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
@@ -30,14 +32,20 @@ export const POST = async (req) => {
     if (email !== user.email) {
       const emailExists = await User.findOne({ email });
       if (emailExists) {
-        return NextResponse.json({ error: "Email is already taken" }, { status: 400 });
+        return NextResponse.json(
+          { error: "Email is already taken" },
+          { status: 400 }
+        );
       }
     }
 
     if (userName && userName !== user.userName) {
       const userNameExists = await User.findOne({ userName });
       if (userNameExists) {
-        return NextResponse.json({ error: "Username is already taken" }, { status: 400 });
+        return NextResponse.json(
+          { error: "Username is already taken" },
+          { status: 400 }
+        );
       }
     }
 
@@ -52,15 +60,29 @@ export const POST = async (req) => {
       user.profilePicture = uploadedImage.secure_url;
     }
 
+    // Check if the new password is the same as the current password
     if (password) {
+      const isSamePassword = await comparePassword(password, user.password);
+      if (isSamePassword) {
+        return NextResponse.json(
+          { error: "New password cannot be the same as the current password" },
+          { status: 400 }
+        );
+      }
       user.password = await hashPassword(password);
     }
 
     await user.save();
 
-    return NextResponse.json({ message: "User information updated successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "User information updated successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error updating user information:", error.message);
-    return NextResponse.json({ error: "Failed to update user information" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update user information" },
+      { status: 500 }
+    );
   }
 };
