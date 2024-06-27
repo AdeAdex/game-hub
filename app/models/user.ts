@@ -1,4 +1,3 @@
-// /app/models/user.ts
 import mongoose from "mongoose";
 
 const loginDataSchema = new mongoose.Schema({
@@ -33,6 +32,9 @@ const userSchema = new mongoose.Schema(
     ],
     loginData: [loginDataSchema], // Add loginData field
     apiKey: { type: String, required: true },
+    facebook: { type: String }, // Add facebook field
+    linkedin: { type: String }, // Add linkedin field
+    twitter: { type: String }, // Add twitter field
   },
   { timestamps: true }
 );
