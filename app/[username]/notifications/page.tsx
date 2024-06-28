@@ -139,7 +139,7 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
         );
       case "messages":
         return (
-          <div className="py-8">You don't have a new messages to read.</div>
+          <div className="py-8">You don't have any new messages to read.</div>
         );
       case "payments":
         return <div className="py-8">You don't have any pending payments.</div>;
