@@ -34,9 +34,12 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const fetchFriendRequests = async (status: string) => {
     try {
       setLoading(true);
-      const response = await axios.post(`/api/username/notifications/${status}`, {
-        username,
-      });
+      const response = await axios.post(
+        `/api/username/notifications/${status}`,
+        {
+          username,
+        }
+      );
 
       if (response.data.message) {
         setFriendRequests(response.data.results || []);
@@ -70,13 +73,17 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
 
   // Handle confirmation of friend request
   const handleConfirm = (friend: UserDataType) => {
-    console.log(`Confirm friend request from ${friend.firstName} ${friend.lastName}`);
+    console.log(
+      `Confirm friend request from ${friend.firstName} ${friend.lastName}`
+    );
     // Add confirmation logic here
   };
 
   // Handle deletion of friend request
   const handleDelete = (friend: UserDataType) => {
-    console.log(`Delete friend request from ${friend.firstName} ${friend.lastName}`);
+    console.log(
+      `Delete friend request from ${friend.firstName} ${friend.lastName}`
+    );
     // Add deletion logic here
   };
 
@@ -93,7 +100,9 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const renderNotificationContent = () => {
     switch (active) {
       case "all":
-        return <div className="py-8">You haven't received any notification yet.</div>;
+        return (
+          <div className="py-8">You haven't received any notification yet.</div>
+        );
       case "friend-requests":
         return (
           <div className="py-8 flex flex-wrap gap-4">
@@ -118,36 +127,65 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
                 ))
               )
             ) : (
-              <div className={`py-8 text-center ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+              <div
+                className={`py-8 text-center ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
                 You don't have any friend requests.
               </div>
             )}
           </div>
         );
       case "messages":
-        return <div className="py-8">You have new messages to read.</div>;
+        return (
+          <div className="py-8">You don't have a new messages to read.</div>
+        );
       case "payments":
-        return <div className="py-8">You have pending payments.</div>;
+        return <div className="py-8">You don't have any pending payments.</div>;
       default:
         return <div className="py-8">Invalid status.</div>;
     }
   };
 
   return (
-    <div className={`min-h-screen py-[100px] ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
+    <div
+      className={`min-h-screen py-[100px] ${
+        theme === "dark"
+          ? "dark-mode-content text-white"
+          : "bg-gray-100 text-black"
+      }`}
+    >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
-      <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${theme === "dark" ? "bg-gray-800 border-gray-700" : "bg-white border-gray-300"}`}>
-        <h3 className={`border-b font-bold pb-[30px] ${theme === "dark" ? "border-gray-700 text-white" : "border-gray-300 text-[#434343]"} md:text-[20px]`}>
+      <div
+        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
+          theme === "dark"
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-300"
+        }`}
+      >
+        <h3
+          className={`border-b font-bold pb-[30px] ${
+            theme === "dark"
+              ? "border-gray-700 text-white"
+              : "border-gray-300 text-[#434343]"
+          } md:text-[20px]`}
+        >
           Notifications Page
         </h3>
         <div className="flex gap-4 border-b overflow-x-auto w-full notification-status-container">
           {["all", "friend-requests", "messages", "payments"].map((status) => (
             <button
               key={status}
-              className={`p-2 relative whitespace-nowrap border-0 focus:outline-none ${theme === "dark" ? "text-white hover:bg-gray-700" : "text-[#434343] hover:bg-gray-300"} ${active === status ? "font-bold" : ""}`}
+              className={`p-2 relative whitespace-nowrap border-0 focus:outline-none ${
+                theme === "dark"
+                  ? "text-white hover:bg-gray-700"
+                  : "text-[#434343] hover:bg-gray-300"
+              } ${active === status ? "font-bold" : ""}`}
               onClick={() => handleNotification(status)}
             >
-              {status.charAt(0).toUpperCase() + status.slice(1).replace("-", " ")}
+              {status.charAt(0).toUpperCase() +
+                status.slice(1).replace("-", " ")}
               {renderActiveIndicator(status)}
             </button>
           ))}
@@ -166,4 +204,3 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
 };
 
 export default NotificationsPage;
-
