@@ -99,12 +99,12 @@ function MyApp() {
 return (
   <div className={`h-screen ${theme === "dark" ? "dark-mode-content text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
     <Navbar onSearch={(query) => {}} suggestions={[]}/>
-    <main className={`h-screen pt-[80px] md:pt-[100px] ${theme === "dark" ? "bg-gray-800" : "bg-[#F4F4F4]"}`}>
+    <main className={`h-screen pt-[80px] md:pt-[100px] ${theme === "dark" ? "dark-mode-content" : "bg-[#F4F4F4]"}`}>
       {loading ? (
         <Loader />
       ) : (
         <div className="relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px]">
-          <div className={`${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
+          <div className={`p-4 rounded-md ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
             <h3 className={`border-b font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600 text-white" : "border-gray-300 text-[#434343]"}`}>
               Reset Password
             </h3>

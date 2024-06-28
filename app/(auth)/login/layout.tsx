@@ -13,7 +13,7 @@ const LoginLayout: React.FC<LoginLayoutProps> = ({ children }) => {
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    document.body.className = theme === "dark" ? "bg-gray-800" : "bg-white";
+    document.body.className = theme === "dark" ? "dark-mode-content" : "bg-white";
   }, [theme]);
 
   return (
