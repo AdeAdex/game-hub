@@ -29,13 +29,7 @@ const BrowseGamePage: React.FC = () => {
         >
           Browse Games
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {/* Replace with real game data */}
-          <div className="bg-gray-200 rounded-lg p-4">Game 1</div>
-          <div className="bg-gray-200 rounded-lg p-4">Game 2</div>
-          <div className="bg-gray-200 rounded-lg p-4">Game 3</div>
-          {/* Add more games as needed */}
-        </div>
+        
       </div>
       <Footer />
     </div>

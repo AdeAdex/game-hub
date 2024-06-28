@@ -86,7 +86,7 @@ function MyApp() {
             <h4 className="text-xl font-semibold">Frequently Asked Questions</h4>
             <div className="mt-4 space-y-4">
               {faqs.map((faq, index) => (
-                <Accordion key={index} style={{ backgroundColor: theme === 'dark' ? '#424242' : 'white', color: theme === 'dark' ? 'white' : 'black' }}>
+                <Accordion key={index} style={{ backgroundColor: theme === 'dark' ? '#757575' : 'white', color: theme === 'dark' ? 'whiteSmoke' : 'black' }}>
                   <AccordionSummary expandIcon={<MdExpandMore style={{ color: theme === 'dark' ? 'white' : 'black', fontSize: '1.5rem' }} />}>
                     <Typography className="text-lg font-medium">{faq.question}</Typography>
                   </AccordionSummary>

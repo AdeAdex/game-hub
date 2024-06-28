@@ -60,9 +60,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
           </div>
           <div className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Role: {userData.role}</div>
           <div className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Status: {userData.status}</div>
-          <Link  href={`/settings?email=${userData.email}`} className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-3">
+          <div>
+          <Link  href={`/settings?email=${userData.email}`} className="bg-blue-500 text-white py-2 px-4 rounded-lg ">
             Settings
           </Link>
+          </div>
         </div>
       )}
     </div>

@@ -224,10 +224,10 @@ function MyApp() {
         >
           Community
         </h3>
-        <div className="mt-4 space-y-8">
-          <section className="community-section">
+        <div className="mt-4 space-y-8 w-full">
+          <section className="community-section w-full">
             <h4 className="text-xl font-semibold">Latest Discussions</h4>
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
               {discussions && discussions.length > 0 ? (
                 discussions.map((discussion, index) => (
                   <div
@@ -260,7 +260,7 @@ function MyApp() {
             </div>
           </section>
 
-          <section className="community-section">
+          <section className="community-section w-full">
             <h4 className="text-xl font-semibold">Top Contributors</h4>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {contributors && contributors.length > 0 ? (

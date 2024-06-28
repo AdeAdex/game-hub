@@ -15,7 +15,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["avatars.githubusercontent.com", 'res.cloudinary.com', 'media.rawg.io', 'gatherer.wizards.com'],
+    domains: ["avatars.githubusercontent.com", 'res.cloudinary.com', 'media.rawg.io', 'gatherer.wizards.com', 'source.unsplash.com'],
   },
   async headers() {
     return [

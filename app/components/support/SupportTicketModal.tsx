@@ -92,7 +92,7 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
             className={`placeholder-${formik.touched.title && formik.errors.title ? 'red-500' : theme === 'dark' ? 'white' : 'black'}`}
             InputProps={{
               style: {
-                backgroundColor: theme === 'dark' ? '#424242' : 'white',
+                backgroundColor: theme === 'dark' ? '#616161' : 'white',
                 color: theme === 'dark' ? 'white' : 'black',
               },
             }}
@@ -118,7 +118,7 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
             className={`placeholder-${formik.touched.description && formik.errors.description ? 'red-500' : theme === 'dark' ? 'white' : 'black'}`}
             InputProps={{
               style: {
-                backgroundColor: theme === 'dark' ? '#424242' : 'white',
+                backgroundColor: theme === 'dark' ? '#616161' : 'white',
                 color: theme === 'dark' ? 'white' : 'black',
               },
             }}
@@ -129,22 +129,35 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
             }}
           />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-            <Button
+            <button
               onClick={onClose}
-              variant="contained"
-              color="secondary"
-              sx={{ mr: 2 }}
+              type="button"
+              style={{
+                backgroundColor: '#f50057', // secondary color
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                marginRight: '8px',
+              }}
             >
               Cancel
-            </Button>
-            <Button
+            </button>
+            <button
               type="submit"
-              variant="contained"
-              color="primary"
               disabled={formik.isSubmitting}
+              style={{
+                backgroundColor: '#3f51b5', // primary color
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
             >
               {formik.isSubmitting ? 'Submitting...' : 'Submit'}
-            </Button>
+            </button>
           </Box>
         </form>
       </Box>
