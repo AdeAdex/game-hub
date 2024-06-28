@@ -71,7 +71,7 @@ const GameDetailsPage: React.FC = () => {
 
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900" : "bg-white"} text-${theme === "dark" ? "white" : "black"}`}>
+    <div className={`min-h-screen ${theme === "dark" ? "dark-mode-content" : "bg-white"} text-${theme === "dark" ? "white" : "black"}`}>
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <main className={`w-full max-w-[65.25rem] mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]`}>
         <GameHeader

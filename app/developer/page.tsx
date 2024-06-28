@@ -67,7 +67,7 @@ const DeveloperPage: React.FC = () => {
     <div
       className={`min-h-screen py-[100px] ${
         theme === "dark"
-          ? "bg-gray-900 text-white"
+          ? "dark-mode-content text-white"
           : "bg-gray-100 text-gray-900"
       }`}
     >

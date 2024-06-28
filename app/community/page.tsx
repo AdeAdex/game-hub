@@ -203,7 +203,7 @@ function MyApp() {
     <div
       className={`min-h-screen py-24 ${
         theme === "dark"
-          ? "bg-gray-900 text-white"
+          ? "dark-mode-content text-white"
           : "bg-gray-100 text-gray-900"
       }`}
     >

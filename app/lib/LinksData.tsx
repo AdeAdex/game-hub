@@ -3,10 +3,10 @@ import { LinkDataType } from "../types/links";
 
 export const links: LinkDataType[] = [
   {
-    title: "browse game",
-    pathname: "/browse-game",
-    path: "/browse-game",
-    icon: "browse game",
+    title: "Featured Games",
+    pathname: "/featured-games",
+    path: "/featured-games",
+    icon: "featured games",
   },
   {
     title: "About",

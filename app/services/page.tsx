@@ -11,7 +11,7 @@ const ServicesPage: React.FC = () => {
   return (
     <div
       className={`min-h-screen py-[100px] ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        theme === "dark" ? "dark-mode-content text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />

@@ -26,7 +26,7 @@ const UploadGamePage: React.FC = () => {
   return (
     <div
       className={`min-h-screen py-[100px] ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        theme === "dark" ? "dark-mode-content text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
@@ -44,8 +44,8 @@ const UploadGamePage: React.FC = () => {
         >
           Upload Your Game
         </h3>
-        <div className="mt-4">
-          <form onSubmit={formik.handleSubmit} className="space-y-4">
+        <div className="mt-4 w-full md:w-[50%]">
+          <form onSubmit={formik.handleSubmit} className="space-y-4 ">
             <div>
               <input
                 type="text"
@@ -113,7 +113,7 @@ const UploadGamePage: React.FC = () => {
             </div>
             <button
               type="submit"
-              className={`w-full py-2 rounded ${
+              className={`w-full md:w-1/3 py-2 rounded ${
                 theme === "dark"
                   ? "bg-green-600 text-white hover:bg-green-500"
                   : "bg-green-500 text-white hover:bg-green-400"

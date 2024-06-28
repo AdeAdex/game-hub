@@ -101,7 +101,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50"}`}>
+    <div className={`min-h-screen flex flex-col ${theme === "dark" ? "dark-mode-content text-white" : "bg-gray-50"}`}>
       <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="flex flex-col md:flex-row md:space-x-8">
@@ -109,7 +109,6 @@ const DashboardPage = () => {
           <FlowDiagram chartData={chartData} chartOptions={chartOptions} />
         </div>
         <Activities recentActivities={recentActivities} userData={userData} formatDateTime={formatDateTime} />
-        <h1 className="mt-8">My D3.js Visualization</h1>
         {/* <D3Chart /> */}
       </div>
       <Footer />

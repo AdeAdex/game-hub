@@ -14,7 +14,7 @@ const TermsAndConditions: React.FC = () => {
       <main
         className={`pt-[80px] px-4 py-8 ${
           theme === "dark"
-            ? "bg-gray-900 text-gray-200"
+            ? "dark-mode-content text-gray-200"
             : "bg-white text-gray-900"
         }`}
       >

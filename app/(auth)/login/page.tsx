@@ -10,7 +10,7 @@ const LoginPage = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`w-full lg:w-1/3 mx-auto mt-[1px] md:my-6 rounded-sm ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-[#434343]"}`}>
+    <div className={`w-full lg:w-1/3 mx-auto mt-[1px] md:my-6 rounded-sm ${theme === "dark" ? "dark-mode-content text-white" : "bg-white text-[#434343]"}`}>
       <h3 className={`py-[30px] border-b px-[10px] md:px-[30px] font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600" : "border-gray-300"}`}>
         Log in to your game hub account
       </h3>

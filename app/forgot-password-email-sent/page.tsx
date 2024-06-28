@@ -12,7 +12,7 @@ const ForgotPasswordEmailSentPage = () => {
   const { theme } = useContext(ThemeContext); // Use the ThemeContext
 
   return (
-    <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
+    <div className={`pt-[80px] md:pt-[100px] h-screen ${theme === "dark" ? "dark-mode-content text-white" : "bg-[#F4F4F4] text-[#434343]"}`}>
       <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] ${theme === "dark" ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}>
         <div className="pt-[20px] pb-[10px]">
