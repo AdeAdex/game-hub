@@ -50,7 +50,7 @@ const LibraryPage: React.FC<LibraryPageProps> = ({ params }) => {
       }`}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
-      <div className="container mx-auto px-4 lg:px-8 py-8">
+      <div className="mx-auto px-4 lg:px-8 py-8 w-full lg:w-[60%]">
         <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
           <h2 className={`text-2xl font-bold px-6 py-4 border-b border-gray-200 dark:border-gray-700 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
             {username}'s Library
