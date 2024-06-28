@@ -102,7 +102,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   }
 
   return (
-    <div className={`${theme === "dark" ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"} min-h-screen`}>
+    <div className={`${theme === "dark" ? "dark-mode-content text-gray-200" : "bg-gray-100 text-gray-900"} min-h-screen`}>
       <Navbar onSearch={(query) => {}} suggestions={[]}/>
       {user ? (
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8  mt-[60px]">

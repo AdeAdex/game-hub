@@ -442,7 +442,7 @@ function MyApp() {
                 {renderForm()}
                 <button
                   type="submit"
-                  className={`w-full py-2 mt-4 font-bold text-white rounded-md ${
+                  className={`w-full md:w-2/4 py-2 mt-4 font-bold text-white rounded-md ${
                     theme === "dark" ? "bg-blue-600" : "bg-blue-500"
                   }`}
                 >
