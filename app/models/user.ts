@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     loginData: [loginDataSchema], // Add loginData field
-    apiKey: { type: String, required: true },
+    apiKey: { type: String, },
     facebook: { type: String }, // Add facebook field
     linkedin: { type: String }, // Add linkedin field
     twitter: { type: String }, // Add twitter field

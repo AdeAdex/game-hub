@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   const { prompt } = await req.json();
+  // console.log(prompt)
   try {
     await connectToDb();
 
