@@ -37,7 +37,7 @@ const ContributorModal: React.FC<ContributorModalProps> = ({ open, onClose, onSu
       <DialogTitle className={theme === "dark" ? "bg-gray-800 text-white" : ""}>Add a Contributor</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
-          <div className="flex flex-col gap-[5px]">
+          <div className={`flex flex-col gap-[5px] ${theme === "dark" ? "bg-gray-800 text-white" : ""}`}>
             <label htmlFor="contributor-name" className="w-full font-bold text-sm">
               Name
             </label>

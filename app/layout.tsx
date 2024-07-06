@@ -1,4 +1,4 @@
-// /app/layout.tsx
+ // /app/layout.tsx
 
 "use client";
 
@@ -138,3 +138,4 @@ const LoadingScreen = ({ initialTheme }: { initialTheme: string }) => {
     </div>
   );
 };
+

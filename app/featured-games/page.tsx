@@ -49,7 +49,7 @@ const FeaturedGamesPage: React.FC = () => {
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-300"
         }`}>
-        <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+        <div className="bg-white dark-mode-content shadow rounded-lg overflow-hidden">
           <h2
             className={`text-2xl font-bold px-6 py-4 border-b border-gray-200 dark:border-gray-700 ${
               theme === "dark" ? "text-white" : "text-gray-800"

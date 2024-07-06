@@ -26,7 +26,8 @@
     "crypto-js": "^4.2.0",
     "d3": "^7.9.0",
     "dotenv": "^16.4.5",
-    "embla-carousel-react": "^7.1.0",
+    "embla-carousel-react": "^8.1.6",
+    "eslint": "^8.57.0",
     "formik": "^2.4.6",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
@@ -43,7 +44,7 @@
     "react-icons": "^5.0.1",
     "react-modal": "^3.16.1",
     "react-redux": "^9.1.0",
-    "react-responsive": "^9.0.2",
+    "react-responsive": "^10.0.0",
     "react-responsive-carousel": "^3.2.23",
     "react-webcam": "^7.2.0",
     "sharp": "^0.33.4",
@@ -60,16 +61,14 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
-    "@types/react-chartjs-2": "^2.5.7",
     "@types/react-dom": "^18",
     "@types/react-google-recaptcha": "^2.1.9",
     "@types/react-modal": "^3.16.3",
     "@types/ua-parser-js": "^0.7.39",
     "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "^14.2.4",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5.4.2"
+    "typescript": "^5.5.3"
   }
 }

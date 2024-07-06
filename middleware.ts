@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
     "/game-details", 
     "/error",
     "/not-found",
-    "/browse-game", 
+    "/featured-games", 
     "/about", 
     "/services", 
     "/upload-game",

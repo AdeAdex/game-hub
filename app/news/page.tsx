@@ -7,6 +7,8 @@ import { ThemeContext } from "@/app/lib/ThemeContext";
 import axios from "axios";
 import { NewsArticle } from "@/app/types/news";
 import NewsSkeleton from "@/app/components/news/NewsSkeleton";
+import Image from "next/image";
+
 
 const NewsPage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
@@ -18,6 +20,7 @@ const NewsPage: React.FC = () => {
       try {
         const response = await axios.get("/api/news");
         setArticles(response.data.articles);
+        console.log(response.data.articles)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching news:", error);
@@ -66,13 +69,16 @@ const NewsPage: React.FC = () => {
                         : "bg-white text-gray-900"
                     }`}
                   >
-                    {article.urlToImage && (
-                      <img
-                        className="h-48 w-full object-cover"
+                    {/* {article.urlToImage && (
+                      <Image
+                        className="w-full h-auto"
                         src={article.urlToImage}
                         alt={article.title}
+                        width={800} // Adjusted width
+                        height={350} // Adjusted height
+                        style={{ objectFit: 'cover' }}
                       />
-                    )}
+                    )} */}
                     <div className="flex-1 p-6 flex flex-col justify-between">
                       <div className="flex-1">
                         <a href={article.url} target="_blank" rel="noopener noreferrer" className="block mt-2">

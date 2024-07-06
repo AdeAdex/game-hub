@@ -11,6 +11,8 @@ import { UserDataType } from "@/app/types/user";
 import SkeletonLoader from "@/app/components/userPage/library/SkeletonLoader"; // Import SkeletonLoader
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
+import Image from "next/image";
+
 
 interface LibraryPageProps {
   params: {
@@ -63,7 +65,7 @@ const LibraryPage: React.FC<LibraryPageProps> = ({ params }) => {
             ) : (
               userLibrary.map((game) => (
                 <div key={game.id} className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-md">
-                  <img src={game.background_image} alt={game.name} className="rounded-lg mb-2" />
+                  <Image src={game.background_image} alt={game.name} className="rounded-lg mb-2" />
                   <h3 className="text-lg font-bold mb-1">{game.name}</h3>
                   <p className="text-sm">{game.released}</p>
                 </div>
