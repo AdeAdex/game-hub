@@ -7,7 +7,7 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import GameCard from "@/app/components/homePage/GameCard";
 import { ThemeContext } from "@/app/lib/ThemeContext";
-import SkeletonLoader from "@/app/components/featured-games/SkeletonLoader"; // Import SkeletonLoader component
+import CardSkeleton from "@/app/components/homePage/CardSkeleton";
 
 const FeaturedGamesPage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
@@ -60,7 +60,7 @@ const FeaturedGamesPage: React.FC = () => {
           <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5 py-[30px] px-[30px] ">
             {loading // Display skeleton loader while loading is true
               ? Array.from({ length: 6 }).map((_, index) => (
-                  <SkeletonLoader key={index} /> // Render SkeletonLoader component
+                  <CardSkeleton key={index} />
                 ))
               : featuredGames.map((game) => (
                   <GameCard key={game.id} game={game} />
