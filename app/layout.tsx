@@ -211,9 +211,9 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
     };
   }, [pathname, searchParams]);
 
-  return <div className="dark:bg-dark-mode">{children}</div>;
+  return <div>{children}</div>;
 }
 
 const LoadingScreen = () => {
-  return <div className="dark:bg-dark-mode">Loading...</div>;
+  return <div>Loading...</div>;
 }
