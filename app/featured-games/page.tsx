@@ -1,12 +1,12 @@
 // pages/featured-games.tsx
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import GameCard from "@/app/components/homePage/GameCard";
-import SkeletonLoader from "@/app/components/featured-games/SkeletonLoader"; // Import SkeletonLoader component
+import CardSkeleton from "../components/homePage/CardSkeleton";
 
 const FeaturedGamesPage: React.FC = () => {
   const [featuredGames, setFeaturedGames] = useState<any[]>([]);
