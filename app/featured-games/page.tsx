@@ -50,7 +50,7 @@ const FeaturedGamesPage: React.FC = () => {
           <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5 py-[30px] px-[30px] ">
             {loading // Display skeleton loader while loading is true
               ? Array.from({ length: 6 }).map((_, index) => (
-                  <SkeletonLoader key={index} /> // Render SkeletonLoader component
+                  <CardSkeleton key={index} />
                 ))
               : featuredGames.map((game) => (
                   <GameCard key={game.id} game={game} />
