@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
@@ -12,7 +12,6 @@ import FriendRequestCard from "@/app/components/userPage/notification/FriendRequ
 import Loader from "@/app/components/Loader";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import FriendRequestCardMobile from "@/app/components/userPage/notification/FriendRequestCardMobile";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 
 interface NotificationsPageProps {
   params: {
@@ -21,7 +20,6 @@ interface NotificationsPageProps {
 }
 
 const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
-  const { theme } = useContext(ThemeContext); // Use ThemeContext to get the current theme
   const { username } = params;
   const router = useRouter();
   const [active, setActive] = useState("all");
@@ -31,32 +29,61 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const isFullScreen = useMediaQuery("(min-width:600px)");
 
   // Function to fetch friend requests based on active status
-  const fetchFriendRequests = async (status: string) => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `/api/username/notifications/${status}`,
-        {
-          username,
+  // const fetchFriendRequests = async (status: string) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(
+  //       `/api/username/notifications/${status}`,
+  //       {
+  //         username,
+  //       }
+  //     );
+
+  //     if (response.data.message) {
+  //       setFriendRequests(response.data.results || []);
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error fetching ${status} data:`, error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // // Handle initial data fetch and updates based on active status
+  // useEffect(() => {
+  //   const statusFromUrl = searchParams?.get("status") || "all";
+  //   setActive(statusFromUrl);
+  //   fetchFriendRequests(statusFromUrl);
+  // }, [searchParams]);
+
+
+    // Function to fetch friend requests based on active status
+    const fetchFriendRequests = useCallback(async (status: string) => {
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          `/api/username/notifications/${status}`,
+          {
+            username,
+          }
+        );
+  
+        if (response.data.message) {
+          setFriendRequests(response.data.results || []);
         }
-      );
-
-      if (response.data.message) {
-        setFriendRequests(response.data.results || []);
+      } catch (error) {
+        console.error(`Error fetching ${status} data:`, error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error(`Error fetching ${status} data:`, error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Handle initial data fetch and updates based on active status
-  useEffect(() => {
-    const statusFromUrl = searchParams?.get("status") || "all";
-    setActive(statusFromUrl);
-    fetchFriendRequests(statusFromUrl);
-  }, [searchParams]);
+    }, [username]);
+  
+    // Handle initial data fetch and updates based on active status
+    useEffect(() => {
+      const statusFromUrl = searchParams?.get("status") || "all";
+      setActive(statusFromUrl);
+      fetchFriendRequests(statusFromUrl);
+    }, [searchParams, fetchFriendRequests]);
 
   // Handle notification status change
   const handleNotification = async (status: string) => {
@@ -128,9 +155,7 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
               )
             ) : (
               <div
-                className={`py-8 text-center ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-600"
-                }`}
+                className={`py-8 text-center dark:text-gray-400 text-gray-600`}
               >
                 You don't have any friend requests.
               </div>
@@ -150,26 +175,14 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
 
   return (
     <div
-      className={`min-h-screen py-[100px] ${
-        theme === "dark"
-          ? "dark-mode-content text-white"
-          : "bg-gray-100 text-black"
-      }`}
+      className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-black`}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div
-        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}
+        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300`}
       >
         <h3
-          className={`border-b font-bold pb-[30px] ${
-            theme === "dark"
-              ? "border-gray-700 text-white"
-              : "border-gray-300 text-[#434343]"
-          } md:text-[20px]`}
+          className={`border-b font-bold pb-[30px] dark:border-gray-700 dark:text-white border-gray-300 text-[#434343] md:text-[20px]`}
         >
           Notifications Page
         </h3>
@@ -177,11 +190,9 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
           {["all", "friend-requests", "messages", "payments"].map((status) => (
             <button
               key={status}
-              className={`p-2 relative whitespace-nowrap border-0 focus:outline-none ${
-                theme === "dark"
-                  ? "text-white hover:bg-gray-700"
-                  : "text-[#434343] hover:bg-gray-300"
-              } ${active === status ? "font-bold" : ""}`}
+              className={`p-2 relative whitespace-nowrap border-0 focus:outline-none dark:text-white dark:hover:bg-gray-700 text-[#434343] hover:bg-gray-300 ${
+                active === status ? "font-bold" : ""
+              }`}
               onClick={() => handleNotification(status)}
             >
               {status.charAt(0).toUpperCase() +

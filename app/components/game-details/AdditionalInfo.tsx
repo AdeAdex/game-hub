@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import { Developer, Genre, Publisher } from "@/app/types/homePage/game-details";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 interface AdditionalInfoProps {
   developers: Developer[];
@@ -17,12 +16,11 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
   publishers,
   background_image_additional,
 }) => {
-  const { theme } = useContext(ThemeContext);
 
   return (
     <div className="flex flex-col gap-y-6">
-      <div className={`flex flex-col p-4 rounded-lg shadow-lg ${theme === "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-        <strong className={`text-xl mb-4 text-center ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}>
+      <div className={`flex flex-col p-4 rounded-lg shadow-lg dark:bg-gray-700 bg-gray-100`}>
+        <strong className={`text-xl mb-4 text-center dark:text-gray-200 text-gray-800`}>
           Screenshot:
         </strong>
         <div className="relative w-full h-44 md:h-80">
@@ -35,8 +33,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
         </div>
       </div>
 
-      <div className={`flex flex-col p-4 rounded-lg shadow-lg ${theme === "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-        <strong className={`text-xl mb-4 text-center ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}>
+      <div className={`flex flex-col p-4 rounded-lg shadow-lg dark:bg-gray-700 bg-gray-100`}>
+        <strong className={`text-xl mb-4 text-center dark:text-gray-200 text-gray-800`}>
           Developers:
         </strong>
         <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -57,8 +55,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
         </div>
       </div>
 
-      <div className={`flex flex-col p-4 rounded-lg shadow-lg ${theme === "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-        <strong className={`text-xl mb-4 text-center ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}>
+      <div className={`flex flex-col p-4 rounded-lg shadow-lg dark:bg-gray-700 bg-gray-100`}>
+        <strong className={`text-xl mb-4 text-center dark:text-gray-200 text-gray-800`}>
           Publishers:
         </strong>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -79,8 +77,8 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({
         </div>
       </div>
 
-      <div className={`flex flex-col p-4 rounded-lg shadow-lg ${theme === "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-        <strong className={`text-xl mb-4 text-center ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}>
+      <div className={`flex flex-col p-4 rounded-lg shadow-lg dark:bg-gray-700 bg-gray-100`}>
+        <strong className={`text-xl mb-4 text-center dark:text-gray-200 text-gray-800`}>
           Genre:
         </strong>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">

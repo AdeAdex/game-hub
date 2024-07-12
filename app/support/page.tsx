@@ -1,19 +1,21 @@
-
 "use client";
 
 import React, { useState, useContext } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import { useFormik } from "formik";
 import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { supportValidationSchema } from "@/app/components/validations/supportValidationSchema";
 import SupportTicketModal from "@/app/components/support/SupportTicketModal";
 import { faqs } from "../lib/FaqsData";
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@mui/material";
 import { MdExpandMore } from "react-icons/md";
-
 
 const SupportPage: React.FC = () => {
   return (
@@ -27,7 +29,6 @@ const SupportPage: React.FC = () => {
 };
 
 function MyApp() {
-  const { theme } = useContext(ThemeContext);
   const { enqueueSnackbar } = useSnackbar();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -62,33 +63,38 @@ function MyApp() {
 
   return (
     <div
-      className={`min-h-screen py-24 ${
-        theme === "dark" ? "dark-mode-content text-white" : "bg-gray-100 text-gray-900"
-      }`}
+      className={`min-h-screen py-24 dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div
-        className={`relative w-full lg:w-3/5 mx-auto rounded-lg shadow-lg border py-8 px-4 md:px-8 ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}
+        className={`relative w-full lg:w-3/5 mx-auto rounded-lg shadow-lg border py-8 px-4 md:px-8 dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >
         <h3
-          className={`border-b text-2xl pb-4 font-bold ${
-            theme === "dark" ? "border-gray-700 text-white" : "border-gray-300 text-gray-700"
-          }`}
+          className={`border-b text-2xl pb-4 font-bold dark:border-gray-700 dark:text-white border-gray-300 text-gray-700 `}
         >
           Support
         </h3>
         <div className="mt-8 space-y-12">
-        <section className="support-section">
-            <h4 className="text-xl font-semibold">Frequently Asked Questions</h4>
+          <section className="support-section">
+            <h4 className="text-xl font-semibold">
+              Frequently Asked Questions
+            </h4>
             <div className="mt-4 space-y-4">
               {faqs.map((faq, index) => (
-                <Accordion key={index} style={{ backgroundColor: theme === 'dark' ? '#757575' : 'white', color: theme === 'dark' ? 'whiteSmoke' : 'black' }}>
-                  <AccordionSummary expandIcon={<MdExpandMore style={{ color: theme === 'dark' ? 'white' : 'black', fontSize: '1.5rem' }} />}>
-                    <Typography className="text-lg font-medium">{faq.question}</Typography>
+                <Accordion
+                  key={index}
+                  className="bg-white dark:bg-gray-700 text-black dark:text-white"
+                >
+                  <AccordionSummary
+                    expandIcon={
+                      <MdExpandMore
+                      className="text-black dark:text-white text-xl"
+                      />
+                    }
+                  >
+                    <Typography className="text-lg font-medium">
+                      {faq.question}
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography className="text-sm">{faq.answer}</Typography>
@@ -97,7 +103,6 @@ function MyApp() {
               ))}
             </div>
           </section>
-
 
           <section className="support-section">
             <h4 className="text-xl font-semibold">Contact Us</h4>
@@ -113,11 +118,7 @@ function MyApp() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.name}
-                  className={`w-full border border-2 px-3 py-[5px] rounded-md ${
-                    theme === "dark"
-                      ? "bg-gray-700 border-gray-600"
-                      : "bg-white border-gray-300"
-                  } ${
+                  className={`w-full border border-2 px-3 py-[5px] rounded-md dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300  ${
                     formik.errors.name && formik.touched.name
                       ? "register-input"
                       : ""
@@ -140,11 +141,7 @@ function MyApp() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
-                  className={`w-full border border-2 px-3 py-[5px] rounded-md ${
-                    theme === "dark"
-                      ? "bg-gray-700 border-gray-600"
-                      : "bg-white border-gray-300"
-                  } ${
+                  className={`w-full border border-2 px-3 py-[5px] rounded-md dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300  ${
                     formik.errors.email && formik.touched.email
                       ? "register-input"
                       : ""
@@ -166,11 +163,7 @@ function MyApp() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.message}
-                  className={`w-full border border-2 px-3 py-[5px] rounded-md ${
-                    theme === "dark"
-                      ? "bg-gray-700 border-gray-600"
-                      : "bg-white border-gray-300"
-                  } ${
+                  className={`w-full border border-2 px-3 py-[5px] rounded-md dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300  ${
                     formik.errors.message && formik.touched.message
                       ? "register-input"
                       : ""
@@ -186,9 +179,7 @@ function MyApp() {
               <button
                 type="submit"
                 disabled={formik.isSubmitting}
-                className={`px-4 py-2 rounded-md ${
-                  theme === "dark" ? "bg-blue-600 text-white" : "bg-blue-500 text-white"
-                }`}
+                className={`px-4 py-2 rounded-md dark:bg-blue-600 dark:text-white bg-blue-500 text-white `}
               >
                 {formik.isSubmitting ? "Submitting..." : "Submit"}
               </button>
@@ -199,13 +190,12 @@ function MyApp() {
             <h4 className="text-xl font-semibold">Support Tickets</h4>
             <div className="mt-4">
               <p className="text-sm">
-                If you have a specific issue that needs further assistance, please submit a support ticket.
-                Our support team will get back to you as soon as possible.
+                If you have a specific issue that needs further assistance,
+                please submit a support ticket. Our support team will get back
+                to you as soon as possible.
               </p>
               <button
-                className={`mt-4 w-full md:w-auto py-2 px-6 rounded-md font-semibold ${
-                  theme === "dark" ? "bg-green-600 text-white" : "bg-green-500 text-white"
-                } transition-transform transform hover:scale-105`}
+                className={`mt-4 w-full md:w-auto py-2 px-6 rounded-md font-semibold dark:bg-green-600 dark:text-white bg-green-500 text-white  transition-transform transform hover:scale-105`}
                 onClick={toggleModal}
               >
                 Submit a Ticket
@@ -215,7 +205,7 @@ function MyApp() {
         </div>
       </div>
       <Footer />
-      <SupportTicketModal isOpen={isModalOpen} onClose={toggleModal} />      
+      <SupportTicketModal isOpen={isModalOpen} onClose={toggleModal} />
     </div>
   );
 }

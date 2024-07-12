@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { FaHeart, FaComment, FaShare, FaGlobeAfrica } from "react-icons/fa";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
@@ -17,14 +17,11 @@ import { PostDataType } from "@/app/types/post";
 import { UserDataType } from "@/app/types/user";
 import { CommentDataType } from "@/app/types/comments";
 import axios from "axios";
-import { ThemeContext } from "@/app/lib/ThemeContext";
-
-
 
 interface PostProps {
   posts: PostDataType[];
   likedPosts: string[];
-  setLikedPosts:React.Dispatch<React.SetStateAction<string[]>>;
+  setLikedPosts: React.Dispatch<React.SetStateAction<string[]>>;
   username: string;
   user: UserDataType;
   setPosts: React.Dispatch<React.SetStateAction<PostDataType[]>>;
@@ -58,33 +55,32 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   const [openModal, setOpenModal] = useState(false);
   const [openCommentDialog, setOpenCommentDialog] = useState<boolean>(false);
   const [comments, setComments] = useState<CommentDataType[]>([]);
-  const { theme } = useContext(ThemeContext);
-  
 
   const router = useRouter();
 
-  const handleShare = async (postId: string, userId: string ) => {
+  const handleShare = async (postId: string, userId: string) => {
     try {
       // Here you can implement share functionality using browser APIs or third-party libraries
       const shareUrl = `https://adex-game-hub.vercel.app/user/${username}/post/${postId}`;
-      const shareText = `Check out this post by ${userId}: "${posts.find(p => p._id === postId)?.content}"`;
-  
+      const shareText = `Check out this post by ${userId}: "${
+        posts.find((p) => p._id === postId)?.content
+      }"`;
+
       if (navigator.share) {
         await navigator.share({
-          title: 'Check out this post',
+          title: "Check out this post",
           text: shareText,
           url: shareUrl,
         });
-        console.log('Shared successfully');
+        console.log("Shared successfully");
       } else {
-        console.log('Web Share API not supported');
+        console.log("Web Share API not supported");
         // Fallback share options for browsers that do not support Web Share API
       }
     } catch (error) {
-      console.error('Error sharing post:', error);
+      console.error("Error sharing post:", error);
     }
   };
-
 
   const handleReaction = async (postId: string) => {
     try {
@@ -113,7 +109,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             ? [...prevLikedPosts, postId]
             : prevLikedPosts.filter((id) => id !== postId)
         );
-       
       } else {
         console.error("Failed to react to post:", response.data.message);
       }
@@ -121,7 +116,6 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
       console.error("Error reacting to post:", error.message);
     }
   };
-
 
   const handleClose = () => {
     setOpen(false);
@@ -161,20 +155,18 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
   };
 
   const handleOpenCommentDialog = (postId: string) => {
-  // If the comment dialog is already open, do nothing
-  if (openCommentDialog) {
-    return;
-  }
+    // If the comment dialog is already open, do nothing
+    if (openCommentDialog) {
+      return;
+    }
 
-  const post = posts.find((post) => post._id === postId);
-  if (post) {
-    setSelectedPost(post);
-    setSelectedPostId(postId);
-    setOpenCommentDialog(true);
-  }
-};
-
-  
+    const post = posts.find((post) => post._id === postId);
+    if (post) {
+      setSelectedPost(post);
+      setSelectedPostId(postId);
+      setOpenCommentDialog(true);
+    }
+  };
 
   const calculateElapsedTime = (timestamp: string): string => {
     const commentTimestamp = new Date(timestamp);
@@ -197,23 +189,24 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
     const elapsedDays = Math.floor(elapsedHours / 24);
     return `${elapsedDays} day${elapsedDays > 1 ? "s" : ""} ago`;
   };
- 
 
   const handlePostPage = (postId: string) => {
     router.push(`/user/${user.userName}/post/${postId}`);
   };
 
-  
   return (
     <div>
       {posts.length > 0 ? (
         posts.map((post) => (
           <div
             key={post._id}
-            className={`mb-4 p-4 rounded-lg shadow-md ${theme === "dark" ? "bg-gray-800 text-gray-200" : "bg-white text-gray-900"}`}
+            className="mb-4 p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200"
           >
-            <div className={`flex justify-between hover:bg-${theme === "dark" ? "gray-700" : "gray-200"} mb-2 cursor-pointer py-1`}>
-              <div className="flex items-center w-[80%]" onClick={() => handlePostPage(post._id)}>
+            <div className="flex justify-between hover:bg-gray-200 dark:hover:bg-gray-700 mb-2 cursor-pointer py-1">
+              <div
+                className="flex items-center w-[80%]"
+                onClick={() => handlePostPage(post._id)}
+              >
                 <div className="relative w-8 h-8 mr-2">
                   <Image
                     src={post?.userId?.profilePicture || avatar}
@@ -239,7 +232,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
                 </div>
               </div>
               <div
-                className={`hover:bg-${theme === "dark" ? "gray-600" : "gray-400"} rounded-full p-3 cursor-pointer`}
+                className="hover:bg-gray-400 dark:hover:bg-gray-600 rounded-full p-3 cursor-pointer"
                 onClick={() => handleToggleModal(post._id)}
               >
                 <CiMenuKebab className="flex my-auto" />
@@ -337,7 +330,7 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
             <div className="flex justify-between items-center mt-2 px-4 text-gray-500">
               <button
                 onClick={() => handleReaction(post._id)}
-                className="text-[8px]"
+                className="text-[8px] dark:text-white text-black"
               >
                 {likedPosts.includes(post._id) ? (
                   <>
@@ -354,13 +347,13 @@ const PostComponent: React.FC<PostProps & { loggedInUserId: string }> = ({
 
               <button
                 onClick={() => handleOpenCommentDialog(post._id)}
-                className="text-[8px]"
+                className="text-[8px] dark:text-white text-black"
               >
                 <FaComment className="mx-auto" size={12} /> Comment
               </button>
               <button
                 onClick={() => handleShare(post._id, post.userId.firstName)}
-                className="text-[8px]"
+                className="text-[8px] dark:text-white text-black"
               >
                 <FaShare className="mx-auto" size={12} /> Share
               </button>

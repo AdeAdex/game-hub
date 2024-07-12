@@ -1,51 +1,55 @@
 "use client";
 
-import React, { useContext } from 'react';
-import { Modal, Box, Typography, Button, TextField } from '@mui/material';
-import { useFormik } from 'formik';
-import axios from 'axios';
+import React, { useContext } from "react";
+import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { ThemeContext } from '@/app/lib/ThemeContext';
-import { supportTicketValidationSchema } from '../validations/supportTicketValidationSchema';
+import { supportTicketValidationSchema } from "../validations/supportTicketValidationSchema";
 
 interface SupportTicketModalProps {
-  isOpen: boolean; 
-  onClose: () => void; 
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const SupportTicketModal: React.FC<SupportTicketModalProps> = ({ isOpen, onClose }) => {
+const SupportTicketModal: React.FC<SupportTicketModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
   return (
     <SnackbarProvider
       maxSnack={1}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <MyApp isOpen={isOpen} onClose={onClose}/>
+      <MyApp isOpen={isOpen} onClose={onClose} />
     </SnackbarProvider>
   );
 };
 
 function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
   const { enqueueSnackbar } = useSnackbar();
-  const { theme } = useContext(ThemeContext);
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      description: '',
+      title: "",
+      description: "",
     },
     validationSchema: supportTicketValidationSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       setSubmitting(true);
       try {
-        const response = await axios.post('/api/conversation/support/tickets', values);
-        enqueueSnackbar(response.data.message || 'Message sent successfully!', {
-          variant: 'success',
+        const response = await axios.post(
+          "/api/conversation/support/tickets",
+          values
+        );
+        enqueueSnackbar(response.data.message || "Message sent successfully!", {
+          variant: "success",
         });
         resetForm();
         onClose(); // Close the modal on successful submission
       } catch (error) {
-        enqueueSnackbar('Failed to send message. Please try again.', {
-          variant: 'error',
+        enqueueSnackbar("Failed to send message. Please try again.", {
+          variant: "error",
         });
       } finally {
         setSubmitting(false);
@@ -62,50 +66,68 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
     >
       <Box
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
           width: 400,
-          bgcolor: theme === 'dark' ? 'grey.800' : 'background.paper',
-          color: theme === 'dark' ? 'white' : 'text.primary',
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
         }}
+        className="bg-white dark:bg-gray-800 text-black dark:text-white"
       >
-        <Typography id="support-ticket-modal-title" variant="h6" component="h2" gutterBottom>
+        <Typography
+          id="support-ticket-modal-title"
+          variant="h6"
+          component="h2"
+          gutterBottom
+        >
           Submit a Support Ticket
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <TextField
             id="title"
             name="title"
-            label={formik.touched.title && formik.errors.title ? formik.errors.title : 'Title'}
+            label={
+              formik.touched.title && formik.errors.title
+                ? formik.errors.title
+                : "Title"
+            }
             variant="outlined"
             fullWidth
             margin="normal"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.title}
-            placeholder={formik.touched.title && formik.errors.title ? formik.errors.title : 'Enter your title'}
-            className={`placeholder-${formik.touched.title && formik.errors.title ? 'red-500' : theme === 'dark' ? 'white' : 'black'}`}
+            placeholder={
+              formik.touched.title && formik.errors.title
+                ? formik.errors.title
+                : "Enter your title"
+            }
+            className={`placeholder-${
+              formik.touched.title && formik.errors.title
+                ? "red-500"
+                : "text-black dark:text-white"
+            }`}
             InputProps={{
-              style: {
-                backgroundColor: theme === 'dark' ? '#616161' : 'white',
-                color: theme === 'dark' ? 'white' : 'black',
-              },
+              className: "bg-white dark:bg-gray-700 text-black dark:text-white",
             }}
             InputLabelProps={{
-              style: {
-                color: formik.touched.title && formik.errors.title ? 'red' : theme === 'dark' ? 'white' : 'black',
-              },
+              className:
+                formik.touched.title && formik.errors.title
+                  ? "text-red-500"
+                  : "text-black dark:text-white",
             }}
           />
           <TextField
             id="description"
             name="description"
-            label={formik.touched.description && formik.errors.description ? formik.errors.description : 'Description'}
+            label={
+              formik.touched.description && formik.errors.description
+                ? formik.errors.description
+                : "Description"
+            }
             variant="outlined"
             fullWidth
             margin="normal"
@@ -114,49 +136,40 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.description}
-            placeholder={formik.touched.description && formik.errors.description ? formik.errors.description : 'Enter your description'}
-            className={`placeholder-${formik.touched.description && formik.errors.description ? 'red-500' : theme === 'dark' ? 'white' : 'black'}`}
+            placeholder={
+              formik.touched.description && formik.errors.description
+                ? formik.errors.description
+                : "Enter your description"
+            }
+            className={`placeholder-${
+              formik.touched.description && formik.errors.description
+                ? "red-500"
+                : "text-black dark:text-white"
+            }`}
             InputProps={{
-              style: {
-                backgroundColor: theme === 'dark' ? '#616161' : 'white',
-                color: theme === 'dark' ? 'white' : 'black',
-              },
+              className: "bg-white dark:bg-gray-700 text-black dark:text-white",
             }}
             InputLabelProps={{
-              style: {
-                color: formik.touched.description && formik.errors.description ? 'red' : theme === 'dark' ? 'white' : 'black',
-              },
+              className:
+                formik.touched.description && formik.errors.description
+                  ? "text-red-500"
+                  : "text-black dark:text-white",
             }}
           />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
             <button
               onClick={onClose}
               type="button"
-              style={{
-                backgroundColor: '#f50057', // secondary color
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                marginRight: '8px',
-              }}
+              className="bg-pink-500 text-white border-none px-4 py-2 rounded cursor-pointer mr-2"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={formik.isSubmitting}
-              style={{
-                backgroundColor: '#3f51b5', // primary color
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className="bg-indigo-500 text-white border-none px-4 py-2 rounded cursor-pointer"
             >
-              {formik.isSubmitting ? 'Submitting...' : 'Submit'}
+              {formik.isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </Box>
         </form>

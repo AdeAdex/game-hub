@@ -19,10 +19,8 @@ import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { Game } from "@/app/types/homePage/games";
-
 
 interface AuthState {
   firstName?: string;
@@ -66,7 +64,6 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
   const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
   const socket = useRef<Socket | null>(null);
-  const { theme } = useContext(ThemeContext); // Use the ThemeContext
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -150,9 +147,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
   return (
     <main>
       <nav
-        className={`w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between fixed z-50 top-0 ${
-          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
-        }`}
+        className={`w-full flex px-5 py-3 shadow-md justify-between md:gap-8 lg:justify-between fixed z-50 top-0 dark:bg-gray-900 dark:text-white bg-white text-black `}
       >
         <div className="flex gap-3 md:gap-5">
           <MenuIcon
@@ -161,7 +156,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
           />
           <Logo />
         </div>
-        <Links ClassName={` hidden md:flex `}/>
+        <Links ClassName={` hidden md:flex `} />
 
         {isMobileMenuOpen && (
           <div className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -182,16 +177,12 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
           suggestions={suggestions}
           ClassName={`hidden md:flex`}
           Placeholder={`Search for games or creator`}
-          inputClassName={`text-[14px] px-3 h-[30px] ${
-            theme === "dark"
-              ? "bg-gray-800 text-white"
-              : "bg-gray-200 text-black"
-          } my-auto`}
+          inputClassName={`text-[14px] px-3 h-[30px] dark:bg-gray-800 dark:text-white bg-gray-200 text-black my-auto`}
         />
         <div className="flex gap-3 md:gap-8">
           {userData && userData.incomingFriendRequests && (
             <Link
-              className="flex relative cursor-pointer my-auto hover:bg-gray-100 rounded-md "
+              className="flex relative cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 rounded-md "
               href={`/${userData?.userName}/notifications?status=all`}
             >
               <IoMdNotifications size={25} className="my-auto " />
@@ -207,7 +198,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                   <div className="flex gap-3 cursor-pointer">
                     <PingLoader />
                     <div
-                      className={`flex my-auto bg-gray-100 p-1 md:p-2 rounded-lg border cursor-pointer ${
+                      className={`flex my-auto dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 p-1 md:p-2 rounded-lg border cursor-pointer ${
                         dropdownOpen ? "border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
@@ -225,11 +216,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                   <div className="flex gap-3">
                     <Link
                       href={`/${userData?.userName}`}
-                      className={`flex gap-2 cursor-pointer my-auto ${
-                        theme === "dark"
-                          ? "hover:bg-gray-600"
-                          : "hover:bg-gray-200"
-                      }`}
+                      className={`flex gap-2 cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 `}
                     >
                       {userData?.profilePicture ? (
                         <Image
@@ -256,10 +243,8 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                     </Link>
 
                     <div
-                      className={`${
-                        theme === "dark" ? "hover:bg-gray-200" : "bg-gray-100"
-                      } flex my-auto p-1 md:p-2 rounded-lg border cursor-pointer ${
-                        dropdownOpen ? "border-blue-500" : ""
+                      className={`dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 flex my-auto p-1 md:p-2 rounded-lg border cursor-pointer ${
+                        dropdownOpen ? "dark:border-blue-500" : ""
                       } `}
                       onClick={handleDropdownToggle}
                     >

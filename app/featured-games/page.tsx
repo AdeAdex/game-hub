@@ -6,11 +6,9 @@ import axios from "axios";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import GameCard from "@/app/components/homePage/GameCard";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import SkeletonLoader from "@/app/components/featured-games/SkeletonLoader"; // Import SkeletonLoader component
 
 const FeaturedGamesPage: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
   const [featuredGames, setFeaturedGames] = useState<any[]>([]);
   const [loading, setLoading] = useState(true); // State to manage loading state
 
@@ -37,23 +35,15 @@ const FeaturedGamesPage: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen py-[100px] ${
-        theme === "dark"
-          ? "dark-mode-content text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+      className={`min-h-screen py-[100px] dark:bg-dark-mode text-white bg-gray-100 text-gray-900 `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
-      <div className={`relative w-full lg:w-[80%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}>
-        <div className="bg-white dark-mode-content shadow rounded-lg overflow-hidden">
+      <div
+        className={`relative w-full lg:w-[80%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 border-gray-700 bg-white border-gray-300 `}
+      >
+        <div className="bg-gray-100 dark:bg-dark-mode shadow rounded-lg overflow-hidden">
           <h2
-            className={`text-2xl font-bold px-6 py-4 border-b border-gray-200 dark:border-gray-700 ${
-              theme === "dark" ? "text-white" : "text-gray-800"
-            }`}
+            className={`text-2xl font-bold px-6 py-4 border-b border-gray-200 dark:border-gray-700 dark:text-white text-gray-800 `}
           >
             Featured Games
           </h2>

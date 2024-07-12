@@ -7,7 +7,6 @@ import avatar from "../../../public/images/robot.png";
 import axios from "axios";
 import { FiMessageCircle } from "react-icons/fi";
 import { UserDataType } from "@/app/types/user";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const style = {
   position: "absolute" as "absolute",
@@ -32,7 +31,6 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
   setOpenFriendsDialog,
   user,
 }) => {
-  const { theme } = useContext(ThemeContext);
   const [friends, setFriends] = useState<UserDataType[]>([]);
 
   useEffect(() => {
@@ -67,9 +65,7 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
       >
         <Box
           sx={style}
-          className={`rounded-md shadow-sm border-none ${
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-          }`}
+          className={`rounded-md shadow-sm border-none dark:bg-gray-800 text-white bg-white text-black`}
         >
           <Typography variant="h6" component="h2">
             Friends
@@ -92,11 +88,7 @@ const FriendsModal: React.FC<FriendsModalProps> = ({
                 </div>
               </div>
               <button
-                className={`cursor-pointer my-auto py-2 px-2 rounded-lg text-[14px] flex gap-1 ${
-                  theme === "dark"
-                    ? "bg-gray-700 hover:bg-gray-600 text-white"
-                    : "bg-gray-300 hover:bg-gray-400 text-black"
-                }`}
+                className={`cursor-pointer my-auto py-2 px-2 rounded-lg text-[14px] flex gap-1 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white bg-gray-300 hover:bg-gray-400 text-black`}
               >
                 <FiMessageCircle className="my-auto" />{" "}
                 <span className="my-auto">Message</span>

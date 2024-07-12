@@ -1,10 +1,8 @@
-
 "use client";
 
 import React, { useContext, useState, useEffect } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import { useFormik } from "formik";
 import axios from "axios";
 import validationSchema from "@/app/components/validations/settingsValidationSchema";
@@ -23,7 +21,6 @@ const SettingsPage: React.FC = () => {
 };
 
 function MyApp() {
-  const { theme } = useContext(ThemeContext);
   const [selectedOption, setSelectedOption] = useState("profile");
   const [isLoading, setIsLoading] = useState(false);
   const [newImage, setNewImage] = useState<string | null>(null);
@@ -112,11 +109,7 @@ function MyApp() {
                 name="firstName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                } ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black ${
                   formik.errors.firstName && formik.touched.firstName
                     ? "register-input"
                     : ""
@@ -139,11 +132,7 @@ function MyApp() {
                 name="lastName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                } ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black ${
                   formik.errors.lastName && formik.touched.lastName
                     ? "register-input"
                     : ""
@@ -166,11 +155,7 @@ function MyApp() {
                 name="userName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                } ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
                   formik.errors.userName && formik.touched.userName
                     ? "register-input"
                     : ""
@@ -192,11 +177,7 @@ function MyApp() {
                 accept="image/*"
                 name="profilePicture"
                 onChange={handleProfilePictureChange}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                }`}
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black `}
               />
             </div>
           </>
@@ -213,11 +194,7 @@ function MyApp() {
               name="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
                 formik.errors.email && formik.touched.email
                   ? "register-input"
                   : ""
@@ -243,11 +220,7 @@ function MyApp() {
               name="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
                 formik.errors.password && formik.touched.password
                   ? "register-input"
                   : ""
@@ -274,11 +247,7 @@ function MyApp() {
                 name="facebook"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                } ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
                   formik.errors.facebook && formik.touched.facebook
                     ? "register-input"
                     : ""
@@ -301,11 +270,7 @@ function MyApp() {
                 name="linkedin"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                } ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
                   formik.errors.linkedin && formik.touched.linkedin
                     ? "register-input"
                     : ""
@@ -328,11 +293,7 @@ function MyApp() {
                 name="twitter"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700"
-                    : "border-gray-300"
-                } ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
                   formik.errors.twitter && formik.touched.twitter
                     ? "register-input"
                     : ""
@@ -354,29 +315,19 @@ function MyApp() {
 
   return (
     <div
-      className={`min-h-screen py-[100px] ${
-        theme === "dark"
-          ? "dark-mode-content text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+      className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div
-        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}
+        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/4 w-full p-4">
+          <div className="md:w-1/4 w-full p-4 space-y-3">
             <div
-              className={`p-2 cursor-pointer rounded-md ${
+              className={`py-2 px-4 rounded-md ${
                 selectedOption === "profile"
-                  ? theme === "dark"
-                    ? "bg-gray-700 hover:bg-gray-600"
-                    : "bg-gray-300 hover:bg-gray-200"
-                  : ""
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 dark:bg-gray-700 dark:text-white"
               }`}
               onClick={() => setSelectedOption("profile")}
             >
@@ -385,10 +336,8 @@ function MyApp() {
             <div
               className={`p-2 cursor-pointer rounded-md ${
                 selectedOption === "email"
-                  ? theme === "dark"
-                    ? "bg-gray-700 hover:bg-gray-600"
-                    : "bg-gray-300 hover:bg-gray-200"
-                  : ""
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 dark:bg-gray-700 dark:text-white"
               }`}
               onClick={() => setSelectedOption("email")}
             >
@@ -397,10 +346,8 @@ function MyApp() {
             <div
               className={`p-2 cursor-pointer rounded-md ${
                 selectedOption === "password"
-                  ? theme === "dark"
-                    ? "bg-gray-700 hover:bg-gray-600"
-                    : "bg-gray-300 hover:bg-gray-200"
-                  : ""
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 dark:bg-gray-700 dark:text-white"
               }`}
               onClick={() => setSelectedOption("password")}
             >
@@ -409,10 +356,8 @@ function MyApp() {
             <div
               className={`p-2 cursor-pointer rounded-md ${
                 selectedOption === "socialMedia"
-                  ? theme === "dark"
-                    ? "bg-gray-700 hover:bg-gray-600"
-                    : "bg-gray-300 hover:bg-gray-200"
-                  : ""
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 dark:bg-gray-700 dark:text-white"
               }`}
               onClick={() => setSelectedOption("socialMedia")}
             >
@@ -421,18 +366,10 @@ function MyApp() {
           </div>
           <div className="md:w-3/4 w-full p-4">
             <div
-              className={`relative w-full rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-                theme === "dark"
-                  ? "bg-gray-800 border-gray-700"
-                  : "bg-white border-gray-300"
-              }`}
+              className={`relative w-full rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 border-gray-700 bg-white border-gray-300 `}
             >
               <h3
-                className={`border-b md:text-[24px] pb-[20px] ${
-                  theme === "dark"
-                    ? "border-gray-700 text-white"
-                    : "border-gray-300 text-[#434343]"
-                } font-bold`}
+                className={`border-b md:text-[24px] pb-[20px] dark:border-gray-700 text-white border-gray-300 text-[#434343] font-bold`}
               >
                 {selectedOption.charAt(0).toUpperCase() +
                   selectedOption.slice(1)}{" "}
@@ -442,9 +379,7 @@ function MyApp() {
                 {renderForm()}
                 <button
                   type="submit"
-                  className={`w-full md:w-2/4 py-2 mt-4 font-bold text-white rounded-md ${
-                    theme === "dark" ? "bg-blue-600" : "bg-blue-500"
-                  }`}
+                  className={`w-full md:w-2/4 py-2 mt-4 font-bold text-white rounded-md dark:bg-blue-600 bg-blue-500 `}
                 >
                   {isLoading ? "Saving..." : "Save Settings"}
                 </button>

@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useContext } from "react";
+import React from "react";
 import Link from "next/link";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const AboutYou = () => {
-  const { theme } = useContext(ThemeContext);
 
   return (
-    <main className={`flex flex-col gap-[25px] ${theme === "dark" ? "text-white" : "text-black"}`}>
-      <div className={`border rounded-sm py-3 px-4 flex flex-col gap-[10px] ${theme === "dark" ? "border-gray-600" : "border-[#CDCDCD]"}`}>
+    <main className={`flex flex-col gap-[25px] dark:text-white text-black`}>
+      <div className={`border rounded-sm py-3 px-4 flex flex-col gap-[10px] dark:border-gray-600 border-[#CDCDCD]`}>
         <h3>About you</h3>
         <div className="flex gap-2">
           <input type="checkbox" name="" id="checkbox1" />
@@ -30,7 +28,7 @@ const AboutYou = () => {
           <input type="checkbox" name="" id="checkbox4" />
           <div className="my-auto flex gap-1">
             <span className="my-auto">I accept the </span>
-            <Link href="/terms-condition" className={`my-auto underline ${theme === "dark" ? "text-red-300" : "text-red-500"}`}>
+            <Link href="/terms-condition" className={`my-auto underline dark:text-red-300 text-red-500`}>
               Terms of Service
             </Link>
           </div>

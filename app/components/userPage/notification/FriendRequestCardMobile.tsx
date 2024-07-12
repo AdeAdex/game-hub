@@ -1,9 +1,7 @@
-
 import React, { useContext } from "react";
 import Image from "next/image";
 import { UserDataType } from "@/app/types/user";
 import avatar from "@/public/images/robot.png";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 
 interface FriendRequestCardProps {
   friend: UserDataType;
@@ -16,14 +14,11 @@ const FriendRequestCardMobile: React.FC<FriendRequestCardProps> = ({
   onConfirm,
   onDelete,
 }) => {
-  const { theme } = useContext(ThemeContext); // Use ThemeContext to get the current theme
   const { firstName, lastName, profilePicture } = friend;
 
   return (
     <div
-      className={`flex justify-between mb-2 cursor-pointer py-1 px-2 ${
-        theme === "dark" ? "hover:bg-gray-700 bg-gray-800 text-white" : "hover:bg-gray-200 bg-white text-gray-700"
-      }`}
+      className={`flex justify-between mb-2 cursor-pointer py-1 px-2 dark:hover:bg-gray-700 dark:bg-gray-800 dark:text-white hover:bg-gray-200 bg-white text-gray-700`}
     >
       <div className="flex items-center w-[100%]">
         <div className="relative mr-2">
@@ -42,21 +37,13 @@ const FriendRequestCardMobile: React.FC<FriendRequestCardProps> = ({
           </div>
           <div className="flex mt-2 w-full gap-x-2">
             <button
-              className={`font-semibold py-1 px-4 rounded w-full ${
-                theme === "dark"
-                  ? "bg-green-600 hover:bg-green-700 text-white"
-                  : "bg-green-500 hover:bg-green-600 text-white"
-              }`}
+              className={`font-semibold py-1 px-4 rounded w-full dark:bg-green-600 dark:hover:bg-green-700 dark:text-white bg-green-500 hover:bg-green-600 text-white`}
               onClick={() => onConfirm(friend)}
             >
               Confirm
             </button>
             <button
-              className={`font-semibold py-1 px-4 rounded w-full ${
-                theme === "dark"
-                  ? "bg-red-600 hover:bg-red-700 text-white"
-                  : "bg-red-500 hover:bg-red-600 text-white"
-              }`}
+              className={`font-semibold py-1 px-4 rounded w-full  dark:bg-green-600 dark:hover:bg-green-700 dark:text-white bg-green-500 hover:bg-green-600 text-white`}
               onClick={() => onDelete(friend)}
             >
               Delete

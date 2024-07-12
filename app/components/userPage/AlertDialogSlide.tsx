@@ -1,7 +1,6 @@
 // /app/components/userPage/AlertDialogSlide.tsx
 
 import * as React from "react";
-import { useContext } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,7 +10,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CircularProgress from "@mui/material/CircularProgress";
 import { TransitionProps } from "@mui/material/transitions";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -37,8 +35,6 @@ export default function AlertDialogSlide({
   selectedPostId,
   handleAction,
 }: AlertDialogSlideProps) {
-  const { theme } = useContext(ThemeContext); // Use ThemeContext to get the current theme
-
   const handleDelete = async () => {
     // Call the handleAction function
     await handleAction("delete", selectedPostId);
@@ -55,47 +51,33 @@ export default function AlertDialogSlide({
         onClose={handleCloseDialog}
         aria-describedby="alert-dialog-slide-description"
         PaperProps={{
-          className:
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black", // Apply theme classes
+          className: "dark:bg-gray-800 dark:text-whit bg-white text-black", // Apply theme classes
         }}
       >
         <DialogTitle
-          className={
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-          }
+          className={"dark:bg-gray-800 dark:text-white bg-white text-black"}
         >
           {"Delete Post?"}
         </DialogTitle>
         <DialogContent
-          className={
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-          }
+          className={"dark:bg-gray-800 dark:text-whit bg-white text-black"}
         >
-          <DialogContentText
-            id="alert-dialog-slide-description"
-            
-          >
-            <span className={theme === "dark" ? "text-white" : "text-black"}>Are you sure you want to delete this post?</span>
-            
+          <DialogContentText id="alert-dialog-slide-description">
+            <span className={"dark:text-white text-black"}>
+              Are you sure you want to delete this post?
+            </span>
           </DialogContentText>
         </DialogContent>
         <DialogActions
-          className={
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-          }
+          className={"dark:bg-gray-800 dark:text-whit bg-white text-black"}
         >
-          <Button
-            onClick={handleCloseDialog}
-            
-          >
-            <span className={theme === "dark" ? "text-white" : ""}>Disagree</span>
+          <Button onClick={handleCloseDialog}>
+            <span className={"dark:text-white"}>Disagree</span>
           </Button>
-          <Button
-            onClick={handleDelete}
-            disabled={loading}
-            
-          >
-            <span className={theme === "dark" ? "text-white" : ""}>{loading ? <CircularProgress size={24} /> : "Agree"}</span>
+          <Button onClick={handleDelete} disabled={loading}>
+            <span className={"dark:text-white"}>
+              {loading ? <CircularProgress size={24} /> : "Agree"}
+            </span>
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,15 +1,18 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "@/app/lib/ThemeContext";
+//  /app/components/ThemeToggle
+
+import React from "react";
+import { useTheme } from "@/app/lib/ThemeContext";
 import { FiSun, FiMoon } from "react-icons/fi";
 
 const ThemeToggle = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <button onClick={toggleTheme} className="cursor-pointer text-xl my-auto">
-      {theme === "light" ? <FiSun size={20} /> : <FiMoon size={20}/>}
+      {theme === "dark" ? <FiMoon size={20} /> : <FiSun size={20} /> }
     </button>
   );
 };
 
 export default ThemeToggle;
+

@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useContext } from "react";
-import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Modal, Box, Typography, TextField } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
 import { UserDataType } from "@/app/types/user";
 import { PostDataType } from "@/app/types/post";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const style = {
   position: "absolute" as "absolute",
@@ -20,7 +19,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
 
 interface PostModalProps {
   user: UserDataType;
@@ -55,7 +53,6 @@ const PostModal: React.FC<PostModalProps> = ({
   );
   const [loading, setLoading] = useState(false);
   const [myPost, setMyPost] = useState<PostDataType | null>(null);
-  const { theme } = useContext(ThemeContext);
 
   // useEffect(() => {
   //  if (selectedPost) {
@@ -172,7 +169,7 @@ const PostModal: React.FC<PostModalProps> = ({
       >
         <Box
           sx={style}
-          className={`rounded-md shadow-sm border-none ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+          className="rounded-md shadow-sm border-none dark:bg-gray-800 dark:text-white bg-white"
         >
           <Typography variant="h6" component="h2">
             {editSelectedPost ? "Edit Post" : "Create a Post"}
@@ -215,17 +212,11 @@ const PostModal: React.FC<PostModalProps> = ({
             onChange={handlePostContentChange}
             fullWidth
             margin="normal"
-            // className={theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}
             InputProps={{
-              className: `${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}`,
-              style: {
-                color: theme === "dark" ? "white" : "black",
-              },
+              className: "dark:bg-gray-700 dark:text-white bg-white text-black",
             }}
             InputLabelProps={{
-              style: {
-                color: theme === "dark" ? "white" : "",
-              },
+              className: "dark:text-white",
             }}
           />
           <div>
@@ -249,18 +240,18 @@ const PostModal: React.FC<PostModalProps> = ({
                 onChange={handleFileChange}
                 accept="image/*"
                 style={{ margin: "16px 0" }}
-                className={theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}
+                className="dark:bg-gray-700 dark:text-white bg-white text-black"
               />
             )}
           </div>
 
           <button
             onClick={handleSubmit}
-            className={`w-full rounded-lg py-2 ${
+            className={`w-full rounded-lg py-2 mt-2 ${
               postContent || postImage
-                ? "bg-blue-500 text-white mt-2"
-                : "bg-gray-400"
-            } ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"}`}
+                ? "bg-blue-500 text-white"
+                : "bg-gray-400 dark:bg-gray-700 dark:text-white text-black"
+            }`}
             disabled={!postContent && !postImage}
           >
             {loading

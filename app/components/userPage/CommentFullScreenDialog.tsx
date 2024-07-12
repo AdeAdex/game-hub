@@ -1,10 +1,11 @@
+
 "use client";
 
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
+// import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
@@ -15,7 +16,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { IoClose } from "react-icons/io5";
 import { IoIosCamera } from "react-icons/io";
-import { LuSend } from "react-icons/lu";
+// import { LuSend } from "react-icons/lu";
 import { BsSendFill } from "react-icons/bs";
 import Box from "@mui/joy/Box";
 import Textarea from "@mui/joy/Textarea"; 
@@ -28,7 +29,6 @@ import { PostDataType } from "@/app/types/post";
 import { CommentDataType } from "@/app/types/comments";
 import PostComponent from "./PostComponent";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -74,7 +74,6 @@ export default function CommentFullScreenDialog({
   const [showCamera, setShowCamera] = useState(false);
 
   const isFullScreen = useMediaQuery("(max-width:700px)");
-  const { theme } = useContext(ThemeContext);
 
   const handleClose = () => {
     if (webcamRef.current) {
@@ -133,28 +132,49 @@ export default function CommentFullScreenDialog({
     }
   };
 
-  useEffect(() => {
-    if (openCommentDialog && selectedPostId) {
-      // console.log(post)
-      fetchComments();
-    }
-  }, [openCommentDialog, selectedPostId, comments, commentContent]);
+  // useEffect(() => {
+  //   if (openCommentDialog && selectedPostId) {
+  //     // console.log(post)
+  //     fetchComments();
+  //   }
+  // }, [openCommentDialog, selectedPostId, comments, commentContent]);
 
-  const fetchComments = async () => {
+  // const fetchComments = async () => {
+  //   try {
+  //     const response = await axios.post(`/api/posts/get-comments`, {
+  //       postId: selectedPostId,
+  //     });
+
+  //     // console.log("response de", response);
+
+  //     if (response.status === 200) {
+  //       setComments(response.data.comments);
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch comments:", error);
+  //   }
+  // };
+
+  const fetchComments = useCallback(async () => {
     try {
       const response = await axios.post(`/api/posts/get-comments`, {
         postId: selectedPostId,
       });
-
-      // console.log("response de", response);
-
+  
       if (response.status === 200) {
         setComments(response.data.comments);
       }
     } catch (error) {
       console.error("Failed to fetch comments:", error);
     }
-  };
+  }, [selectedPostId, setComments]);
+
+  useEffect(() => {
+    if (openCommentDialog && selectedPostId) {
+      fetchComments();
+    }
+  }, [openCommentDialog, selectedPostId, fetchComments, comments, commentContent]);
+  
 
   const handleCameraClick = () => {
     setShowCamera(true);
@@ -218,9 +238,7 @@ export default function CommentFullScreenDialog({
         open={openCommentDialog}
         onClose={handleClose}
         TransitionComponent={Transition}
-        className={`w-full max-w-[800px]  relative overflow-y-auto flex mx-auto ${
-          theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-        }`}
+        className={`w-full max-w-[800px]  relative overflow-y-auto flex mx-auto dark:bg-gray-800 dark:text-white bg-white text-black`}
       >
         <AppBar className={`fixed top-0 left-0 right-0 w-full md:left-1/2 md:transform md:-translate-x-1/2 md:max-w-[800px]`}>
           <Toolbar className={``}>
@@ -239,9 +257,7 @@ export default function CommentFullScreenDialog({
         </AppBar>
         <List
           sx={{ width: "100%" }}
-          className={`w-full ${
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-          }`}
+          className={`w-full dark:bg-gray-800 dark:text-white bg-white text-black`}
         >
           <div className="comments mt-[60px] pb-[100px] px-2 w-full">
             {post && (
@@ -286,9 +302,7 @@ export default function CommentFullScreenDialog({
                     </div>
                     <div>
                       <div
-                        className={`flex flex-col rounded-lg p-2 ${
-                          theme === "dark" ? "bg-gray-700" : "bg-gray-100"
-                        }`}
+                        className={`flex flex-col rounded-lg p-2 dark:bg-gray-700 bg-gray-100`}
                       >
                         <small className="font-bold">
                           {comment.userId
@@ -306,9 +320,7 @@ export default function CommentFullScreenDialog({
             )}
           </div>
           <div
-            className={`fixed bottom-0 left-0 right-0 transform md:left-1/2 md:transform md:-translate-x-1/2 py-2 flex items-center justify-center flex-col w-full md:w-auto md:px-4 lg:px-8 ${
-              theme === "dark" ? "bg-gray-800" : "bg-white"
-            }`}
+            className={`fixed bottom-0 left-0 right-0 transform md:left-1/2 md:transform md:-translate-x-1/2 py-2 flex items-center justify-center flex-col w-full md:w-auto md:px-4 lg:px-8 dark:bg-gray-800 bg-white`}
           >
             <Divider className="w-full bg-gray-500" />
             <Divider className="w-full bg-gray-500" />

@@ -1,9 +1,7 @@
-
 "use client";
 
 import React, { useState, useContext } from "react";
 import { FaSearch } from "react-icons/fa";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 import { Game } from "@/app/types/homePage/games";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,8 +21,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   onSearch,
   suggestions,
 }: SearchBoxProps) => {
-  const { theme } = useContext(ThemeContext); // Use the ThemeContext
-
   const [query, setQuery] = useState("");
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,19 +47,13 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         onChange={handleSearch}
       />
       <button
-        className={`${
-          theme === "dark" ? "bg-gray-600 border-none" : "bg-[#F4F4F4]"
-        } border px-3 h-[30px]  my-auto rounded-tr-sm rounded-bt-sm `}
+        className={`dark:bg-gray-600 dark:border-none bg-[#F4F4F4] border px-3 h-[30px]  my-auto rounded-tr-sm rounded-bt-sm `}
       >
         <FaSearch size={15} />
       </button>
       {query && (
         <ul
-          className={`absolute top-[45px] md:top-[52px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen pb-[20px] md:pb-[55px] ${
-            theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-          } border ${
-            theme === "dark" ? "border-gray-700" : "border-gray-300"
-          } rounded-md shadow-lg z-50`}
+          className={`absolute top-[45px] md:top-[52px] left-50 w-[90%] md:w-[20%] mt-1 overflow-y-auto max-h-screen pb-[20px] md:pb-[55px] dark:bg-gray-800 dark:text-white dark:border-gray-700 bg-white text-black border border-gray-300 rounded-md shadow-lg z-50`}
         >
           <div className="text-[12px] text-center p-2 w-full">
             See results for "{query}"
@@ -71,9 +61,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
           {suggestions.length > 0 ? (
             <>
               <div
-                className={`${
-                  theme === "dark" ? "bg-gray-700" : "bg-gray-200"
-                } text-[12px] px-4 py-1`}
+                className={`dark:bg-gray-700 bg-gray-200 text-[12px] px-4 py-1`}
               >
                 TAGS
               </div>
@@ -85,18 +73,16 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                 ([matchType, games], index) => (
                   <div key={index}>
                     <div
-                      className={`${
-                        theme === "dark" ? "bg-gray-700" : "bg-gray-200"
-                      } text-[12px] px-4 py-1`}
+                      className={`dark:bg-gray-700 bg-gray-200 text-[12px] px-4 py-1`}
                     >
                       ({games.length}) GAMES BY {matchType.toUpperCase()}
                     </div>
                     {games.map((game) => (
                       <Link
                         key={game.id}
-                        href={`/game-details?id=${game.id}&name=${encodeURIComponent(
-                          game.name
-                        )}`}
+                        href={`/game-details?id=${
+                          game.id
+                        }&name=${encodeURIComponent(game.name)}`}
                         passHref
                       >
                         <li
@@ -105,7 +91,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                         >
                           <div className="relative w-8 h-8 mr-2">
                             <Image
-                              src={game.background_image || "/default-image.png"}
+                              src={
+                                game.background_image || "/default-image.png"
+                              }
                               alt={game.name}
                               fill
                               style={{ objectFit: "cover" }}
@@ -118,9 +106,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                               {game.genres.map((genre, index) => (
                                 <span
                                   key={index}
-                                  className={
-                                    theme === "dark" ? "text-yellow-500" : ""
-                                  }
+                                  className="dark:text-yellow-500"
                                 >
                                   {genre.name}
                                 </span>

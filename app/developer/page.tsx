@@ -3,7 +3,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import ApiKeyDisplay from "@/app/components/developer/ApiKeyDisplay";
@@ -13,7 +12,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "@/app/components/developer/LoadingSkeleton";
 
 const DeveloperPage: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
   const { data: session } = useSession();
   const [apiKey, setApiKey] = useState("");
   const [loading, setLoading] = useState(true);
@@ -40,11 +38,11 @@ const DeveloperPage: React.FC = () => {
   }, [session]);
 
   const handleRegister = () => {
-        setShowForm(true);
-        // const newParams = new URLSearchParams(window.location.search);
-        // newParams.set("action", "register-for-api");
-        // router.push(`${window.location.pathname}?${newParams.toString()}`);
-      };
+    setShowForm(true);
+    // const newParams = new URLSearchParams(window.location.search);
+    // newParams.set("action", "register-for-api");
+    // router.push(`${window.location.pathname}?${newParams.toString()}`);
+  };
 
   const handleFormSubmit = (formData: { appName: string; country: string }) => {
     if (session?.user?.email) {
@@ -65,36 +63,24 @@ const DeveloperPage: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen py-[100px] ${
-        theme === "dark"
-          ? "dark-mode-content text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+      className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div
-        className={`w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}
+        className={`w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >
         {loading ? (
           <LoadingSkeleton />
         ) : session ? (
           apiKey ? (
-            <ApiKeyDisplay apiKey={apiKey} theme={theme} />
+            <ApiKeyDisplay apiKey={apiKey} />
           ) : showForm ? (
-            <RegisterForm onSubmit={handleFormSubmit} theme={theme} />
+            <RegisterForm onSubmit={handleFormSubmit} />
           ) : (
-            <RegisterPrompt onRegisterClick={handleRegister} theme={theme} />
+            <RegisterPrompt onRegisterClick={handleRegister} />
           )
         ) : (
-          <p
-            className={`text-sm ${
-              theme === "dark" ? "text-white" : "text-gray-600"
-            }`}
-          >
+          <p className={`text-sm dark:text-white text-gray-600 `}>
             Please log in to access the developer page and manage your API keys.
             If you do not have an account, please sign up to join our developer
             community.

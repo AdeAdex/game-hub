@@ -5,7 +5,6 @@ import ImageSkeleton from "./ImageSkeleton";
 import avatar from "../../../public/images/robot.png";
 import MobileUserProfileSection from "./MobileUserProfileSection";
 import { UserDataType } from "@/app/types/user";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 interface UserAvatarSectionProps {
   isLoading: boolean;
@@ -18,8 +17,6 @@ const UserAvatarSection: React.FC<UserAvatarSectionProps> = ({
   user,
   handleFileSelect,
 }) => {
-  const { theme } = useContext(ThemeContext);
-
   return (
     <>
       <div className="text-center">
@@ -67,10 +64,14 @@ const UserAvatarSection: React.FC<UserAvatarSectionProps> = ({
           style={{ display: "none" }}
           onChange={handleFileSelect}
         />
-        <h1 className={`mt-4 text-3xl font-extrabold ${theme === "dark" ? "text-gray-200" : "text-gray-900"}`}>
+        <h1
+          className={`mt-4 text-3xl font-extrabold dark:text-gray-200 text-gray-900`}
+        >
           {user.firstName} {user.lastName}
         </h1>
-        <p className={`mt-1 text-lg ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>@{user.userName}</p>
+        <p className={`mt-1 text-lg dark:text-gray-400 text-gray-500`}>
+          @{user.userName}
+        </p>
       </div>
       <div className="mt-8 md:hidden">
         <MobileUserProfileSection user={user} />

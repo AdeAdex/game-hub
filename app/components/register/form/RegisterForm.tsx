@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import RegisterWith from "./RegisterWith";
 import Link from "next/link";
 import AboutYou from "./AboutYou";
@@ -8,10 +8,8 @@ import { useRouter } from "next/navigation";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import ReCAPTCHA from "react-google-recaptcha";
 import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
-
 
 const RegisterForm = () => {
   return (
@@ -28,9 +26,8 @@ function MyApp() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const { theme } = useContext(ThemeContext);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
 
   const formik = useFormik({
     initialValues: {
@@ -43,7 +40,6 @@ function MyApp() {
 
     onSubmit: async (values) => {
       setSubmitting(true);
-
 
       if (!recaptchaToken) {
         enqueueSnackbar("Please complete the reCAPTCHA", { variant: "error" });
@@ -118,9 +114,7 @@ function MyApp() {
 
   return (
     <div
-      className={`w-full flex flex-col relative w-full md:w-[50%] pb-[40px] ${
-        theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-      }`}
+      className={`w-full flex flex-col relative w-full md:w-[50%] pb-[40px] dark:bg-gray-800 dark:text-white bg-white text-black`}
     >
       {/* Register with github section */}
       <section>
@@ -142,11 +136,7 @@ function MyApp() {
               name="userName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 border-gray-300 ${
                 formik.errors.userName && formik.touched.userName
                   ? "register-input"
                   : ""
@@ -161,9 +151,7 @@ function MyApp() {
           <div className="text-center">
             <h3 className="font-bold">Your profile page will be</h3>
             <div
-              className={`py-2 px-3 mt-[5px] ${
-                theme === "dark" ? "bg-gray-700" : "bg-[#F9F9F9]"
-              }`}
+              className={`py-2 px-3 mt-[5px] dark:bg-gray-700 bg-[#F9F9F9]`}
               style={{ userSelect: "none" }}
             >
               https://adex-game-hub.vercel.app/
@@ -180,11 +168,7 @@ function MyApp() {
               name="firstName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 border-gray-300 ${
                 formik.errors.firstName && formik.touched.firstName
                   ? "register-input"
                   : ""
@@ -206,11 +190,7 @@ function MyApp() {
               name="lastName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 border-gray-300 ${
                 formik.errors.lastName && formik.touched.lastName
                   ? "register-input"
                   : ""
@@ -232,11 +212,7 @@ function MyApp() {
               name="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 border-gray-300 ${
                 formik.errors.email && formik.touched.email
                   ? "register-input"
                   : ""
@@ -258,11 +234,7 @@ function MyApp() {
               autoComplete="current-password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-700"
-                  : "border-gray-300"
-              } ${
+              className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 border-gray-300 ${
                 formik.errors.password && formik.touched.password
                   ? "register-input"
                   : ""
@@ -293,12 +265,8 @@ function MyApp() {
           <div className="flex flex-col md:flex-row w-full gap-[10px]">
             <button
               type="submit"
-              className={`text-center py-2 px-4 text-white rounded-sm ${
-                submitting
-                  ? "bg-gray-400"
-                  : theme === "dark"
-                  ? "bg-gray-700"
-                  : "bg-[#FF2449]"
+              className={`text-center py-2 px-4 text-white rounded-sm  ${
+                submitting ? "bg-gray-400" : "dark:bg-gray-700 bg-[#FF2449]"
               }`}
               disabled={submitting}
             >
@@ -312,9 +280,7 @@ function MyApp() {
               <span>or already have an account?</span>
               <Link
                 href="/login"
-                className={`underline ml-[5px] ${
-                  theme === "dark" ? "text-red-300" : "text-red-600"
-                }`}
+                className={`underline ml-[5px] dark:text-red-300 text-red-600 `}
               >
                 Log in
               </Link>

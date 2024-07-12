@@ -3,15 +3,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import axios from "axios";
 import { NewsArticle } from "@/app/types/news";
 import NewsSkeleton from "@/app/components/news/NewsSkeleton";
 import Image from "next/image";
 
-
 const NewsPage: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +17,7 @@ const NewsPage: React.FC = () => {
       try {
         const response = await axios.get("/api/news");
         setArticles(response.data.articles);
-        console.log(response.data.articles)
+        console.log(response.data.articles);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching news:", error);
@@ -33,25 +30,15 @@ const NewsPage: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen py-[100px] ${
-        theme === "dark" ? "dark-mode-content text-white" : "bg-gray-100 text-gray-900"
-      }`}
+      className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className={`relative w-full mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] ${
-            theme === "dark"
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-300"
-          }`}
+          className={`relative w-full mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300`}
         >
           <h3
-            className={`border-b md:text-[20px] pb-[10px] ${
-              theme === "dark"
-                ? "border-gray-700 text-white"
-                : "border-gray-300 text-[#434343]"
-            } font-bold`}
+            className={`border-b md:text-[20px] pb-[10px] dark:border-gray-700 dark:text-white border-gray-300 text-[#434343] font-bold`}
           >
             News
           </h3>
@@ -63,11 +50,7 @@ const NewsPage: React.FC = () => {
                 {articles.map((article, index) => (
                   <div
                     key={index}
-                    className={`flex flex-col rounded-lg shadow-lg overflow-hidden ${
-                      theme === "dark"
-                        ? "bg-gray-700 text-white"
-                        : "bg-white text-gray-900"
-                    }`}
+                    className={`flex flex-col rounded-lg shadow-lg overflow-hidden dark:bg-gray-700 dark:text-white bg-white text-gray-900 `}
                   >
                     {/* {article.urlToImage && (
                       <Image
@@ -81,16 +64,27 @@ const NewsPage: React.FC = () => {
                     )} */}
                     <div className="flex-1 p-6 flex flex-col justify-between">
                       <div className="flex-1">
-                        <a href={article.url} target="_blank" rel="noopener noreferrer" className="block mt-2">
-                          <p className="text-xl font-semibold">{article.title}</p>
-                          <p className="mt-3 text-base">{article.description}</p>
+                        <a
+                          href={article.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block mt-2"
+                        >
+                          <p className="text-xl font-semibold">
+                            {article.title}
+                          </p>
+                          <p className="mt-3 text-base">
+                            {article.description}
+                          </p>
                         </a>
                       </div>
                       <div className="mt-6 flex items-center">
                         <div className="flex-shrink-0">
                           <span className="sr-only">{article.author}</span>
                           <div className="h-10 w-10 rounded-full bg-gray-400 flex items-center justify-center">
-                            <span className="text-white">{article.author ? article.author[0] : "A"}</span>
+                            <span className="text-white">
+                              {article.author ? article.author[0] : "A"}
+                            </span>
                           </div>
                         </div>
                         <div className="ml-3">
@@ -99,10 +93,16 @@ const NewsPage: React.FC = () => {
                           </p>
                           <div className="flex space-x-1 text-sm">
                             <time dateTime={article.publishedAt}>
-                              {new Date(article.publishedAt).toLocaleDateString()}
+                              {new Date(
+                                article.publishedAt
+                              ).toLocaleDateString()}
                             </time>
                             <span aria-hidden="true">&middot;</span>
-                            <span>{new Date(article.publishedAt).toLocaleTimeString()}</span>
+                            <span>
+                              {new Date(
+                                article.publishedAt
+                              ).toLocaleTimeString()}
+                            </span>
                           </div>
                         </div>
                       </div>

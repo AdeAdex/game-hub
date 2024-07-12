@@ -2,7 +2,7 @@
 "use client";
 
 // Import React and necessary libraries
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Chart, registerables } from "chart.js";
@@ -13,14 +13,12 @@ import UserProfile from "../components/dashboard/UserProfile";
 import FlowDiagram from "../components/dashboard/FlowDiagram";
 import Activities from "../components/dashboard/Activities";
 import { UserDataType, ActivityType } from "../types/user";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import ThemeContext
 // import D3Chart from "../components/dashboard/D3Chart";
 
 Chart.register(...registerables);
 
 const DashboardPage = () => {
   const { data: session } = useSession();
-  const { theme } = useContext(ThemeContext); // Get the current theme
   const [userData, setUserData] = useState<UserDataType | null>(null);
   const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,8 +58,14 @@ const DashboardPage = () => {
   };
 
   const currentMonth = new Date().getMonth();
-  const daysInMonth = new Date(new Date().getFullYear(), currentMonth + 1, 0).getDate();
-  const labels = Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
+  const daysInMonth = new Date(
+    new Date().getFullYear(),
+    currentMonth + 1,
+    0
+  ).getDate();
+  const labels = Array.from({ length: daysInMonth }, (_, i) =>
+    (i + 1).toString()
+  );
   const data = labels.map((_, i) => loginCounts[i] || 0);
 
   const chartData = {
@@ -85,12 +89,12 @@ const DashboardPage = () => {
         type: "linear" as const,
         beginAtZero: true,
         ticks: {
-          color: theme === "dark" ? "#CBD5E0" : "#4B5563", // Adjust ticks color based on theme
+          color: "dark:#CBD5E0 #4B5563", // Adjust ticks color based on theme
         },
       },
       x: {
         ticks: {
-          color: theme === "dark" ? "#CBD5E0" : "#4B5563", // Adjust ticks color based on theme
+          color: "dark:#CBD5E0 #4B5563", // Adjust ticks color based on theme
         },
       },
     },
@@ -101,14 +105,20 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col ${theme === "dark" ? "dark-mode-content text-white" : "bg-gray-50"}`}>
-      <Navbar onSearch={(query) => {}} suggestions={[]}/>
+    <div
+      className={`min-h-screen flex flex-col dark:bg-dark-mode dark:text-white bg-gray-50`}
+    >
+      <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="flex flex-col md:flex-row md:space-x-8">
           <UserProfile userData={userData} />
           <FlowDiagram chartData={chartData} chartOptions={chartOptions} />
         </div>
-        <Activities recentActivities={recentActivities} userData={userData} formatDateTime={formatDateTime} />
+        <Activities
+          recentActivities={recentActivities}
+          userData={userData}
+          formatDateTime={formatDateTime}
+        />
         {/* <D3Chart /> */}
       </div>
       <Footer />
@@ -117,8 +127,6 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
-
-
 
 // useEffect(() => {
 //   const fetchUserData = async () => {

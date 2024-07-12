@@ -1,13 +1,13 @@
 // components/homePage/GameCard.tsx
 
+
 'use client'
 
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import { Tooltip } from "@mui/material";
 import { Game } from "@/app/types/homePage/games";
 import CustomTooltip from "./CustomTooltip"; // Import CustomTooltip
@@ -26,7 +26,6 @@ interface GameCardProps {
 }
 
 const GameCard: React.FC<GameCardProps> = ({ game }) => {
-  const { theme } = useContext(ThemeContext);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -96,9 +95,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
   return (
     <div
       ref={cardRef}
-      className={`w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out ${
-        theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"
-      }`}
+      className="w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out bg-white text-black dark:bg-gray-800 dark:text-white"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -143,9 +140,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
               {game.genres.map((genre, index) => (
                 <small
                   key={index}
-                  className={`text-[12px] ${
-                    theme === "dark" ? "text-yellow-500" : ""
-                  }`}
+                  className="text-[12px] dark:text-yellow-500"
                 >
                   {genre.name}
                 </small>

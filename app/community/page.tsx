@@ -4,7 +4,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 import { communityValidationSchema } from "@/app/components/validations/communityValidationSchema";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import axios from "axios";
@@ -33,7 +32,6 @@ const CommunityPage: React.FC = () => {
 };
 
 function MyApp() {
-  const { theme } = useContext(ThemeContext);
   const { enqueueSnackbar } = useSnackbar();
   const [submitting, setSubmitting] = useState(false);
   const [discussions, setDiscussions] = useState<Discussion[]>([]);
@@ -51,9 +49,7 @@ function MyApp() {
           axios.get("/api/conversation/contributors"),
         ]);
 
-        // console.log("Discussions Response:", discussionsResponse.data);
-        // console.log("Contributors Response:", contributorsResponse.data);
-
+      
         setDiscussions(discussionsResponse.data);
         setContributors(contributorsResponse.data);
       } catch (error) {
@@ -123,64 +119,30 @@ function MyApp() {
     },
   });
 
-  // const contributorFormik = useFormik({
-  //   initialValues: {
-  //     name: "",
-  //     description: "",
-  //   },
-  //   onSubmit: async (values) => {
-  //     setSubmitting(true);
-  //     try {
-  //       const response = await axios.post(
-  //         "/api/conversation/contributors",
-  //         values
-  //       );
-  //       console.log("Contributor Post Response:", response.data);
 
-  //       enqueueSnackbar(
-  //         response.data.message || "Contributor added successfully!",
-  //         {
-  //           variant: "success",
-  //         }
-  //       );
-
-  //       contributorFormik.resetForm();
-
-  //       // Ensure response.data.newContributor matches the expected structure
-  //       if (response.data.newContributor) {
-  //         setContributors((prevContributors) => [
-  //           response.data.newContributor,
-  //           ...prevContributors,
-  //         ]);
-  //         handleCloseContributorDialog();
-  //       } else {
-  //         console.error("Unexpected response structure:", response.data);
-  //         enqueueSnackbar("Unexpected response structure. Please try again.", {
-  //           variant: "error",
-  //         });
-  //       }
-  //     } catch (error: any) {
-  //       console.error("Error adding contributor:", error.message);
-  //       enqueueSnackbar("Failed to add contributor. Please try again.", {
-  //         variant: "error",
-  //       });
-  //     } finally {
-  //       setSubmitting(false);
-  //     }
-  //   },
-  // });
-
-  const handleAddContributor = async (values: { name: string; description: string }) => {
+  const handleAddContributor = async (values: {
+    name: string;
+    description: string;
+  }) => {
     setSubmitting(true);
     try {
-      const response = await axios.post("/api/conversation/contributors", values);
+      const response = await axios.post(
+        "/api/conversation/contributors",
+        values
+      );
       console.log("Contributor Post Response:", response.data);
 
       if (response.data.newContributor) {
-        enqueueSnackbar(response.data.message || "Contributor added successfully!", {
-          variant: "success",
-        });
-        setContributors((prevContributors) => [response.data.newContributor, ...prevContributors]);
+        enqueueSnackbar(
+          response.data.message || "Contributor added successfully!",
+          {
+            variant: "success",
+          }
+        );
+        setContributors((prevContributors) => [
+          response.data.newContributor,
+          ...prevContributors,
+        ]);
         handleCloseContributorDialog();
       } else {
         console.error("Unexpected response structure:", response.data);
@@ -198,29 +160,16 @@ function MyApp() {
     }
   };
 
-
   return (
     <div
-      className={`min-h-screen py-24 ${
-        theme === "dark"
-          ? "dark-mode-content text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+      className={`min-h-screen py-24 dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div
-        className={`relative w-full lg:w-4/5 mx-auto rounded-sm border-2 py-8 px-4 md:px-8 ${
-          theme === "dark"
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-300"
-        }`}
+        className={`relative w-full lg:w-4/5 mx-auto rounded-sm border-2 py-8 px-4 md:px-8 dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >
         <h3
-          className={`border-b text-2xl pb-8 font-bold ${
-            theme === "dark"
-              ? "border-gray-700 text-white"
-              : "border-gray-300 text-gray-700"
-          }`}
+          className={`border-b text-2xl pb-8 font-bold dark:border-gray-700 dark:text-white border-gray-300 text-gray-700 `}
         >
           Community
         </h3>
@@ -232,9 +181,7 @@ function MyApp() {
                 discussions.map((discussion, index) => (
                   <div
                     key={index}
-                    className={`discussion-item bg-${
-                      theme === "dark" ? "gray-700" : "white"
-                    } border rounded-md p-4 transition-transform transform hover:scale-105`}
+                    className={`discussion-item dark:bg-gray-700 border rounded-md p-4 transition-transform transform hover:scale-105`}
                   >
                     <h5 className="text-lg font-medium">{discussion.title}</h5>
                     <p className="text-sm">
@@ -244,7 +191,7 @@ function MyApp() {
                     </p>
                     <div className="text-right">
                       <button
-                        className={` hover:underline ${ theme === "dark" ? "text-orange-500" : "text-blue-500"}`}
+                        className={` hover:underline dark:text-orange-500 text-blue-500`}
                         onClick={() => handleReadMore(index)}
                       >
                         {expandedDiscussion === index
@@ -255,7 +202,7 @@ function MyApp() {
                   </div>
                 ))
               ) : (
-                  <LoadingSkeleton type="discussion" />
+                <LoadingSkeleton type="discussion" />
               )}
             </div>
           </section>
@@ -267,15 +214,13 @@ function MyApp() {
                 contributors.map((contributor, index) => (
                   <div
                     key={index}
-                    className={`contributor-item bg-${
-                      theme === "dark" ? "gray-700" : "white"
-                    } border rounded-md p-4 transition-transform transform hover:scale-105`}
+                    className={`contributor-item dark:bg-gray-700 border rounded-md p-4 transition-transform transform hover:scale-105`}
                   >
                     <h5 className="text-lg font-medium">{contributor.name}</h5>
                     <p className="text-sm">{contributor.description}</p>
                     <div className="text-right">
                       <button
-                        className={`hover:underline ${ theme === "dark" ? "text-orange-500" : "text-blue-500"}`}
+                        className={`hover:underline dark:text-orange-500 text-blue-500`}
                         onClick={() =>
                           console.log(
                             "View Profile clicked for:",
@@ -289,10 +234,9 @@ function MyApp() {
                   </div>
                 ))
               ) : (
-                  <LoadingSkeleton type="contributor" />
+                <LoadingSkeleton type="contributor" />
               )}
             </div>
-            
           </section>
 
           <section className="community-section text-right mt-4">
@@ -330,11 +274,7 @@ function MyApp() {
                   onChange={discussionFormik.handleChange}
                   onBlur={discussionFormik.handleBlur}
                   value={discussionFormik.values.title}
-                  className={`w-full border border-2 px-3 py-[5px] rounded-md ${
-                    theme === "dark"
-                      ? "bg-gray-700 border-gray-600"
-                      : "bg-white border-gray-300"
-                  } ${
+                  className={`w-full border border-2 px-3 py-[5px] rounded-md dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300  ${
                     discussionFormik.errors.title &&
                     discussionFormik.touched.title
                       ? "register-input"
@@ -361,11 +301,7 @@ function MyApp() {
                   onChange={discussionFormik.handleChange}
                   onBlur={discussionFormik.handleBlur}
                   value={discussionFormik.values.content}
-                  className={`w-full border border-2 px-3 py-[5px] rounded-md ${
-                    theme === "dark"
-                      ? "bg-gray-700 border-gray-600"
-                      : "bg-white border-gray-300"
-                  } ${
+                  className={`w-full border border-2 px-3 py-[5px] rounded-md dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300 ${
                     discussionFormik.errors.content &&
                     discussionFormik.touched.content
                       ? "register-input"
@@ -382,11 +318,7 @@ function MyApp() {
               </div>
               <button
                 type="submit"
-                className={`px-4 py-2 rounded-md ${
-                  theme === "dark"
-                    ? "bg-blue-600 text-white"
-                    : "bg-blue-500 text-white"
-                }`}
+                className={`px-4 py-2 rounded-md dark:bg-blue-600 bg-blue-500 text-white `}
                 disabled={submitting}
               >
                 {submitting ? "Submitting..." : "Post Discussion"}
@@ -396,7 +328,6 @@ function MyApp() {
         </div>
       </div>
       <Footer />
-     
     </div>
   );
 }

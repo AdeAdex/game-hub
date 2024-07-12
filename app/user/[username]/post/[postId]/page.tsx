@@ -68,7 +68,7 @@ const UserPostPage: React.FC<UserPostPageProps> = ({ params }) => {
 
   // Render post content once data is fetched
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 dark:bg-dark-mode min-h-screen">
       <Navbar onSearch={(query) => {}} suggestions={[]}/>
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-20">
         {/* Display post content */}

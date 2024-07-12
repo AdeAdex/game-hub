@@ -7,10 +7,8 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
-
 
 const Form = () => {
   return (
@@ -33,12 +31,9 @@ function MyApp() {
   const router = useRouter();
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
-  const { theme } = useContext(ThemeContext);
   // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
-  
+
   // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
- 
- 
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -50,8 +45,12 @@ function MyApp() {
     fetchLocation();
   }, [fetchLocation]);
 
-
-  const signInWithCredentials = async (email: string, password: string, device: string, location: string) => {
+  const signInWithCredentials = async (
+    email: string,
+    password: string,
+    device: string,
+    location: string
+  ) => {
     try {
       const result = await signIn("credentials", {
         email,
@@ -72,7 +71,7 @@ function MyApp() {
       console.error("Error during login:", error.message);
       enqueueSnackbar("Error during login", { variant: "error" });
     }
-   };
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,7 +83,6 @@ function MyApp() {
     setSubmitting(false);
   };
 
-
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-[25px]">
@@ -93,7 +91,7 @@ function MyApp() {
             Username or email:
           </label>
           <input
-            className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-700 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+            className={`w-full border border-2 px-3 py-[5px] dark:border-gray-700 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black`}
             type="text"
             id="email"
             name="email"
@@ -107,7 +105,7 @@ function MyApp() {
             Password:
           </label>
           <input
-            className={`w-full border border-2 px-3 py-[5px] ${theme === "dark" ? "border-gray-700 bg-gray-800 text-white" : "border-gray-300 bg-white text-black"}`}
+            className={`w-full border border-2 px-3 py-[5px] dark:border-gray-700 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black`}
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
@@ -128,11 +126,11 @@ function MyApp() {
           </button>
         </div>
       </div>
-     
+
       <div className="py-[25px] flex gap-4 border-b">
         <button
           type="submit"
-          className={`px-3 py-[5px] rounded-sm ${theme === "dark" ? "bg-[#FF2E51] text-white" : "bg-[#FF2E51] text-white"}`}
+          className={`px-3 py-[5px] rounded-sm dark:bg-[#FF2E51] dark:text-white bg-[#FF2E51] text-white`}
           disabled={submitting}
         >
           {submitting ? <div>Connecting...</div> : <div>Login</div>}

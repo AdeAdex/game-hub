@@ -1,6 +1,8 @@
+
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: 'class', // Enable class-based dark mode
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,6 +10,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        // "dark-mode-content": "#000000",
+        // "light-mode-content": "#ffffff",
+        // "dark-mode-section": "#1e1e1e",
+        // "light-mode-section": "#f4f4f4",
+        // "light-body": "#ffffff",
+        // "dark-body": "#121212",
+      },
+      backgroundColor: {
+        "dark-mode": "#000000",
+        "light-mode": "#ffffff",
+        "dark-mode-section": "#1e1e1e",
+        "light-mode-section": "#f4f4f4",
+        // "light-body": "#ffffff",
+        // "dark-body": "#121212",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -15,23 +33,14 @@ const config: Config = {
       },
       screens: {
         xxsm: "240px",
-        // => @media (min-width: 240px) { ... }
         xsm: "340px",
-        // => @media (min-width: 340px) { ... }
         sm: "640px",
-        // => @media (min-width: 640px) { ... }
         md: "760px",
-        // => @media (min-width: 768px) { ... }
         lg: "1024px",
-        // => @media (min-width: 1024px) { ... }
         xl: "1280px",
-        // => @media (min-width: 1280px) { ... }
         xxl: "1440px",
-        // => @media (min-width: 1440px) { ... }
         xxxl: "1700px",
-        // => @media (min-width: 2040px) { ... }
         xxxxl: "2560px",
-        // => @media (min-width: 2560px) { ... }
       },
       fontFamily: {
         BeVietnam: ['"Be Vietnam"', "sans-serif"],
@@ -40,4 +49,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;

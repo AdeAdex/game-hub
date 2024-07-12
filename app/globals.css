@@ -4,16 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body.light-mode {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-body.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
-}
-
 /* Autofill styles for dark mode */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
@@ -36,22 +26,6 @@ body.light-mode input:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 }
 
-/* Specific styles for sections and content in dark and light modes */
-.light-mode-section {
-  background-color: #f4f4f4;
-}
-
-.dark-mode-section {
-  background-color: #1e1e1e;
-}
-
-.light-mode-content {
-  background-color: #ffffff;
-}
-
-.dark-mode-content {
-  background-color: #000000;
-}
 
 /* .nav-list {
   display: flex;

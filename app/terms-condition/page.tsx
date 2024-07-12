@@ -3,20 +3,13 @@
 import React, { useContext } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const TermsAndConditions: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
-
   return (
     <>
       <Navbar onSearch={() => {}} suggestions={[]} />
       <main
-        className={`pt-[80px] px-4 py-8 ${
-          theme === "dark"
-            ? "dark-mode-content text-gray-200"
-            : "bg-white text-gray-900"
-        }`}
+        className={`pt-[80px] px-4 py-8 dark:bg-dark-mode dark:text-gray-200 bg-white text-gray-900 `}
       >
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-6 text-center">
@@ -26,23 +19,32 @@ const TermsAndConditions: React.FC = () => {
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
             <p>
-              Welcome to Adex GameHub. These terms and conditions outline
-              the rules and regulations for the use of Adex GameHub's
-              Website, located at: <a href="https://adex-game-hub.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">https://adex-game-hub.vercel.app</a>.
+              Welcome to Adex GameHub. These terms and conditions outline the
+              rules and regulations for the use of Adex GameHub's Website,
+              located at:{" "}
+              <a
+                href="https://adex-game-hub.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                https://adex-game-hub.vercel.app
+              </a>
+              .
             </p>
             <p>
               By accessing this website we assume you accept these terms and
-              conditions. Do not continue to use Adex GameHub if you do
-              not agree to take all of the terms and conditions stated on this
-              page.
+              conditions. Do not continue to use Adex GameHub if you do not
+              agree to take all of the terms and conditions stated on this page.
             </p>
           </section>
 
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-4">2. Cookies</h2>
             <p>
-              We employ the use of cookies. By accessing Adex GameHub,
-              you agreed to use cookies in agreement with the Adex GameHub's Privacy Policy.
+              We employ the use of cookies. By accessing Adex GameHub, you
+              agreed to use cookies in agreement with the Adex GameHub's Privacy
+              Policy.
             </p>
             <p>
               Most interactive websites use cookies to let us retrieve the
@@ -56,21 +58,17 @@ const TermsAndConditions: React.FC = () => {
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-4">3. License</h2>
             <p>
-              Unless otherwise stated, Adex GameHub and/or its licensors
-              own the intellectual property rights for all material on Adex GameHub.
-               All intellectual property rights are reserved. You
-              may access this from Adex GameHub for your own personal use
-              subjected to restrictions set in these terms and conditions.
+              Unless otherwise stated, Adex GameHub and/or its licensors own the
+              intellectual property rights for all material on Adex GameHub. All
+              intellectual property rights are reserved. You may access this
+              from Adex GameHub for your own personal use subjected to
+              restrictions set in these terms and conditions.
             </p>
             <p>You must not:</p>
             <ul className="list-disc list-inside ml-4">
               <li>Republish material from Adex GameHub</li>
-              <li>
-                Sell, rent, or sub-license material from Adex GameHub
-              </li>
-              <li>
-                Reproduce, duplicate, or copy material from Adex GameHub
-              </li>
+              <li>Sell, rent, or sub-license material from Adex GameHub</li>
+              <li>Reproduce, duplicate, or copy material from Adex GameHub</li>
               <li>Redistribute content from Adex GameHub</li>
             </ul>
           </section>
@@ -80,19 +78,19 @@ const TermsAndConditions: React.FC = () => {
             <p>
               Parts of this website offer an opportunity for users to post and
               exchange opinions and information in certain areas of the website.
-              Adex GameHub does not filter, edit, publish or review
-              Comments prior to their presence on the website. Comments do not
-              reflect the views and opinions of Adex GameHub,its agents
-              and/or affiliates. Comments reflect the views and opinions of the
-              person who post their views and opinions. To the extent permitted
-              by applicable laws, Adex GameHub shall not be liable for
-              the Comments or for any liability, damages or expenses caused
-              and/or suffered as a result of any use of and/or posting of and/or
-              appearance of the Comments on this website.
+              Adex GameHub does not filter, edit, publish or review Comments
+              prior to their presence on the website. Comments do not reflect
+              the views and opinions of Adex GameHub,its agents and/or
+              affiliates. Comments reflect the views and opinions of the person
+              who post their views and opinions. To the extent permitted by
+              applicable laws, Adex GameHub shall not be liable for the Comments
+              or for any liability, damages or expenses caused and/or suffered
+              as a result of any use of and/or posting of and/or appearance of
+              the Comments on this website.
             </p>
             <p>
-              Adex GameHub reserves the right to monitor all Comments and
-              to remove any Comments which can be considered inappropriate,
+              Adex GameHub reserves the right to monitor all Comments and to
+              remove any Comments which can be considered inappropriate,
               offensive, or causes a breach of these Terms and Conditions.
             </p>
           </section>

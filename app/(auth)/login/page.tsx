@@ -4,21 +4,22 @@ import Form from "@/app/components/login/Form";
 import SocialMediaLogin from "@/app/components/login/SocialMediaLogin";
 import Link from "next/link";
 import React, { useContext } from "react";
-import { ThemeContext } from "@/app/lib/ThemeContext";
 
 const LoginPage = () => {
-  const { theme } = useContext(ThemeContext);
-
   return (
-    <div className={`w-full lg:w-1/3 mx-auto mt-[1px] md:my-6 rounded-sm ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-[#434343]"}`}>
-      <h3 className={`py-[30px] border-b px-[10px] md:px-[30px] font-bold md:text-[20px] ${theme === "dark" ? "border-gray-600" : "border-gray-300"}`}>
+    <div
+      className={`w-full lg:w-1/3 mx-auto mt-[1px] md:my-6 rounded-sm dark:bg-gray-700 dark:text-white bg-white text-[#434343]`}
+    >
+      <h3
+        className={`py-[30px] border-b px-[10px] md:px-[30px] font-bold md:text-[20px] dark:border-gray-600 border-gray-300`}
+      >
         Log in to your game hub account
       </h3>
       <div className="mt-[35px] px-[10px] md:px-[30px] text-[14px]">
         <Form />
         <SocialMediaLogin />
       </div>
-      <hr className={`${theme === "dark" ? "border-gray-600" : "border-gray-300"}`} />
+      <hr className={`dark:border-gray-600 border-gray-300`} />
       <div className="text-[14px] py-[15px] px-[10px] md:px-[30px]">
         <Link href="" className="underline">
           Looking for something you bought?

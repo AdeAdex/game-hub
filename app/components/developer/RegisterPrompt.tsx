@@ -2,32 +2,25 @@ import React from "react";
 
 interface RegisterPromptProps {
   onRegisterClick: () => void;
-  theme: string;
+  // theme: string;
 }
 
-const RegisterPrompt: React.FC<RegisterPromptProps> = ({
-  onRegisterClick,
-  theme,
-}) => {
+const RegisterPrompt: React.FC<RegisterPromptProps> = ({ onRegisterClick }) => {
   return (
     <>
       <h3
-        className={`border-b md:text-[20px] pb-[30px] ${
-          theme === "dark"
-            ? "border-gray-700 text-white"
-            : "border-gray-300 text-[#434343]"
-        } font-bold`}
+        className={`border-b md:text-[20px] pb-[30px] dark:border-gray-700 text-white light:border-gray-300 text-[#434343]  font-bold`}
       >
         Register for API Key
       </h3>
       <div className="mt-4">
         <button
           onClick={onRegisterClick}
-          className={`bg-blue-500 px-4 py-2 rounded ${theme === "dark" ? 'text-white' : 'text-white'}`}
+          className={`bg-blue-500 px-4 py-2 rounded text-white`}
         >
           Register for API Key
         </button>
-        <p className={`mt-4 text-sm ${theme === "dark" ? 'text-white' : 'text-gray-600'}`}>
+        <p className={`mt-4 text-sm dark:text-white light:text-gray-600 `}>
           By registering for an API key, you will gain access to our powerful
           developer tools and resources. This allows you to integrate our
           services seamlessly into your applications, enhance your project

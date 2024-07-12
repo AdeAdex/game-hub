@@ -4,9 +4,8 @@ import Footer from "@/app/components/footer/Footer";
 import Navbar from "@/app/components/navbar/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { ThemeContext } from "@/app/lib/ThemeContext"; // Import the ThemeContext
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
@@ -25,7 +24,6 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { theme } = useContext(ThemeContext); // Use the ThemeContext
   // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
@@ -84,28 +82,10 @@ function MyApp() {
   // };
 
   return (
-    <div
-      className={`pt-[80px] md:pt-[100px] h-screen ${
-        theme === "dark"
-          ? "dark-mode-content text-white"
-          : "bg-[#F4F4F4] text-[#434343]"
-      }`}
-    >
+    <div className="pt-[80px] md:pt-[100px] h-screen dark:bg-dark-mode dark:text-white bg-[#F4F4F4] text-[#434343]">
       <Navbar onSearch={(query) => {}} suggestions={[]} />
-      <div
-        className={`relative w-full lg:w-[50%] mx-auto rounded-md border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] ${
-          theme === "dark"
-            ? "bg-gray-700 border-gray-600"
-            : "bg-white border-gray-300"
-        }`}
-      >
-        <h3
-          className={`border-b font-bold md:text-[20px] ${
-            theme === "dark"
-              ? "border-gray-600 text-white"
-              : "border-gray-300 text-[#434343]"
-          }`}
-        >
+      <div className="relative w-full lg:w-[50%] mx-auto rounded-md border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300">
+        <h3 className="border-b font-bold md:text-[20px] dark:border-gray-600 dark:text-white border-gray-300 text-[#434343]">
           Reset Password
         </h3>
         <div className="pt-[20px] pb-[10px]">
@@ -123,11 +103,7 @@ function MyApp() {
               type="email"
               autoComplete="on"
               name="email"
-              className={`w-[100%] md:w-[65%] border border-2 px-3 py-[5px] ${
-                theme === "dark"
-                  ? "border-gray-600 bg-gray-800 text-white"
-                  : "border-gray-300 bg-white text-black"
-              }`}
+              className="w-[100%] md:w-[65%] border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black"
               placeholder="Required"
               required
             />
@@ -137,7 +113,7 @@ function MyApp() {
               type="submit"
               className={`px-3 py-[6px] rounded-sm text-white ${
                 submitting ? "opacity-50 cursor-not-allowed" : ""
-              } ${theme === "dark" ? "bg-red-600" : "bg-[#FF2E51]"}`}
+              } dark:bg-red-600 bg-[#FF2E51]`}
               disabled={submitting}
             >
               {submitting ? <div>Connecting...</div> : <div>Submit</div>}
@@ -150,23 +126,12 @@ function MyApp() {
             </div>
           </div>
         </form>
-        {/* ReCAPTCHA component */}
-        {/* {recaptchaSiteKey && (
-            <div className="flex item-center justify-center mt-5">
-              <ReCAPTCHA
-                sitekey={recaptchaSiteKey}
-                onChange={handleRecaptchaChange}
-              />
-            </div>
-          )} */}
         <div>
           <small>
             If you are having trouble accessing your account, please{" "}
             <Link
               href="/support"
-              className={`underline ${
-                theme === "dark" ? "text-red-400" : "text-[#FF2E51]"
-              }`}
+              className="underline dark:text-red-400 text-[#FF2E51]"
             >
               contact Support
             </Link>
