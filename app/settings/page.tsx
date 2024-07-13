@@ -5,7 +5,7 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { useFormik } from "formik";
 import axios from "axios";
-import validationSchema from "@/app/components/validations/settingsValidationSchema";
+import settingsValidationSchema from "@/app/components/validations/settingsValidationSchema";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useSearchParams } from "next/navigation";
 
@@ -31,7 +31,6 @@ function MyApp() {
   useEffect(() => {
     if (searchParams) {
       const email = searchParams.get("email");
-      console.log(email);
       setUserEmail(email);
     }
   }, [searchParams]);
@@ -46,11 +45,12 @@ function MyApp() {
       facebook: "",
       linkedin: "",
       twitter: "",
+      role: "", // Initialize role field
+      status: "", // Initialize status field
     },
-    validationSchema: validationSchema(selectedOption),
+    validationSchema: settingsValidationSchema(selectedOption),
     enableReinitialize: true,
     onSubmit: async (values) => {
-      console.log(values);
       try {
         setIsLoading(true);
 
@@ -61,12 +61,10 @@ function MyApp() {
         });
 
         if (response.status === 200) {
-          console.log("Settings saved successfully:", response.data);
           enqueueSnackbar(response.data.message, {
             variant: "success",
           });
         } else {
-          console.error("Error saving settings:", response.data.error);
           enqueueSnackbar(response.data.error, { variant: "error" });
         }
       } catch (error: any) {
@@ -155,7 +153,7 @@ function MyApp() {
                 name="userName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black  ${
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black ${
                   formik.errors.userName && formik.touched.userName
                     ? "register-input"
                     : ""
@@ -178,6 +176,52 @@ function MyApp() {
                 name="profilePicture"
                 onChange={handleProfilePictureChange}
                 className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black `}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="role">
+                Role:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="role"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black ${
+                  formik.errors.role && formik.touched.role
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.role && formik.errors.role
+                    ? formik.errors.role
+                    : "Enter your role"
+                }
+                value={formik.values.role}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-[5px]">
+              <label className="w-full font-bold" htmlFor="status">
+                Status:
+              </label>
+              <input
+                type="text"
+                autoComplete="on"
+                name="status"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-700 dark:text-white border-gray-300 text-black ${
+                  formik.errors.status && formik.touched.status
+                    ? "register-input"
+                    : ""
+                }`}
+                placeholder={
+                  formik.touched.status && formik.errors.status
+                    ? formik.errors.status
+                    : "Enter your status"
+                }
+                value={formik.values.status}
               />
             </div>
           </>
