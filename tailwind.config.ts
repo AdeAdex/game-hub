@@ -23,8 +23,6 @@ const config: Config = {
         "light-mode": "#ffffff",
         "dark-mode-section": "#1e1e1e",
         "light-mode-section": "#f4f4f4",
-        // "light-body": "#ffffff",
-        // "dark-body": "#121212",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

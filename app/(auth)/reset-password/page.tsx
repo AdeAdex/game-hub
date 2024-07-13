@@ -210,7 +210,7 @@ function MyApp() {
                         />
                         <button
                           type="button"
-                          className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
+                          className="absolute right-[20px] top-[50%] transform bg-transparent border-none cursor-pointer"
                           onClick={() => setShowPassword((prev) => !prev)}
                         >
                           {showPassword ? (
@@ -245,7 +245,7 @@ function MyApp() {
                         />
                         <button
                           type="button"
-                          className="absolute right-[20px] top-[50%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer"
+                          className="absolute right-[20px] top-[50%] transform bg-transparent border-none cursor-pointer"
                           onClick={() => setShowPassword((prev) => !prev)}
                         >
                           {showPassword ? (
