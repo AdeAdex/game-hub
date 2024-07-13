@@ -30,11 +30,13 @@ const userSchema = new mongoose.Schema(
         reason: String,
       },
     ],
-    loginData: [loginDataSchema], // Add loginData field
-    apiKey: { type: String, },
-    facebook: { type: String }, // Add facebook field
-    linkedin: { type: String }, // Add linkedin field
-    twitter: { type: String }, // Add twitter field
+    loginData: [loginDataSchema],
+    apiKey: { type: String },
+    facebook: { type: String },
+    linkedin: { type: String },
+    twitter: { type: String },
+    role: { type: String }, 
+    status: { type: String },
   },
   { timestamps: true }
 );
