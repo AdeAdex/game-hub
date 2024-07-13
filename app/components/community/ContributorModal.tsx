@@ -7,6 +7,7 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
+import { contributorValidationSchema } from "../validations/contributorValidationSchema";
 
 interface ContributorModalProps {
   open: boolean;
@@ -27,6 +28,7 @@ const ContributorModal: React.FC<ContributorModalProps> = ({
       name: "",
       description: "",
     },
+    validationSchema: contributorValidationSchema,
     onSubmit: async (values) => {
       await onSubmit(values);
     },
