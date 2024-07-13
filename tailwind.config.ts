@@ -11,12 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // "dark-mode-content": "#000000",
-        // "light-mode-content": "#ffffff",
-        // "dark-mode-section": "#1e1e1e",
-        // "light-mode-section": "#f4f4f4",
-        // "light-body": "#ffffff",
-        // "dark-body": "#121212",
+        
       },
       backgroundColor: {
         "dark-mode": "#000000",
