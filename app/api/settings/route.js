@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDb } from "../../utils/database";
 import User from "../../models/user";
-import { hashPassword, comparePassword } from "../../utils/bcrypt"; // Make sure to import comparePassword
+import { hashPassword, comparePassword } from "../../utils/bcrypt";
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -12,20 +12,20 @@ cloudinary.config({
 
 export const POST = async (req) => {
   try {
-    const { 
-      email, 
-      firstName, 
-      lastName, 
-      userName, 
-      profilePicture, 
-      password, 
-      userEmail, 
-      facebook, 
-      linkedin, 
-      twitter 
+    const {
+      email,
+      firstName,
+      lastName,
+      userName,
+      profilePicture,
+      password,
+      userEmail,
+      facebook,
+      linkedin,
+      twitter,
+      role, // Add role field
+      status, // Add status field
     } = await req.json();
-    
-    console.log(email, firstName, lastName, userName, password, userEmail, facebook, linkedin, twitter);
 
     if (!userEmail) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -67,6 +67,8 @@ export const POST = async (req) => {
     if (facebook) user.facebook = facebook;
     if (linkedin) user.linkedin = linkedin;
     if (twitter) user.twitter = twitter;
+    if (role) user.role = role; // Update role
+    if (status) user.status = status; // Update status
 
     // Handle profile picture upload to Cloudinary
     if (profilePicture) {
