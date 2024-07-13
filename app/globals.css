@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Autofill styles for dark mode */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {

@@ -11,7 +11,8 @@ import {
 interface ContributorModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (values: { name: string; description: string }) => void;
+  // onSubmit: (values: { name: string; description: string }) => void;
+  onSubmit: (values: { name: string; description: string }) => Promise<void>;
   submitting: boolean;
 }
 
@@ -26,8 +27,8 @@ const ContributorModal: React.FC<ContributorModalProps> = ({
       name: "",
       description: "",
     },
-    onSubmit: (values) => {
-      onSubmit(values);
+    onSubmit: async (values) => {
+      await onSubmit(values);
     },
   });
 
@@ -149,6 +150,7 @@ const ContributorModal: React.FC<ContributorModalProps> = ({
                   ? formik.errors.name
                   : "Enter the contributor name"
               }
+              required
             />
           </div>
           <div className="flex flex-col gap-[5px] mt-4 bg-white dark:bg-gray-800 text-black dark:text-white">
@@ -175,6 +177,7 @@ const ContributorModal: React.FC<ContributorModalProps> = ({
                   ? formik.errors.description
                   : "Enter the contributor description"
               }
+              required
             ></textarea>
           </div>
         </DialogContent>

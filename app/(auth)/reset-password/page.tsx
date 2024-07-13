@@ -194,7 +194,13 @@ function MyApp() {
                           type={showPassword ? "text" : "password"}
                           autoComplete="on"
                           name="password"
-                          className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black`}
+                          className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black 
+                            ${
+                              errors.password && touched.password
+                                ? "register-input"
+                                : ""
+                            }
+                            `}
                           placeholder={
                             touched.password && errors.password
                               ? errors.password
@@ -213,11 +219,6 @@ function MyApp() {
                             <AiFillEye size={25} />
                           )}
                         </button>
-                        <ErrorMessage
-                          name="password"
-                          component="div"
-                          className="text-red-500"
-                        />
                       </div>
                       <div className="relative w-full flex flex-col gap-[5px] mt-[15px]">
                         <label
@@ -230,7 +231,11 @@ function MyApp() {
                           type={showPassword ? "text" : "password"}
                           autoComplete="on"
                           name="confirmPassword"
-                          className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black `}
+                          className={`w-full border border-2 px-3 py-[5px] dark:border-gray-600 dark:bg-gray-800 dark:text-white border-gray-300 bg-white text-black ${
+                            errors.confirmPassword && touched.confirmPassword
+                              ? "register-input"
+                              : ""
+                          }`}
                           placeholder={
                             touched.confirmPassword && errors.confirmPassword
                               ? errors.confirmPassword
@@ -249,11 +254,6 @@ function MyApp() {
                             <AiFillEye size={25} />
                           )}
                         </button>
-                        <ErrorMessage
-                          name="confirmPassword"
-                          component="div"
-                          className="text-red-500"
-                        />
                       </div>
                       <div className="py-[25px] flex gap-4">
                         <button

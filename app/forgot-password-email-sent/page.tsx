@@ -10,11 +10,11 @@ import { IoMdCheckmark } from "react-icons/io";
 const ForgotPasswordEmailSentPage = () => {
   return (
     <div
-      className={`pt-[80px] md:pt-[100px] h-screen dark:dark-mode-content text-white light:bg-[#F4F4F4] text-[#434343] `}
+      className={`pt-[80px] md:pt-[100px] h-screen dark:bg-dark-mode dark:text-white bg-[#F4F4F4] text-[#434343] `}
     >
       <Navbar onSearch={(query) => {}} suggestions={[]} />
       <div
-        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] dark:bg-gray-700 border-gray-600 light:bg-white border-gray-300`}
+        className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300`}
       >
         <div className="pt-[20px] pb-[10px]">
           <small className="flex gap-[10px]">
@@ -27,7 +27,7 @@ const ForgotPasswordEmailSentPage = () => {
           <small>
             <Link
               href="/"
-              className={`underline flex dark:text-red-400 light:text-[#FF2E51] `}
+              className={`underline flex dark:text-red-400 text-[#FF2E51] `}
             >
               <IoIosArrowRoundBack className="my-auto" size={20} /> Return home
             </Link>

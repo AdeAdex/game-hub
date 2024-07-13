@@ -107,7 +107,7 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
             }
             className={`placeholder-${
               formik.touched.title && formik.errors.title
-                ? "red-500"
+                ? "register-input"
                 : "text-black dark:text-white"
             }`}
             InputProps={{
@@ -143,7 +143,7 @@ function MyApp({ isOpen, onClose }: SupportTicketModalProps) {
             }
             className={`placeholder-${
               formik.touched.description && formik.errors.description
-                ? "red-500"
+                ? "register-input"
                 : "text-black dark:text-white"
             }`}
             InputProps={{
