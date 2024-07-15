@@ -2,17 +2,19 @@
 
 import React from "react";
 import { useTheme } from "@/app/lib/ThemeContext";
-import { FiSun, FiMoon } from "react-icons/fi";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button onClick={toggleTheme} className="cursor-pointer text-xl my-auto">
-      {theme === "dark" ? <FiMoon size={20} /> : <FiSun size={20} /> }
-    </button>
+    <div className="cursor-pointer my-auto" onClick={toggleTheme}>
+      <div className="toggle my-auto">
+        <input type="checkbox" />
+        <span className="button"></span>
+        {theme === "dark" ? <span className="label">☾</span> : <span className="label">☼</span>}
+      </div>
+    </div>
   );
 };
 
 export default ThemeToggle;
-

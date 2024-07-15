@@ -1,3 +1,5 @@
+//  app/components/navbar/Navbar.tsx
+
 "use client";
 
 import React, { useEffect, useRef, useState, useContext } from "react";

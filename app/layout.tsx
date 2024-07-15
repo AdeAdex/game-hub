@@ -1,4 +1,4 @@
-// /app/layout.tsx
+// // /app/layout.tsx
 
 'use client'
 
@@ -30,16 +30,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadComponent />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var theme = localStorage.getItem('theme') || 'light';
-                document.documentElement.classList.add(theme);
-              })();
-            `,
-          }}
-        />
       </head>
       <body className={`${inter.className}`}>
         <ThemeProvider>
@@ -106,7 +96,7 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
     };
   }, [pathname, searchParams]);
 
-  return <div>{children}</div>;
+  return <div className="">{children}</div>;
 }
 
 const LoadingScreen = () => {

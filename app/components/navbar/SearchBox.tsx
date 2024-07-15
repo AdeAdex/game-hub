@@ -1,6 +1,9 @@
+//  app/components/navbar/SearchBox.tsx
+
+
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Game } from "@/app/types/homePage/games";
 import Image from "next/image";
