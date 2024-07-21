@@ -10,6 +10,8 @@ import RegisterForm from "@/app/components/developer/RegisterForm";
 import RegisterPrompt from "@/app/components/developer/RegisterPrompt";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "@/app/components/developer/LoadingSkeleton";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const DeveloperPage: React.FC = () => {
   const { data: session } = useSession();
@@ -19,6 +21,8 @@ const DeveloperPage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams?.get("action");
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -65,7 +69,8 @@ const DeveloperPage: React.FC = () => {
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >

@@ -9,6 +9,8 @@ import LoadingSkeleton from "@/app/components/userPage/LoadingSkeleton";
 import Navbar from "@/app/components/navbar/Navbar";
 import { PostDataType } from "@/app/types/post";
 // import PostComponent from "@/app/components/userPage/PostComponent";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 
 interface PostsPageProps {
@@ -22,6 +24,8 @@ const PostsPage: React.FC<PostsPageProps> = ({ params }) => {
   const { postId } = params;
   const [post, setPost] = useState<PostDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     const fetchPost = async () => {

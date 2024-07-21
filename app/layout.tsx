@@ -12,6 +12,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import HeadComponent from "./head";
 import CookieConsent from "@/app/components/cookies/CookieConsent";
 import { ThemeProvider } from "@/app/lib/ThemeContext";
+import { SearchProvider } from "./lib/SearchContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider>
           <ReduxProviders>
             <CustomProvider>
+            <SearchProvider>
               <Suspense fallback={<LoadingScreen />}>
                 {hasConsent ? (
                   <InnerRootLayout pathname={pathname}>{children}</InnerRootLayout>
@@ -50,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   children
                 )}
               </Suspense>
+              </SearchProvider>
             </CustomProvider>
           </ReduxProviders>
           <CookieConsent onConsent={() => setHasConsent(true)} />

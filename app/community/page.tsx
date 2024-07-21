@@ -11,6 +11,8 @@ import { Discussion } from "@/app/types/discussion";
 import { Contributor } from "@/app/types/contributor";
 import ContributorModal from "@/app/components/community/ContributorModal";
 import LoadingSkeleton from "@/app/components/community/LoadingSkeleton";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 import {
   Dialog,
@@ -40,6 +42,8 @@ function MyApp() {
     null
   );
   const [openContributorDialog, setOpenContributorDialog] = useState(false);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -164,7 +168,8 @@ function MyApp() {
     <div
       className={`min-h-screen py-24 dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`relative w-full lg:w-4/5 mx-auto rounded-sm border-2 py-8 px-4 md:px-8 dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >

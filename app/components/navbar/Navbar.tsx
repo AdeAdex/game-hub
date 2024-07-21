@@ -23,6 +23,7 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { Game } from "@/app/types/homePage/games";
+import { useSearch } from "@/app/lib/SearchContext";
 
 interface AuthState {
   firstName?: string;
@@ -42,19 +43,20 @@ interface NavbarProps {
   suggestions: { game: Game; matchType: string }[];
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onSearch, suggestions }) => {
+const Navbar: React.FC<NavbarProps> = () => {
   return (
     <SnackbarProvider
       maxSnack={1}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <MyApp onSearch={onSearch} suggestions={suggestions} />
+      <MyApp  />
     </SnackbarProvider>
   );
 };
 
-function MyApp({ onSearch, suggestions }: NavbarProps) {
+function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
+  const { searchQuery, setSearchQuery, suggestions, handleSearch } = useSearch();
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
@@ -167,7 +169,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
                 links={links}
                 links2={links2}
                 isMobileMenuOpen={isMobileMenuOpen}
-                onSearch={onSearch}
+                onSearch={handleSearch}
                 suggestions={suggestions}
               />
             </div>
@@ -175,7 +177,7 @@ function MyApp({ onSearch, suggestions }: NavbarProps) {
         )}
 
         <SearchBox
-          onSearch={onSearch}
+          onSearch={handleSearch}
           suggestions={suggestions}
           ClassName={`hidden md:flex`}
           Placeholder={`Search for games or creator`}

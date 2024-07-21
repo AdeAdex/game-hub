@@ -5,13 +5,18 @@ import Footer from "@/app/components/footer/Footer";
 import Navbar from "@/app/components/navbar/Navbar";
 import Hero from "@/app/components/register/hero/Hero";
 import RegisterForm from "@/app/components/register/form/RegisterForm";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const RegisterPage = () => {
+  const { handleSearch, suggestions } = useSearch();
+
   return (
     <main
       className={`w-full pt-[50px] md:pt-[75px] relative dark:bg-dark-mode bg-[#F4F4F4]`}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`w-full lg:w-[60%] mx-auto mt-[1px] md:mt-6 dark:bg-gray-700 dark:border-gray-600 bg-white border-2 border-gray-300 rounded-sm`}
       >

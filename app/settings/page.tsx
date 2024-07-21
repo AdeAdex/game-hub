@@ -8,6 +8,8 @@ import axios from "axios";
 import settingsValidationSchema from "@/app/components/validations/settingsValidationSchema";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useSearchParams } from "next/navigation";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const SettingsPage: React.FC = () => {
   return (
@@ -27,6 +29,8 @@ function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
   const searchParams = useSearchParams();
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     if (searchParams) {
@@ -361,7 +365,8 @@ function MyApp() {
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >

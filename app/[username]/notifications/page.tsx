@@ -12,6 +12,8 @@ import FriendRequestCard from "@/app/components/userPage/notification/FriendRequ
 import Loader from "@/app/components/Loader";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import FriendRequestCardMobile from "@/app/components/userPage/notification/FriendRequestCardMobile";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 interface NotificationsPageProps {
   params: {
@@ -27,6 +29,8 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
   const [friendRequests, setFriendRequests] = useState<UserDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const isFullScreen = useMediaQuery("(min-width:600px)");
+  const { handleSearch, suggestions } = useSearch();
+
 
   // Function to fetch friend requests based on active status
   // const fetchFriendRequests = async (status: string) => {
@@ -177,7 +181,8 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-black`}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300`}
       >

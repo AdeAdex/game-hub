@@ -32,13 +32,26 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   };
 
   // Group suggestions by matchType
-  const groupedSuggestions = suggestions.reduce((acc, { game, matchType }) => {
-    if (!acc[matchType]) {
-      acc[matchType] = [];
-    }
-    acc[matchType].push(game);
-    return acc;
-  }, {} as { [key: string]: Game[] });
+  // const groupedSuggestions = suggestions.reduce((acc, { game, matchType }) => {
+  //   if (!acc[matchType]) {
+  //     acc[matchType] = [];
+  //   }
+  //   acc[matchType].push(game);
+  //   return acc;
+  // }, {} as { [key: string]: Game[] });
+
+
+   // Group suggestions by matchType
+   const groupedSuggestions = suggestions.reduce<{ [key: string]: Game[] }>(
+    (acc, { game, matchType }) => {
+      if (!acc[matchType]) {
+        acc[matchType] = [];
+      }
+      acc[matchType].push(game);
+      return acc;
+    },
+    {}
+  );
 
   return (
     <div className={`${ClassName}`}>

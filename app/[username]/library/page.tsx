@@ -11,6 +11,8 @@ import axios from "axios";
 import SkeletonLoader from "@/app/components/userPage/library/SkeletonLoader"; // Import SkeletonLoader
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 interface LibraryPageProps {
   params: {
@@ -25,6 +27,8 @@ const LibraryPage: React.FC<LibraryPageProps> = ({ params }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userLibrary, setUserLibrary] = useState<any[]>([]); // State to store user library data
   const isFullScreen = useMediaQuery("(min-width:600px)");
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     const fetchUserLibrary = async () => {
@@ -46,7 +50,8 @@ const LibraryPage: React.FC<LibraryPageProps> = ({ params }) => {
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900`}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div className="mx-auto px-4 lg:px-8 py-8 w-full lg:w-[60%]">
         <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
           <h2

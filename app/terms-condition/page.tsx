@@ -3,8 +3,12 @@
 import React, { useContext } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const TermsAndConditions: React.FC = () => {
+  const { handleSearch, suggestions } = useSearch();
+
   return (
     <>
       <Navbar onSearch={() => {}} suggestions={[]} />

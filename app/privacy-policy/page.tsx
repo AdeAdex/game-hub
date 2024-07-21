@@ -5,13 +5,18 @@
 import React from "react";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const PrivacyPolicy: React.FC = () => {
+  const { handleSearch, suggestions } = useSearch();
+
   return (
     <div
       className={`min-h-screen flex flex-col dark:bg-dark-mode dark:text-white bg-gray-50 text-black `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div className="container mx-auto py-16 md:py-20 max-w-[65.25rem] px-5">
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
         <p className="mb-4">

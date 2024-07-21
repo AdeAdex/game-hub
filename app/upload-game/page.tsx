@@ -5,8 +5,12 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { useFormik } from "formik";
 import { uploadGameSchema } from "@/app/components/validations/uploadGameValidationSchema";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const UploadGamePage: React.FC = () => {
+  const { handleSearch, suggestions } = useSearch();
+  
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -22,7 +26,8 @@ const UploadGamePage: React.FC = () => {
 
   return (
     <div className="min-h-screen py-[100px] bg-gray-100 text-gray-900 dark:bg-dark-mode dark:text-white">
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div className="relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] bg-white border-gray-300 dark:bg-dark-mode dark:border-gray-700">
         <h3 className="border-b md:text-[20px] pb-[30px] border-gray-300 text-[#434343] dark:border-gray-700 dark:text-white font-bold">
           Upload Your Game

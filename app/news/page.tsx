@@ -7,10 +7,15 @@ import axios from "axios";
 import { NewsArticle } from "@/app/types/news";
 import NewsSkeleton from "@/app/components/news/NewsSkeleton";
 import Image from "next/image";
+import { useSearch } from "@/app/lib/SearchContext";
+
+
 
 const NewsPage: React.FC = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -32,7 +37,8 @@ const NewsPage: React.FC = () => {
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`relative w-full mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300`}

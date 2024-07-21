@@ -12,6 +12,8 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import Loader from "@/app/components/Loader";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils"; // Adjust the import path accordingly
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const ResetPassword = () => {
   return (
@@ -37,6 +39,9 @@ function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
+  const { handleSearch, suggestions } = useSearch();
+
+  
 
   useEffect(() => {
     const queryToken = new URLSearchParams(window.location.search).get("token");
@@ -95,7 +100,8 @@ function MyApp() {
     <div
       className={`h-screen dark:bg-dark-mode dark:text-white bg-[#F4F4F4] text-[#434343]`}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <main
         className={`h-screen pt-[80px] md:pt-[100px] dark:bg-dark-mode bg-[#F4F4F4] `}
       >

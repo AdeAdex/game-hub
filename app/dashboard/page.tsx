@@ -14,6 +14,8 @@ import FlowDiagram from "../components/dashboard/FlowDiagram";
 import Activities from "../components/dashboard/Activities";
 import { UserDataType, ActivityType } from "../types/user";
 // import D3Chart from "../components/dashboard/D3Chart";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 Chart.register(...registerables);
 
@@ -23,6 +25,8 @@ const DashboardPage = () => {
   const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [loginCounts, setLoginCounts] = useState<number[]>([]);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,7 +112,8 @@ const DashboardPage = () => {
     <div
       className={`min-h-screen flex flex-col dark:bg-dark-mode dark:text-white bg-gray-50`}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="flex flex-col md:flex-row md:space-x-8">
           <UserProfile userData={userData} />

@@ -15,13 +15,16 @@ import ScrollToTop from "@/app/utils/ScrollToTop"
 
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
+import { useSearch } from "./lib/SearchContext";
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { handleSearch, suggestions } = useSearch();
+
+  // const [searchQuery, setSearchQuery] = useState("");
   // const [suggestions, setSuggestions] = useState<Game[]>([]);
-  const [suggestions, setSuggestions] = useState<{ game: Game; matchType: string }[]>([]);
+  // const [suggestions, setSuggestions] = useState<{ game: Game; matchType: string }[]>([]);
 
 
   useEffect(() => {
@@ -41,21 +44,11 @@ export default function Home() {
     fetchGames();
   }, []);
 
-  // const handleSearch = (query: string) => {
-  //   setSearchQuery(query);
-
-  //   const filteredGames = games.filter((game) =>
-  //     game.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-
-  //   setSuggestions(filteredGames);
-  //   console.log("Filtered Games:", filteredGames);
-  // };
 
   // const handleSearch = (query: string) => {
   //   setSearchQuery(query);
 
-  //   const filteredGames = games.filter((game) => {
+  //   const filteredGames = games.reduce<{ game: Game; matchType: string }[]>((acc, game) => {
   //     const matchesName = game.name.toLowerCase().includes(query.toLowerCase());
   //     const matchesGenre = game.genres.some((genre) =>
   //       genre.name.toLowerCase().includes(query.toLowerCase())
@@ -70,50 +63,18 @@ export default function Home() {
   //       store.store.name.toLowerCase().includes(query.toLowerCase())
   //     );
 
-  //     return (
-  //       matchesName ||
-  //       matchesGenre ||
-  //       matchesParentPlatform ||
-  //       matchesPlatform ||
-  //       matchesStore
-  //     );
-  //   });
+  //     if (matchesName) acc.push({ game, matchType: "name" });
+  //     else if (matchesGenre) acc.push({ game, matchType: "genre" });
+  //     else if (matchesParentPlatform) acc.push({ game, matchType: "parent platform" });
+  //     else if (matchesPlatform) acc.push({ game, matchType: "platform" });
+  //     else if (matchesStore) acc.push({ game, matchType: "store" });
+
+  //     return acc;
+  //   }, []);
 
   //   setSuggestions(filteredGames);
   //   console.log("Filtered Games:", filteredGames);
   // };
-
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-
-    const filteredGames = games.reduce<{ game: Game; matchType: string }[]>((acc, game) => {
-      const matchesName = game.name.toLowerCase().includes(query.toLowerCase());
-      const matchesGenre = game.genres.some((genre) =>
-        genre.name.toLowerCase().includes(query.toLowerCase())
-      );
-      const matchesParentPlatform = game.parent_platforms.some((platform) =>
-        platform.platform.name.toLowerCase().includes(query.toLowerCase())
-      );
-      const matchesPlatform = game.platforms.some((platform) =>
-        platform.platform.name.toLowerCase().includes(query.toLowerCase())
-      );
-      const matchesStore = game.stores.some((store) =>
-        store.store.name.toLowerCase().includes(query.toLowerCase())
-      );
-
-      if (matchesName) acc.push({ game, matchType: "name" });
-      else if (matchesGenre) acc.push({ game, matchType: "genre" });
-      else if (matchesParentPlatform) acc.push({ game, matchType: "parent platform" });
-      else if (matchesPlatform) acc.push({ game, matchType: "platform" });
-      else if (matchesStore) acc.push({ game, matchType: "store" });
-
-      return acc;
-    }, []);
-
-    setSuggestions(filteredGames);
-    console.log("Filtered Games:", filteredGames);
-  };
 
   return (
     <>

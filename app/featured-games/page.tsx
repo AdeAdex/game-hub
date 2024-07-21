@@ -7,10 +7,13 @@ import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import GameCard from "@/app/components/homePage/GameCard";
 import CardSkeleton from "../components/homePage/CardSkeleton";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const FeaturedGamesPage: React.FC = () => {
   const [featuredGames, setFeaturedGames] = useState<any[]>([]);
   const [loading, setLoading] = useState(true); // State to manage loading state
+  const { handleSearch, suggestions } = useSearch();
 
   useEffect(() => {
     const fetchFeaturedGames = async () => {
@@ -37,7 +40,8 @@ const FeaturedGamesPage: React.FC = () => {
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode text-white bg-gray-100 text-gray-900 `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`relative w-full lg:w-[80%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 border-gray-700 bg-white border-gray-300 `}
       >

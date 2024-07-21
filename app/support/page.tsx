@@ -16,6 +16,8 @@ import {
   Typography,
 } from "@mui/material";
 import { MdExpandMore } from "react-icons/md";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const SupportPage: React.FC = () => {
   return (
@@ -31,6 +33,8 @@ const SupportPage: React.FC = () => {
 function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { handleSearch, suggestions } = useSearch();
+
 
   const formik = useFormik({
     initialValues: {
@@ -65,7 +69,8 @@ function MyApp() {
     <div
       className={`min-h-screen py-24 dark:bg-dark-mode dark:text-white bg-gray-100 text-gray-900 `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`relative w-full lg:w-3/5 mx-auto rounded-lg shadow-lg border py-8 px-4 md:px-8 dark:bg-gray-800 dark:border-gray-700 bg-white border-gray-300 `}
       >

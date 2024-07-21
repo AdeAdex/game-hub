@@ -6,13 +6,18 @@ import Footer from "../components/footer/Footer";
 import Link from "next/link";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoMdCheckmark } from "react-icons/io";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const ForgotPasswordEmailSentPage = () => {
+  const { handleSearch, suggestions } = useSearch();
+
   return (
     <div
       className={`pt-[80px] md:pt-[100px] h-screen dark:bg-dark-mode dark:text-white bg-[#F4F4F4] text-[#434343] `}
     >
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div
         className={`relative w-full lg:w-[60%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300`}
       >

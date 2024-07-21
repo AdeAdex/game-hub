@@ -14,6 +14,8 @@ import GameHeader from "@/app/components/game-details/GameHeader";
 import GameDescription from "@/app/components/game-details/GameDescription";
 import GameStats from "@/app/components/game-details/GameStats";
 import AdditionalInfo from "@/app/components/game-details/AdditionalInfo";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const GameDetailsPage: React.FC = () => {
   const router = useSearchParams();
@@ -21,6 +23,8 @@ const GameDetailsPage: React.FC = () => {
   const gameId = router ? router.get("id") : null;
   const [gameDetails, setGameDetails] = useState<GameDetails | null>(null);
   const [loading, setLoading] = useState(true);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     if (gameId) {
@@ -70,7 +74,8 @@ const GameDetailsPage: React.FC = () => {
 
   return (
     <div className={`min-h-screen dark:bg-dark-mode dark:text-white`}>
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <main
         className={`w-full max-w-[65.25rem] mx-auto flex flex-col items-center px-4 py-8 sm:px-6 lg:px-8 mt-[60px]`}
       >

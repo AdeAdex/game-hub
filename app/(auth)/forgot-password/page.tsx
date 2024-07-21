@@ -8,6 +8,8 @@ import React, { useState } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const ForgotPasswordPage = () => {
   return (
@@ -24,6 +26,8 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const { handleSearch, suggestions } = useSearch();
+
   // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
@@ -83,7 +87,8 @@ function MyApp() {
 
   return (
     <div className="pt-[80px] md:pt-[100px] h-screen dark:bg-dark-mode dark:text-white bg-[#F4F4F4] text-[#434343]">
-      <Navbar onSearch={(query) => {}} suggestions={[]} />
+            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+
       <div className="relative w-full lg:w-[50%] mx-auto rounded-md border-2 py-[30px] px-[10px] md:px-[30px] mb-[30px] dark:bg-gray-700 dark:border-gray-600 bg-white border-gray-300">
         <h3 className="border-b font-bold md:text-[20px] dark:border-gray-600 dark:text-white border-gray-300 text-[#434343]">
           Reset Password

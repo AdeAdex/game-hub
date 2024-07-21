@@ -7,6 +7,8 @@ import axios from 'axios';
 import Image from 'next/image';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 interface GameDetailsProps {
   id: number;
@@ -24,6 +26,8 @@ const GameDetails: React.FC = () => {
   const gameId = params?.gameId;
   const [gameDetails, setGameDetails] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
+  const { handleSearch, suggestions } = useSearch();
+
 
   useEffect(() => {
     if (gameName) {
