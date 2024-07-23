@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import Navbar from "../navbar/Navbar";
+import { useSearch } from "@/app/lib/SearchContext";
 
 const LoadingSkeleton: React.FC = () => {
+  const { handleSearch, suggestions } = useSearch();
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white">
-            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+      <Navbar onSearch={handleSearch} suggestions={suggestions} />
 
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-[60px]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

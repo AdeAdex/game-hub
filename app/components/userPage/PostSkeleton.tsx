@@ -1,7 +1,11 @@
 import React from "react";
 import Navbar from "@/app/components/navbar/Navbar"; // Import your Navbar component here
+import { useSearch } from "@/app/lib/SearchContext";
+
 
 const PostSkeleton = () => {
+  const { handleSearch, suggestions } = useSearch();
+
   return (
     <div className={`dark:bg-gray-900 bg-gray-100 min-h-screen`}>
             <Navbar onSearch={handleSearch} suggestions={suggestions} />
