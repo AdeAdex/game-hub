@@ -29,6 +29,7 @@
     "embla-carousel-react": "^8.1.6",
     "eslint": "^8.57.0",
     "formik": "^2.4.6",
+    "hamburgers": "^1.2.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "localforage": "^1.10.0",
