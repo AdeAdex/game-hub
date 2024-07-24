@@ -49,7 +49,7 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
 
   useEffect(() => {
     // Fetch country dialing codes
-    fetch("https://adex-game-hub.vercel.app/api/dial_code", {
+    fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
@@ -61,7 +61,7 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
 
   useEffect(() => {
     // Fetch country details
-    fetch("https://adex-game-hub.vercel.app/api/countries", {
+    fetch("https://country-dial-code-api.vercel.app/api/countries", {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
