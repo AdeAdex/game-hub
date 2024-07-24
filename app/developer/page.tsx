@@ -16,6 +16,7 @@ import { useSearch } from "@/app/lib/SearchContext";
 const DeveloperPage: React.FC = () => {
   const { data: session } = useSession();
   const [apiKey, setApiKey] = useState("");
+  const [requestCount, setRequestCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
@@ -29,7 +30,9 @@ const DeveloperPage: React.FC = () => {
       axios
         .get(`/api/developer?user=${session.user.email}`)
         .then((response) => {
+          // console.log("response", response.data)
           setApiKey(response.data.apiKey);
+          setRequestCount(response.data.requestCount);
           setLoading(false);
         })
         .catch((error) => {
@@ -78,7 +81,7 @@ const DeveloperPage: React.FC = () => {
           <LoadingSkeleton />
         ) : session ? (
           apiKey ? (
-            <ApiKeyDisplay apiKey={apiKey} />
+            <ApiKeyDisplay apiKey={apiKey} requestCount={requestCount}/>
           ) : showForm ? (
             <RegisterForm onSubmit={handleFormSubmit} />
           ) : (

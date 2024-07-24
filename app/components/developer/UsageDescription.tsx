@@ -4,8 +4,9 @@ const usageDescription = `
 #### Fetch Country Dialing Codes
 
 To fetch country dialing codes, use the following endpoint:
+
 \`\`\`javascript
-fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/dial_code", {
+fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
   headers: {
     "Authorization": \`Bearer YOUR_API_KEY\`,
   },
@@ -16,6 +17,7 @@ fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/dial_code
 \`\`\`
 
 #### Example Response:
+
 \`\`\`json
 [
   {
@@ -35,8 +37,9 @@ fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/dial_code
 #### Fetch Country Details
 
 To fetch country details including states, use the following endpoint:
+
 \`\`\`javascript
-fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/countries", {
+fetch("https://country-dial-code-api.vercel.app/api/countries", {
   headers: {
     "Authorization": \`Bearer YOUR_API_KEY\`,
   },
@@ -47,6 +50,7 @@ fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/countries
 \`\`\`
 
 #### Example Response:
+
 \`\`\`json
 [
   {
@@ -113,7 +117,7 @@ fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/countries
 ]
 \`\`\`
 
-#### Example Usage in a Form:
+### Example Usage in a Form
 
 Below is an example of how to use the fetched data in a form with select options for country, state, and dialing code.
 
@@ -128,7 +132,7 @@ const MyForm = ({ apiKey }) => {
   const [dialCode, setDialCode] = useState("");
 
   useEffect(() => {
-    fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/dial_code", {
+    fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
       headers: {
         "Authorization": \`Bearer \${apiKey}\`,
       },
@@ -139,7 +143,7 @@ const MyForm = ({ apiKey }) => {
   }, [apiKey]);
 
   useEffect(() => {
-    fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/countries", {
+    fetch("https://country-dial-code-api.vercel.app/api/countries", {
       headers: {
         "Authorization": \`Bearer \${apiKey}\`,
       },

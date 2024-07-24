@@ -24,7 +24,7 @@ export const GET = async (req) => {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ apiKey: user.apiKey }, { status: 200 });
+    return NextResponse.json({ apiKey: user.apiKey, requestCount: user.requestCount }, { status: 200 });
   } catch (error) {
     console.error("Error fetching API key:", error.message);
     return NextResponse.error(new Error("Failed to fetch API key"), {

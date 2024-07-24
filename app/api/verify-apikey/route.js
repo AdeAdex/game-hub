@@ -7,7 +7,10 @@ export const POST = async (req) => {
     const { apiKey } = await req.json();
 
     if (!apiKey) {
-      return NextResponse.json({ error: "API key is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "API key is required" },
+        { status: 400 }
+      );
     }
 
     await connectToDb();
@@ -18,7 +21,14 @@ export const POST = async (req) => {
       return NextResponse.json({ valid: false }, { status: 403 });
     }
 
-    return NextResponse.json({ valid: true }, { status: 200 });
+    // Increment the request count
+    user.requestCount += 1;
+    await user.save();
+
+    return NextResponse.json(
+      { valid: true, name: `${user.firstName} ${user.lastName}`, requestCount: user.requestCount },
+      { status: 200 }
+    );    
   } catch (error) {
     console.error("Error verifying API key:", error.message);
     return NextResponse.error(new Error("Failed to verify API key"), {
