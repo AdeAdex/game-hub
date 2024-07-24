@@ -5,7 +5,7 @@ const usageDescription = `
 
 To fetch country dialing codes, use the following endpoint:
 \`\`\`javascript
-fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
+fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/dial_code", {
   headers: {
     "Authorization": \`Bearer YOUR_API_KEY\`,
   },
@@ -36,7 +36,7 @@ fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
 
 To fetch country details including states, use the following endpoint:
 \`\`\`javascript
-fetch("https://country-dial-code-api.vercel.app/api/countries", {
+fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/countries", {
   headers: {
     "Authorization": \`Bearer YOUR_API_KEY\`,
   },
@@ -128,7 +128,7 @@ const MyForm = ({ apiKey }) => {
   const [dialCode, setDialCode] = useState("");
 
   useEffect(() => {
-    fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
+    fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/dial_code", {
       headers: {
         "Authorization": \`Bearer \${apiKey}\`,
       },
@@ -139,7 +139,7 @@ const MyForm = ({ apiKey }) => {
   }, [apiKey]);
 
   useEffect(() => {
-    fetch("https://country-dial-code-api.vercel.app/api/countries", {
+    fetch("https://school-portal-backend-adex2210.vercel.app/staff_account/countries", {
       headers: {
         "Authorization": \`Bearer \${apiKey}\`,
       },
