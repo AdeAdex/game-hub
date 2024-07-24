@@ -3,6 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import usageDescription from "./UsageDescription";
+import Image from "next/image";
+import screenshot from "@/public/images/Capture.png";
+import screenshot2 from "@/public/images/Capture2.png";
+import screenshot3 from "@/public/images/Capture3.png";
+import screenshot4 from "@/public/images/Capture4.png";
+import screenshot5 from "@/public/images/Capture5.png";
+import screenshot6 from "@/public/images/Capture6.png";
 
 interface ApiKeyDisplayProps {
   apiKey: string;
@@ -25,16 +32,6 @@ const ApiKeyDisplay: React.FC<ApiKeyDisplayProps> = ({
 
 function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
   const [showApiKey, setShowApiKey] = useState(false);
-  const [countries, setCountries] = useState<
-    { country: string; code: string }[]
-  >([]);
-  const [countryDetails, setCountryDetails] = useState<
-    { country: string; states: string[] }[]
-  >([]);
-  const [selectedCountry, setSelectedCountry] = useState<string>("");
-  const [selectedCountryCode, setSelectedCountryCode] = useState<string>("");
-  const [states, setStates] = useState<string[]>([]);
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const { enqueueSnackbar } = useSnackbar();
 
   const toggleApiKeyVisibility = () => {
@@ -47,48 +44,14 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
     });
   };
 
-  useEffect(() => {
-    // Fetch country dialing codes
-    fetch("https://country-dial-code-api.vercel.app/api/dial_code", {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setCountries(data))
-      .catch((error) => console.error("Error fetching dialing codes:", error));
-  }, [apiKey]);
-
-  useEffect(() => {
-    // Fetch country details
-    fetch("https://country-dial-code-api.vercel.app/api/countries", {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setCountryDetails(data))
-      .catch((error) => console.error("Error fetching countries:", error));
-  }, [apiKey]);
-
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const country = e.target.value;
-    setSelectedCountry(country);
-    const countryDetail = countryDetails.find((c) => c.country === country);
-    if (countryDetail) {
-      setStates(countryDetail.states);
-      const countryCode =
-        countries.find((c) => c.country === country)?.code || "";
-      setSelectedCountryCode(countryCode);
-    } else {
-      setStates([]);
-      setSelectedCountryCode("");
-    }
-  };
-
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
-  };
+  const images = [
+    screenshot,
+    screenshot2,
+    screenshot3,
+    screenshot4,
+    screenshot5,
+    screenshot6,
+  ];
 
   return (
     <div className="py-6 dark:bg-gray-900 bg-gray-100 text-gray-800">
@@ -149,83 +112,21 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
             {requestCount === 1 ? "" : "s"}.
           </p>
         </div>
-
-        {/* Country and State Form */}
-        <div className="mt-6">
-          <label
-            htmlFor="country-select"
-            className="block text-sm font-medium dark:text-gray-300 text-gray-700"
-          >
-            Select a Country
-          </label>
-          <select
-            id="country-select"
-            className="mt-2 p-2 border rounded-lg dark:bg-gray-800 dark:text-gray-300"
-            onChange={handleCountryChange}
-            value={selectedCountry}
-          >
-            <option value="">Select a country</option>
-            {countryDetails.map((country) => (
-              <option key={country.country} value={country.country}>
-                {country.country}
-              </option>
-            ))}
-          </select>
-
-          {selectedCountry && (
-            <>
-              <label
-                htmlFor="state-select"
-                className="block mt-4 text-sm font-medium dark:text-gray-300 text-gray-700"
-              >
-                Select a State
-              </label>
-              <select
-                id="state-select"
-                className="mt-2 p-2 border rounded-lg dark:bg-gray-800 dark:text-gray-300"
-              >
-                <option value="">Select a state</option>
-                {states.map((state) => (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
-            </>
-          )}
+        <div className="mt-6 flex flex-col gap-4 w-full">
+          {images.map((src, index) => (
+            <div key={index} className="relative w-full">
+              <Image
+                src={src}
+                alt={`screenshot${index + 1}`}
+                layout="intrinsic"
+                className="rounded-lg"
+              />
+            </div>
+          ))}
         </div>
-
-        {/* Phone Number Form */}
-        <div className="mt-6">
-          <label
-            htmlFor="phone-number"
-            className="block text-sm font-medium dark:text-gray-300 text-gray-700"
-          >
-            Phone Number
-          </label>
-          <div className="mt-2 flex">
-            <select
-              id="dialing-code-select"
-              className="p-2 border rounded-l-lg dark:bg-gray-800 dark:text-gray-300"
-              value={selectedCountryCode}
-              onChange={(e) => setSelectedCountryCode(e.target.value)}
-            >
-              {countries.map((country) => (
-                <option key={country.code} value={country.code}>
-                  {country.code}
-                </option>
-              ))}
-            </select>
-            <input
-              type="text"
-              id="phone-number"
-              className="p-2 border rounded-r-lg flex-grow dark:bg-gray-800 dark:text-gray-300"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              placeholder="Enter phone number"
-            />
-          </div>
-        </div>
+        {/* <pre className="mt-4 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 overflow-x-auto whitespace-pre-wrap">
+          {usageDescription}
+         </pre> */}
 
         <p className="mt-4 text-sm dark:text-gray-300 text-gray-700">
           This API key grants access to developer resources and must be securely
