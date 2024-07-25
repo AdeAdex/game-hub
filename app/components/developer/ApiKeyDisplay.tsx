@@ -12,7 +12,6 @@ import screenshot5 from "@/public/images/Capture5.png";
 import screenshot6 from "@/public/images/Capture6.png";
 
 
-
 interface ApiKeyDisplayProps {
   apiKey: string;
   requestCount: number;
