@@ -10,9 +10,9 @@ import Image from "next/image";
 // import screenshot4 from "@/public/images/Capture4.png"
 // import screenshot5 from "@/public/images/Capture5.png"
 // import screenshot6 from "@/public/images/Capture6.png"
-// import 'prismjs';
-// import 'prismjs/themes/prism-tomorrow.css'; // You can choose any theme you like
-// import Prism from 'prismjs';
+import Prism from "prismjs";
+import "prismjs/components/prism-javascript.min.js"; // Import the language you need
+import "prismjs/themes/prism-tomorrow.css";
 
 
 
@@ -133,9 +133,14 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
             </div>
           ))}
         </div> */}
-        <pre className="mt-4 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 overflow-x-auto whitespace-pre-wrap">
-          <code>{usageDescription}</code>
-        </pre>
+      <div className="mt-4 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 overflow-x-auto">
+          <pre className="whitespace-pre-wrap">
+            <code
+              className="language-javascript"
+              dangerouslySetInnerHTML={{ __html: Prism.highlight(usageDescription, Prism.languages.javascript, 'javascript') }}
+            />
+          </pre>
+        </div>
 
         <p className="mt-4 text-sm dark:text-gray-300 text-gray-700">
           This API key grants access to developer resources and must be securely
