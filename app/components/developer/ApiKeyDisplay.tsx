@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import usageDescription from "./UsageDescription";
 import Image from "next/image";
@@ -125,9 +125,9 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
             </div>
           ))}
         </div>
-        {/* <pre className="mt-4 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 overflow-x-auto whitespace-pre-wrap">
+        <pre className="mt-4 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 overflow-x-auto whitespace-pre-wrap">
           {usageDescription}
-         </pre> */}
+         </pre>
 
         <p className="mt-4 text-sm dark:text-gray-300 text-gray-700">
           This API key grants access to developer resources and must be securely
