@@ -1,15 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import usageDescription from "./UsageDescription";
 import Image from "next/image";
-import screenshot from "@/public/images/Capture.png"
-import screenshot2 from "@/public/images/Capture2.png"
-import screenshot3 from "@/public/images/Capture3.png"
-import screenshot4 from "@/public/images/Capture4.png"
-import screenshot5 from "@/public/images/Capture5.png"
-import screenshot6 from "@/public/images/Capture6.png"
+// import screenshot from "@/public/images/Capture.png"
+// import screenshot2 from "@/public/images/Capture2.png"
+// import screenshot3 from "@/public/images/Capture3.png"
+// import screenshot4 from "@/public/images/Capture4.png"
+// import screenshot5 from "@/public/images/Capture5.png"
+// import screenshot6 from "@/public/images/Capture6.png"
+// import 'prismjs';
+// import 'prismjs/themes/prism-tomorrow.css'; // You can choose any theme you like
+// import Prism from 'prismjs';
+
 
 
 interface ApiKeyDisplayProps {
@@ -45,14 +49,18 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
     });
   };
 
-  const images = [
-    screenshot,
-    screenshot2,
-    screenshot3,
-    screenshot4,
-    screenshot5,
-    screenshot6,
-  ];
+  // const images = [
+  //   screenshot,
+  //   screenshot2,
+  //   screenshot3,
+  //   screenshot4,
+  //   screenshot5,
+  //   screenshot6,
+  // ];
+
+  // useEffect(() => {
+  //   Prism.highlightAll(); // Highlight code when component mounts
+  // }, []);
 
   return (
     <div className="py-6 dark:bg-gray-900 bg-gray-100 text-gray-800">
@@ -113,7 +121,7 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
             {requestCount === 1 ? "" : "s"}.
           </p>
         </div>
-        <div className="mt-6 flex flex-col gap-4 w-full">
+        {/* <div className="mt-6 flex flex-col gap-4 w-full">
           {images.map((src, index) => (
             <div key={index} className="relative w-full">
               <Image
@@ -124,10 +132,10 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
               />
             </div>
           ))}
-        </div>
+        </div> */}
         <pre className="mt-4 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 overflow-x-auto whitespace-pre-wrap">
-          {usageDescription}
-         </pre>
+          <code>{usageDescription}</code>
+        </pre>
 
         <p className="mt-4 text-sm dark:text-gray-300 text-gray-700">
           This API key grants access to developer resources and must be securely
