@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import usageDescription from "./UsageDescription";
 import Image from "next/image";
-import screenshot from "@/public/images/Capture.png";
-import screenshot2 from "@/public/images/Capture2.png";
-import screenshot3 from "@/public/images/Capture3.png";
-import screenshot4 from "@/public/images/Capture4.png";
-import screenshot5 from "@/public/images/Capture5.png";
-import screenshot6 from "@/public/images/Capture6.png";
+import screenshot from "@/public/images/Capture.png"
+import screenshot2 from "@/public/images/Capture2.png"
+import screenshot3 from "@/public/images/Capture3.png"
+import screenshot4 from "@/public/images/Capture4.png"
+import screenshot5 from "@/public/images/Capture5.png"
+import screenshot6 from "@/public/images/Capture6.png"
 
 
 interface ApiKeyDisplayProps {
