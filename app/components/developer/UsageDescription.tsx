@@ -1,5 +1,3 @@
-//  /app/components/developer/UsageDescription.tsx
-
 const usageDescription = `
 ### How to Use the Country and Dialing Code APIs
 
@@ -142,9 +140,7 @@ const MyForm = ({ apiKey }) => {
       .then(response => response.json())
       .then(data => setCountries(data))
       .catch(error => console.error("Error fetching dialing codes:", error));
-  }, [apiKey]);
 
-  useEffect(() => {
     fetch("https://country-dial-code-api.vercel.app/api/countries", {
       headers: {
         "Authorization": \`Bearer \${apiKey}\`,
@@ -155,72 +151,46 @@ const MyForm = ({ apiKey }) => {
       .catch(error => console.error("Error fetching countries:", error));
   }, [apiKey]);
 
-  useEffect(() => {
-    if (selectedCountry) {
-      const country = countryDetails.find(c => c.country === selectedCountry);
-      setStates(country ? country.states : []);
-      const countryCode = countries.find(c => c.country === selectedCountry);
-      setDialCode(countryCode ? countryCode.code : "");
-    }
-  }, [selectedCountry, countryDetails, countries]);
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setSelectedCountry(country);
+    const countryInfo = countryDetails.find(c => c.country === country);
+    setStates(countryInfo ? countryInfo.states : []);
+    const dialingCode = countries.find(c => c.country === country)?.code || "";
+    setDialCode(dialingCode);
+  };
 
   return (
-    <form className="mt-6">
-      <div>
-        <label htmlFor="country-select" className="block text-sm font-medium">
-          Select a Country
-        </label>
-        <select
-          id="country-select"
-          value={selectedCountry}
-          onChange={e => setSelectedCountry(e.target.value)}
-          className="mt-2 p-2 border rounded-lg"
-        >
-          <option value="">Select a Country</option>
-          {countryDetails.map(country => (
-            <option key={country.country} value={country.country}>
-              {country.country}
-            </option>
-          ))}
-        </select>
-      </div>
+    <form>
+      <label htmlFor="country">Country:</label>
+      <select id="country" onChange={handleCountryChange}>
+        {countryDetails.map((c) => (
+          <option key={c.country} value={c.country}>
+            {c.country}
+          </option>
+        ))}
+      </select>
 
-      <div className="mt-6">
-        <label htmlFor="state-select" className="block text-sm font-medium">
-          Select a State
-        </label>
-        <select
-          id="state-select"
-          className="mt-2 p-2 border rounded-lg"
-          disabled={!states.length}
-        >
-          <option value="">Select a State</option>
-          {states.map(state => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
-      </div>
+      <label htmlFor="state">State:</label>
+      <select id="state">
+        {states.map((state) => (
+          <option key={state} value={state}>
+            {state}
+          </option>
+        ))}
+      </select>
 
-      <div className="mt-6">
-        <label htmlFor="phone-number" className="block text-sm font-medium">
-          Phone Number
-        </label>
-        <div className="flex mt-2">
-          <span className="p-2 border rounded-l-lg">{dialCode}</span>
-          <input
-            type="text"
-            id="phone-number"
-            className="p-2 border rounded-r-lg flex-1"
-            placeholder="Enter your phone number"
-          />
-        </div>
-      </div>
+      <label htmlFor="dial-code">Dialing Code:</label>
+      <input type="text" id="dial-code" value={dialCode} readOnly />
     </form>
   );
 };
+
+export default MyForm;
 \`\`\`
+
+Keep this file updated with any changes to the API or usage examples.
+
 `;
 
 export default usageDescription;
