@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import usageDescription from "./UsageDescription";
 // import Image from "next/image";
@@ -56,10 +56,7 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
   //   screenshot5,
   //   screenshot6,
   // ];
-
-  useEffect(() => {
-    Prism.highlightAll(); // Highlight code when component mounts
-  }, []);
+ 
 
   return (
     <div className="py-6 dark:bg-gray-900 bg-gray-100 text-gray-800">
