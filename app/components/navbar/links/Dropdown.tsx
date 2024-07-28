@@ -34,7 +34,7 @@ const Dropdown: React.FC<SideBarProps> = ({
       <SearchBox
         ClassName={`mb-[10px] flex`}
         Placeholder={`Search games & creator`}
-        inputClassName={`text-[14px] px-3 h-[30px] dark:bg-gray-800 text-white light:bg-[#F4F4F4] text-black my-auto w-[90%]`}
+        inputClassName={`text-[14px] px-3 h-[30px] dark:bg-gray-800 bg-[#F4F4F4] dark:text-white text-black my-auto w-[90%]`}
         onSearch={onSearch}
         suggestions={suggestions}
       />
