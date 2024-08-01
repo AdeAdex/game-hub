@@ -3,13 +3,7 @@
 import React, { useState } from "react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import usageDescription from "./UsageDescription";
-// import Image from "next/image";
-// import screenshot from "@/public/images/Capture.png"
-// import screenshot2 from "@/public/images/Capture2.png"
-// import screenshot3 from "@/public/images/Capture3.png"
-// import screenshot4 from "@/public/images/Capture4.png"
-// import screenshot5 from "@/public/images/Capture5.png"
-// import screenshot6 from "@/public/images/Capture6.png"
+import Image from "next/image";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript.min.js"; // Import the language you need
 import "prismjs/themes/prism-tomorrow.css";
@@ -48,15 +42,14 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
     });
   };
 
-  // const images = [
-  //   screenshot,
-  //   screenshot2,
-  //   screenshot3,
-  //   screenshot4,
-  //   screenshot5,
-  //   screenshot6,
-  // ];
- 
+  const images = [
+    "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1722512723/Capture_ncin2a.png",
+    "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1722512723/Capture2_v6cb0h.png",
+    "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1722512723/Capture3_cpzonz.png",
+    "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1722512723/Capture4_xc04o9.png",
+    "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1722512724/Capture5_hileid.png",
+    "https://res.cloudinary.com/dn4gfzlhq/image/upload/v1722512723/Capture6_qax6an.png",
+  ];
 
   return (
     <div className="py-6 dark:bg-gray-900 bg-gray-100 text-gray-800">
@@ -125,7 +118,7 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
             />
           </pre>
         </div>
-         {/* <div className="mt-6 flex flex-col gap-4 w-full">
+         <div className="mt-6 flex flex-col gap-4 w-full">
           {images.map((src, index) => (
             <div key={index} className="relative w-full">
               <Image
@@ -136,7 +129,7 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
               />
             </div>
           ))}
-        </div> */}
+        </div>
 
         <p className="mt-4 text-sm dark:text-gray-300 text-gray-700">
           This API key grants access to developer resources and must be securely
