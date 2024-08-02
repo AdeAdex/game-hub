@@ -11,6 +11,7 @@ import RegisterPrompt from "@/app/components/developer/RegisterPrompt";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "@/app/components/developer/LoadingSkeleton";
 import { useSearch } from "@/app/lib/SearchContext";
+import { Country } from "../types";
 
 
 const DeveloperPage: React.FC = () => {
@@ -24,6 +25,7 @@ const DeveloperPage: React.FC = () => {
   const action = searchParams?.get("action");
   const { handleSearch, suggestions } = useSearch();
 
+  console.log(session?.user?.email)
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -51,7 +53,7 @@ const DeveloperPage: React.FC = () => {
     // router.push(`${window.location.pathname}?${newParams.toString()}`);
   };
 
-  const handleFormSubmit = (formData: { appName: string; country: string }) => {
+  const handleFormSubmit = (formData: { appName: string; country: Country }) => {
     if (session?.user?.email) {
       axios
         .post("/api/developer", {

@@ -1,9 +1,6 @@
-export type Country =
-  | "United States"
-  | "Canada"
-  | "United Kingdom"
-  | "Australia"
-  | "Germany"
-  | "France"
-  | "Japan"
-  | "China";
+// app/types.ts
+export type Country = {
+  id: number;
+  country: string;
+  states: string[];
+};

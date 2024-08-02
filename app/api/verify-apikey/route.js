@@ -31,7 +31,7 @@ export const POST = async (req) => {
     );    
   } catch (error) {
     console.error("Error verifying API key:", error.message);
-    return NextResponse.error(new Error("Failed to verify API key"), {
+    return NextResponse.error(new Error("Failed to verify the API key from GameHub"), {
       status: 500,
     });
   }
