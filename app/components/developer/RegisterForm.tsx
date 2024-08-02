@@ -14,6 +14,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const [states, setStates] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false); // Added state for submitting
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -61,8 +62,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
       state: "",
     },
     validationSchema: registerFormSchema,
-    onSubmit: (values) => {
-      onSubmit(values);
+    onSubmit: async (values) => {
+      setSubmitting(true); // Set submitting state to true
+      try {
+        await onSubmit(values);
+      } catch (error) {
+        console.error("Submission error:", error);
+      } finally {
+        setSubmitting(false); // Reset submitting state
+      }
     },
   });
 
@@ -152,7 +160,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            Submit
+            {submitting ? "Submitting..." : "Submit"} {/* Conditional button text */}
           </button>
         </form>
       )}
