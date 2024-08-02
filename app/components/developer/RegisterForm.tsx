@@ -3,17 +3,15 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { registerFormSchema } from "@/app/components/validations/apiValidationSchemas";
-import { Country } from "@/app/types";
-
-
-// console.log('NEXT_PUBLIC_COUNTRY_API_KEY:', process.env.NEXT_PUBLIC_COUNTRY_API_KEY);
+import { Country, RegisterFormValues } from "@/app/types";
 
 interface RegisterFormProps {
-  onSubmit: (formData: { appName: string; country: Country }) => void;
+  onSubmit: (formData: RegisterFormValues) => void;
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const [countries, setCountries] = useState<Country[]>([]);
+  const [states, setStates] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,22 +24,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           },
         });
 
-        // console.log("Response", response)
-
         if (!response.ok) {
-          const errorDetails = await response.text(); // Get the response text for debugging
+          const errorDetails = await response.text();
           throw new Error(`Network response was not ok: ${errorDetails}`);
         }
 
         const data = await response.json();
-        // Sort countries alphabetically by name
-        // console.log(data)
         const sortedCountries = data.sort((a: Country, b: Country) =>
           a.country.localeCompare(b.country)
         );
-        setCountries(sortedCountries); 
+        setCountries(sortedCountries);
       } catch (error: any) {
-        console.log("Fetch error:", error.message); // Log the error message
+        console.log("Fetch error:", error.message);
         setError("Failed to fetch countries");
       } finally {
         setLoading(false);
@@ -51,10 +45,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     fetchCountries();
   }, []);
 
-  const formik = useFormik({
+  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCountry = countries.find(
+      (country) => country.country === e.target.value
+    );
+    formik.setFieldValue("country", selectedCountry || {} as Country);
+    setStates(selectedCountry?.states || []);
+    formik.setFieldValue("state", "");
+  };
+
+  const formik = useFormik<RegisterFormValues>({
     initialValues: {
       appName: "",
-      country: {} as Country, // Initialize with an empty object
+      country: {} as Country,
+      state: "",
     },
     validationSchema: registerFormSchema,
     onSubmit: (values) => {
@@ -104,13 +108,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             <select
               id="country"
               name="country"
-              value={formik.values.country.country || ""} // Ensure a default value
-              onChange={(e) => {
-                const selectedCountry = countries.find(
-                  (country) => country.country === e.target.value
-                );
-                formik.setFieldValue("country", selectedCountry || {});
-              }}
+              value={formik.values.country.country || ""}
+              onChange={handleCountryChange}
               onBlur={formik.handleBlur}
               className={`mt-1 block w-full px-3 py-2 border dark:border-gray-700 dark:bg-gray-700 dark:text-white border-gray-300 ${
                 formik.errors.country && formik.touched.country
@@ -121,6 +120,31 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <option value="" label="Select your country" />
               {countries.map((country) => (
                 <option key={country.id} value={country.country} label={country.country} />
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="state"
+              className="block text-sm font-medium dark:text-gray-300 text-gray-700"
+            >
+              State
+            </label>
+            <select
+              id="state"
+              name="state"
+              value={formik.values.state}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`mt-1 block w-full px-3 py-2 border dark:border-gray-700 dark:bg-gray-700 dark:text-white border-gray-300 ${
+                formik.errors.state && formik.touched.state
+                  ? "register-input"
+                  : ""
+              }`}
+            >
+              <option value="" label="Select your state" />
+              {states.map((state, index) => (
+                <option key={index} value={state} label={state} />
               ))}
             </select>
           </div>

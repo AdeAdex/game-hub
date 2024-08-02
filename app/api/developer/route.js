@@ -38,10 +38,10 @@ export const GET = async (req) => {
 
 export const POST = async (req) => {
   try {
-    const { email } = await req.json();
+    const { email, country, state, appName } = await req.json();
     
-    if (!email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!email || !country || !state || !appName) {
+      return NextResponse.json({ error: "Email, country, state, and appName are required" }, { status: 400 });
     }
 
     await connectToDb();
@@ -54,6 +54,9 @@ export const POST = async (req) => {
 
     const apiKey = crypto.randomBytes(20).toString('hex');
     user.apiKey = apiKey;
+    user.country = country;    // Save country
+    user.state = state;        // Save state
+    user.appName = appName;    // Save appName
     await user.save();
 
     return NextResponse.json({ apiKey }, { status: 200 });

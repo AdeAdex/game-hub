@@ -37,7 +37,10 @@ const userSchema = new mongoose.Schema(
     twitter: { type: String },
     role: { type: String }, 
     status: { type: String },
-    requestCount: { type: Number, default: 0 }
+    requestCount: { type: Number, default: 0 },
+    country: { type: String }, 
+    state: { type: String },  
+    appName: { type: String },
   },
   { timestamps: true }
 );

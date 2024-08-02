@@ -1,6 +1,13 @@
-// app/types.ts
-export type Country = {
+// types.ts
+
+export interface Country {
   id: number;
   country: string;
   states: string[];
-};
+}
+
+export interface RegisterFormValues {
+  appName: string;
+  country: Country;
+  state: string;
+}
