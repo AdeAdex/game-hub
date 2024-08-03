@@ -8,6 +8,6 @@ export interface Country {
 
 export interface RegisterFormValues {
   appName: string;
-  country: Country;
+  country: string;
   state: string;
 }

@@ -19,6 +19,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
+        // const response = await fetch("http://localhost:2500/api/countries", {
         const response = await fetch("https://country-dial-code-api.vercel.app/api/countries", {
           headers: {
             "Authorization": `Bearer ${process.env.NEXT_PUBLIC_COUNTRY_API_KEY}`,
@@ -45,38 +46,40 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
     fetchCountries();
   }, []);
+  
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCountry = countries.find(
       (country) => country.country === e.target.value
     );
-    formik.setFieldValue("country", selectedCountry || {} as Country);
     setStates(selectedCountry?.states || []);
-    formik.setFieldValue("state", "");
+    formik.setFieldValue("country", e.target.value); // Set country as string
+    formik.setFieldValue("state", ""); // Reset state
   };
 
   const formik = useFormik<RegisterFormValues>({
     initialValues: {
       appName: "",
-      country: {} as Country,
+      country: "",
       state: "",
     },
     validationSchema: registerFormSchema,
     onSubmit: async (values) => {
-      setSubmitting(true); // Set submitting state to true
+      setSubmitting(true);
+      // console.log("Form values submitted:", values);
       try {
         await onSubmit(values);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Submission error:", error);
       } finally {
-        setSubmitting(false); // Reset submitting state
+        setSubmitting(false);
       }
     },
   });
 
   return (
     <div className="mt-4">
-      {loading && <p>Loading countries...</p>}
+      {loading && <p>Loading countries please wait...</p>}
       {error && <p className="text-red-500">{error}</p>}
       {!loading && !error && (
         <form onSubmit={formik.handleSubmit} className="mt-4">
@@ -116,7 +119,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             <select
               id="country"
               name="country"
-              value={formik.values.country.country || ""}
+              value={formik.values.country || ""}
               onChange={handleCountryChange}
               onBlur={formik.handleBlur}
               className={`mt-1 block w-full px-3 py-2 border dark:border-gray-700 dark:bg-gray-700 dark:text-white border-gray-300 ${
@@ -160,7 +163,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            {submitting ? "Submitting..." : "Submit"} {/* Conditional button text */}
+            {submitting ? "Submitting..." : "Submit"} 
           </button>
         </form>
       )}

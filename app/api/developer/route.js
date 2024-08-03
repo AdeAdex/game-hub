@@ -39,6 +39,8 @@ export const GET = async (req) => {
 export const POST = async (req) => {
   try {
     const { email, country, state, appName } = await req.json();
+
+    console.log(email, country, state, appName)
     
     if (!email || !country || !state || !appName) {
       return NextResponse.json({ error: "Email, country, state, and appName are required" }, { status: 400 });

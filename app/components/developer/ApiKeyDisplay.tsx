@@ -118,13 +118,14 @@ function MyApp({ apiKey, requestCount }: ApiKeyDisplayProps) {
             />
           </pre>
         </div>
-         <div className="mt-6 flex flex-col gap-4 w-full">
+        <div className="mt-6 flex flex-col gap-4 w-full">
           {images.map((src, index) => (
             <div key={index} className="relative w-full">
               <Image
                 src={src}
                 alt={`screenshot${index + 1}`}
-                layout="intrinsic"
+                width={800} 
+                height={600}
                 className="rounded-lg"
               />
             </div>

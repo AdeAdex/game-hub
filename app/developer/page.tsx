@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import { useSession } from "next-auth/react";
@@ -11,7 +11,7 @@ import RegisterPrompt from "@/app/components/developer/RegisterPrompt";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "@/app/components/developer/LoadingSkeleton";
 import { useSearch } from "@/app/lib/SearchContext";
-import { Country } from "../types";
+import { RegisterFormValues } from "../types";
 
 
 const DeveloperPage: React.FC = () => {
@@ -53,22 +53,27 @@ const DeveloperPage: React.FC = () => {
     // router.push(`${window.location.pathname}?${newParams.toString()}`);
   };
 
-  const handleFormSubmit = (formData: { appName: string; country: Country }) => {
+  const handleFormSubmit = async (formData: RegisterFormValues) => {
     if (session?.user?.email) {
-      axios
-        .post("/api/developer", {
+      try {
+        const response = await axios.post("/api/developer", {
           email: session.user.email,
           ...formData,
-        })
-        .then((response) => {
-          setApiKey(response.data.apiKey);
-          setShowForm(false);
-        })
-        .catch((error) =>
-          console.error("Error registering for API key:", error)
-        );
+        });
+        setApiKey(response.data.apiKey);
+        setShowForm(false);
+      } catch (error) {
+        console.error("Error registering for API key:", error);
+      }
     }
   };
+
+  // const handleFormSubmit = (formData: RegisterFormValues) => {
+  //   console.log("Form submitted with data:", formData);
+  //   // Add your API call or other logic here
+  // };
+  
+  
 
   return (
     <div
