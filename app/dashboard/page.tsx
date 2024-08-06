@@ -13,27 +13,33 @@ import UserProfile from "../components/dashboard/UserProfile";
 import FlowDiagram from "../components/dashboard/FlowDiagram";
 import Activities from "../components/dashboard/Activities";
 import { UserDataType, ActivityType } from "../types/user";
-// import D3Chart from "../components/dashboard/D3Chart";
 import { useSearch } from "@/app/lib/SearchContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { signInSuccess } from "../redux/authSlice";
+import { RootState } from "../redux/store";
 
 
 Chart.register(...registerables);
 
 const DashboardPage = () => {
   const { data: session } = useSession();
-  const [userData, setUserData] = useState<UserDataType | null>(null);
-  const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  // const [userData, setUserData] = useState<UserDataType | null>(null);
+  const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loginCounts, setLoginCounts] = useState<number[]>([]);
   const { handleSearch, suggestions } = useSearch();
+  const dispatch = useDispatch();
+  const userInformation = useSelector((state: RootState) => state.auth.userInformation);
 
+console.log("userinfo", userInformation)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post(`/api/prompt/dashboard`);
         if (response.data.success) {
-          setUserData(response.data.user);
+          dispatch(signInSuccess(response.data.user));
+          // setUserData(response.data.user);
           setLoginCounts(response.data.loginCounts);
           setRecentActivities(response.data.recentActivities);
         }
@@ -47,7 +53,7 @@ const DashboardPage = () => {
     if (session) {
       fetchData();
     }
-  }, [session]);
+  }, [session, dispatch]);
 
   const formatDateTime = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -116,12 +122,12 @@ const DashboardPage = () => {
 
       <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
         <div className="flex flex-col md:flex-row md:space-x-8">
-          <UserProfile userData={userData} />
+          <UserProfile userData={userInformation} />
           <FlowDiagram chartData={chartData} chartOptions={chartOptions} />
         </div>
         <Activities
           recentActivities={recentActivities}
-          userData={userData}
+          userData={userInformation}
           formatDateTime={formatDateTime}
         />
         {/* <D3Chart /> */}

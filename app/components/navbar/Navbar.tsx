@@ -24,6 +24,8 @@ import ThemeToggle from "@/app/components/ThemeToggle";
 import { Game } from "@/app/types/homePage/games";
 import { useSearch } from "@/app/lib/SearchContext";
 import NotificationIcon from "./NotificationIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 interface AuthState {
   firstName?: string;
@@ -63,16 +65,19 @@ function MyApp() {
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [token, setToken] = useState<boolean>(false);
-  const [userData, setUserData] = useState<AuthState | null>(null);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [token, setToken] = useState<boolean>(false);
+  // const [userData, setUserData] = useState<AuthState | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
-  const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
-  const [messageCount, setMessageCount] = useState(0); // State for message count
-  const [hasPayments, setHasPayments] = useState(false);
+  // const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
+  // const [messageCount, setMessageCount] = useState(0); // State for message count
+  // const [hasPayments, setHasPayments] = useState(false);
   const socket = useRef<Socket | null>(null);
+  const userInformation = useSelector(
+    (state: RootState) => state.auth.userInformation
+  );
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -94,28 +99,28 @@ function MyApp() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.post(`/api/prompt/dashboard`);
-        if (response.data.success === true) {
-          setToken(true);
-          setUserData(response.data.user);
-          setFriendRequestCount(response.data.user.friendRequestCount);
-          setMessageCount(response.data.user.messages.length); // Count messages
-          setHasPayments(response.data.user.payments.length > 0);
-          console.log(response.data.user);
-        }
-      } catch (error: any) {
-        console.error("Error fetching user data:", error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await axios.post(`/api/prompt/dashboard`);
+  //       if (response.data.success === true) {
+  //         setToken(true);
+  //         setUserData(response.data.user);
+  //         setFriendRequestCount(response.data.user.friendRequestCount);
+  //         setMessageCount(response.data.user.messages.length); // Count messages
+  //         setHasPayments(response.data.user.payments.length > 0);
+  //         console.log(response.data.user);
+  //       }
+  //     } catch (error: any) {
+  //       console.error("Error fetching user data:", error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, [session, friendRequestCount]);
+  //   fetchData();
+  // }, [session, friendRequestCount]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -133,26 +138,6 @@ function MyApp() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    socket.current = io();
-
-    if (socket.current) {
-      socket.current.on("newFriendRequest", () => {
-        setFriendRequestCount((prevCount) => prevCount + 1);
-      });
-
-      socket.current.on("updateFriendRequestCount", (count: number) => {
-        setFriendRequestCount(count);
-      });
-    }
-
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
     };
   }, []);
 
@@ -192,54 +177,36 @@ function MyApp() {
           inputClassName={`text-[14px] px-3 h-[30px] dark:bg-gray-800 dark:text-white bg-gray-200 text-black my-auto`}
         />
         <div className="flex gap-3 md:gap-8">
-          {userData && userData.incomingFriendRequests && (
+          {userInformation && (
             // <Link
             //   className="flex relative cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 rounded-md "
-            //   href={`/${userData?.userName}/notifications?status=all`}
+            //   href={`/${userInformation?.userName}/notifications?status=all`}
             // >
             //   <IoMdNotifications size={25} className="my-auto " />
             //   <small className="absolute flex items-center justify-center rounded-full p-1 bg-red-500 text-white text-[10px] w-4 h-4 top-2 right-1 transform translate-x-1/2 -translate-y-1/2">
-            //     {userData.friendRequestCount}
+            //     {userInformation.friendRequestCount}
             //   </small>
             // </Link>
 
             <NotificationIcon
-              userName={userData.userName}
-              friendRequestCount={userData.friendRequestCount}
-              messageCount={messageCount}
-              hasPayments={hasPayments}
+              userName={userInformation.userName}
+              friendRequestCount={userInformation.friendRequestCount}
+              messageCount={userInformation.messages.length}
+              hasPayments={userInformation.payments.length > 0}
             />
           )}
           <div className="my-auto flex">
-            {userData && token ? (
-              loading ? (
-                <div className="flex flex-col relative">
-                  <div className="flex gap-3 cursor-pointer">
-                    <PingLoader />
-                    <div
-                      className={`flex my-auto dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 p-1 md:p-2 rounded-lg border cursor-pointer ${
-                        dropdownOpen ? "border-blue-500" : ""
-                      } `}
-                      onClick={handleDropdownToggle}
-                    >
-                      {dropdownOpen ? (
-                        <FaAngleUp size={18} className="my-auto " />
-                      ) : (
-                        <FaAngleDown size={18} className="my-auto" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ) : (
+            {userInformation ? (
+              
                 <div className="flex flex-col relative">
                   <div className="flex gap-3">
                     <Link
-                      href={`/${userData?.userName}`}
+                      href={`/${userInformation?.userName}`}
                       className={`flex gap-2 cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 `}
                     >
-                      {userData?.profilePicture ? (
+                      {userInformation?.profilePicture ? (
                         <Image
-                          src={userData?.profilePicture}
+                          src={userInformation?.profilePicture}
                           alt="profile"
                           width={32}
                           height={32}
@@ -255,9 +222,10 @@ function MyApp() {
                         />
                       )}
                       <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
-                        {userData?.userName && userData.userName.length > 8
-                          ? `${userData.userName.slice(0, 8)}...`
-                          : userData.userName}
+                        {userInformation?.userName &&
+                        userInformation.userName.length > 8
+                          ? `${userInformation.userName.slice(0, 8)}...`
+                          : userInformation.userName}
                       </span>
                     </Link>
 
@@ -279,26 +247,26 @@ function MyApp() {
                       <div ref={dropdownRef} className="profile-dropdown">
                         <ProfileDropdown
                           handleClick={handleLogout}
-                          username={userData?.userName || ""}
-                          email={userData?.email || ""}
+                          username={userInformation?.userName || ""}
+                          email={userInformation?.email || ""}
                         />
                       </div>
                     </div>
                   )}
                 </div>
-              )
+              
             ) : (
               <AuthButton title="login" to="/login" />
             )}
           </div>
           <div className="my-auto hidden md:flex">
-            {userData && token ? (
+            {userInformation ? (
               <></>
             ) : (
               <AuthButton title="register" to="/register" />
             )}
           </div>
-          <div className={`my-auto ${userData ? "ml-[-5px]" : ""}`}>
+          <div className={`my-auto ${userInformation ? "ml-[-5px]" : ""}`}>
             <ThemeToggle />
           </div>
         </div>

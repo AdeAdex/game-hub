@@ -7,6 +7,8 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
+import { signInSuccess } from "@/app/redux/authSlice";
+import { useDispatch } from 'react-redux';
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
@@ -31,6 +33,7 @@ function MyApp() {
   const router = useRouter();
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
+  const dispatch = useDispatch();
   // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
 
   // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
@@ -60,8 +63,16 @@ function MyApp() {
         redirect: false,
       });
 
-      if (result && !result.error) {
-        // console.log("sign in succeefully")
+      console.log("result",result)
+
+      if (result?.ok) {
+        // Assuming user information is part of the session or handled elsewhere
+        const user = session?.user; // Fetch user from session
+        if (user) {
+          // Dispatch user information to Redux store
+          console.log("user", user)
+          dispatch(signInSuccess(user));
+        }
         // Handle successful sign-in
       } else {
         const errorMessage = result?.error || "Error during login";

@@ -3,7 +3,7 @@
 import Form from "@/app/components/login/Form";
 import SocialMediaLogin from "@/app/components/login/SocialMediaLogin";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React from "react";
 
 const LoginPage = () => {
   return (
