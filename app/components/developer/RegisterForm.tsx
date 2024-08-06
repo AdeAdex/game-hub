@@ -34,8 +34,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         const data = await response.json();
         const sortedCountries = data.sort((a: Country, b: Country) =>
           a.country.localeCompare(b.country)
-        );
-        setCountries(sortedCountries);
+      );
+      console.log("countries data", sortedCountries)
+      setCountries(sortedCountries);
       } catch (error: any) {
         console.log("Fetch error:", error.message);
         setError("Failed to fetch countries");

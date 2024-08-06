@@ -13,6 +13,7 @@ import HeadComponent from "./head";
 import CookieConsent from "@/app/components/cookies/CookieConsent";
 import { ThemeProvider } from "@/app/lib/ThemeContext";
 import { SearchProvider } from "./lib/SearchContext";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -111,5 +112,5 @@ function InnerRootLayout({ pathname, children }: { pathname: string; children: R
 }
 
 const LoadingScreen = () => {
-  return <div>Loading...</div>;
+  return <Loading/>;
 }
