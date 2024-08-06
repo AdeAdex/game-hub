@@ -16,7 +16,7 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
-import { IoMdNotifications } from "react-icons/io";
+// import { IoMdNotifications } from "react-icons/io";
 import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
@@ -24,6 +24,7 @@ import { io, Socket } from "socket.io-client";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { Game } from "@/app/types/homePage/games";
 import { useSearch } from "@/app/lib/SearchContext";
+import NotificationIcon from "./NotificationIcon";
 
 interface AuthState {
   firstName?: string;
@@ -49,14 +50,15 @@ const Navbar: React.FC<NavbarProps> = () => {
       maxSnack={1}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <MyApp  />
+      <MyApp />
     </SnackbarProvider>
   );
 };
 
 function MyApp() {
   const { enqueueSnackbar } = useSnackbar();
-  const { searchQuery, setSearchQuery, suggestions, handleSearch } = useSearch();
+  const { searchQuery, setSearchQuery, suggestions, handleSearch } =
+    useSearch();
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
@@ -185,15 +187,20 @@ function MyApp() {
         />
         <div className="flex gap-3 md:gap-8">
           {userData && userData.incomingFriendRequests && (
-            <Link
-              className="flex relative cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 rounded-md "
-              href={`/${userData?.userName}/notifications?status=all`}
-            >
-              <IoMdNotifications size={25} className="my-auto " />
-              <small className="absolute flex items-center justify-center rounded-full p-1 bg-red-500 text-white text-[10px] w-4 h-4 top-2 right-1 transform translate-x-1/2 -translate-y-1/2">
-                {userData.friendRequestCount}
-              </small>
-            </Link>
+            // <Link
+            //   className="flex relative cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 rounded-md "
+            //   href={`/${userData?.userName}/notifications?status=all`}
+            // >
+            //   <IoMdNotifications size={25} className="my-auto " />
+            //   <small className="absolute flex items-center justify-center rounded-full p-1 bg-red-500 text-white text-[10px] w-4 h-4 top-2 right-1 transform translate-x-1/2 -translate-y-1/2">
+            //     {userData.friendRequestCount}
+            //   </small>
+            // </Link>
+
+            <NotificationIcon
+              userName={userData.userName}
+              friendRequestCount={userData.friendRequestCount}
+            />
           )}
           <div className="my-auto flex">
             {userData && token ? (

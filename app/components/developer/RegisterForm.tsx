@@ -35,7 +35,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         const sortedCountries = data.sort((a: Country, b: Country) =>
           a.country.localeCompare(b.country)
       );
-      console.log("countries data", sortedCountries)
+      // console.table("countries data", sortedCountries)
       setCountries(sortedCountries);
       } catch (error: any) {
         console.log("Fetch error:", error.message);
