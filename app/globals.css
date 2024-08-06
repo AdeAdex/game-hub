@@ -62,14 +62,13 @@ body.light-mode input:-webkit-autofill:focus {
   left: 5px;
   width: 6px;
   height: 6px;
-  background-color: rgb(0, 255, 0);
   border-radius: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.notification-point::before {
+.notification-point.animate::before {
   content: "";
   position: absolute;
   width: 1px;

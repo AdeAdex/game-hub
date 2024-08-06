@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Links from "./links/Links";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
@@ -16,7 +16,6 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
-// import { IoMdNotifications } from "react-icons/io";
 import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
@@ -36,6 +35,8 @@ interface AuthState {
   profilePicture?: string;
   incomingFriendRequests: any[];
   friendRequestCount: number;
+  messages: any[];
+  payments: any[];
 }
 
 interface NavbarProps {
@@ -69,6 +70,8 @@ function MyApp() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
   const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
+  const [messageCount, setMessageCount] = useState(0); // State for message count
+  const [hasPayments, setHasPayments] = useState(false);
   const socket = useRef<Socket | null>(null);
 
   const handleDropdownToggle = () => {
@@ -100,6 +103,9 @@ function MyApp() {
           setToken(true);
           setUserData(response.data.user);
           setFriendRequestCount(response.data.user.friendRequestCount);
+          setMessageCount(response.data.user.messages.length); // Count messages
+          setHasPayments(response.data.user.payments.length > 0);
+          console.log(response.data.user);
         }
       } catch (error: any) {
         console.error("Error fetching user data:", error.message);
@@ -200,6 +206,8 @@ function MyApp() {
             <NotificationIcon
               userName={userData.userName}
               friendRequestCount={userData.friendRequestCount}
+              messageCount={messageCount}
+              hasPayments={hasPayments}
             />
           )}
           <div className="my-auto flex">

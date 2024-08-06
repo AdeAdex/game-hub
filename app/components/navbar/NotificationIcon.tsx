@@ -4,11 +4,15 @@ import Link from "next/link";
 interface NotificationIconProps {
   userName?: string;
   friendRequestCount?: number;
+  messageCount?: number;
+  hasPayments?: boolean;
 }
 
 const NotificationIcon: React.FC<NotificationIconProps> = ({
   userName,
-  friendRequestCount,
+  friendRequestCount = 0,
+  messageCount = 0, // Default value for message count
+  hasPayments = false,
 }) => {
   return (
     <Link
@@ -33,7 +37,7 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
             stroke="currentColor"
           ></path>
         </svg>
-        <div className="notification-point"></div>
+        <div className={`${friendRequestCount > 0 || messageCount > 0 || hasPayments ? 'notification-point bg-green animate' : ''}`}></div>
       </div>
     </Link>
   );

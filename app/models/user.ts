@@ -1,10 +1,26 @@
 import mongoose from "mongoose";
 
+// Define the schemas
+const messageSchema = new mongoose.Schema({
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  content: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now },
+});
+
+const paymentSchema = new mongoose.Schema({
+  amount: { type: Number, required: true },
+  date: { type: Date, default: Date.now },
+  paymentMethod: { type: String, required: true },
+});
+
+// Define the loginData schema
 const loginDataSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   count: { type: Number, required: true, default: 0 },
 });
 
+// Define the user schema
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
@@ -41,6 +57,8 @@ const userSchema = new mongoose.Schema(
     country: { type: String }, 
     state: { type: String },  
     appName: { type: String },
+    messages: [messageSchema], // Embed messages
+    payments: [paymentSchema], // Embed payments
   },
   { timestamps: true }
 );
