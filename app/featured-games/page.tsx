@@ -24,10 +24,7 @@ const FeaturedGamesPage: React.FC = () => {
     dispatch(fetchGames());
   }, [dispatch]);
 
-  // Filtered games based on rating
-  const filteredGames = featuredGames.filter((game: Game) => game.rating > 4.5).slice(0, 9);
-  console.log(filteredGames)
-
+  
 
   return (
     <div
@@ -49,7 +46,7 @@ const FeaturedGamesPage: React.FC = () => {
               ? Array.from({ length: 6 }).map((_, index) => (
                   <CardSkeleton key={index} />
                 ))
-              :  filteredGames.map((game) => (
+              :  featuredGames.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
           </div>
