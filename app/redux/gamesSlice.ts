@@ -5,12 +5,14 @@ import { Game } from '../types/homePage/games';
 
 interface GamesState {
   games: Game[];
+  featuredGames: Game[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: GamesState = {
   games: [],
+  featuredGames: [],
   loading: false,
   error: null,
 };

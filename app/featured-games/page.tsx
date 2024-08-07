@@ -8,33 +8,26 @@ import Footer from "@/app/components/footer/Footer";
 import GameCard from "@/app/components/homePage/GameCard";
 import CardSkeleton from "../components/homePage/CardSkeleton";
 import { useSearch } from "@/app/lib/SearchContext";
+import { RootState, AppDispatch } from "../redux/store";
+import { fetchGames } from "../redux/gamesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Game } from "../types/homePage/games";
 
 
 const FeaturedGamesPage: React.FC = () => {
-  const [featuredGames, setFeaturedGames] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true); // State to manage loading state
+  const dispatch: AppDispatch = useDispatch();
+  const { featuredGames, loading, error } = useSelector((state: RootState) => state.games);
   const { handleSearch, suggestions } = useSearch();
 
-  useEffect(() => {
-    const fetchFeaturedGames = async () => {
-      setLoading(true); // Set loading state to true before fetching data
-      try {
-        const response = await axios.get("/api/games");
-        // Example: Filter games based on certain criteria (e.g., ratings, release date)
-        const filteredGames = response.data.results.filter((game: any) => {
-          // Replace with your own logic to determine featured games
-          return game.rating > 4.5; // Example filter condition: games with rating higher than 4.5
-        });
-        setFeaturedGames(filteredGames.slice(0, 9)); // Adjust to show a limited number of featured games
-      } catch (error) {
-        console.error("Error fetching featured games:", error);
-      } finally {
-        setLoading(false); // Set loading state to false after data fetching is completed
-      }
-    };
 
-    fetchFeaturedGames();
-  }, []);
+  useEffect(() => {
+    // Fetch featured games when component mounts
+    dispatch(fetchGames());
+  }, [dispatch]);
+
+  // Filtered games based on rating
+  const filteredGames = featuredGames.filter((game: Game) => game.rating > 4.5).slice(0, 9);
+
 
   return (
     <div
@@ -56,7 +49,7 @@ const FeaturedGamesPage: React.FC = () => {
               ? Array.from({ length: 6 }).map((_, index) => (
                   <CardSkeleton key={index} />
                 ))
-              : featuredGames.map((game) => (
+              :  filteredGames.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
           </div>
