@@ -16,7 +16,6 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import ProfileDropdown from "./ProfileDropdown";
 import axios from "axios";
 import avatar from "../../../public/images/robot.png";
-import PingLoader from "../PingLoader";
 import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
@@ -66,15 +65,9 @@ function MyApp() {
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [token, setToken] = useState<boolean>(false);
-  // const [userData, setUserData] = useState<AuthState | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuBackdropRef = useRef<HTMLDivElement>(null);
-  // const [friendRequestCount, setFriendRequestCount] = useState<number>(0);
-  // const [messageCount, setMessageCount] = useState(0); // State for message count
-  // const [hasPayments, setHasPayments] = useState(false);
   const socket = useRef<Socket | null>(null);
   const userInformation = useSelector(
     (state: RootState) => state.auth.userInformation
@@ -99,29 +92,6 @@ function MyApp() {
       console.error("Error logging out:", error);
     }
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await axios.post(`/api/prompt/dashboard`);
-  //       if (response.data.success === true) {
-  //         setToken(true);
-  //         setUserData(response.data.user);
-  //         setFriendRequestCount(response.data.user.friendRequestCount);
-  //         setMessageCount(response.data.user.messages.length); // Count messages
-  //         setHasPayments(response.data.user.payments.length > 0);
-  //         console.log(response.data.user);
-  //       }
-  //     } catch (error: any) {
-  //       console.error("Error fetching user data:", error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [session, friendRequestCount]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

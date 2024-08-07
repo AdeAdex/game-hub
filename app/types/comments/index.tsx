@@ -3,12 +3,9 @@
 import { UserDataType } from "../user";
 
 export interface CommentDataType {
-  // _id: string;
-  // content: string;
-  // postId: string;
   _id: string;
   content: string;
   postId: string;
-  userId: UserDataType;
+  userId: UserDataType; 
   timestamp: string; 
 }

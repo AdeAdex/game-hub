@@ -1,16 +1,15 @@
 // /app/types/user/index.tsx
 
-
 export interface Message {
   sender: string; // Assuming ObjectId is converted to string
   receiver: string;
   content: string;
-  timestamp: Date;
+  timestamp: Date; // Changed from string to Date
 }
 
 export interface Payment {
   amount: number;
-  date: Date;
+  date: Date; // Use Date if date is a Date object
   paymentMethod: string;
 }
 
@@ -20,18 +19,33 @@ export interface UserDataType {
   lastName: string;
   userName: string;
   email: string;
-  profilePicture: string;
-  bio?: string;
-  phone?: string;
+  profilePicture?: string; // Optional
+  password?: string; // Optional
+  socialId?: string; // Optional
+  resetPasswordToken?: string; // Optional
+  currentFriends?: string[];
+  incomingFriendRequests?: string[];
+  outgoingFriendRequests?: string[];
+  friendRequestCount?: number;
+  savedPosts?: string[];
+  reportedPosts?: {
+    postId: string;
+    reason: string;
+  }[];
+  loginData?: {
+    date: Date;
+    count: number;
+  }[];
+  apiKey?: string;
+  facebook?: string;
   linkedin?: string;
   twitter?: string;
-  facebook?: string;
   role?: string;
   status?: string;
-  currentFriends?: string[];
-  apiKey?: string;
-  incomingFriendRequests?: string[];
-  friendRequestCount?: number;
+  requestCount?: number;
+  country?: string;
+  state?: string;
+  appName?: string;
   messages?: Message[];
   payments?: Payment[];
 }
@@ -48,22 +62,3 @@ export interface ActivityType {
   date: string;
 }
 
-
-  // export interface UserDataType {
-  //   _id: string;
-  //   firstName: string;
-  //   lastName: string;
-  //   userName: string;
-  //   email: string;
-  //   profilePicture: string;
-  //   bio: string;
-  //   phone?: string;
-  //   linkedin?: string;
-  //   twitter?: string;
-  //   facebook?: string;
-  //   role?: string;
-  //   status?: string;
-  //   currentFriends?: string[];
-  //   apiKey?: string;
-  // }
-  

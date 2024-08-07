@@ -33,8 +33,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
             {userData.firstName} {userData.lastName}
           </div>
           <div className={`text-sm text-gray-500`}>{userData.email}</div>
-          <div className={`text-sm text-gray-500`}>{userData.phone}</div>
-          <div className={`text-sm text-gray-500`}>{userData.bio}</div>
+          {/* <div className={`text-sm text-gray-500`}>{userData.phone}</div> */}
+          {/* <div className={`text-sm text-gray-500`}>{userData.bio}</div> */}
           <div className="flex justify-center space-x-4">
             <a
               href={userData.linkedin}

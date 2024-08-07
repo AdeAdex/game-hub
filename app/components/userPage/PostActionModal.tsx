@@ -42,16 +42,7 @@ interface Post {
   _id: string;
   content: string;
   timestamp: string;
-  userId: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    userName: string;
-    email: string;
-    profilePicture: string;
-    bio: string;
-    currentFriends?: string[];
-  };
+  userId: UserDataType;
   likes: number;
   dislikes: number;
   likedBy: string[];
