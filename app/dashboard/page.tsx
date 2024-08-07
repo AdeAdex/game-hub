@@ -24,7 +24,6 @@ Chart.register(...registerables);
 const DashboardPage = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
-  // const [userData, setUserData] = useState<UserDataType | null>(null);
   const [recentActivities, setRecentActivities] = useState<ActivityType[]>([]);
   const [loginCounts, setLoginCounts] = useState<number[]>([]);
   const { handleSearch, suggestions } = useSearch();
@@ -39,7 +38,6 @@ console.log("userinfo", userInformation)
         const response = await axios.post(`/api/prompt/dashboard`);
         if (response.data.success) {
           dispatch(signInSuccess(response.data.user));
-          // setUserData(response.data.user);
           setLoginCounts(response.data.loginCounts);
           setRecentActivities(response.data.recentActivities);
         }

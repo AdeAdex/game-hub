@@ -10,10 +10,14 @@ interface NotificationIconProps {
 
 const NotificationIcon: React.FC<NotificationIconProps> = ({
   userName,
-  friendRequestCount = 0,
-  messageCount = 0, // Default value for message count
-  hasPayments = 0,
+  friendRequestCount,
+  messageCount,
+  hasPayments,
 }) => {
+  const totalNotifications =
+    (friendRequestCount || 0) + (messageCount || 0) + (hasPayments || 0);
+  // console.table(totalNotifications);
+
   return (
     <Link
       className="flex relative cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 rounded-md "
@@ -37,7 +41,11 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
             stroke="currentColor"
           ></path>
         </svg>
-        <div className={`${friendRequestCount > 0 || messageCount > 0 || hasPayments > 0 ? 'notification-point bg-green animate' : ''}`}></div>
+        <div
+          className={`${
+            totalNotifications > 0 ? "notification-point bg-green animate" : ""
+          }`}
+        ></div>
       </div>
     </Link>
   );

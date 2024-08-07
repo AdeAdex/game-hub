@@ -24,7 +24,8 @@ export interface UserDataType {
   socialId?: string; // Optional
   resetPasswordToken?: string; // Optional
   currentFriends?: string[];
-  incomingFriendRequests?: string[];
+  // incomingFriendRequests?: string[];
+  incomingFriendRequests: FriendRequestType[];
   outgoingFriendRequests?: string[];
   friendRequestCount?: number;
   savedPosts?: string[];
@@ -62,3 +63,6 @@ export interface ActivityType {
   date: string;
 }
 
+export interface FriendRequestType extends UserDataType {
+  // Add any additional fields specific to friend requests here if needed
+}

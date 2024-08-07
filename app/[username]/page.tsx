@@ -1,7 +1,7 @@
 // /app/[username]/page.tsx 
 
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
@@ -9,12 +9,13 @@ import LoadingSkeleton from "../components/userPage/LoadingSkeleton";
 import UserProfileSection from "../components/userPage/UserProfileSection";
 import Post from "../components/userPage/PostComponent";
 import UserAvatarSection from "../components/userPage/UserAvatarSection";
-import PostModal from "../components/userPage/PostModal";
 import PostButton from "../components/userPage/PostButton";
-import { UserDataType } from "../types/user";
 import { PostDataType } from "../types/post";
 import Footer from "../components/footer/Footer";
 import { useSearch } from "@/app/lib/SearchContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
+import { UserDataType } from "@/app/types/user";
 
 
 interface UserPageProps {
@@ -26,7 +27,6 @@ interface UserPageProps {
 const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const router = useRouter();
   const { username } = params;
-  const [user, setUser] = useState<UserDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<PostDataType[]>([]);
   const [newImage, setNewImage] = useState("");
@@ -38,6 +38,9 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   const [editSelectedPost, setEditSelectedPost] = useState<string>("");
   const [selectedPost, setSelectedPost] = useState<PostDataType | null>(null);
   const { handleSearch, suggestions } = useSearch();
+  const userInformation = useSelector(
+    (state: RootState) => state.auth.userInformation
+  ) as UserDataType | null;
 
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +59,7 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
       // console.log(reader.result)
       const endpoint = "/api/username/upload";
       axios
-        .post(endpoint, { newImage: reader.result, email: user?.email })
+        .post(endpoint, { newImage: reader.result, email: userInformation?.email })
         .then((response) => {
           // console.log(response.data.cloudLinkForProfilePicture);
           setCloudImage(response.data.cloudLinkForProfilePicture);
@@ -72,18 +75,13 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   useEffect(() => {
     const fetchUserAndPosts = async () => {
       try {
-        const userResponse = await axios.post(
-          `/api/username/profile?username=${username}`,
-          { username }
-        );
-        setUser(userResponse.data);
-
+        
         const postsResponse = await axios.get("/api/posts"); // Fetch all posts
         setPosts(postsResponse.data);
 
         // Fetch all posts and liked posts with user ID
         const likedResponse = await axios.post(`/api/posts/my-likes`, {
-          userId: userResponse.data._id,
+          userId: userInformation?._id,
         });
         // console.log("likedResponse", likedResponse.data);
         setLikedPosts(likedResponse.data.map((post: PostDataType) => post._id));
@@ -106,19 +104,19 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
   return (
     <div className={`dark:bg-dark-mode dark:text-gray-200 bg-gray-100 text-gray-900 min-h-screen`}>
       <Navbar onSearch={handleSearch} suggestions={suggestions} />
-      {user ? (
+      {userInformation ? (
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8  mt-[60px]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-1">
               <div className={`dark:bg-gray-800 rounded-lg shadow-lg p-6`}>
                 <UserAvatarSection
                   isLoading={isLoading}
-                  user={user}
+                  user={userInformation}
                   handleFileSelect={handleFileSelect}
                 />
               </div>
               <PostButton
-                user={user}
+                user={userInformation}
                 setPosts={setPosts}
                 openCreatePostModal={openCreatePostModal}
                 setOpenCreatePostModal={setOpenCreatePostModal}
@@ -129,17 +127,17 @@ const UserPage: React.FC<UserPageProps> = ({ params }) => {
               />
 
               <div className="mt-8 hidden md:flex flex-col">
-                <UserProfileSection email={user.email}/>
+                <UserProfileSection email={userInformation.email}/>
               </div>
             </div>
             <div className="md:col-span-2">
               <Post
-                user={user}
+                user={userInformation}
                 posts={posts}
                 setPosts={setPosts}
                 likedPosts={likedPosts}
                 setLikedPosts={setLikedPosts}
-                loggedInUserId={user._id}
+                loggedInUserId={userInformation._id}
                 openCreatePostModal={openCreatePostModal}
                 setOpenCreatePostModal={setOpenCreatePostModal}
                 editSelectedPost={editSelectedPost}

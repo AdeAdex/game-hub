@@ -27,19 +27,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { UserDataType } from "@/app/types/user";
 
-interface AuthState {
-  firstName?: string;
-  lastName?: string;
-  name: string;
-  email: string;
-  userName?: string;
-  image: string;
-  profilePicture?: string;
-  incomingFriendRequests: any[];
-  friendRequestCount: number;
-  messages: any[];
-  payments: any[];
-}
 
 interface NavbarProps {
   onSearch: (query: string) => void; // Callback function for search action
@@ -72,6 +59,9 @@ function MyApp() {
   const userInformation = useSelector(
     (state: RootState) => state.auth.userInformation
   ) as UserDataType | null;
+  
+
+ 
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -161,9 +151,9 @@ function MyApp() {
 
             <NotificationIcon
               userName={userInformation.userName}
-              friendRequestCount={userInformation.friendRequestCount}
-              messageCount={userInformation.messages?.length || 0}
-              hasPayments={userInformation.payments?.length || 0}
+              friendRequestCount={userInformation.incomingFriendRequests?.length}
+              messageCount={userInformation.messages?.length}
+              hasPayments={userInformation.payments?.length}
             />
           )}
           <div className="my-auto flex">

@@ -5,13 +5,10 @@ import Link from "next/link";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
 import { signInSuccess } from "@/app/redux/authSlice";
 import { useDispatch } from 'react-redux';
 import useAuth from "@/app/hooks/useAuth";
-// import ReCAPTCHA from "react-google-recaptcha";
-// import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
 const Form = () => {
   return (
@@ -30,23 +27,13 @@ function MyApp() {
   const [submitting, setSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  const { data: session } = useSession();
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
   const dispatch = useDispatch();
 
   useAuth("/dashboard");
-  // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
-
-  // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
-
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     router.replace("/dashboard");
-  //   }
-  // }, [status, router]);
-
+ 
   useEffect(() => {
     fetchLocation();
   }, [fetchLocation]);
@@ -69,7 +56,6 @@ function MyApp() {
       console.log("result",result)
 
       if (result?.ok) {
-        // Assuming user information is part of the session or handled elsewhere
         const user = session?.user; // Fetch user from session
         if (user) {
           // Dispatch user information to Redux store
