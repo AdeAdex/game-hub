@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useFetchLocation, useDetectDevice } from "@/app/utils/useDeviceUtils";
 import { signInSuccess } from "@/app/redux/authSlice";
 import { useDispatch } from 'react-redux';
+import useAuth from "@/app/hooks/useAuth";
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { verifyRecaptcha } from "@/app/utils/recaptchaUtils";
 
@@ -34,15 +35,17 @@ function MyApp() {
   const { location, locationError, fetchLocation } = useFetchLocation();
   const device = useDetectDevice();
   const dispatch = useDispatch();
+
+  useAuth("/dashboard");
   // const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Initialize recaptchaToken with a type
 
   // const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.replace("/dashboard");
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.replace("/dashboard");
+  //   }
+  // }, [status, router]);
 
   useEffect(() => {
     fetchLocation();

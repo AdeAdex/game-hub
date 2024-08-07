@@ -26,6 +26,7 @@ import { useSearch } from "@/app/lib/SearchContext";
 import NotificationIcon from "./NotificationIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import { UserDataType } from "@/app/types/user";
 
 interface AuthState {
   firstName?: string;
@@ -77,7 +78,7 @@ function MyApp() {
   const socket = useRef<Socket | null>(null);
   const userInformation = useSelector(
     (state: RootState) => state.auth.userInformation
-  );
+  ) as UserDataType | null;
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prevOpen) => !prevOpen);
@@ -191,70 +192,68 @@ function MyApp() {
             <NotificationIcon
               userName={userInformation.userName}
               friendRequestCount={userInformation.friendRequestCount}
-              messageCount={userInformation.messages.length}
-              hasPayments={userInformation.payments.length > 0}
+              messageCount={userInformation.messages?.length || 0}
+              hasPayments={userInformation.payments?.length || 0}
             />
           )}
           <div className="my-auto flex">
             {userInformation ? (
-              
-                <div className="flex flex-col relative">
-                  <div className="flex gap-3">
-                    <Link
-                      href={`/${userInformation?.userName}`}
-                      className={`flex gap-2 cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 `}
-                    >
-                      {userInformation?.profilePicture ? (
-                        <Image
-                          src={userInformation?.profilePicture}
-                          alt="profile"
-                          width={32}
-                          height={32}
-                          className="rounded-full"
-                        />
-                      ) : (
-                        <Image
-                          src={avatar}
-                          alt="profile"
-                          width={32}
-                          height={32}
-                          className="rounded-full border border-gray-500"
-                        />
-                      )}
-                      <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
-                        {userInformation?.userName &&
-                        userInformation.userName.length > 8
-                          ? `${userInformation.userName.slice(0, 8)}...`
-                          : userInformation.userName}
-                      </span>
-                    </Link>
+              <div className="flex flex-col relative">
+                <div className="flex gap-3">
+                  <Link
+                    href={`/${userInformation?.userName}`}
+                    className={`flex gap-2 cursor-pointer my-auto dark:hover:bg-gray-600 hover:bg-gray-200 `}
+                  >
+                    {userInformation?.profilePicture ? (
+                      <Image
+                        src={userInformation?.profilePicture}
+                        alt="profile"
+                        width={32}
+                        height={32}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <Image
+                        src={avatar}
+                        alt="profile"
+                        width={32}
+                        height={32}
+                        className="rounded-full border border-gray-500"
+                      />
+                    )}
+                    <span className="my-auto text-[14px] font-bold overflow-hidden whitespace-nowrap max-w-[80px]">
+                      {userInformation?.userName &&
+                      userInformation.userName.length > 8
+                        ? `${userInformation.userName.slice(0, 8)}...`
+                        : userInformation.userName}
+                    </span>
+                  </Link>
 
-                    <div
-                      className={`dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 flex my-auto p-1 md:p-2 rounded-lg border cursor-pointer ${
-                        dropdownOpen ? "dark:border-blue-500" : ""
-                      } `}
-                      onClick={handleDropdownToggle}
-                    >
-                      {dropdownOpen ? (
-                        <FaAngleUp size={18} className="my-auto" />
-                      ) : (
-                        <FaAngleDown size={18} className="my-auto" />
-                      )}
+                  <div
+                    className={`dark:hover:bg-gray-600 hover:bg-gray-200 dark:bg-transparent bg-gray-100 flex my-auto p-1 md:p-2 rounded-lg border cursor-pointer ${
+                      dropdownOpen ? "dark:border-blue-500" : ""
+                    } `}
+                    onClick={handleDropdownToggle}
+                  >
+                    {dropdownOpen ? (
+                      <FaAngleUp size={18} className="my-auto" />
+                    ) : (
+                      <FaAngleDown size={18} className="my-auto" />
+                    )}
+                  </div>
+                </div>
+                {dropdownOpen && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div ref={dropdownRef} className="profile-dropdown">
+                      <ProfileDropdown
+                        handleClick={handleLogout}
+                        username={userInformation?.userName || ""}
+                        email={userInformation?.email || ""}
+                      />
                     </div>
                   </div>
-                  {dropdownOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                      <div ref={dropdownRef} className="profile-dropdown">
-                        <ProfileDropdown
-                          handleClick={handleLogout}
-                          username={userInformation?.userName || ""}
-                          email={userInformation?.email || ""}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              
+                )}
+              </div>
             ) : (
               <AuthButton title="login" to="/login" />
             )}

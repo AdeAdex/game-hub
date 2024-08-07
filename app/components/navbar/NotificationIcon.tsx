@@ -5,14 +5,14 @@ interface NotificationIconProps {
   userName?: string;
   friendRequestCount?: number;
   messageCount?: number;
-  hasPayments?: boolean;
+  hasPayments?: number;
 }
 
 const NotificationIcon: React.FC<NotificationIconProps> = ({
   userName,
   friendRequestCount = 0,
   messageCount = 0, // Default value for message count
-  hasPayments = false,
+  hasPayments = 0,
 }) => {
   return (
     <Link
@@ -37,7 +37,7 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
             stroke="currentColor"
           ></path>
         </svg>
-        <div className={`${friendRequestCount > 0 || messageCount > 0 || hasPayments ? 'notification-point bg-green animate' : ''}`}></div>
+        <div className={`${friendRequestCount > 0 || messageCount > 0 || hasPayments > 0 ? 'notification-point bg-green animate' : ''}`}></div>
       </div>
     </Link>
   );
