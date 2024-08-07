@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/SideBar";
@@ -12,69 +11,32 @@ import CardSkeleton from "@/app/components/homePage/CardSkeleton";
 import GameCard from "./components/homePage/GameCard";
 import { Game } from "@/app/types/homePage/games"; // Import the Game type
 import ScrollToTop from "@/app/utils/ScrollToTop"
+import { RootState, AppDispatch  } from "./redux/store";
+import { fetchGames } from "./redux/gamesSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // Importing links and links2
 import { links, links2 } from "./lib/SideBarLinks";
 import { useSearch } from "./lib/SearchContext";
 
 export default function Home() {
-  const [games, setGames] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [games, setGames] = useState<Game[]>([]);
+  // const [loading, setLoading] = useState(true);
   const { handleSearch, suggestions } = useSearch();
-
-  // const [searchQuery, setSearchQuery] = useState("");
-  // const [suggestions, setSuggestions] = useState<Game[]>([]);
-  // const [suggestions, setSuggestions] = useState<{ game: Game; matchType: string }[]>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const { games, loading, error } = useSelector((state: RootState) => state.games);
 
 
   useEffect(() => {
-    const fetchGames = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("/api/games");
-        // console.log(response.data.results);
-        setGames(response.data.results);
-      } catch (error: any) {
-        console.error("There was a problem with the fetch operation:", error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGames();
-  }, []);
-
-
-  // const handleSearch = (query: string) => {
-  //   setSearchQuery(query);
-
-  //   const filteredGames = games.reduce<{ game: Game; matchType: string }[]>((acc, game) => {
-  //     const matchesName = game.name.toLowerCase().includes(query.toLowerCase());
-  //     const matchesGenre = game.genres.some((genre) =>
-  //       genre.name.toLowerCase().includes(query.toLowerCase())
-  //     );
-  //     const matchesParentPlatform = game.parent_platforms.some((platform) =>
-  //       platform.platform.name.toLowerCase().includes(query.toLowerCase())
-  //     );
-  //     const matchesPlatform = game.platforms.some((platform) =>
-  //       platform.platform.name.toLowerCase().includes(query.toLowerCase())
-  //     );
-  //     const matchesStore = game.stores.some((store) =>
-  //       store.store.name.toLowerCase().includes(query.toLowerCase())
-  //     );
-
-  //     if (matchesName) acc.push({ game, matchType: "name" });
-  //     else if (matchesGenre) acc.push({ game, matchType: "genre" });
-  //     else if (matchesParentPlatform) acc.push({ game, matchType: "parent platform" });
-  //     else if (matchesPlatform) acc.push({ game, matchType: "platform" });
-  //     else if (matchesStore) acc.push({ game, matchType: "store" });
-
-  //     return acc;
-  //   }, []);
-
-  //   setSuggestions(filteredGames);
-  //   console.log("Filtered Games:", filteredGames);
-  // };
+    // Try to fetch from local storage if already fetched
+    const cachedGames = localStorage.getItem("games");
+    if (!cachedGames) {
+      dispatch(fetchGames());
+    } else {
+      // Set cached games if available
+      dispatch({ type: 'games/setGames', payload: JSON.parse(cachedGames) });
+    }
+  }, [dispatch]);
 
   return (
     <>

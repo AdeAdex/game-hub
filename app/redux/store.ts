@@ -3,8 +3,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './authSlice';
+import gamesReducer from './gamesSlice';
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 
 // Redux Persist configuration
@@ -18,6 +20,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 const store = configureStore({
   reducer: {
     auth: persistedReducer,
+    games: gamesReducer,
     // Add other reducers if needed
   },
   middleware: (getDefaultMiddleware) =>
