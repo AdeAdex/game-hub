@@ -1,4 +1,5 @@
 // redux/gamesSlice.ts
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Game } from '../types/homePage/games';
@@ -32,6 +33,8 @@ const gamesSlice = createSlice({
   reducers: {
     setGames: (state, action) => {
       state.games = action.payload;
+      // Example: Set featured games based on the newly fetched games
+      state.featuredGames = action.payload.filter((game: Game) => game.rating > 4.5).slice(0, 9);
     },
   },
   extraReducers: (builder) => {
@@ -42,7 +45,9 @@ const gamesSlice = createSlice({
       })
       .addCase(fetchGames.fulfilled, (state, action) => {
         state.loading = false;
+        // Set games and featured games
         state.games = action.payload;
+        state.featuredGames = action.payload.filter((game: Game) => game.rating > 4.5).slice(0, 9);
         // Cache the result
         localStorage.setItem('games', JSON.stringify(action.payload));
       })

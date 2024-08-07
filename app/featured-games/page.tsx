@@ -1,8 +1,7 @@
 // pages/featured-games.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import GameCard from "@/app/components/homePage/GameCard";
@@ -27,6 +26,7 @@ const FeaturedGamesPage: React.FC = () => {
 
   // Filtered games based on rating
   const filteredGames = featuredGames.filter((game: Game) => game.rating > 4.5).slice(0, 9);
+  console.log(filteredGames)
 
 
   return (
