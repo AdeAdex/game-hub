@@ -19,11 +19,24 @@ const initialState: GamesState = {
 };
 
 // Async thunk to fetch games
+// export const fetchGames = createAsyncThunk(
+//   'games/fetchGames',
+//   async () => {
+//     const response = await axios.get('/api/games');
+//     return response.data.results;
+//   }
+// );
+
 export const fetchGames = createAsyncThunk(
   'games/fetchGames',
   async () => {
-    const response = await axios.get('/api/games');
-    return response.data.results;
+    // Use `fetch` with revalidation option
+    const response = await fetch('/api/games', {
+      cache: 'default',  // This is the default caching strategy
+      next: { revalidate: 86400 }, // Revalidate every 24 hours (86400 seconds)
+    });
+    const data = await response.json();
+    return data.results;
   }
 );
 
