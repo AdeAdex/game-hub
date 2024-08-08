@@ -13,6 +13,7 @@ export type AppDispatch = typeof store.dispatch;
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['auth'], // Only persist the auth slice
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);

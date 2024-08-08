@@ -10,7 +10,6 @@ import { useSearch } from "@/app/lib/SearchContext";
 import { RootState, AppDispatch } from "../redux/store";
 import { fetchGames } from "../redux/gamesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Game } from "../types/homePage/games";
 
 
 const FeaturedGamesPage: React.FC = () => {

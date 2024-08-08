@@ -15,25 +15,10 @@ interface Provider {
 }
 
 const SocialMediaLogin = () => {
-  // const [providers, setProviders] = useState<Record<string, Provider> | null>(
-  //   null
-  // );
   const [providers, setProviders] = useState<Record<string, Provider>>({});
   const { data: session } = useSession();
    const router = useRouter();
-
-  // useEffect(
-  //   () => {
-  //     const setUpProvider = async () => {
-  //       const response = await getProviders();
-  //       setProviders(response as Record<string, Provider>);
-  //       console.log(response);
-
-  //     };
-  //     setUpProvider();
-  //   },
-  //   []
-  // );
+  
 
   useEffect(() => {
     const setUpProvider = async () => {
@@ -62,13 +47,6 @@ const SocialMediaLogin = () => {
     try {
       const result = await signIn(providerId);
       console.log("provider result", result)
-
-      // if (session?.user) {
-      //   router.push("/dashboard");
-      // } else {
-      //   // const errorMessage = result?.error || "Error during login";
-      //   // enqueueSnackbar(errorMessage, { variant: "error" });
-      // }
     } catch (error: any) {
       console.error("Error during login:", error.message);
     } 

@@ -26,6 +26,10 @@ import NotificationIcon from "./NotificationIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { UserDataType } from "@/app/types/user";
+import { persistStore } from 'redux-persist';
+import { store } from '@/app/redux/store';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/app/redux/authSlice';
 
 
 interface NavbarProps {
@@ -59,6 +63,7 @@ function MyApp() {
   const userInformation = useSelector(
     (state: RootState) => state.auth.userInformation
   ) as UserDataType | null;
+  const dispatch = useDispatch();
   
 
  
@@ -75,7 +80,10 @@ function MyApp() {
         if (response.status === 200) {
           console.log(response.data.message);
           await signOut();
+          persistStore(store).purge();
+        dispatch(logout());
           enqueueSnackbar(response.data.message, { variant: "success" });
+
         }
       }
     } catch (error) {

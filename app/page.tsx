@@ -20,8 +20,6 @@ import { links, links2 } from "./lib/SideBarLinks";
 import { useSearch } from "./lib/SearchContext";
 
 export default function Home() {
-  // const [games, setGames] = useState<Game[]>([]);
-  // const [loading, setLoading] = useState(true);
   const { handleSearch, suggestions } = useSearch();
   const dispatch: AppDispatch = useDispatch();
   const { games, loading, error } = useSelector((state: RootState) => state.games);
