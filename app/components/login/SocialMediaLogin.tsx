@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, getProviders, useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useDispatch } from 'react-redux';
+import { signInSuccess } from "@/app/redux/authSlice";
 
 interface Provider {
   id: string;
@@ -17,7 +18,8 @@ interface Provider {
 const SocialMediaLogin = () => {
   const [providers, setProviders] = useState<Record<string, Provider>>({});
   const { data: session } = useSession();
-   const router = useRouter();
+   const dispatch = useDispatch();
+
   
 
   useEffect(() => {
@@ -35,18 +37,17 @@ const SocialMediaLogin = () => {
     setUpProvider();
   }, []);
 
-  useEffect(() => {
-    if (session?.user) {
-      // console.log("socialMedia session: ", session?.user);
-      router.push("/dashboard");
-    }
-  }, [session, router]);
-
+ 
   const handleSignIn = async (providerId: string) => {
     
     try {
-      const result = await signIn(providerId);
-      console.log("provider result", result)
+      // const result = await signIn(providerId);
+      // console.log("provider result", result)
+      const result = await signIn(providerId, { redirect: false });
+      if (result?.ok && session?.user) {
+        dispatch(signInSuccess(session.user)); // Dispatch user information to Redux store
+      }
+      console.log("provider result", result);
     } catch (error: any) {
       console.error("Error during login:", error.message);
     } 

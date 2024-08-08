@@ -30,7 +30,7 @@ const DashboardPage = () => {
   const dispatch = useDispatch();
   const userInformation = useSelector((state: RootState) => state.auth.userInformation);
 
-console.log("userinfo", userInformation)
+// console.log("userinfo", userInformation)
 
   useEffect(() => {
     const fetchData = async () => {

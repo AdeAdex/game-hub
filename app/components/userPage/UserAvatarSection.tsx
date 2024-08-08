@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Image from "next/image";
 import { FaCamera } from "react-icons/fa";
 import ImageSkeleton from "./ImageSkeleton";

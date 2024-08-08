@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/SideBar";
@@ -9,7 +9,6 @@ import { IoArrowForward } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
 import CardSkeleton from "@/app/components/homePage/CardSkeleton";
 import GameCard from "./components/homePage/GameCard";
-import { Game } from "@/app/types/homePage/games"; // Import the Game type
 import ScrollToTop from "@/app/utils/ScrollToTop"
 import { RootState, AppDispatch  } from "./redux/store";
 import { fetchGames } from "./redux/gamesSlice";

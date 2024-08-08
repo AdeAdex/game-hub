@@ -34,7 +34,6 @@ import { logout } from '@/app/redux/authSlice';
 
 interface NavbarProps {
   onSearch: (query: string) => void; // Callback function for search action
-  // suggestions: Game[];
   suggestions: { game: Game; matchType: string }[];
 }
 
