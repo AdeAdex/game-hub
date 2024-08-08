@@ -37,6 +37,24 @@ export const POST = async (req) => {
       password: hashedPassword,
     });
 
+    const logoUrl = process.env.ADEX_GAMEHUB_LOGO; // Your logo URL
+    const welcomeMessage = welcomeMessageTemplate(prompt.firstName, logoUrl);
+
+    // Create a message to be added to the new user's messages array
+    const welcomeMessageObject = {
+      sender: "Adex GameHub", // This should ideally be an ObjectId if referencing a User
+      receiver: newUser._id, // The ID of the newly created user
+      content: welcomeMessage,
+      timestamp: new Date(),
+    };
+
+    // Add the message to the new user's messages
+    await User.findByIdAndUpdate(
+      newUser._id,
+      { $push: { messages: welcomeMessageObject } },
+      { new: true }
+    );
+
     try {
       await sendWelcomeEmail(prompt.email, prompt.firstName);
       console.log("Welcome email sent successfully.");
