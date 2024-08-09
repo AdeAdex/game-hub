@@ -6,6 +6,7 @@ const messageSchema = new mongoose.Schema({
   receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   content: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
+  from: {type: String,},
 });
 
 const paymentSchema = new mongoose.Schema({

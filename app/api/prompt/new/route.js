@@ -5,6 +5,7 @@ import User from "../../../models/user";
 import { hashPassword } from "../../../utils/bcrypt";
 import { sendWelcomeEmail } from "../../../utils/emailUtils";
 import { NextResponse } from "next/server";
+import { welcomeMessageTemplate } from "@/app/utils/welcomeMessageTemplate";
 
 
 export const POST = async (req) => {
@@ -42,9 +43,10 @@ export const POST = async (req) => {
 
     // Create a message to be added to the new user's messages array
     const welcomeMessageObject = {
-      sender: "Adex GameHub", // This should ideally be an ObjectId if referencing a User
+      sender: newUser._id, // This should ideally be an ObjectId if referencing a User
       receiver: newUser._id, // The ID of the newly created user
       content: welcomeMessage,
+      from: "Adex GameHub",
       timestamp: new Date(),
     };
 

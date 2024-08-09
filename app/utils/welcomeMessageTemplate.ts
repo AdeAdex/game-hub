@@ -1,6 +1,6 @@
-// utils/welcomeMessageTemplate.js
+// utils/welcomeMessageTemplate.ts
 
-export const welcomeMessageTemplate = (firstName, logoUrl) => `
+export const welcomeMessageTemplate = (firstName: string, logoUrl: string) => `
   <div style="background-color: #2E3440; padding: 20px; color: #ffffff; border-radius: 5px;">
     <img src="${logoUrl}" alt="GameHub Logo" style="max-width: 150px; height: 30px; margin-bottom: 20px;">
     <div style="text-align: center;">

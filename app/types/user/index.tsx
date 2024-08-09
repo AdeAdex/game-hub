@@ -5,6 +5,7 @@ export interface Message {
   receiver: string;
   content: string;
   timestamp: Date; // Changed from string to Date
+  from: string;
 }
 
 export interface Payment {
