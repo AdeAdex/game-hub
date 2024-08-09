@@ -137,7 +137,7 @@ const NotificationsPage = () => {
                     className="p-6 border rounded-lg shadow-md bg-white dark:bg-gray-900 dark:border-gray-800"
                   >
                     <div className="font-semibold text-xl mb-3 text-gray-800 dark:text-gray-200">
-                      {message.from}
+                      <span>From:</span> {message.from}
                     </div>
                     <div className="text-gray-700 dark:text-gray-300 mb-3">
                       {message.content}
