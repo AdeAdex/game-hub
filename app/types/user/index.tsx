@@ -6,6 +6,7 @@ export interface Message {
   content: string;
   timestamp: Date; // Changed from string to Date
   from: string;
+  _id: string;
 }
 
 export interface Payment {

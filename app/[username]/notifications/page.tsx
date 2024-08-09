@@ -6,7 +6,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
-import { UserDataType, FriendRequestDetailsType } from "@/app/types/user";
+import { UserDataType, FriendRequestDetailsType, Message } from "@/app/types/user";
 import FriendRequestCard from "@/app/components/userPage/notification/FriendRequestCard";
 import Loader from "@/app/components/Loader";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -16,14 +16,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 
 
-interface NotificationsPageProps {
-  params: {
-    username: string;
-  };
-}
 
-const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
-  const { username } = params;
+const NotificationsPage = () => {
   const router = useRouter();
   const [active, setActive] = useState("all");
   const searchParams = useSearchParams();
@@ -38,8 +32,8 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
     (userInformation?.incomingFriendRequests?.length || 0) + (userInformation?.messages?.length || 0) + (userInformation?.payments?.length || 0);
 
 
-  const friendRequests: FriendRequestDetailsType[] = userInformation?.incomingFriendRequests || [];
-  const messages = userInformation?.messages || [];
+  const friendRequests:FriendRequestDetailsType[] = userInformation?.incomingFriendRequests || [];
+  const messages:Message[] = userInformation?.messages || [];
   const payments = userInformation?.payments || [];
 
   const friendRequestCount = friendRequests.length;
@@ -134,8 +128,34 @@ const NotificationsPage: React.FC<NotificationsPageProps> = ({ params }) => {
         );
       case "messages":
         return (
-          <div className="py-8">You don't have any new messages to read.</div>
+          <div className="py-8">
+            {messages.length > 0 ? (
+              <div className="flex flex-col gap-6">
+                {messages.map((message) => (
+                  <div
+                    key={message._id} // Ensure to add a unique key for each message
+                    className="p-6 border rounded-lg shadow-md bg-white dark:bg-gray-900 dark:border-gray-800"
+                  >
+                    <div className="font-semibold text-xl mb-3 text-gray-800 dark:text-gray-200">
+                      {message.from}
+                    </div>
+                    <div className="text-gray-700 dark:text-gray-300 mb-3">
+                      {message.content}
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date(message.timestamp).toLocaleString()}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center text-gray-600 dark:text-gray-400">
+                You don't have any new messages to read.
+              </div>
+            )}
+          </div>
         );
+        
       case "payments":
         return <div className="py-8">You don't have any pending payments.</div>;
       default:
