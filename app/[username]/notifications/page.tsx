@@ -98,7 +98,7 @@ const NotificationsPage = () => {
               Read the available Notifications
             </div>
           ): (
-            <div className="py-8">You haven't received any notification yet.</div>
+            <div className="">You haven't received any notification yet.</div>
           )}
           </div>
         );
