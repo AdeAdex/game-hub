@@ -92,7 +92,15 @@ const NotificationsPage = () => {
     switch (active) {
       case "all":
         return (
-          <div className="py-8">You haven't received any notification yet.</div>
+          <div className="py-8 text-center dark:text-gray-400 text-gray-600">
+          {totalNotifications > 0 ? (
+            <div>
+              Read the available Notifications
+            </div>
+          ): (
+            <div className="py-8">You haven't received any notification yet.</div>
+          )}
+          </div>
         );
       case "friend-requests":
         return (
@@ -119,7 +127,7 @@ const NotificationsPage = () => {
               )
             ) : (
               <div
-                className={`py-8 text-center dark:text-gray-400 text-gray-600`}
+                className={`text-center dark:text-gray-400 text-gray-600`}
               >
                 You don't have any friend requests.
               </div>
@@ -157,9 +165,9 @@ const NotificationsPage = () => {
         );
         
       case "payments":
-        return <div className="py-8">You don't have any pending payments.</div>;
+        return <div className="py-8 text-center text-gray-600 dark:text-gray-400">You don't have any pending payments.</div>;
       default:
-        return <div className="py-8">Invalid status.</div>;
+        return <div className="py-8 text-center dark:text-gray-400 text-gray-600">Invalid status.</div>;
     }
   };
 
