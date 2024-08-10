@@ -7,7 +7,7 @@
 import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import Navbar from "../components/navbar/Navbar";
 import { useSearch } from "../lib/SearchContext";
 import useTags from "../hooks/useTags";
@@ -18,6 +18,7 @@ import { IoArrowForward } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
 import Footer from "../components/footer/Footer";
 import ScrollToTop from "../utils/ScrollToTop";
+import { fetchGames } from "../redux/gamesSlice";
 
 const GamePage: React.FC = () => {
   const router = useSearchParams();
@@ -28,11 +29,20 @@ const GamePage: React.FC = () => {
   );
   const { handleSearch, suggestions } = useSearch();
   const { allTags, popularTags } = useTags(games);
+  const dispatch: AppDispatch = useDispatch();
+
 
   useEffect(() => {
-    // Fetch featured games when component mounts
-    // dispatch(fetchGames());
-  }, []);
+    // Try to fetch from local storage if already fetched
+    const cachedGames = localStorage.getItem("games");
+    if (!cachedGames) {
+      dispatch(fetchGames());
+    } else {
+      // Set cached games if available
+      dispatch({ type: 'games/setGames', payload: JSON.parse(cachedGames) });
+    }
+  }, [dispatch]);
+ 
 
   // Filter games based on the tagQuery
   const filteredGames = tagQuery
