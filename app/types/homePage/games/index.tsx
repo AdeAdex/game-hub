@@ -100,6 +100,6 @@ export interface AddedByStatus {
         slug: string;
         stores: Store[];
         suggestions_count: number;
-        tags: Tag[];
+        tags?: Tag[];
       }
       

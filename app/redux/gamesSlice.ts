@@ -36,6 +36,7 @@ export const fetchGames = createAsyncThunk(
       next: { revalidate: 86400 }, // Revalidate every 24 hours (86400 seconds)
     });
     const data = await response.json();
+    console.table(data.results)
     return data.results;
   }
 );

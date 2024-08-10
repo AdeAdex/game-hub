@@ -3,9 +3,8 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/app/components/footer/Footer";
 import Loader from "@/app/components/Loader";

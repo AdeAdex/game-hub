@@ -5,13 +5,13 @@ import SearchBox from "../SearchBox";
 import { Game } from "@/app/types/homePage/games";
 import Links from "@/app/components/navbar/links/Links";
 
-interface LinkItem {
-  title: string;
+interface TagItem {
+  name: string;
 }
 
 interface SideBarProps {
-  links: LinkItem[];
-  links2: LinkItem[];
+  allTags: TagItem[];
+  popularTags: TagItem[];
   isMobileMenuOpen: boolean;
   // suggestions: Game[]; // Add suggestions prop
   suggestions: { game: Game; matchType: string }[];
@@ -19,8 +19,8 @@ interface SideBarProps {
 }
 
 const Dropdown: React.FC<SideBarProps> = ({
-  links,
-  links2,
+  allTags,
+  popularTags,
   isMobileMenuOpen,
   suggestions, // Add suggestions prop
   onSearch, // Add onSearch prop
@@ -41,13 +41,13 @@ const Dropdown: React.FC<SideBarProps> = ({
       <div className="flex py-3 border-b w-full">
         <Links ClassName={`flex flex-col w-full`} />
       </div>
-      <Section title="popular tags" links={links} />
+      <Section title="popular tags" tags={popularTags} />
       <Link href="" className="text-[14px] capitalize leading-[28px]">
         browse all tags →
       </Link>
 
       <div className="mt-[30px] flex flex-col gap-y-[30px]">
-        <Section title="browse" links={links2} />
+        <Section title="browse" tags={allTags} />
       </div>
     </section>
   );

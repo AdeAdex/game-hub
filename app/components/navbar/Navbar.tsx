@@ -8,7 +8,6 @@ import Logo from "./Logo";
 import SearchBox from "./SearchBox";
 import AuthButton from "./AuthButton";
 import MenuIcon from "./MenuIcon";
-import { links, links2 } from "@/app/lib/SideBarLinks";
 import Dropdown from "./links/Dropdown";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -30,6 +29,7 @@ import { persistStore } from 'redux-persist';
 import { store } from '@/app/redux/store';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/app/redux/authSlice';
+import useTags from "@/app/hooks/useTags";
 
 
 interface NavbarProps {
@@ -63,6 +63,9 @@ function MyApp() {
     (state: RootState) => state.auth.userInformation
   ) as UserDataType | null;
   const dispatch = useDispatch();
+  const { games, loading, error } = useSelector((state: RootState) => state.games);
+  const { allTags, popularTags } = useTags(games);
+
   
 
  
@@ -127,8 +130,8 @@ function MyApp() {
           <div className="dropdown-backdrop fixed top-[62px] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div ref={mobileMenuBackdropRef}>
               <Dropdown
-                links={links}
-                links2={links2}
+                popularTags={popularTags}
+                allTags={allTags}
                 isMobileMenuOpen={isMobileMenuOpen}
                 onSearch={handleSearch}
                 suggestions={suggestions}

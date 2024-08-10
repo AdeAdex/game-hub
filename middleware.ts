@@ -31,6 +31,7 @@ export function middleware(request: NextRequest) {
     "/support", 
     "/community", 
     "/developer",
+    "/games",
   ];
 
 
