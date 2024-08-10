@@ -21,9 +21,6 @@ const SideBar: React.FC<SideBarProps> = ({ popularTags, allTags}) => {
       </Link>
       <div className="mt-[30px] flex flex-col gap-y-[30px]">
         <Section title="browse" tags={allTags} />
-        <Section title="browse" tags={allTags} />
-        <Section title="browse" tags={allTags} />
-        <Section title="browse" tags={allTags} />
       </div>
     </section>
   );
