@@ -5,7 +5,7 @@ import React from "react";
 
 const CardSkeleton: React.FC = () => {
   return (
-    <div className="w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out bg-white text-black dark:bg-gray-800 dark:text-white">
+    <div className="w-full h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out bg-white text-black dark:bg-gray-800 dark:text-white">
       <div className="relative w-full h-[65%] animate-pulse">
         <div className="absolute w-full h-full bg-gray-200 dark:bg-gray-700" />
         <div className="absolute bottom-0 left-0 p-2 flex flex-wrap bg-black bg-opacity-50 w-full overflow-hidden">

@@ -95,7 +95,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
   return (
     <div
       ref={cardRef}
-      className="w-full md:w-[30%] lg:w-[19%] h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out bg-white text-black dark:bg-gray-800 dark:text-white"
+      className="w-full h-[320px] rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out bg-white text-black dark:bg-gray-800 dark:text-white"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

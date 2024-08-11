@@ -19,6 +19,7 @@ import { FaRandom } from "react-icons/fa";
 import Footer from "../components/footer/Footer";
 import ScrollToTop from "../utils/ScrollToTop";
 import { fetchGames } from "../redux/gamesSlice";
+import { browseData } from "../components/sidebar/BrowseData";
 
 const GamePage: React.FC = () => {
   const router = useSearchParams();
@@ -57,13 +58,14 @@ const GamePage: React.FC = () => {
       <main
         className={`w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative dark:bg-dark-mode bg-light-mode`}
       >
-        <SideBar popularTags={popularTags} allTags={allTags} />
+        <SideBar popularTags={popularTags} browse={browseData} />
         <section
           className={`mt-1 w-full md:w-[83%] md:ml-[16.6%] dark:bg-dark-mode light-mode-section`}
         >
           <div
-            className={`flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5 py-[30px] px-[30px] dark:bg-dark-mode light-mode-section`}
+            className={`py-[30px] px-[30px] dark:bg-dark-mode light-mode-section`}
           >
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {filteredGames && filteredGames.length > 0 ? (
               filteredGames.map((game) => (
                 <GameCard key={game.id} game={game} />
@@ -71,6 +73,8 @@ const GamePage: React.FC = () => {
             ) : (
               <p>No games found with tag "{tagQuery}"</p>
             )}
+
+            </div>
             <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">
               <span className={`my-auto dark:text-white text-gray-800`}>
                 Don&apos;t see anything you like?{" "}

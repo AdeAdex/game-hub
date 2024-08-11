@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 // Importing links and links2
 import { useSearch } from "./lib/SearchContext";
 import useTags from "./hooks/useTags";
+import { browseData } from "./components/sidebar/BrowseData";
 
 
 export default function Home() {
@@ -46,13 +47,14 @@ console.log(games)
         className={`w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative dark:bg-dark-mode bg-light-mode`}
       >
         {/* Pass links and links2 to SideBar */}
-        <SideBar popularTags={popularTags} allTags={allTags}  />
+        <SideBar popularTags={popularTags} browse={browseData}  />
         <section
           className={`mt-1 w-full md:w-[83%] md:ml-[16.6%] dark:bg-dark-mode light-mode-section`}
         >
           <div
-            className={`flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5 py-[30px] px-[30px] dark:bg-dark-mode light-mode-section`}
+            className={`py-[30px] px-[30px] dark:bg-dark-mode light-mode-section`}
           >
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {loading
               ? // Render card skeleton if loading
                 Array.from({ length: 10 }).map((_, index) => (
@@ -62,6 +64,8 @@ console.log(games)
                 games.map((game, index) => (
                   <GameCard key={game.id} game={game} />
                 ))}
+
+            </div>
             <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">
               <span
                 className={`my-auto dark:text-white text-gray-800`}

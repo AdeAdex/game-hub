@@ -11,25 +11,23 @@ import { RootState, AppDispatch } from "../redux/store";
 import { fetchGames } from "../redux/gamesSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const FeaturedGamesPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { featuredGames, loading, error } = useSelector((state: RootState) => state.games);
+  const { featuredGames, loading, error } = useSelector(
+    (state: RootState) => state.games
+  );
   const { handleSearch, suggestions } = useSearch();
-
 
   useEffect(() => {
     // Fetch featured games when component mounts
     dispatch(fetchGames());
   }, [dispatch]);
 
-  
-
   return (
     <div
       className={`min-h-screen py-[100px] dark:bg-dark-mode text-white bg-gray-100 text-gray-900 `}
     >
-            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+      <Navbar onSearch={handleSearch} suggestions={suggestions} />
 
       <div
         className={`relative w-full lg:w-[80%] mx-auto rounded-sm border-2 py-[30px] px-[10px] md:px-[30px] dark:bg-gray-800 border-gray-700 bg-white border-gray-300 `}
@@ -40,14 +38,16 @@ const FeaturedGamesPage: React.FC = () => {
           >
             Featured Games
           </h2>
-          <div className="flex flex-wrap justify-between gap-[25px] md:gap-[0px] md:gap-y-5 py-[30px] px-[30px] ">
-            {loading // Display skeleton loader while loading is true
-              ? Array.from({ length: 6 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))
-              :  featuredGames.map((game) => (
-                  <GameCard key={game.id} game={game} />
-                ))}
+          <div className="py-[30px] px-[30px] ">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {loading // Display skeleton loader while loading is true
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <CardSkeleton key={index} />
+                  ))
+                : featuredGames.map((game) => (
+                    <GameCard key={game.id} game={game} />
+                  ))}
+            </div>
           </div>
         </div>
       </div>

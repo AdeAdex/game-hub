@@ -30,6 +30,7 @@ import { store } from '@/app/redux/store';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/app/redux/authSlice';
 import useTags from "@/app/hooks/useTags";
+import { browseData } from "../sidebar/BrowseData";
 
 
 interface NavbarProps {
@@ -131,7 +132,7 @@ function MyApp() {
             <div ref={mobileMenuBackdropRef}>
               <Dropdown
                 popularTags={popularTags}
-                allTags={allTags}
+                browse={browseData}
                 isMobileMenuOpen={isMobileMenuOpen}
                 onSearch={handleSearch}
                 suggestions={suggestions}

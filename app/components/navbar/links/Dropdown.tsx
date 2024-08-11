@@ -9,17 +9,22 @@ interface TagItem {
   name: string;
 }
 
+interface BrowseItem {
+  id: number;
+  name: string;
+  link: string;
+}
+
 interface SideBarProps {
-  allTags: TagItem[];
+  browse: BrowseItem[];
   popularTags: TagItem[];
   isMobileMenuOpen: boolean;
-  // suggestions: Game[]; // Add suggestions prop
   suggestions: { game: Game; matchType: string }[];
   onSearch: (query: string) => void; // Add onSearch prop
 }
 
 const Dropdown: React.FC<SideBarProps> = ({
-  allTags,
+  browse,
   popularTags,
   isMobileMenuOpen,
   suggestions, // Add suggestions prop
@@ -47,7 +52,7 @@ const Dropdown: React.FC<SideBarProps> = ({
       </Link>
 
       <div className="mt-[30px] flex flex-col gap-y-[30px]">
-        <Section title="browse" tags={allTags} />
+        <Section title="browse" tags={browse} />
       </div>
     </section>
   );

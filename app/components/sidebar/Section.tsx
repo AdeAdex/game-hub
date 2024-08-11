@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Link from "next/link";
+import { browseData } from "./BrowseData";
 
 interface TagItem {
   name: string;
@@ -10,6 +11,10 @@ interface SideBarTypes {
   title: string;
 }
 
+const tagLinks = Object.fromEntries(
+  browseData.map(({ name, link }) => [name, link])
+);
+
 const Section: React.FC<SideBarTypes> = ({ tags, title }) => {
   return (
     <div>
@@ -19,16 +24,19 @@ const Section: React.FC<SideBarTypes> = ({ tags, title }) => {
         {title}
       </h3>
       <div className="w-full text-[14px] capitalize leading-[28px]">
-        <div className="w-full flex flex-wrap justify-between ">
-          {tags.map((tag, index) => (
-            <Link
-              href={`/games?tags=${tag.name}`}
-              className={`capitalize w-[50%] dark:text-gray-400 dark:hover:underline dark:hover:text-red-500 text-black hover:underline hover:text-red-500`}
-              key={index}
-            >
-              {tag.name}
-            </Link>
-          ))}
+        <div className="w-full flex flex-wrap justify-between">
+          {tags?.map((tag, index) => {
+            const link = tagLinks[tag.name] || `/games?tags=${tag.name}`;
+            return (
+              <Link
+                href={link}
+                className={`capitalize w-[50%] dark:text-gray-400 dark:hover:underline dark:hover:text-red-500 text-black hover:underline hover:text-red-500`}
+                key={index}
+              >
+                {tag.name}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
