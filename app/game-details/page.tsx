@@ -16,13 +16,14 @@ import AdditionalInfo from "@/app/components/game-details/AdditionalInfo";
 import { useSearch } from "@/app/lib/SearchContext";
 
 
+
 const GameDetailsPage: React.FC = () => {
   const router = useSearchParams();
-  // console.log("post id", router?.get('id'))
   const gameId = router ? router.get("id") : null;
   const [gameDetails, setGameDetails] = useState<GameDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const { handleSearch, suggestions } = useSearch();
+ 
 
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const GameDetailsPage: React.FC = () => {
             `https://api.rawg.io/api/games/${gameId}`,
             {
               params: {
-                key: "4e2c61f658d44adcb51ed39f710a9d71",
+                key: `${process.env.NEXT_PUBLIC_RAWG_API_KEY}`,
               },
             }
           );

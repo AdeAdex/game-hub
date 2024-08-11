@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useSearch } from "@/app/lib/SearchContext";
 import { RootState, AppDispatch } from "../redux/store";
 import { fetchGames } from "../redux/gamesSlice";
 import { useDispatch, useSelector } from "react-redux";

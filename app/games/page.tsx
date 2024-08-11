@@ -1,14 +1,11 @@
 // /app/games
 
-
-
 "use client";
 
 import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import { useSearch } from "../lib/SearchContext";
 import useTags from "../hooks/useTags";
 import { fetchGames } from "../redux/gamesSlice";
 import SideBarPages from "../components/sidebar/sidebarPages/SideBarPages";
