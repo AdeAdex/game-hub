@@ -4,9 +4,6 @@ import React, { useEffect } from "react";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/SideBar";
-import Link from "next/link";
-import { IoArrowForward } from "react-icons/io5";
-import { FaRandom } from "react-icons/fa";
 import CardSkeleton from "@/app/components/homePage/CardSkeleton";
 import GameCard from "./components/homePage/GameCard";
 import ScrollToTop from "@/app/utils/ScrollToTop"
@@ -18,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearch } from "./lib/SearchContext";
 import useTags from "./hooks/useTags";
 import { browseData } from "./components/sidebar/BrowseData";
+import GameExplorer from "./components/homePage/GameExplorer";
 
 
 export default function Home() {
@@ -66,27 +64,7 @@ console.log(games)
                 ))}
 
             </div>
-            <div className="flex flex-col md:flex-row gap-[15px] text-[14px] justify-center w-full mt-[30px] text-center">
-              <span
-                className={`my-auto dark:text-white text-gray-800`}
-              >
-                Don&apos;t see anything you like?{" "}
-              </span>
-              <Link
-                href=""
-                className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px] justify-center"
-              >
-                <span> View all games</span>{" "}
-                <IoArrowForward className="my-auto" />
-              </Link>
-              <Link
-                href=""
-                className="border border-red-500 py-[6px] px-3 text-red-500 rounded-sm flex gap-[10px] justify-center"
-              >
-                <span>View something random</span>{" "}
-                <FaRandom className="my-auto" />
-              </Link>
-            </div>
+           <GameExplorer/>
           </div>
           <Footer />
         </section>
