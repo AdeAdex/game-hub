@@ -7,7 +7,7 @@ import GameExplorer from "../../homePage/GameExplorer";
 import Footer from "../../footer/Footer";
 import ScrollToTop from "@/app/utils/ScrollToTop";
 import SideBarCompo from "./SideBarCompo";
-import { Game } from "@/app/types/homePage/games";
+import { Game, PlatformDetails } from "@/app/types/homePage/games";
 import GameCard from "../../homePage/GameCard";
 import SideBar from "../SideBar";
 import { useSearchParams } from "next/navigation";
@@ -16,24 +16,55 @@ import { browseData } from "../BrowseData";
 import CardSkeleton from "../../homePage/CardSkeleton";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import useFetchGames from "@/app/hooks/useFetchGames";
 
 interface SideBarPagesProps {
   games: Game[]; // Updated to accept an array of games
 }
 
 const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
+  // Use the custom hook to fetch games either from the server or from storage if no games
+  useFetchGames();
+
   const { handleSearch, suggestions } = useSearch();
   const router = useSearchParams();
   const tagQuery = router ? router.get("tags") : null; // Get the query parameter for tags
   const { allTags, popularTags } = useTags(games);
-  const { loading } = useSelector((state: RootState) => state.games);
+  const { loading, games: reduxGames } = useSelector(
+    (state: RootState) => state.games
+  );
 
   const pathname =
     typeof window !== "undefined" ? window.location.pathname : "";
-  console.log("router", pathname);
+
+  // Extract links from browseData
+  const browseLinks = browseData.map((item) => item.link);
+
+  // Determine which games to display
+  const displayGames = games && games.length > 0 ? games : reduxGames;
 
   // Show <SideBarCompo /> if the route has a tag or is "/featured-games"
-  const showSideBarCompo = tagQuery || pathname === "/featured-games";
+  const showSideBarCompo =
+    tagQuery ||
+    pathname === "/featured-games" ||
+    browseLinks.includes(pathname);
+
+  // Extract unique platforms using a Map to retain detailed information
+  const platformMap = new Map<string, PlatformDetails>();
+
+  displayGames.forEach((game) => {
+    game.platforms.forEach((p) => {
+      const platform = p.platform;
+      if (!platformMap.has(platform.name)) {
+        platformMap.set(platform.name, platform);
+      }
+    });
+  });
+
+  // Convert Map to array
+  const allPlatforms: PlatformDetails[] = Array.from(platformMap.values());
+
+  console.log("allPlatforms", allPlatforms);
 
   return (
     <div>
@@ -42,7 +73,7 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
         className={`w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative dark:bg-dark-mode bg-light-mode`}
       >
         {showSideBarCompo ? (
-          <SideBarCompo />
+          <SideBarCompo platforms={allPlatforms} />
         ) : (
           <SideBar popularTags={popularTags} browse={browseData} />
         )}
@@ -54,8 +85,10 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
           >
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {showSideBarCompo ? (
-                games && games.length > 0 ? (
-                  games.map((game) => <GameCard key={game.id} game={game} />)
+                displayGames && displayGames.length > 0 ? (
+                  displayGames.map((game) => (
+                    <GameCard key={game.id} game={game} />
+                  ))
                 ) : (
                   <p>No games found with tag</p>
                 )
@@ -66,7 +99,9 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
                 ))
               ) : (
                 // Render games if not loading
-                games.map((game) => <GameCard key={game.id} game={game} />)
+                displayGames.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))
               )}
             </div>
 

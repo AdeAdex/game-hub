@@ -6,9 +6,9 @@ import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import useTags from "../hooks/useTags";
 import { fetchGames } from "../redux/gamesSlice";
 import SideBarPages from "../components/sidebar/sidebarPages/SideBarPages";
+import useFetchGames from "../hooks/useFetchGames";
 
 const GamePage: React.FC = () => {
   const router = useSearchParams();
@@ -17,20 +17,9 @@ const GamePage: React.FC = () => {
   const { games, loading, error } = useSelector(
     (state: RootState) => state.games
   );
-  const { allTags, popularTags } = useTags(games);
   const dispatch: AppDispatch = useDispatch();
 
-
-  useEffect(() => {
-    // Try to fetch from local storage if already fetched
-    const cachedGames = localStorage.getItem("games");
-    if (!cachedGames) {
-      dispatch(fetchGames());
-    } else {
-      // Set cached games if available
-      dispatch({ type: 'games/setGames', payload: JSON.parse(cachedGames) });
-    }
-  }, [dispatch]);
+  useFetchGames();
  
 
   // Filter games based on the tagQuery
