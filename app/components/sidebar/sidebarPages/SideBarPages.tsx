@@ -44,6 +44,8 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   // Determine which games to display
   const displayGames = games && games.length > 0 ? games : reduxGames;
 
+  console.log("games are",displayGames)
+
   // Show <SideBarCompo /> if the route has a tag or is "/featured-games"
   const showSideBarCompo =
     tagQuery || platformQuery ||
