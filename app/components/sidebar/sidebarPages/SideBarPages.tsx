@@ -27,8 +27,9 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   useFetchGames();
 
   const { handleSearch, suggestions } = useSearch();
-  const router = useSearchParams();
-  const tagQuery = router ? router.get("tags") : null; // Get the query parameter for tags
+  const searchParams = useSearchParams();
+  const tagQuery = searchParams ? searchParams.get("tags") : null; // Get the query parameter for tags
+  const platformQuery = searchParams ? searchParams.get("platform") : null; // Get the query parameter for platform
   const { allTags, popularTags } = useTags(games);
   const { loading, games: reduxGames } = useSelector(
     (state: RootState) => state.games
@@ -45,7 +46,7 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
 
   // Show <SideBarCompo /> if the route has a tag or is "/featured-games"
   const showSideBarCompo =
-    tagQuery ||
+    tagQuery || platformQuery ||
     pathname === "/featured-games" ||
     browseLinks.includes(pathname);
 
@@ -64,7 +65,7 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   // Convert Map to array
   const allPlatforms: PlatformDetails[] = Array.from(platformMap.values());
 
-  console.log("allPlatforms", allPlatforms);
+  // console.log("allPlatforms", allPlatforms);
 
   return (
     <div>

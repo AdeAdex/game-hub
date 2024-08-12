@@ -2,36 +2,44 @@
 
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useSearchParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import { fetchGames } from "../redux/gamesSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 import SideBarPages from "../components/sidebar/sidebarPages/SideBarPages";
 import useFetchGames from "../hooks/useFetchGames";
 
 const GamePage: React.FC = () => {
-  const router = useSearchParams();
-  const tagQuery = router ? router.get("tags") : null; // Get the query parameter for tags
+  const searchParams = useSearchParams();
+  const tagQuery = searchParams ? searchParams.get("tags") : null; // Get the query parameter for tags
+  const platformQuery = searchParams ? searchParams.get("platform") : null; // Get the query parameter for platform
 
-  const { games, loading, error } = useSelector(
-    (state: RootState) => state.games
-  );
-  const dispatch: AppDispatch = useDispatch();
+  const { games } = useSelector((state: RootState) => state.games);
 
   useFetchGames();
- 
+  // Filter games based on the tagQuery or platformQuery
+  const filteredGames = games.filter((game) => {
+    // Filter based on tags
+    const matchesTag = tagQuery
+      ? game.tags?.some(
+          (tag) => tag.name.toLowerCase() === tagQuery.toLowerCase()
+        )
+      : true;
 
-  // Filter games based on the tagQuery
-  const filteredGames = tagQuery
-    ? games.filter(game =>
-        game.tags?.some(tag => tag.name.toLowerCase() === tagQuery.toLowerCase()) ?? false
-      )
-    : games;
+    // Filter based on platform
+    const matchesPlatform = platformQuery
+      ? game.platforms?.some(
+          (platform) =>
+            platform.platform.name.toLowerCase() === platformQuery.toLowerCase()
+        )
+      : true;
+
+    return matchesTag && matchesPlatform;
+  });
 
   return (
     <div>
-      <SideBarPages games={filteredGames}/>
+      <SideBarPages games={filteredGames} />
     </div>
   );
 };
