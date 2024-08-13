@@ -1,50 +1,19 @@
 "use client";
 
 import React from "react";
-import { PlatformDetails } from "@/app/types/homePage/games";
-import {
-  FaWindows,
-  FaPlaystation,
-  FaXbox,
-  FaApple,
-  FaAndroid,
-} from "react-icons/fa";
-import { IoLogoGameControllerA } from "react-icons/io";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Link from "next/link";
 
-// Function to get the platform icon based on slug
-const getPlatformIcon = (slug: string) => {
-  switch (slug) {
-    case "pc":
-      return <FaWindows className="text-white mx-1" />;
-    case "playstation":
-      return <FaPlaystation className="text-blue-600 mx-1" />;
-    case "xbox":
-      return <FaXbox className="text-green-600 mx-1" />;
-    case "ios":
-      return <FaApple className="text-gray-500 mx-1" />;
-    case "android":
-      return <FaAndroid className="text-green-500 mx-1" />;
-    case "mac":
-      return <FaApple className="text-gray-500 mx-1" />;
-    default:
-      return <IoLogoGameControllerA className="text-gray-500 mx-1" />;
-  }
-};
-
 interface SideBarPageSectionProps {
   title: string;
-  platforms: PlatformDetails[];
-  prices?: number[]; 
+  prices?: number[];
 }
 
-const SideBarPageSection: React.FC<SideBarPageSectionProps> = ({
+const SideBarPageSection2: React.FC<SideBarPageSectionProps> = ({
   title,
-  platforms,
   prices,
 }) => {
   const [expanded, setExpanded] = React.useState<boolean>(true);
@@ -76,24 +45,24 @@ const SideBarPageSection: React.FC<SideBarPageSectionProps> = ({
           className=""
         >
           <h4 className="text-[14px] capitalize dark:text-white text-black">
-            Platform
+            Price
           </h4>
         </AccordionSummary>
         <AccordionDetails className="border-t border-rose-600">
           <div className="w-full text-[14px] capitalize leading-[28px]">
-            {platforms.map((platform, index) => (
-              <Link
-                href={`/games?platform=${platform.name}`}
+            {prices &&
+              prices.length > 0 &&
+              prices.map((price, index) => (
+                <Link
+                href={`/games?price=${price.toFixed(2)}`}
                 key={index}
                 className="flex items-center w-full dark:bg-dark-mode bg-light-mode shadow-sm p-2 mb-2"
               >
-                {/* Display the platform icon */}
-                {getPlatformIcon(platform.slug)}
-                <span className="ml-2 dark:text-white text-black">
-                  {platform.name}
-                </span>
-              </Link>
-            ))}
+                  <span className="ml-2 dark:text-white text-black">
+                    ${price.toFixed(2)} {/* Display price */}
+                  </span>
+                  </Link>
+              ))}
           </div>
         </AccordionDetails>
       </Accordion>
@@ -101,4 +70,4 @@ const SideBarPageSection: React.FC<SideBarPageSectionProps> = ({
   );
 };
 
-export default SideBarPageSection;
+export default SideBarPageSection2;

@@ -88,6 +88,7 @@ export interface Game {
   parent_platforms: ParentPlatform[];
   platforms: Platform[];
   playtime: number;
+  price?: number;
   rating: number;
   rating_top: number;
   ratings: Rating[];
