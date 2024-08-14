@@ -12,12 +12,12 @@ export const browseData = [
   {
     id: 3,
     name: "rating",
-    link: "/rating",
+    link: "/",
   },
   {
     id: 4,
     name: "genres",
-    link: "/genres",
+    link: "/",
   },
   {
     id: 5,
