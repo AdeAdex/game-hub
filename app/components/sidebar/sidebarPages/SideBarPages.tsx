@@ -17,7 +17,7 @@ import CardSkeleton from "../../homePage/CardSkeleton";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import useFetchGames from "@/app/hooks/useFetchGames";
-import useGamesWithPrices from "../gamesWithPrices";
+import { generateRatingRanges } from "@/app/utils/ratingUtils";
 
 interface SideBarPagesProps {
   games: Game[]; // Updated to accept an array of games
@@ -42,22 +42,15 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   // Extract links from browseData
   const browseLinks = browseData.map((item) => item.link);
 
-  // Use the custom hook to get games with prices and prices array
-  const { gamesWithPrices, prices } = useGamesWithPrices();
-
-
   // Determine which games to display
-  // const displayGames = games && games.length > 0 ? games : reduxGames;
+  const displayGames = games && games.length > 0 ? games : reduxGames;
 
-
-  const displayGames = games && games.length > 0 ? gamesWithPrices : reduxGames;
-
-  console.log("games are",displayGames)
-  console.log("price",prices)
+  console.log("games are", displayGames);
 
   // Show <SideBarCompo /> if the route has a tag or is "/featured-games"
   const showSideBarCompo =
-    tagQuery || platformQuery ||
+    tagQuery ||
+    platformQuery ||
     pathname === "/featured-games" ||
     browseLinks.includes(pathname);
 
@@ -76,7 +69,12 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   // Convert Map to array
   const allPlatforms: PlatformDetails[] = Array.from(platformMap.values());
 
-  // console.log("allPlatforms", allPlatforms);
+ 
+  // Extract unique ratings and generate ranges
+  const ratings = displayGames
+    .map((game) => game.rating!)
+    .filter((rating) => rating !== undefined);
+  const ratingRanges = generateRatingRanges(ratings);
 
   return (
     <div>
@@ -85,7 +83,7 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
         className={`w-100 h-screen flex flex-col md:flex-row w-full pt-[50px] md:pt-[75px] relative dark:bg-dark-mode bg-light-mode`}
       >
         {showSideBarCompo ? (
-          <SideBarCompo platforms={allPlatforms} prices={prices}/>
+          <SideBarCompo platforms={allPlatforms} ratings={ratingRanges} />
         ) : (
           <SideBar popularTags={popularTags} browse={browseData} />
         )}
