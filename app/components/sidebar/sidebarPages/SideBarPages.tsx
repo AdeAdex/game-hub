@@ -31,6 +31,11 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   const searchParams = useSearchParams();
   const tagQuery = searchParams ? searchParams.get("tags") : null; // Get the query parameter for tags
   const platformQuery = searchParams ? searchParams.get("platform") : null; // Get the query parameter for platform
+  const ratingQuery = {
+    rating_min: searchParams ? searchParams.get("rating_min") : null,
+    rating_max: searchParams ? searchParams.get("rating_max") : null,
+  };
+  
   const { allTags, popularTags } = useTags(games);
   const { loading, games: reduxGames } = useSelector(
     (state: RootState) => state.games
@@ -51,6 +56,8 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
     platformQuery ||
     pathname === "/featured-games" ||
     browseLinks.includes(pathname);
+
+    console.log("ratingQuery",ratingQuery)
 
   // Extract unique platforms using a Map to retain detailed information
   const platformMap = new Map<string, PlatformDetails>();
@@ -92,11 +99,12 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
           <div
             className={`py-[30px] px-[30px] dark:bg-dark-mode light-mode-section`}
           >
+            {showSideBarCompo && (
             <div className="dark:text-gray-300 text-[#434343] mb-3 mt-[-15px]">
               <h1 className="text-lg md:text-2xl">
                 <strong>
                   Top{" "}
-                  {/* {ratings ? (
+                  {ratingQuery.rating_min || ratingQuery.rating_max ? (
                     <span>
                       {ratingRanges.map((label, index) => (
                         <span key={index}>{label.label} </span>
@@ -104,7 +112,7 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
                     </span>
                   ) : (
                     ""
-                  )} */}
+                  )}
                   <span className="border rounded-md py-1 px-2"> Games</span>{" "}
                   {tagQuery ? (
                     <span>for {tagQuery}</span>
@@ -119,7 +127,8 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
                   ({games.length} results)
                 </span>
               </h1>
-            </div>
+            </div> 
+            )}
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {showSideBarCompo ? (
                 displayGames && displayGames.length > 0 ? (
