@@ -45,8 +45,6 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   // Determine which games to display
   const displayGames = games && games.length > 0 ? games : reduxGames;
 
-  console.log("games are", displayGames);
-
   // Show <SideBarCompo /> if the route has a tag or is "/featured-games"
   const showSideBarCompo =
     tagQuery ||
@@ -69,12 +67,13 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
   // Convert Map to array
   const allPlatforms: PlatformDetails[] = Array.from(platformMap.values());
 
- 
   // Extract unique ratings and generate ranges
   const ratings = displayGames
     .map((game) => game.rating!)
     .filter((rating) => rating !== undefined);
   const ratingRanges = generateRatingRanges(ratings);
+
+  console.log("rate", ratingRanges);
 
   return (
     <div>
@@ -93,6 +92,34 @@ const SideBarPages: React.FC<SideBarPagesProps> = ({ games }) => {
           <div
             className={`py-[30px] px-[30px] dark:bg-dark-mode light-mode-section`}
           >
+            <div className="dark:text-gray-300 text-[#434343] mb-3 mt-[-15px]">
+              <h1 className="text-lg md:text-2xl">
+                <strong>
+                  Top{" "}
+                  {/* {ratings ? (
+                    <span>
+                      {ratingRanges.map((label, index) => (
+                        <span key={index}>{label.label} </span>
+                      ))}
+                    </span>
+                  ) : (
+                    ""
+                  )} */}
+                  <span className="border rounded-md py-1 px-2"> Games</span>{" "}
+                  {tagQuery ? (
+                    <span>for {tagQuery}</span>
+                  ) : platformQuery ? (
+                    <span>for {platformQuery}</span>
+                  ) : (
+                    ""
+                  )}
+                </strong>
+                <span className="text-[#858585]">
+                  {" "}
+                  ({games.length} results)
+                </span>
+              </h1>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {showSideBarCompo ? (
                 displayGames && displayGames.length > 0 ? (
