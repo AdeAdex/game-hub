@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import SideBarPages from "../components/sidebar/sidebarPages/SideBarPages";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";

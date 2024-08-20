@@ -33,8 +33,9 @@ export function middleware(request: NextRequest) {
     "/developer",
     "/games",
     "/rating",
-    "/genres",
-    "/"
+    "/genre",
+    "/browse",
+    "/cookies"
   ];
 
 

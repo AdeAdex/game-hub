@@ -20,8 +20,8 @@ const FooterRowOne = () => {
           <Link href="/support" className="uppercase">
             faq
           </Link>
-          <Link href="" className="uppercase">
-            blog
+          <Link href="/services" className="uppercase">
+            services
           </Link>
           <Link href="/support" className="uppercase">
             contact us

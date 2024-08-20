@@ -200,7 +200,7 @@ function MyApp() {
                 to you as soon as possible.
               </p>
               <button
-                className={`mt-4 w-full md:w-auto py-2 px-6 rounded-md font-semibold dark:bg-green-600 dark:text-white bg-green-500 text-white  transition-transform transform hover:scale-105`}
+                className={`mt-4 w-full md:w-auto py-2 px-6 border rounded-md font-semibold dark:bg-green-600 dark:text-white bg-green-500 text-black  transition-transform transform hover:scale-105`}
                 onClick={toggleModal}
               >
                 Submit a Ticket
