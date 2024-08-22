@@ -32,7 +32,6 @@ export const POST = async (req, res) => {
     // Generate reset password link here, assuming you have a route for resetting password
     const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`; // Replace with your actual reset password link
 
-    //     const resetLink = `${process.env.BASE_URL}/reset-password?token=${resetToken}`; // Assuming you have BASE_URL set in your environment variables
 
     const username = user.userName;
 

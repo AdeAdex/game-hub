@@ -23,12 +23,12 @@ const Activities: React.FC<ActivitiesProps> = ({
       >
         Recent Activities
       </h2>
-      <ul className="space-y-4">
+      <ul className="space-y-4 w-full">
         {recentActivities && recentActivities.length > 0 ? (
           recentActivities.map((activity, index) => (
             <li
               key={index}
-              className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4"
+              className="w-full flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 md:overflow-x-auto md:flex-wrap border-b border-gray-400 pb-4"
             >
               <div className="flex-shrink-0">
                 <Image
@@ -40,29 +40,29 @@ const Activities: React.FC<ActivitiesProps> = ({
                 />
               </div>
               <div
-                className={`text-lg flex-1 dark:text-gray-300 text-gray-700`}
+                className={`text-md md:flex-shrink-0 lg:flex-1 dark:text-gray-300 text-gray-700 `}
               >
                 {activity.description}
               </div>
               <div
-                className={`text-sm flex-shrink-0 dark:text-gray-400 text-gray-500`}
+                className={`text-sm flex-shrink-0 dark:text-gray-400 text-gray-500 `}
               >
                 {formatDateTime(activity.date)}
               </div>
               <div
-                className={`text-sm flex-shrink-0 dark:text-gray-400 text-gray-500`}
+                className={`text-sm flex-shrink-0 dark:text-gray-400 text-gray-500  break-words`}
               >
                 Device: {activity.device}
               </div>
               <div
-                className={`text-sm flex-shrink-0 dark:text-gray-400 text-gray-500`}
+                className={`text-sm flex-shrink-0 dark:text-gray-400 text-gray-500  break-words`}
               >
                 Location: {activity.location}
               </div>
             </li>
           ))
         ) : (
-          <div className={`text-gray-500 dark:text-gray-400 `}>
+          <div className={`text-gray-500 dark:text-gray-400`}>
             No recent activities found
           </div>
         )}

@@ -14,10 +14,9 @@ import FlowDiagram from "../components/dashboard/FlowDiagram";
 import Activities from "../components/dashboard/Activities";
 import { UserDataType, ActivityType } from "../types/user";
 import { useSearch } from "@/app/lib/SearchContext";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { signInSuccess } from "../redux/authSlice";
 import { RootState } from "../redux/store";
-
 
 Chart.register(...registerables);
 
@@ -28,9 +27,11 @@ const DashboardPage = () => {
   const [loginCounts, setLoginCounts] = useState<number[]>([]);
   const { handleSearch, suggestions } = useSearch();
   const dispatch = useDispatch();
-  const userInformation = useSelector((state: RootState) => state.auth.userInformation);
+  const userInformation = useSelector(
+    (state: RootState) => state.auth.userInformation
+  );
 
-// console.log("userinfo", userInformation)
+  // console.log("userinfo", userInformation)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,12 +115,12 @@ const DashboardPage = () => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col dark:bg-dark-mode dark:text-white bg-gray-50`}
+      className={`w-full min-h-screen flex flex-col dark:bg-dark-mode dark:text-white bg-gray-50`}
     >
-            <Navbar onSearch={handleSearch} suggestions={suggestions} />
+      <Navbar onSearch={handleSearch} suggestions={suggestions} />
 
-      <div className="flex-grow container mx-auto px-4 py-16 md:py-20">
-        <div className="flex flex-col md:flex-row md:space-x-8">
+      <div className="w-full flex-grow mx-auto px-4 py-20">
+        <div className="w-full flex flex-col md:flex-row md:space-x-8">
           <UserProfile userData={userInformation} />
           <FlowDiagram chartData={chartData} chartOptions={chartOptions} />
         </div>
@@ -128,7 +129,6 @@ const DashboardPage = () => {
           userData={userInformation}
           formatDateTime={formatDateTime}
         />
-        {/* <D3Chart /> */}
       </div>
       <Footer />
     </div>
