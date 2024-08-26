@@ -13,7 +13,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
 }) => {
   return (
     <div
-      className={`shadow-lg rounded-lg p-8 flex-1 md:max-w-full dark:bg-gray-900 bg-white dark:text-white text-gray-800`}
+      className={`shadow-lg rounded-lg p-8 flex-1 dark:bg-gray-900 bg-white dark:text-white text-gray-800`}
     >
       <h2
         className={`text-2xl font-semibold mb-4 dark:text-white text-gray-800`}

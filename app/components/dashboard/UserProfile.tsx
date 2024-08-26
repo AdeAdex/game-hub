@@ -12,7 +12,7 @@ interface UserProfileProps {
 const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
   return (
     <div
-      className={`shadow-lg rounded-lg p-8 mb-8 md:mb-0 md:w-1/3 lg:w-1/4 text-center dark:bg-gray-900 dark:text-white bg-white text-gray-800 `}
+      className={`shadow-lg rounded-lg p-8 mb-8 md:mb-0 md:flex-shrink-0 md:w-1/3 lg:w-1/4 text-center dark:bg-gray-900 dark:text-white bg-white text-gray-800 `}
     >
       {userData && (
         <div className="space-y-6">

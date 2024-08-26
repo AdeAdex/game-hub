@@ -120,7 +120,7 @@ const DashboardPage = () => {
       <Navbar onSearch={handleSearch} suggestions={suggestions} />
 
       <div className="w-full flex-grow mx-auto px-4 py-20">
-        <div className="w-full flex flex-col md:flex-row md:space-x-8">
+        <div className="w-full flex flex-col md:flex-row md:space-x-8 overflow-hidden">
           <UserProfile userData={userInformation} />
           <FlowDiagram chartData={chartData} chartOptions={chartOptions} />
         </div>
