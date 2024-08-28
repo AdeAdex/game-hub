@@ -43,7 +43,7 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
         </svg>
         <div
           className={`${
-            totalNotifications > 0 ? "notification-point bg-green animate" : ""
+            totalNotifications > 0 ? "notification-point bg-green-color animate" : ""
           }`}
         ></div>
       </div>

@@ -18,7 +18,7 @@ const config: Config = {
         "light-mode": "#ffffff",
         "dark-mode-section": "#1e1e1e",
         "light-mode-section": "#f4f4f4",
-        "green": "#00FF00"
+        "green-color": "#00FF00"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
