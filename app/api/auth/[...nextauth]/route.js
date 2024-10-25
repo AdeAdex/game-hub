@@ -3,6 +3,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../models/user";
 import { connectToDb } from "../../../utils/database";
@@ -20,6 +21,10 @@ const handler = NextAuth({
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
     }),
     CredentialsProvider({
       credentials: {},
@@ -151,7 +156,7 @@ async function handleAuthentication(credentials, profile, provider) {
         const nameParts = profile.name.split(" ");
         const lastName = nameParts.slice(1).join(" ");
         const firstName = nameParts[0];
-        const profilePicture = profile.avatar_url || profile.picture;
+        const profilePicture = profile.avatar_url || profile.picture || profile.picture.data.url;
         const userName = profile.login ? profile.login : lastName;
         const socialId = profile.id;
 

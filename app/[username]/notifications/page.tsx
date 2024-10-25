@@ -127,7 +127,7 @@ const NotificationsPage = () => {
               )
             ) : (
               <div
-                className={`text-center dark:text-gray-400 text-gray-600`}
+                className={`w-full text-center dark:text-gray-400 text-gray-600`}
               >
                 You don't have any friend requests.
               </div>

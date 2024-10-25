@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, getProviders, useSession } from "next-auth/react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { signInSuccess } from "@/app/redux/authSlice";
 
 interface Provider {
@@ -18,15 +18,16 @@ interface Provider {
 const SocialMediaLogin = () => {
   const [providers, setProviders] = useState<Record<string, Provider>>({});
   const { data: session } = useSession();
-   const dispatch = useDispatch();
-
-  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const setUpProvider = async () => {
       const response = await getProviders();
       const filteredProviders = Object.values(response || {}).filter(
-        (provider) => provider.name === "Google" || provider.name === "GitHub"
+        (provider) =>
+          provider.id === "google" ||
+          provider.id === "github" ||
+          provider.id === "facebook"
       );
       const providersObject = filteredProviders.reduce((acc, curr) => {
         acc[curr.id] = curr;
@@ -37,9 +38,7 @@ const SocialMediaLogin = () => {
     setUpProvider();
   }, []);
 
- 
   const handleSignIn = async (providerId: string) => {
-    
     try {
       // const result = await signIn(providerId);
       // console.log("provider result", result)
@@ -50,28 +49,33 @@ const SocialMediaLogin = () => {
       console.log("provider result", result);
     } catch (error: any) {
       console.error("Error during login:", error.message);
-    } 
-
+    }
   };
 
   return (
     <>
       <div className="py-[25px]">
         <div className="text-[12px] font-bold">Or log in with another site</div>
-        <div className="flex flex-col md:flex-row justify-between md:justify-start md:gap-4 w-full">
+        <div className="flex flex-col md:flex-row justify-between md:justify-evenly w-full">
           {providers &&
             Object.values(providers).map((provider) => (
               <button
-                className="flex gap-3 mt-[10px] border border-[#FF2E51] py-[5px] px-4 rounded-sm justify-center"
+                className="flex gap-3 mt-[10px] border border-[#FF2E51] py-[5px] px-4 rounded-sm justify-center "
                 type="button"
                 onClick={() => handleSignIn(provider.id)}
                 key={provider.name}
               >
-                {provider.name == "Google" ? (
+                {provider.id === "google" ? (
                   <FcGoogle size={25} />
-                ) : (
+                ) : provider.id === "github" ? (
                   <FaGithub size={25} />
+                ) : (
+                  <FaFacebook
+                    size={25}
+                    className="text-[#1877F2] dark:text-white dark:bg-[#1877F2] dark:rounded-full"
+                  />
                 )}
+
                 <span className="text-[#FF2E51]">
                   Log in with {provider.name}
                 </span>

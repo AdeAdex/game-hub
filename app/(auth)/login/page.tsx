@@ -8,7 +8,7 @@ import React from "react";
 const LoginPage = () => {
   return (
     <div
-      className={`w-full lg:w-1/3 mx-auto mt-[1px] md:my-6 rounded-sm dark:bg-gray-700 dark:text-white bg-white text-[#434343]`}
+      className={`w-full lg:w-[60%] mx-auto mt-[1px] md:my-6 rounded-sm dark:bg-gray-700 dark:text-white bg-white text-[#434343]`}
     >
       <h3
         className={`py-[30px] border-b px-[10px] md:px-[30px] font-bold md:text-[20px] dark:border-gray-600 border-gray-300`}
@@ -21,7 +21,7 @@ const LoginPage = () => {
       </div>
       <hr className={`dark:border-gray-600 border-gray-300`} />
       <div className="text-[14px] py-[15px] px-[10px] md:px-[30px]">
-        <Link href="" className="underline">
+        <Link href="/" className="underline">
           Looking for something you bought?
         </Link>
       </div>
