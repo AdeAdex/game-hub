@@ -66,6 +66,30 @@ export const sendResetPasswordEmail = async (email, resetLink, username) => {
   return transporter.sendMail(mailOptions);
 };
 
+export const sendPasswordChangeEmail = async (email, firstName) => {
+  const mailOptions = {
+    from: process.env.USER,
+    to: email,
+    subject: "Your Password Has Been Changed - Adex GameHub",
+    html: `
+      <div style="background-color: #2E3440; padding: 20px; color: #ffffff; border-radius: 5px;">
+        <img src="${gamehubLogo}" alt="GameHub Logo" style="max-width: 150px; height: 30px; margin-bottom: 20px;">
+        <div style="text-align: center;">
+          <h1 style="font-size: 24px; margin-bottom: 20px;">Password Change Notification</h1>
+          <p style="font-size: 16px;">Hello ${firstName},</p>
+          <p style="font-size: 16px;">This is a confirmation that the password for your account on <a href="${gamehub}" style="color: orange;">Adex GameHub</a> has been successfully changed.</p>
+          <p style="font-size: 16px;">If you did not make this change, please contact our support team immediately.</p>
+          <br>
+          <p style="font-size: 16px;">Best regards,</p>
+          <p style="font-size: 16px;">The Adex GameHub Team</p>
+        </div>
+      </div>
+    `,
+  };
+
+  return transporter.sendMail(mailOptions);
+};
+
 
 
 export const sendSupportEmail = async (name, email, message) => {
