@@ -6,6 +6,7 @@ import Activity from "../../models/activity"; // Import Activity model
 import { connectToDb } from "../../utils/database";
 import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
 import logActivity from "@/app/utils/activityLogger.js";
+import { sendPasswordChangeEmail } from "@/app/utils/emailUtils";
 
 export const POST = async (req, res) => {
   if (req.method !== "POST") {
@@ -65,6 +66,7 @@ export const POST = async (req, res) => {
           location
         ); // Log activity
 
+    await sendPasswordChangeEmail(user.email, user.fullname.split(" ")[0]);
   
     console.log("Password reset successfully");
     return NextResponse.json(
