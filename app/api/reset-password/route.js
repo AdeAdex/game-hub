@@ -2,7 +2,6 @@
 
 import { NextResponse } from "next/server";
 import User from "../../models/user";
-import Activity from "../../models/activity"; // Import Activity model
 import { connectToDb } from "../../utils/database";
 import { hashPassword, comparePassword } from "@/app/utils/bcrypt";
 import logActivity from "@/app/utils/activityLogger.js";
