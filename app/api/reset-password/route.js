@@ -66,7 +66,7 @@ export const POST = async (req, res) => {
           location
         ); // Log activity
 
-    await sendPasswordChangeEmail(user.email, user.fullname.split(" ")[0]);
+    await sendPasswordChangeEmail(user.email, user.firstName);
   
     console.log("Password reset successfully");
     return NextResponse.json(
